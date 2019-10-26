@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE loadFileList SYSTEM "/wt/load/windchillLoad.dtd">
+
+<!--
+windchill wt.load.LoadFileSet -file loadFiles/ext/gfgo/ClassificationStructure/Classification_LoadSet.xml -u orgadmin -p 1 -NOSERVERSTOP -UNATTENDED
+ -->
+<loadFileList>
+
+   <loadFile filename="ext/gfgo/ClassificationStructure/Classification_0.xml" containerPath="/"></loadFile>
+   <loadFile filename="ext/gfgo/ClassificationStructure/Classification_1.xml" containerPath="/"></loadFile>
+   <loadFile filename="ext/gfgo/ClassificationStructure/Classification_2.xml" containerPath="/"></loadFile>
+
+</loadFileList>

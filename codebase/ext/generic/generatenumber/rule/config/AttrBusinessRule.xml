@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+
+	<date-format-define>
+		  <!-- 时间日期格式，如果下面不够，可以继续添加，如果觉得配置的太多，也可以删除部分 -->	    			   
+		<date-format format="yy"/>
+		<date-format format="yyyy"/>
+		<date-format format="yyMM"/>
+		<date-format format="yyyyMM"/>
+		<date-format format="yyMMdd"/>
+		<date-format format="yyyyMMdd"/>
+	</date-format-define>	
+	
+</config>

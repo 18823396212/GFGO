@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE Configuration SYSTEM "xconf.dtd">
+
+<Configuration targetFile="codebase/ext/xconf/reviewObjectInfo.properties">
+
+	 <Service context="default" name="com.ptc.core.components.descriptor.DataUtility">
+      <Option requestor="java.lang.Object"  serviceClass="ext.generic.reviewObject.datautility.ReviewObjectDataUtility" selector="reviewObjectDataUtility" cardinality="singleton"/>
+  </Service>
+  
+</Configuration>

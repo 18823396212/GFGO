@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <clear-obj-second>
+	<!-- 修订事件 -->	
+	<clear-event name="revise" event="NEW_VERSION" > 
+	<!-- clear决定附件是否要清除，prefix代表文档前缀满足的条件，suffix代表文档后缀满足的条件，不配置，则是不做限制 -->
+		<Second type="WTDocument" clear="true" prefix="PRINT_" suffix=".pdf" /> 
+		<Second type="EPMDocument"  clear="true" prefix="PRINT_" suffix=".pdf" /> 
+	</clear-event>
+
+	<!-- 复制事件 -->	
+	<clear-event name="copy" event="POST_STORE" > 
+		<Second type="WTDocument" clear="true" prefix="PRINT_" suffix=".pdf" /> 
+		<Second type="EPMDocument"  clear="true" prefix="PRINT_" suffix=".pdf" /> 
+	</clear-event>
+
+	<!-- 另存为事件 -->	
+	<clear-event name="saveas" event="POST_MODIFY" > 
+		<Second type="WTDocument" clear="true" prefix="PRINT_" suffix=".pdf" /> 
+		<Second type="EPMDocument"  clear="true" prefix="PRINT_" suffix=".pdf" /> 
+	</clear-event>
+  </clear-obj-second>
+</root>	

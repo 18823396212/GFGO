@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE NmLoader
+  SYSTEM "standardX26.dtd">
+<NmLoader>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>appodoc</csvname>
+      <csvhierarchyDisplayName>appodoc</csvhierarchyDisplayName>
+      <csvorganizerPaths></csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name/>
+      <csvdescription/>
+      <csvdata_type>ORG</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier/>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>sscpx</csvname>
+      <csvhierarchyDisplayName>sscpx</csvhierarchyDisplayName>
+      <csvorganizerPaths>appodoc</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>所属产品线</csvdisplay_name>
+      <csvdescription>sscpx</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>sscpx</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>lswdbb</csvname>
+      <csvhierarchyDisplayName>lswdbb</csvhierarchyDisplayName>
+      <csvorganizerPaths>appodoc</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>历史文档版本</csvdisplay_name>
+      <csvdescription>lswdbb</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>lswdbb</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>lswdbh</csvname>
+      <csvhierarchyDisplayName>lswdbh</csvhierarchyDisplayName>
+      <csvorganizerPaths>appodoc</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>历史文档编号</csvdisplay_name>
+      <csvdescription>历史文档编号</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>lswdbh</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>rjbb</csvname>
+      <csvhierarchyDisplayName>rjbb</csvhierarchyDisplayName>
+      <csvorganizerPaths>appodoc</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>软件版本</csvdisplay_name>
+      <csvdescription>rjbb</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>rjbb</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>apponewpart</csvname>
+      <csvhierarchyDisplayName>appo属性</csvhierarchyDisplayName>
+      <csvorganizerPaths></csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name/>
+      <csvdescription/>
+      <csvdata_type>ORG</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier/>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>ResponsiblePerson</csvname>
+      <csvhierarchyDisplayName>ResponsiblePerson</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>责任人</csvdisplay_name>
+      <csvdescription>ResponsiblePerson</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>ResponsiblePerson</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>SendDccState</csvname>
+      <csvhierarchyDisplayName>SendDccState</csvhierarchyDisplayName>
+      <csvorganizerPaths>appodoc</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>发送DCC状态信息</csvdisplay_name>
+      <csvdescription>SendDccState</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>SendDccState</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>bz</csvname>
+      <csvhierarchyDisplayName>bz</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>备注</csvdisplay_name>
+      <csvdescription>bz</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>bz</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>ssxm</csvname>
+      <csvhierarchyDisplayName>ssxm</csvhierarchyDisplayName>
+      <csvorganizerPaths>appodoc</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>所属项目</csvdisplay_name>
+      <csvdescription>ssxm</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>ssxm</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>ssyjly</csvname>
+      <csvhierarchyDisplayName>ssyjly</csvhierarchyDisplayName>
+      <csvorganizerPaths>appodoc</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>所属研究领域</csvdisplay_name>
+      <csvdescription>ssyjly</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>ssyjly</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>CompletionTime</csvname>
+      <csvhierarchyDisplayName>CompletionTime</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>计划完成时间</csvdisplay_name>
+      <csvdescription>CompletionTime</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>CompletionTime</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>Customer</csvname>
+      <csvhierarchyDisplayName>Customer</csvhierarchyDisplayName>
+      <csvorganizerPaths></csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name/>
+      <csvdescription/>
+      <csvdata_type>ORG</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier/>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>SmallDocType</csvname>
+      <csvhierarchyDisplayName>文档小类</csvhierarchyDisplayName>
+      <csvorganizerPaths>Customer</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>文档小类</csvdisplay_name>
+      <csvdescription/>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>SmallDocType</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+</NmLoader>

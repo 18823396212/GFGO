@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	
+	<!-- ECN报表入口校验角色 -->
+	<validator-role-ecn>
+		<role name=""></role>
+	</validator-role-ecn>
+	
+	<!-- ECN报表入口校验组 -->
+	<validator-group-ecn>
+		<group name="Administrators"></group>
+	</validator-group-ecn>
+	
+	<!-- ECN入口校验状态 -->
+	<validator-state-ecn>
+		<state name="RESOLVED"></state>
+	</validator-state-ecn>
+
+	<!-- WTPartUsageLink对象需要比较差异的属性 -->
+	<part-usageLink>
+		<attribute name="lineNumber.value"></attribute>
+		<attribute name="quantity.amount"></attribute>
+		<attribute name="quantity.unit"></attribute>
+		<attribute name="referenceDesignatorRange"></attribute>
+	</part-usageLink>
+	
+	<!-- WTPartSubstituteLink对象需要比较差异的属性 -->
+	<part-substituteLink>
+		<attribute name="quantity.unit"></attribute>
+		<attribute name="quantity.amount"></attribute>
+	</part-substituteLink>
+	
+	<!-- WTDocumentUsageLink对象需要比较差异的属性 -->
+	<doc-usageLink>
+		<attribute name=""></attribute>
+	</doc-usageLink>
+	
+	<!-- EPMMemberLink对象需要比较差异的属性 -->
+	<epm-memberLink>
+		<attribute name="quantity.unit"></attribute>
+		<attribute name="quantity.amount"></attribute>
+	</epm-memberLink>
+	
+</config>

@@ -1,0 +1,63 @@
+{
+
+  "IsDeleteEntry": "true",
+
+  "IsVerifyBaseDataField": "false",
+  "IsEntryBatchFill": "true",
+  "ValidateFlag": "true",
+  "NumberSearch": "true",
+  "InterationFlags": "",
+  "IsAutoSubmitAndAudit": "true",//是否自动提交和审核
+  "Model": {
+    "FBOMCATEGORY": "1",//BOM分类
+    "FBOMUSE": "99",//BOM用途
+    "FYIELDRATE": 100.0,//成品率
+    "FMATERIALID": {
+      "FNumber": "A10060000001"
+    },
+    "FTreeEntity": [
+      {
+        "FReplaceGroup": 1,
+        "FMATERIALIDCHILD": {
+          "FNumber": "2634175"
+        },
+        "FMATERIALTYPE": "1",//子项类型（1标准件）
+        "FDOSAGETYPE": "1",//用量类型
+        "FNUMERATOR": 1.0,//分子
+        "FDENOMINATOR": 1.0,//分母
+        "FReplacePolicy": "1",//替代策略
+        "FReplaceType": "1",//替代方式
+        "FIskeyItem": true,//替代主料
+        "FEntrySource": "1",
+        "FTIMEUNIT": "1",
+        "FOWNERTYPEID": "BD_OwnerOrg"//货主类型
+      },
+      {
+        "FReplaceGroup": 1,//项次
+        "FMATERIALIDCHILD": {
+          "FNumber": "A0000102222"
+        },
+        "FMATERIALTYPE": "3",//子项类型（3替代件）
+        "FCHILDUNITID": {
+          "FNumber": "Pcs"
+        },
+
+        "FDOSAGETYPE": "2",//用量类型
+        "FNUMERATOR": 1.0,//分子
+        "FDENOMINATOR": 1.0,//分母
+        "FMEMO": "备注",
+        "FReplacePolicy": "1",//替代策略
+        "FIsCanReplace": false,//可替换
+        "FReplaceType": "1",//替代方式
+        "FReplacePriority": 1,//替代优先级
+        "FIskeyItem": true,//替代主料
+        "FEntrySource": "1",//子项来源
+        "FTIMEUNIT": "1",//时间单位
+        "FMEMO": "备注备注",//备注
+        "FPOSITIONNO": "999",//位置号
+        "FOWNERTYPEID": "BD_OwnerOrg"//货主类型
+      }
+    ]
+  }
+}
+

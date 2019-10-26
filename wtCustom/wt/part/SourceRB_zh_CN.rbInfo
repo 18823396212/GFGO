@@ -1,0 +1,29 @@
+ResourceInfo.class=wt.tools.resource.EnumResourceInfo
+
+# Entry Contents
+
+buy.value.translationSource.now=Buy
+buy.shortDescription.translationSource.now=Buy state
+buy.value=外购
+buy.shortDescription=外购状态
+buy.order=20
+
+make.value.translationSource.now=Make
+make.shortDescription.translationSource.now=Make state
+make.value=自制
+make.shortDescription=自制状态
+make.order=10
+
+singlesource.value.translationSource.now=Buy - Single Source
+singlesource.shortDescription.translationSource.now=Buy Single Source state
+singlesource.value=Buy - Single Source
+singlesource.shortDescription=Buy Single Source state
+singlesource.order=30
+
+Outsourcing.value=外协
+Outsourcing.shortDescription=外协
+Outsourcing.order=25
+
+outsource.value=outsource
+outsource.shortDescription=outsource
+outsource.order=94

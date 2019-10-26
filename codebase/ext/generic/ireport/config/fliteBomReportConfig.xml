@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<!-- BOM报表层级样式配置 -->
+	<bom-level-style>
+		<!--  目前支持三种，所以请选择一种来配置 -->
+		<!-- <style name="bomOrder"  join="" ></style> --> <!-- 只输出部件所在的层级1、 2、 2、 1、 2 、1 、1 没有填充 -->
+		<!-- <style name="levelOrder"  join="-"></style> --> <!-- 层级1顺序-层级2顺序-当前层级顺序 例如：1、1-1、1-2、2、2-1、2-1-1 -->
+		<!-- <style name="fillOrder"  join=" " ></style> --> <!-- 用填充符号来代表层级，空格，原点等 -->
+
+		<style name="levelOrder"  join="-"></style>
+	</bom-level-style>
+	
+	<!-- BOM报表入口校验状态 -->
+	<validator-state-bom>
+		<state name="INWORK"></state>
+		<state name="RELEASED"></state>
+	</validator-state-bom>
+	
+	<!-- BOM报表入口校验视图 -->
+	<validator-view-bom>
+		<view name="Design"></view>
+	</validator-view-bom>
+
+	<!-- BOM报表入口校验角色 -->
+	<validator-role-bom>
+		<role name="ProductEngineer"></role>
+	</validator-role-bom>
+	
+		<!-- BOM报表入口校验组 -->
+	<validator-group-bom>
+			<group name="测试组"></group>
+	</validator-group-bom>	
+			
+	<!-- 判断导出bom结构显示何种类型部件以及该部件的确定逻辑 name属性表示该规则的命名，无程序上的意义-->
+	<validator-part-type name = "自购件">
+		<!-- 部件所属容器为以下配置项时，满足条件  name为容器名   type为容器类型对应的java类型 
+		可填写的值有wt.pdmlink.PDMLinkProduct（产品）和wt.inf.library.WTLibrary（存储库）和其他的wt.inf.container.WTContainer接口对象-->
+		<part-container name="Test" type ="wt.pdmlink.PDMLinkProduct"/>
+		<!-- 部件为以下软类型时，满足此条件 -->
+		<part-softType name="com.ptc.ElectricalPart"/>
+		<!-- 部件属性源的显示值为  以下配置项中的value时 满足条件，value为系统中的显示值，如"制造"，"购买"-->
+		<part-attr-source value ="制造"/>
+		<!-- 部件的某个软属性为以下配置项时，满足此条件  name为软属性名，value为软属性值（均转换为String格式进行判断）-->
+		<part-softAttr name="levelfirst" value ="材质"/>
+		<!-- 客制化方法返回为true时，满足条件 class为java类名，method为实例方法名（方法为public方法，不为静态方法，返回值类型为boolean，无其他修饰词）
+			参数为FliterBOMBean-->
+		<!-- 
+		<customer-method class="ext.part.PartExportCheck" method=""/> 
+		-->
+	</validator-part-type>
+</config>

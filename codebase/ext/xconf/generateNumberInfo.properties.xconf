@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE Configuration SYSTEM "xconf.dtd">
+
+<Configuration targetFile="codebase/ext/xconf/generateNumberInfo.properties">
+    
+    <Service context="default" name="com.ptc.core.ui.validation.SimpleValidationFilter">
+   		<Option serviceClass="ext.generic.generatenumber.validator.GenerateNumberFilter" selector="setPartNumberFilter" requestor="null" />
+   		<Option serviceClass="ext.generic.generatenumber.validator.ManualGenerateNumberFilter" selector="manualGeneratePartNumberFilter" requestor="null" />
+	 </Service>
+
+	 <Service context="default" name="com.ptc.core.components.descriptor.DataUtility">
+      <Option requestor="java.lang.Object"  serviceClass="ext.generic.generatenumber.datautility.GenerateNoDatautility" selector="GenerateNoDatautility" cardinality="singleton"/>
+	  <Option requestor="java.lang.Object"  serviceClass="ext.generic.generatenumber.rule.datautility.NORuleDatautility" selector="NORuleDatautility" cardinality="singleton"/>
+  </Service>
+  
+</Configuration>

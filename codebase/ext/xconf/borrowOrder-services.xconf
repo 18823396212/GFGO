@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Configuration SYSTEM "xconf.dtd">
+<Configuration targetFile="codebase/wt.properties">
+
+<!-- -*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-
+WARNING: Do not modify this file after it has been installed.  Use xconfmanager
+         to set, reset, or undefine properties for your installation
+-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*- -->
+
+	<Property name="wt.services.service.90041" overridable="true" 
+		default="ext.generic.borrow.utils.BorrowOrderService/ext.generic.borrow.utils.StandardBorrowOrderService" />
+
+
+	<!-- The following properies are used by the JCA framework for mapping actions and UI validation -->
+	<AddToProperty name="com.ptc.netmarkets.util.misc.defaultActions" value="config/actions/BorrowOrder-actions.xml"/>
+   	<AddToProperty name="com.ptc.netmarkets.util.misc.defaultActionmodels" value="config/actions/BorrowOrder-actionmodels.xml"/> 
+   	
+   	
+   	<Property name="borrow.item.picker.type.list" overridable="true" 
+		default="wt.part.WTPart,wt.epm.EPMDocument,wt.doc.WTDocument,wt.change2.WTChangeRequest2,wt.change2.WTChangeOrder2,wt.change2.WTChangeActivity2,wt.change2.WTChangeIssue" />
+   	
+</Configuration>

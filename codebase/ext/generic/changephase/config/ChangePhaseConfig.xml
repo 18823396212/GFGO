@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<!--转阶段类型，“state”或者“iba”，state:表示通过全生命周期控制，iba:表示通过IBA属性的方式控制 -->
+	<change-type type="state"></change-type>
+	<!-- 当前WTPart的生命周期，按照先后顺利排列 -->
+	<part-state>
+		<state name="NEWITEM"></state>
+		<state name="INWORK"></state>
+		<state name="REWORK"></state>
+		<state name="UNDERREVIEW"></state>
+		<state name="PROTOTYPE"></state>
+		<state name="PROTOTYPE_DESIGN"></state>
+		<state name="MODEL_CHANGE"></state>
+		<state name="MODEL_WAIT_FOR_CONVERSION"></state>
+		<state name="MODEL_STAGE"></state>
+		<state name="PRODUCTION_CHANGE"></state>
+		<state name="PRODUCTION_STAGE"></state>	
+		<state name="RELEASED"></state>
+		<state name="OBSOLESCENCE"></state>
+		
+	</part-state>
+	
+	<iba-name name="productPhase"></iba-name>
+	
+	<iba-value>
+		<value value="S"></value>
+		<value value="A"></value>
+		<value value="B"></value>
+	</iba-value>
+	
+	<!-- 签审中的状态，“审阅中”或者“正在审阅” -->
+	<reviewing-state name="UNDERREVIEW"></reviewing-state>
+	<collection-getRelated3D2D name="true"></collection-getRelated3D2D>
+	<collection-relatedDrawingDocument name="WTDocument"></collection-relatedDrawingDocument>
+	<!-- 文档齐套性检查 -->
+	<has-documents-check name="SmallDocType"></has-documents-check>
+
+	<menu-validator>
+		<!-- 最新版本 -->
+		<latested name="true"></latested>
+		<!-- 是否只能创建者提交,这里可以填写"true","false" -->
+		<onlycreator name="false"></onlycreator>
+		<!-- 生命周期必须为以下生命周期之一 -->
+		<validate-part-state name="PROTOTYPE"></validate-part-state>
+		<validate-part-state name="MODEL_STAGE"></validate-part-state>
+		<!-- IBA属性值处于以下状态之一（针对IBA属性值做转阶段） -->
+		<validate-iba-value value="S"></validate-iba-value>
+		<validate-iba-value value="A"></validate-iba-value>
+		<!-- 如果用户组、角色都不为空，必须同时满足才能显示菜单 -->
+		<!-- 用户组，如："产品管理组"，如果不需要匹配用户组直接设置为"" -->
+		<validate-group value=""></validate-group>
+		<!-- 角色（取角色内部值），如果不需要匹配角色直接设置为"" -->
+		<validate-role value=""></validate-role>
+	</menu-validator>
+
+	<!-- 可以转变的生命周期状态 -->
+	<lifecycle-change-rule source-state="PROTOTYPE">
+		<target-state name="MODEL_STAGE">
+			<legalsource-state name="PROTOTYPE"></legalsource-state>
+			<!-- 对于非自己创建的WTPart允许转变的状态 -->
+			<waiting-state name="PROTOTYPE"></waiting-state>
+			<lifecycle-change-workflow name="STDPhaseWF"></lifecycle-change-workflow>
+		</target-state>
+	</lifecycle-change-rule>
+	
+	
+
+	<!-- 可以转变的生命周期状态 -->
+	<lifecycle-change-rule source-state="MODEL_STAGE">
+		<target-state name="PRODUCTION_STAGE">
+			<legalsource-state name="MODEL_STAGE"></legalsource-state>
+			<!-- 对于非自己创建的WTPart允许转变的状态 -->
+			<waiting-state name="MODEL_STAGE"></waiting-state>
+			<!-- WTPart齐套性检查属性,如：[DrawingDocument][StandardDocument] -->
+			<lifecycle-change-workflow name="STDPhaseWF_Trail-Product"></lifecycle-change-workflow>
+		</target-state>
+	</lifecycle-change-rule>
+	
+		<!-- 可以转变的IBA值 -->
+	<iba-change-rule source-value="S">
+		<target-value value="A">
+			<legalsource-value value="S"></legalsource-value>
+			<!-- 对于非自己创建的WTPart允许转变的状态 -->
+			<waiting-value value="S"></waiting-value>
+			<iba-change-workflow name="STDPhaseWF"></iba-change-workflow>
+		</target-value>
+
+
+		<target-value value="B">
+			<legalsource-value value="S"></legalsource-value>
+			<legalsource-value value="A"></legalsource-value>
+			<!-- 对于非自己创建的WTPart允许转变的状态 -->
+			<waiting-value value="S"></waiting-value>
+			<waiting-value value="A"></waiting-value>
+			<iba-change-workflow name="STDPhaseWF_Prototye-Product"></iba-change-workflow>
+		</target-value>
+
+	</iba-change-rule>
+	
+	<!-- 可以转变的生命周期状态 -->
+	<iba-change-rule source-value="A">
+		<target-value value="B">
+			<legalsource-value value="A"></legalsource-value>
+			<!-- 对于非自己创建的WTPart允许转变的状态 -->
+			<waiting-value value="A"></waiting-value>
+			<!-- WTPart齐套性检查属性,如：[DrawingDocument][StandardDocument] -->
+			<iba-change-workflow name="STDPhaseWF_Trail-Product"></iba-change-workflow>
+		</target-value>
+	</iba-change-rule>
+
+</config>

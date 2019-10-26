@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE Configuration SYSTEM "xconf.dtd">
+
+<Configuration targetFile="codebase/ext/xconf/epmSignfilter.properties">
+	<Service context="default" name="com.ptc.core.ui.validation.SimpleValidationFilter">
+   		<Option serviceClass="ext.generic.epm.validator.EPMWorkflowFilter" requestor="null" selector="EPMSignActionFilter" cardinality="duplicate" />
+	</Service>
+</Configuration>

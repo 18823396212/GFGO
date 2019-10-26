@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Configuration SYSTEM "xconf.dtd">
+<Configuration targetFile="codebase/wt.properties">
+
+<!-- -*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-
+WARNING: Do not modify this file after it has been installed.  Use xconfmanager
+         to set, reset, or undefine properties for your installation
+-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*- -->
+    
+	<!-- The following properies are used by the JCA framework for mapping actions and UI validation -->
+	  <AddToProperty name="com.ptc.netmarkets.util.misc.defaultActions" value="config/actions/checkActivties-actions.xml"/>
+   	<AddToProperty name="com.ptc.netmarkets.util.misc.defaultActionmodels" value="config/actions/checkActivties-actionModels.xml"/> 
+   	
+</Configuration>

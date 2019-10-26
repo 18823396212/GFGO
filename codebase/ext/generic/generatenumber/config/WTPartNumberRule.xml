@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>	
+	<!--编码规则-->	
+	<number-rules>
+		<!--编码前缀-->
+		<element name = "number-prefix" ></element>	
+		<!--序列号部分-->	
+		<element name = "seria-number" ></element>	 	
+		<element name = "number-postfix" ></element>
+	</number-rules>
+	<!--定义编码前缀,可以取以下三种：
+	ClassNodeNameBefore_:分类名称中的_之前的部分
+	ClassNodeName：分类名称
+	ClassNodeInternalName：分类内部名称
+	-->
+	<number-prefix name="number-prefix">ClassNodeInternalName</number-prefix>
+	
+	<!--定义序列号位数的IBA属性，一般为PartsLink上的IBA属性，WaterCodeDigit为IBA属性的内部名-->
+	<seria-number-attribute name="seria-number-attribute">SeriaNumberDigit</seria-number-attribute>
+	<!--默认序列号的位数，如果没有定义序列号位数的IBA属性，则读默认值-->
+	<seria-number-digit name="seria-number-digit">5</seria-number-digit>
+	
+	<!--编码前缀对应序列号的初始值，如果没有定义，则默认为从1开始-->
+	<seria-number-max>			
+		<element name = "100000" >0001</element>			
+		<element name = "100100" >0001</element>
+		<element name = "110000" >0001</element>
+	</seria-number-max>
+	
+	<!--编码后缀，为PartsLink上的IBA属性，如果没有定义，则默认为空-->
+	<number-other-attribute name="number-other-attribute">PartNumberPostfix</number-other-attribute>
+	<!--编码相关的WTPart上的IBA属性，用于记录编码错误信息-->	
+	<number-related-iba name="CodingStatusIBAName">CodeApplicationStatus</number-related-iba>
+	
+	<!--编码按钮显示的状态条件-->
+	<lifecycle-show-rule>
+		<element name = "NEWITEM" ></element>			
+		<!--<element name = "INWORK" ></element>-->
+	</lifecycle-show-rule>
+	
+	<!--物料编码流程编制页面显示的相似物料判断方式，iba或者ClassNode -->
+	<similar-part-type name="similar-part-type">ClassNode</similar-part-type>
+	<!--物料编码流程编制页面显示的IBA属性内部值，多个用英文;;;分割，如DRAW_NO;;;WEIGHT，没有则为空 -->
+	<ibas-for-display name="ibas-for-display"></ibas-for-display>
+	<!--物料编码流程编制页面需要搜索的IBA属性内部值，多个用英文;;;分割，如DRAW_NO;;;WEIGHT，没有则为空 -->
+	<ibas-for-search name="ibas-for-search"></ibas-for-search>
+
+	<setTargetStates>
+	<!-- 设置都是针对随签对象的设置 -->
+		<setState softType="wt.part.WTPart" smallTypeIba="" smallType ="" ClassNodeInternalName="1001" targetState="RELEASED" targetPhaseIBA="B" ></setState>
+		<!-- 图纸的话，如果配置了ClassNodeInternalName，则用其关联的部件分类匹配；另外如果图纸本身没有软属性或是不匹配，也按照其关联部件的属性去匹配，符合的话也设置目标状态和目标阶段 -->
+		<setState softType="wt.epm.EPMDocument" smallTypeIba="" smallType ="" ClassNodeInternalName="1001" targetState="RELEASED" targetPhaseIBA="B" ></setState>
+	</setTargetStates>
+</root>	

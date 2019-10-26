@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE Configuration SYSTEM "xconf.dtd">
+<Configuration targetFile="codebase/com/ptc/windchill/enterprise/search/server/SearchableTypes.properties">
+
+<!-- PDMLink Searchable Types -->
+
+      <!-- If security labels is enabled on your system then add wt.access.agreement.AuthorizationAgreement to PDMLink.allSearch:
+         
+      -->
+      
+      <AddToProperty name="PDMLink.allSearch" value="ext.generic.borrow.BorrowOrder"/>
+      
+      <!-- ObjectInitRules Object Picker -->
+      <AddToProperty name="Foundation.ObjectInitRules" value="ext.generic.borrow.BorrowOrder"/> 
+      
+      
+      
+      
+      
+   <!-- Add Managed Collection object type to Search type picker -->
+   <AddToProperty name="WindchillPDM.allSearch"            value="ext.generic.borrow.BorrowOrder"/>
+   <AddToProperty name="PDMLink.allSearch"                 value="ext.generic.borrow.BorrowOrder"/>
+
+   <!-- Add ManagedCollection object type to the Searchable Types for the Link object (as in "New Link") -->
+   <AddToProperty name="Foundation.link" value="ext.generic.borrow.BorrowOrder"/>
+   
+   <!-- Activate rules for ManagedCollection rules -->
+   <AddToProperty name="Foundation.ObjectInitRules" value="ext.generic.borrow.BorrowOrder"/>
+   
+   <!-- Can use itemPicker to search -->
+   <AddToProperty name="Foundation.itemPicker" value="ext.generic.borrow.BorrowOrder"/>
+      
+</Configuration>

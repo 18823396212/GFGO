@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Configuration SYSTEM "xconf.dtd">
+<Configuration targetFile="codebase/WEB-INF/conf/wvs.properties">
+
+<!-- -*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-
+WARNING: Do not modify this file after it has been installed.  Use xconfmanager
+         to set, reset, or undefine properties for your installation
+-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*- -->
+
+ <Property name="publish.service.filterdocumentpublishmethod" overridable="true"
+  default="ext.generic.wvs.PublishService/filterDocument" />
+</Configuration>

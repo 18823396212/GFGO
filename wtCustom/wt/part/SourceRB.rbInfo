@@ -1,0 +1,39 @@
+ResourceInfo.class=wt.tools.resource.EnumResourceInfo
+ResourceInfo.customizable=true
+ResourceInfo.deprecated=false
+ResourceInfo.replacement=false
+ResourceInfo.UUID=c67f40ad-f6fe-4486-b3cd-6a78b7844cb4
+
+
+# Entry Format (values equal to default value are not included)
+# <key>.value=
+# <key>.category=
+# <key>.comment=
+# <key>.argComment<n>=
+# <key>.constant=
+# <key>.customizable=
+# <key>.deprecated=
+# <key>.abbreviatedDisplay=
+# <key>.fullDisplay=
+# <key>.shortDescription=
+# <key>.longDescription=
+# <key>.order=
+# <key>.defaultValue=
+# <key>.selectable=
+
+# Entry Contents
+
+Outsourcing.value=Outsourcing
+Outsourcing.shortDescription=Outsourcing
+Outsourcing.order=25
+
+outsource.value=outsource
+outsource.shortDescription=outsource
+outsource.order=94
+outsource.selectable=false
+
+singlesource.value=Buy - Single Source
+singlesource.shortDescription=Buy Single Source state
+singlesource.order=30
+singlesource.order=30
+singlesource.selectable=false

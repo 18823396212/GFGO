@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Configuration SYSTEM "xconf.dtd">
+<Configuration targetFile="codebase/wt.properties">
+
+<!-- -*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-
+WARNING: Do not modify this file after it has been installed.  Use xconfmanager
+         to set, reset, or undefine properties for your installation
+-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*- -->
+<!-- add by WeiWenJie For ERP Integration -->
+   <!--Property name="wt.services.service.90051" overridable="true"  
+                 default="ext.generic.integration.erp.listener.ListenerService/ext.generic.integration.erp.listener.ClearIntegrationStatusListenerService"/-->
+   <!-- End by WeiWenJie -->
+
+	<!-- The following properies are used by the JCA framework for mapping actions and UI validation -->
+	  <AddToProperty name="com.ptc.netmarkets.util.misc.defaultActions" value="config/actions/ERP-actions.xml"/>
+   	<AddToProperty name="com.ptc.netmarkets.util.misc.defaultActionmodels" value="config/actions/ERP-actionmodels.xml"/> 
+   	
+</Configuration>

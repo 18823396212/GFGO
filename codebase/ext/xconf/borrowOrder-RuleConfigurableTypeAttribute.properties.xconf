@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE Configuration SYSTEM "xconf.dtd">
+<Configuration targetFile="codebase/com/ptc/core/rule/server/delegate/init/RuleConfigurableTypeAttribute.properties">
+   <!-- windchill properties -->
+   
+   <!--   
+          The format of the entries is as follows:
+          <type classname>=<logical attribute names separated by commas>
+
+          Example
+          wt.part.WTPart=number,name,lifeCycle,lifeCycle.id,teamTemplate,teamTemplate.id,folder.id
+    -->      
+    
+   <Property name="ext.generic.borrow.BorrowOrder" default="number,lifeCycle.id,lifeCycle,teamTemplate,teamTemplate.id,folder.id"/>
+   
+</Configuration>

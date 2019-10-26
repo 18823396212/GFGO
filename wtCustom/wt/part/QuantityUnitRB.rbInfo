@@ -1,0 +1,87 @@
+ResourceInfo.class=wt.tools.resource.EnumResourceInfo
+ResourceInfo.customizable=true
+ResourceInfo.deprecated=false
+ResourceInfo.replacement=false
+ResourceInfo.UUID=f02e5a5a-f978-438f-be4d-93306237cc68
+
+
+# Entry Format (values equal to default value are not included)
+# <key>.value=
+# <key>.category=
+# <key>.comment=
+# <key>.argComment<n>=
+# <key>.constant=
+# <key>.customizable=
+# <key>.deprecated=
+# <key>.abbreviatedDisplay=
+# <key>.fullDisplay=
+# <key>.shortDescription=
+# <key>.longDescription=
+# <key>.order=
+# <key>.defaultValue=
+# <key>.selectable=
+
+# Entry Contents
+
+as_needed.value=as needed
+as_needed.shortDescription=as needed
+as_needed.order=134
+as_needed.selectable=false
+
+bag.value=package
+bag.shortDescription=package
+bag.order=68
+bag.order=68
+
+cm.value=centimeter
+cm.shortDescription=centimeter
+cm.order=55
+
+cu_m.value=cubic meters
+cu_m.shortDescription=m^3
+cu_m.order=70
+cu_m.selectable=false
+
+g.value=gram
+g.shortDescription=gram
+g.order=35
+
+item.value=item
+item.shortDescription=item
+item.order=69
+
+l.value=liters
+l.shortDescription=l
+l.order=39
+
+m.value=meters
+m.shortDescription=m
+m.order=41
+
+mg.value=Milligram
+mg.shortDescription=Milligram
+mg.order=37
+
+ml.value=Milliliter
+ml.shortDescription=Milliliter
+ml.order=40
+
+mm.value=millimeter
+mm.shortDescription=millimeter
+mm.order=62
+
+sq_m.value=square meters
+sq_m.shortDescription=m^2
+sq_m.order=38
+
+vol.value=volume
+vol.shortDescription=volume
+vol.order=66
+
+in.value=inch
+in.shortDescription=inch
+in.order=109
+
+ft.value=foot
+ft.shortDescription=foot
+ft.order=119

@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="engineering_changeOrder2" language="groovy" pageWidth="850" pageHeight="842" orientation="Landscape" columnWidth="810" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="number" class="java.lang.String">
+		<parameterDescription><![CDATA[WTChangeOrder2@number]]></parameterDescription>
+	</parameter>
+	<parameter name="name" class="java.lang.String">
+		<parameterDescription><![CDATA[WTChangeOrder2@name]]></parameterDescription>
+	</parameter>
+	<parameter name="description" class="java.lang.String">
+		<parameterDescription><![CDATA[WTChangeOrder2@description]]></parameterDescription>
+	</parameter>
+	<parameter name="creator" class="java.lang.String">
+		<parameterDescription><![CDATA[WTChangeOrder2@creator]]></parameterDescription>
+	</parameter>
+	<parameter name="resolutionDate" class="java.sql.Timestamp">
+		<parameterDescription><![CDATA[WTChangeOrder2@resolutionDate]]></parameterDescription>
+	</parameter>
+	<parameter name="needDate" class="java.sql.Timestamp">
+		<parameterDescription><![CDATA[WTChangeOrder2@needDate]]></parameterDescription>
+	</parameter>
+	<parameter name="stateName" class="java.lang.String">
+		<parameterDescription><![CDATA[WTChangeOrder2@stateName]]></parameterDescription>
+	</parameter>
+	<parameter name="changeRequest2_Path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\ptc\\Windchill_10.2\\Windchill\\codebase\\ext\\generic\\engineerChange\\template\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="changeRequest2_Data" class="java.util.List"/>
+	<parameter name="changeIssue_Path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\ptc\\Windchill_10.2\\Windchill\\codebase\\ext\\generic\\engineerChange\\template\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="changeIssue_Data" class="java.util.List"/>
+	<parameter name="changeActivity2_Path" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\ptc\\Windchill_10.2\\Windchill\\codebase\\ext\\generic\\engineerChange\\template\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="changeActivity2_Data" class="java.util.List"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="219" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="810" height="60" backcolor="#FFFF00"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[工     程     变     更     单]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="60" width="100" height="40"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[编号：]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="100" y="60" width="100" height="40"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{number}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="200" y="60" width="100" height="40"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[名称：]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="300" y="60" width="100" height="40"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="400" y="60" width="100" height="40"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[创建者：]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="500" y="60" width="100" height="40"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{creator}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="600" y="60" width="100" height="40"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[状态：]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="700" y="60" width="110" height="40"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{stateName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="100" width="200" height="40"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[需要日期：]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="yyyy/MM/dd" isBlankWhenNull="true">
+				<reportElement x="200" y="100" width="200" height="40"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{needDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="400" y="100" width="200" height="40"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[解决日期：]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="yyyy/MM/dd" isBlankWhenNull="true">
+				<reportElement x="600" y="100" width="210" height="40"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{resolutionDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="140" width="200" height="40"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[变更说明：]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="200" y="140" width="610" height="40"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{description}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="180" width="810" height="39"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="88">
+			<subreport isUsingCache="true" runToBottom="false">
+				<reportElement x="0" y="0" width="810" height="88"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRMapCollectionDataSource($P{changeRequest2_Data})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{changeRequest2_Path} + "engineering_changeOrder2_changeRequest2.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="88">
+			<subreport>
+				<reportElement x="0" y="0" width="810" height="88"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRMapCollectionDataSource($P{changeIssue_Data})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{changeIssue_Path} + "engineering_changeOrder2_changeIssue.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="88">
+			<subreport>
+				<reportElement x="0" y="0" width="810" height="88"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRMapCollectionDataSource($P{changeActivity2_Data})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{changeActivity2_Path} + "engineering_changeOrder2_changeActivity2.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

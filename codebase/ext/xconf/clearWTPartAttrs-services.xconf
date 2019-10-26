@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Configuration SYSTEM "xconf.dtd">
+<Configuration targetFile="codebase/wt.properties">
+
+<!-- -*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-
+WARNING: Do not modify this file after it has been installed.  Use xconfmanager
+         to set, reset, or undefine properties for your installation
+-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*- -->
+<!-- deprecated -->
+ <!--Property name="wt.services.service.900037" overridable="true" default="ext.generic.part.listener.ClearListenerService/ext.generic.part.listener.ClearWTPartAttrsListenerService" /-->
+</Configuration>

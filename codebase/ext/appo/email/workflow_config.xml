@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ 	配置邮件的筛选规则
+	processlist/process/processName: 				流程模板的名称     				必填值
+	processlist/process/type: 						是否检查模板和活动名称    		必填值（值为0或1,当值为1时只检查相应的流程活动是否为不检查，当为0时检查相应流程活动是否超出配置的时间）
+ 	processlist/process/activityName: 				活动名称						必填值（可填写某个活动名称或者“*”）
+ 	processlist/process/endTimeSpace: 				活动的截止时间				不必填（填写整数,type为1时不需要填写）	
+ 	processlist/process/managerEndTimeSpace: 		活动通知主管的截止时间		不必填（填写整数,type为1时不需要填写）
+ 
+
+// -->
+<processlist>
+	
+	
+	<!-- DEFAULT ENDTIME (for test) -->
+	<process>
+		<processName>DEFAULT</processName>
+		<type>0</type>
+		<activityName>DEFAULT</activityName>
+		<endTimeSpace>2</endTimeSpace>
+		<managerEndTimeSpace>4</managerEndTimeSpace>
+	</process>
+	
+	<!-- YL_ProjectOnLineReview begin (for test) -->
+	<process>
+		<processName>YL_ProjectOnLineReview</processName>
+		<type>1</type>
+		<activityName>*</activityName>
+		<endTimeSpace></endTimeSpace>
+		<managerEndTimeSpace></managerEndTimeSpace>
+	</process>
+	<!-- YL_ProjectOnLineReview end.-->
+	
+		<!-- Engineering CR Workflowbegin (for test) -->
+	<process>
+		<processName>Engineering CR Workflow</processName>
+		<type>0</type>
+		<activityName>*</activityName>
+		<endTimeSpace>2</endTimeSpace>
+		<managerEndTimeSpace>4</managerEndTimeSpace>
+	</process>
+	<!-- Engineering CR Workflow  end.-->
+	
+	
+</processlist>

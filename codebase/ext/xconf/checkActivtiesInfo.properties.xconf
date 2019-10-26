@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE Configuration SYSTEM "xconf.dtd">
+
+<Configuration targetFile="codebase/ext/xconf/checkActivtiesInfo.properties">
+
+	 <Service context="default" name="com.ptc.core.components.descriptor.DataUtility">
+       <Option serviceClass="ext.generic.excel.check.datautility.WorkFlowConfigurationDataUtility" requestor="java.lang.Object" selector="workflowconfiguration" cardinality="duplicate"/>   
+  </Service>
+  
+</Configuration>

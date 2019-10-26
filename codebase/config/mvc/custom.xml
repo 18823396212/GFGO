@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.ptc.com/schema/mvc"	
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+http://www.ptc.com/schema/mvc http://www.ptc.com/schema/mvc/mvc-10.0.xsd">
+
+		
+	<bean id="reviewprincipal.builder.ChooseOrganizationTableBuilder" class="ext.generic.reviewprincipal.builder.ChooseOrganizationTableBuilder" />
+  <bean id="reviewprincipal.builder.ChooseWTUserTableBuilder" class="ext.generic.reviewprincipal.builder.ChooseWTUserTableBuilder" />
+  <bean id="ext.generic.reviewprincipal.builder" class="ext.generic.reviewprincipal.builder.ReviewPrincipalTableBuilder" /> 
+  
+  <bean class="ext.generic.organization.builders.InfoPageOrganizationAttributesPanel"/>
+  <bean id="organization.info.page.table.builder" class="ext.generic.organization.builders.InfoPageOrganizationTableBuilder" />
+  <bean class="ext.generic.organization.builders.OrganizationInfoBuilder"/>
+  <bean id="organization.layout.attributes.panel" class="ext.generic.organization.builders.OrganizationLayoutBuilder" />
+  <bean id="ext.generic.organization.builders.OrganizationManagementBuilder" class="ext.generic.organization.builders.OrganizationManagementBuilder" />
+  
+  <bean id="ext.generic.excel.check.builder.WorkFlowConfigurationInfoBuilder" class="ext.generic.excel.check.builder.WorkFlowConfigurationInfoBuilder" />
+		
+	<bean id="ext.generic.esignature.builder.FailedEsignatureObjectBuilder" class="ext.generic.esignature.builder.FailedEsignatureObjectBuilder" />
+		
+	<bean id="ext.generic.reviewObject.builder.AssignTaskTableBuilder" class="ext.generic.reviewObject.builder.AssignTaskTableBuilder" />
+	<bean id="ext.generic.reviewObject.builder.AssignUserTableBuilder" class="ext.generic.reviewObject.builder.AssignUserTableBuilder" />
+	<bean id="netmarkets.object.clipboard" class="ext.generic.reviewObject.builder.ClipboardTableBuilder" />
+	<bean id="ext.generic.reviewObject.builder.reviewObjectTableBuilder" class="ext.generic.reviewObject.builder.ReviewObjectTableBuilder" />
+	<bean id="ext.generic.reviewObject.builder.reviewObjectTableBuilderNoToolBar" class="ext.generic.reviewObject.builder.ReviewObjectTableBuilderNoToolBar" />
+	<bean id="ext.generic.reviewObject.builder.TableBuilderSign" class="ext.generic.reviewObject.builder.TableBuilderSign" />
+	<bean id="ext.generic.workflow.builder.WorkflowStepGuidePanelBuilder" class="ext.generic.workflow.builder.WorkflowStepGuidePanelBuilder" /> 
+ 
+	<bean id="ext.generic.reviewObject.builder.ReviewObjSignOpinionsBuilder" class="ext.generic.reviewObject.builder.ReviewObjSignOpinionsBuilder" />
+	
+	<!-- add by syli for  numberrule begin -->
+	<mvc:builder-scan base-package="ext.generic.generatenumber.rule.builder"/>
+	<bean id="ext.generic.generatenumber.rule.builder.ClfNumberRuleBuilder" class="ext.generic.generatenumber.rule.builder.ClfNumberRuleBuilder" />
+	<bean id="ext.generic.generatenumber.rule.builder.MergeRuleAttrBuilder" class="ext.generic.generatenumber.rule.builder.MergeRuleAttrBuilder" />
+	<bean id="ext.generic.generatenumber.rule.builder.SelectAttrsBuilder" class="ext.generic.generatenumber.rule.builder.SelectAttrsBuilder" />
+	<bean id="ext.generic.generatenumber.rule.builder.SelectMergeRuleAttrBuilder" class="ext.generic.generatenumber.rule.builder.SelectMergeRuleAttrBuilder" />
+	<bean id="ext.generic.generatenumber.rule.builder.ParentClfNumberRuleBuilder" class="ext.generic.generatenumber.rule.builder.ParentClfNumberRuleBuilder" />
+	<bean id="ext.appo.ecn.mvc.builder.AffectedUpperMaterialsTableBuilder" class="ext.appo.ecn.mvc.builder.AffectedUpperMaterialsTableBuilder" />
+    <bean id="ext.appo.ecn.mvc.builder.AffectedDownMaterialsTableBuilder" class="ext.appo.ecn.mvc.builder.AffectedDownMaterialsTableBuilder" />
+
+	<!-- add by syli for  numberrule end -->
+	<!-- 工作流中自动创建基线 -->
+	<bean id="ext.generic.wfbaseline.mvc.builders.WTObjectBaselineLinkTable" class="ext.generic.wfbaseline.mvc.builders.WTObjectBaselineLinkTable"/>
+	<!-- <bean id="ext.generic.masschange.builder.SubstituteMassChangeSearchResultReviseTableBuilder" class="ext.generic.masschange.builder.SubstituteMassChangeSearchResultReviseTableBuilder" /> -->
+  <!-- <bean id="ext.generic.masschange.builder.SubstituteMassChangeSearchResultCheckOutTableBuilder" class="ext.generic.masschange.builder.SubstituteMassChangeSearchResultCheckOutTableBuilder" />-->
+  <!--  <bean id="ext.generic.masschange.builder.SubstituteMassChangeSearchResultCheckListTableBuilder" class="ext.generic.masschange.builder.SubstituteMassChangeSearchResultCheckListTableBuilder" />-->
+  <!--  <bean id="ext.generic.masschange.builder.BomMassChangeSearchResultReviseTableBuilder" class="ext.generic.masschange.builder.BomMassChangeSearchResultReviseTableBuilder" />-->
+  <!--  <bean id="ext.generic.masschange.builder.BomMassChangeSearchResultEndItemTableBuilder" class="ext.generic.masschange.builder.BomMassChangeSearchResultEndItemTableBuilder" />-->
+  <!--  <bean id="ext.generic.masschange.builder.BomMassChangeSearchResultCheckOutTableBuilder" class="ext.generic.masschange.builder.BomMassChangeSearchResultCheckOutTableBuilder" />-->
+  <!--  <bean id="ext.generic.masschange.builder.BomMassChangeSearchResultCheckListTableBuilder" class="ext.generic.masschange.builder.BomMassChangeSearchResultCheckListTableBuilder" />-->
+  
+  <!-- add by kwang : 更改通告表单 -->
+  <bean id="ext.appo.ecn.mvc.builder.ChangeTaskTableBuilder" class="ext.appo.ecn.mvc.builder.ChangeTaskTableBuilder"/>
+  <bean id="ext.appo.ecn.mvc.builder.AffectedEndItemsTableBuilder" class="ext.appo.ecn.mvc.builder.AffectedEndItemsTableBuilder"/>
+  <bean id="ext.appo.ecn.mvc.builder.CollectItemsTableBuilder" class="ext.appo.ecn.mvc.builder.CollectItemsTableBuilder" /> 
+  <bean id="ext.appo.ecn.mvc.builder.AffectedItemsTableBuilder" class="ext.appo.ecn.mvc.builder.AffectedItemsTableBuilder" /> 
+   <!-- add1.25 cjt 基线展示 -->
+  <bean id="ext.appo.part.builder.BaseLineTreeBuilder" class="ext.appo.part.builder.BaseLineTreeBuilder" />
+  <bean id="ext.appo.part.builder.ChangeStateECNTableBuilder" class="ext.appo.part.builder.ChangeStateECNTableBuilder" />
+
+  
+  <!-- add by ymwang 20180601-->
+  <bean id="ext.appo.part.builder.CISAttributesBuilder" class="ext.appo.part.builder.CISAttributesBuilder" />
+  <bean id="ext.appo.part.builder.cisReviewObjectTableBuilder" class="ext.appo.part.builder.CisReviewObjectTableBuilder" />
+  <bean id="ext.appo.part.builder.ItemStageReviewObjectTableBuilder" class="ext.appo.part.builder.ItemStageReviewObjectTableBuilder" />
+  <bean id="ext.appo.part.builder.ItemStageReviewObjectTableBuilderNoToolBar" class="ext.appo.part.builder.ItemStageReviewObjectTableBuilderNoToolBar" />  
+  
+  <bean id="ext.appo.part.builder.PartAttrChangeReviewObjectTableBuilder" class="ext.appo.part.builder.PartAttrChangeReviewObjectTableBuilder" />
+  <bean id="ext.appo.part.builder.PartAttrChangeReviewObjectNoToolbarTableBuilder" class="ext.appo.part.builder.PartAttrChangeReviewObjectNoToolbarTableBuilder" />
+  
+  <mvc:builder-scan base-package="ext.generic.integration.erp.mvc.builders"/>
+<bean id="ext.appo.part.builder.ProductNamingNoticTableBuilder" class="ext.appo.part.builder.ProductNamingNoticTableBuilder" />
+<bean id="ext.appo.part.builder.ShowProductNamingNoticTableBuilder" class="ext.appo.part.builder.ShowProductNamingNoticTableBuilder" />
+</beans>

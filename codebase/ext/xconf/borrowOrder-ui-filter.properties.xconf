@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE Configuration SYSTEM "xconf.dtd">
+
+<Configuration targetFile="codebase/ext/xconf/borrowOrder-ui-filter.properties">
+	<Service context="default" name="com.ptc.core.ui.validation.SimpleValidationFilter">
+   		<Option serviceClass="ext.generic.borrow.filters.EditBorrowOrderActionFilter" selector="editBorrowOrderActionFilter" requestor="null" />
+	</Service>
+	
+	<Service context="default" name="com.ptc.core.ui.validation.SimpleValidationFilter">
+   		<Option serviceClass="ext.generic.borrow.filters.InfoPageBorrowOrderTableComponentFilter" selector="infoPageBorrowOrderTableComponentFilter" requestor="null" />
+	</Service>
+	
+	<Service context="default" name="com.ptc.core.ui.validation.SimpleValidationFilter">
+   		<Option serviceClass="ext.generic.borrow.filters.ItemBorrowOrderListTableComponentFilter" selector="itemBorrowOrderListTableComponentFilter" requestor="null" />
+	</Service>
+</Configuration>

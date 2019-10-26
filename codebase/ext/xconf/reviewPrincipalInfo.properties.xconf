@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE Configuration SYSTEM "xconf.dtd">
+
+<Configuration targetFile="codebase/ext/xconf/reviewPrincipalInfo.properties">
+	 <Service context="default" name="com.ptc.core.ui.validation.SimpleValidationFilter">
+   		<Option serviceClass="ext.generic.organization.filters.InfoPageOrganizationTableComponentFilter" selector="infoPageOrgizationTableComponentFilter" requestor="null" />
+   		<Option serviceClass="ext.generic.reviewprincipal.validator.SetOtherPrincipalFilter" selector="setOtherPrincipalFilter" requestor="null" />
+   		<Option serviceClass="ext.generic.organization.validator.SetOrgArchitectureFilter" selector="setOrgArchitectureFilter" requestor="null" />
+	</Service>
+	
+	<Service context="default" name="com.ptc.core.components.descriptor.DataUtility"> 
+       <Option serviceClass="ext.generic.reviewprincipal.datautility.ReviewPrincipalDataUtility" requestor="java.lang.Object" selector="genericRoleParticipantsName" cardinality="duplicate"/>     
+       <Option serviceClass="ext.generic.organization.datautility.OrganizationDataUtility" requestor="java.lang.Object" selector="differentIcon" cardinality="duplicate"/>      
+  </Service>
+  
+   <Service context="default" name="com.ptc.core.components.beans.TreeHandler">
+       <Option serviceClass="ext.generic.organization.treehandlers.OrganizatonTreeHandler"  selector="organizatonHandler" requestor="java.lang.Object" cardinality="duplicate"/>
+  </Service>
+  
+</Configuration>

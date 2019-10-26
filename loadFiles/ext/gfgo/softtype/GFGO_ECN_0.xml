@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE NmLoader
+  SYSTEM "standardX26.dtd">
+<NmLoader>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>apponewpart</csvname>
+      <csvhierarchyDisplayName>appo属性</csvhierarchyDisplayName>
+      <csvorganizerPaths></csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name/>
+      <csvdescription/>
+      <csvdata_type>ORG</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier/>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>ChangeCause</csvname>
+      <csvhierarchyDisplayName>ChangeCause</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>变更原因</csvdisplay_name>
+      <csvdescription>ChangeCause</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>ChangeCause</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>appodoc</csvname>
+      <csvhierarchyDisplayName>appodoc</csvhierarchyDisplayName>
+      <csvorganizerPaths></csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name/>
+      <csvdescription/>
+      <csvdata_type>ORG</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier/>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>sscpx</csvname>
+      <csvhierarchyDisplayName>sscpx</csvhierarchyDisplayName>
+      <csvorganizerPaths>appodoc</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>所属产品线</csvdisplay_name>
+      <csvdescription>sscpx</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>sscpx</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>bgjd</csvname>
+      <csvhierarchyDisplayName>bgjd</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>变更阶段</csvdisplay_name>
+      <csvdescription>bgjd</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>bgjd</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>appo_opensWorkItem_Owner</csvname>
+      <csvhierarchyDisplayName>appo_opensWorkItem_Owner</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>当前处理人</csvdisplay_name>
+      <csvdescription>appo_opensWorkItem_Owner</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>appo_opensWorkItem_Owner</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>ssxm</csvname>
+      <csvhierarchyDisplayName>ssxm</csvhierarchyDisplayName>
+      <csvorganizerPaths>appodoc</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>所属项目</csvdisplay_name>
+      <csvdescription>ssxm</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>ssxm</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>ChangeItemType</csvname>
+      <csvhierarchyDisplayName>ChangeItemType</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>变更类型</csvdisplay_name>
+      <csvdescription>ChangeItemType</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>ChangeItemType</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>appo_opensWorkItem_Name</csvname>
+      <csvhierarchyDisplayName>appo_opensWorkItem_Name</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>当前节点</csvdisplay_name>
+      <csvdescription>appo_opensWorkItem_Name</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>appo_opensWorkItem_Name</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>change_dwg_ornot</csvname>
+      <csvhierarchyDisplayName>change_dwg_ornot</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>是否变更图纸</csvdisplay_name>
+      <csvdescription>change_dwg_ornot</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>change_dwg_ornot</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+</NmLoader>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE actionmodels SYSTEM "actionmodels.dtd">
+<actionmodels>
+	<model name="more change notice row actions" menufor="wt.change2.WTChangeOrder2">
+      <description>Change notice row actions</description>
+      <submodel name="Change object row actions open"/>
+	  <action name="editEngineeringChangeOrder" type="changeNotice"/>     <!-- add by kwang : 工程ECN编辑按钮 --> 
+      <action name="separator" type="separator"/>
+      <action name="view" type="object"/>
+      <action name="separator" type="separator"/>
+      <submodel name="thingworxActionsMenu"/>
+      <action name="separator" type="separator"/>
+      <action name="undoReservation" type="reservation"/>
+      <!--action name="edit" type="changeNotice"/>
+      <action name="editModifyContentOnly" type="changeNotice"/-->      
+      <action name="editTemplate" type="changeNotice"/>
+      <action name="reissueChange" type="change"/>
+      <action name="separator" type="separator"/>
+      <!-- <submodel name="Change notice new row actions"/>--> 
+      <action name="separator" type="separator"/>
+      <action name="relatedWorkitems" type="change"/>
+      <action name="separator" type="separator"/>
+      <action name="copy" type="object"/>
+      <action name="CONTAINERMOVE" type="pdmObject"/>
+      <action name="renameObjectWizard" type="object"/>
+      <action name="setState" type="lifecycle"/>
+      <action name="deleteChangeItem" type="change"/>
+      <action name="reassignLC" type="lifecycle"/> <!-- Reassign Life Cycle -->
+      <action name="resetTeam" type="team"/>
+      <action name="separator" type="separator"/>
+      <submodel name="change objects add row actions"/>
+      <action name="separator" type="separator"/>
+      <action name="removeShare" type="object"/>
+      <action name="separator" type="separator"/>
+      <action name="summaryReport" type="change"/>
+      <action name="implementationStatusReport" type="changeNotice"/>
+      <!--action name="export" type="object" /-->
+      <action name="separator" type="separator"/>
+      <action name="ManageSecurity" type="accessPermission"/>
+      <action name="securityLabelsSingleObjJCA" type="securityLabels"/>
+      <action name="EDITSECURITYLABELSNONCOLLECTED" type="object"/>
+      <action name="createSubscription" type="subscription"/>
+      <action name="separator" type="separator"/>
+      <action name="track_new_work" type="resourceAssignment" /><!-- Track new Work against subject of deliverable-->
+      <action name="new_plan_activity" type="planActivity" /><!-- New Plan Activity against subject -->    
+      <action name="exportPdf" type="searchItems" /><!-- New Plan Activity against subject -->     
+   </model>
+</actionmodels>

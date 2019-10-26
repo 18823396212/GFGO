@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<!DOCTYPE listofactions SYSTEM 'actions.dtd'>
+<listofactions>
+   <objecttype name="document" class="wt.doc.Document" resourceBundle="com.ptc.windchill.enterprise.doc.documentResource">
+
+      <action name="related_doc_create_wizard_part_references" ajax="component">
+         <command class="com.ptc.windchill.enterprise.part.forms.PartDocRefCreateRelationFormProcessor" method="execute" onClick="onClickValidation(event,&apos;related_doc_create_wizard_part_references&apos;)" windowType="popup"/>
+         <includeFilter name="disableForAdminLocked"/>
+      </action>
+      <action name="related_doc_create_wizard_part_described" ajax="component">
+         <command class="com.ptc.windchill.enterprise.part.forms.PartDocDescCreateRelationFormProcessor" method="execute" onClick="onClickValidation(event,&apos;related_doc_create_wizard_part_described&apos;)" windowType="popup" url="?noRefDoc=true"/>
+         <includeFilter name="disableForAdminLocked"/>
+      </action>
+      
+   </objecttype>
+
+   <objecttype name="part" class="wt.part.WTPart" resourceBundle="com.ptc.windchill.enterprise.part.partResource">
+      <action name="relatedPartsDocuments" uicomponent="THIRD_LEVEL_RELATED_DOCUMENTS">
+			<component name = "relatedParts.DescribedByDocuments" />
+	  </action>			
+      <action name="relatedPartsReferences" uicomponent="THIRD_LEVEL_RELATED_DOCUMENTS">
+			<component name = "relatedParts.ReferencesDocuments" />
+	  </action>
+      <action name="documentsForPartMiniNavigatorTable" uicomponent="THIRD_LEVEL_RELATED_DOCUMENTS">
+        <component name="documentsForPartMiniNavigator" windowType="page"/>
+      </action>
+      <action name="relatedPartsCADDocuments" uicomponent="THIRD_LEVEL_RELATED_CAD_DOCS">
+	   <component name = "relatedObjects.CadDynamicDocuments" />
+      </action>
+      <action name="epmDocsForPartMiniNavigatorTable" uicomponent="THIRD_LEVEL_RELATED_CAD_DOCS">
+            <component name = "epmDocsForPartMiniNavigator" />
+            <supportedTypes>
+               <type value="wt.part.WTPart"/>
+            </supportedTypes>
+      </action>
+      <action name="relatedMPMProcessPlans"/>
+      <action name="relatedPartsLists"/>
+
+      <action name="related_delete_references" multiselect="true" ajax="component">
+         <command class="com.ptc.windchill.enterprise.part.forms.PartDocRefDeleteRelationFormProcessor" method="execute" onClick="onClickValidation(event,&apos;related_delete_references&apos;)"/>
+         <includeFilter name="disableForAdminLocked"/>
+      </action>
+      <action name="related_delete_described" multiselect="true" ajax="component">
+         <command class="com.ptc.windchill.enterprise.part.forms.PartDocDescDeleteRelationFormProcessor" method="execute" onClick="onClickValidation(event,&apos;related_delete_described&apos;)"/>
+         <includeFilter name="disableForAdminLocked"/>
+		  <includeFilter name="PartDocRelationValidator"/>
+      </action>
+      <action name="related_copy_references" multiselect="true">
+         <command class="com.ptc.netmarkets.model.NmObjectCommands" method="list_copy" windowType="no_content"/>
+      </action>
+      <action name="related_paste_references" ajax="component">
+         <command class="com.ptc.windchill.enterprise.part.forms.PartDocRefPasteRelationFormProcessor" method="execute" onClick="onClickValidation(event,&apos;related_paste_references&apos;)"/>
+         <includeFilter name="disableForAdminLocked"/>
+      </action>
+      <action name="related_paste_described" ajax="component">
+         <command class="com.ptc.windchill.enterprise.part.forms.PartDocDescPasteRelationFormProcessor" method="execute" onClick="onClickValidation(event,&apos;related_paste_described&apos;)"/>
+         <includeFilter name="disableForAdminLocked"/>
+      </action>
+      <action name="related_paste_select_references" multiselect="true" uicomponent="PASTE" ajax="component">
+         <command class="com.ptc.windchill.enterprise.part.forms.PartDocRefPasteRelationFormProcessor" method="execute" onClick="onClickValidation(event,&apos;related_paste_select_references&apos;)" windowType="popup"/>
+         <includeFilter name="disableForAdminLocked"/>
+      </action>
+      <action name="related_paste_select_described" multiselect="true" uicomponent="PASTE" ajax="component">
+         <command class="com.ptc.windchill.enterprise.part.forms.PartDocDescPasteRelationFormProcessor" method="execute" onClick="onClickValidation(event,&apos;related_paste_select_described&apos;)" windowType="popup"/>
+         <includeFilter name="disableForAdminLocked"/>
+      </action>
+      <action name="related_add_references" multiselect="true" ajax="component">
+          <command class="com.ptc.windchill.enterprise.part.forms.PartDocRefRelationFormProcessor" method="execute" onClick="onClickValidation(event,&apos;related_add_references&apos;)" windowType="popup"/>
+          <includeFilter name="disableForAdminLocked"/>
+      </action>
+      <action name="related_add_described" multiselect="true" ajax="component">
+         <command class="com.ptc.windchill.enterprise.part.forms.PartDocDescRelationFormProcessor" method="execute" onClick="onClickValidation(event,&apos;related_add_described&apos;)" windowType="popup"/>
+         <includeFilter name="disableForAdminLocked"/>
+		  <includeFilter name="PartDocRelationValidator"/>
+      </action>
+      <action name="ASSOCIATEDOCUMENTSTOPART" renderType="PDM">
+          <command windowType="page" class="java.lang.Object" method="ASSOCIATEDOCUMENTSTOPART"/>
+      </action>
+
+   </objecttype>
+
+</listofactions>

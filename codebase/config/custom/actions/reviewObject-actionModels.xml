@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE actionmodels SYSTEM "actionmodels.dtd">
+<actionmodels>
+
+	<model name="reviewObjectTableToolbar">
+			<action name="reloadReviewObject"  	type="reviewObject" shortcut="true"/>
+			<action name="reviewObjectPaste"  	type="reviewObject" shortcut="true"/>
+			<action name="removeReviewObject"  	type="reviewObject" shortcut="true"/>
+			<action name="updateReviewObject"  	type="reviewObject" shortcut="true"/>
+   	</model> 
+   	
+    <model name="reviewObjectTableDocToolbar">       
+			<action name="reviewObjectPaste"  	type="reviewObject" shortcut="true"/>
+			<action name="removeReviewObject"  	type="reviewObject" shortcut="true"/>
+			<action name="updateReviewObject"  	type="reviewObject" shortcut="true"/>
+   	</model> 
+   	
+   	<model name="reviewObjectTableECNToolbar">       
+			<action name="reloadReviewObject"  	type="reviewObject" shortcut="true"/>
+   	</model> 
+   	
+   	 <model name="assignTaskToolbar">       
+			<action name="assignTask"  	type="reviewObject" shortcut="true"/>
+   	</model>
+
+	<model name="partAttrChangeTableToolbar">
+		<action name="addDatasheet"  	type="reviewObject" shortcut="true"/>
+		<action name="removeReviewObject"  	type="reviewObject" shortcut="true"/>
+	</model>
+
+	<!-- 添加规格书完成及取消按钮 -->
+	<model name="addDatasheetButtons">
+		<action name="addButton" type="reviewObject"/>
+		<action name="clientButton" type="reviewObject"/>
+	</model>
+
+</actionmodels>
+   	
+	
+
+ 
+   
+   
+   

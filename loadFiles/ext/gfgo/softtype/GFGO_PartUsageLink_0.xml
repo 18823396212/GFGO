@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE NmLoader
+  SYSTEM "standardX26.dtd">
+<NmLoader>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>apponewpart</csvname>
+      <csvhierarchyDisplayName>appo属性</csvhierarchyDisplayName>
+      <csvorganizerPaths></csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name/>
+      <csvdescription/>
+      <csvdata_type>ORG</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier/>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>bom_note</csvname>
+      <csvhierarchyDisplayName>bom_note</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>BOM备注信息</csvdisplay_name>
+      <csvdescription>bom_note</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>bom_note</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>stockGrade</csvname>
+      <csvhierarchyDisplayName>stockGrade</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>最低存货等级</csvdisplay_name>
+      <csvdescription>stockGrade</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>stockGrade</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+</NmLoader>

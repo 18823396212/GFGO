@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Configuration SYSTEM "xconf.dtd">
+<Configuration targetFile="codebase/com/ptc/core/components/components.dataUtilities.properties">
+
+      <!-- II) DataUtilities for PlanAssignmentsTableNameDataUtility (Names or Labels) -->
+  <Service name="com.ptc.core.components.descriptor.DataUtility">
+
+    <Option serviceClass="ext.generic.workflow.datautility.SubjectDatautility"
+            requestor="java.lang.Object"
+            selector="PLAN_ASSIGNMENT_SUBJECT"
+            cardinality="duplicate"/>
+  </Service>
+      <!-- End of DataUtilities for PlanAssignmentsTableNameDataUtility (Names or Labels) -->   
+</Configuration>

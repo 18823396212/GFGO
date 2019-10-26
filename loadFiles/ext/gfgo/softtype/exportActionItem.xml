@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE NmLoader SYSTEM "standardX20.dtd">
+
+<!-- 
+windchill wt.load.LoadFromFile -d loadFiles/ext/gfgo/softtype/exportActionItem.xml -u wcadmin -p wcadmin -CONT_PATH /
+-->
+
+<NmLoader>
+
+	<csvExportDefinition handler="com.ptc.core.lwc.server.TypeDefinitionExporter.beginExportDefinition">
+		<csvtoLocation>/ptc/Windchill_11.0/Windchill/loadFiles/ext/gfgo/softtype</csvtoLocation>
+		<csvtoFileName>GFGO_DiscreteActionItem.xml</csvtoFileName>
+		<csvexportDefClass>com.ptc.core.lwc.server.LWCTypeDefinition</csvexportDefClass>
+		<csvexportNames>wt.meeting.actionitem.DiscreteActionItem</csvexportNames>
+		<csvmode>0</csvmode>
+		<csvExportAncestorTypes>false</csvExportAncestorTypes>
+	</csvExportDefinition>
+
+</NmLoader>

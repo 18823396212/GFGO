@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Configuration SYSTEM "xconf.dtd">
+<Configuration targetFile="codebase/wt.properties">
+
+<!-- -*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-
+WARNING: Do not modify this file after it has been installed.  Use xconfmanager
+         to set, reset, or undefine properties for your installation
+-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*- -->
+		
+		 <Property name="wt.services.service.90021" overridable="true" 
+  					default="ext.generic.reviewObject.model.ProcessReviewObjectLinkService/ext.generic.reviewObject.model.StandardProcessReviewObjectLinkService"/>						
+    <Property name="wt.services.service.90121" overridable="true" 
+  					default="ext.generic.reviewObject.model.SignedOpinionService/ext.generic.reviewObject.model.StandardSignedOpinionService"/>			
+	<!-- The following properies are used by the JCA framework for mapping actions and UI validation -->
+	  <AddToProperty name="com.ptc.netmarkets.util.misc.defaultActions" value="config/actions/reviewObject-actions.xml"/>
+   	<AddToProperty name="com.ptc.netmarkets.util.misc.defaultActionmodels" value="config/actions/reviewObject-actionModels.xml"/> 
+   	
+</Configuration>

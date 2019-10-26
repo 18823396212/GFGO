@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE Configuration SYSTEM "xconf.dtd">
+
+<Configuration targetFile="codebase/ext/xconf/ERPInfo.properties">
+ 
+	<Service context="default" name="com.ptc.core.ui.validation.SimpleValidationFilter">
+	  <Option serviceClass="ext.generic.integration.erp.manually.ErpManuallyPublishPartActionFilter" selector="erpManuallyPublishPartFilter" requestor="null" />
+	  <Option serviceClass="ext.generic.integration.erp.manually.ErpManuallyPublishBOMActionFilter" selector="erpManuallyPublishBOMFilter" requestor="null" />
+	</Service>
+	
+   <Service name="com.ptc.core.components.descriptor.DataUtility">
+    	<Option serviceClass="ext.generic.integration.erp.datautilities.IntegrationFailedInfoDataUtility" requestor="java.lang.Object" selector="integrationInfo" cardinality="singleton"/>
+    	<Option serviceClass="ext.generic.integration.erp.datautilities.QueryInventoryPriceDataUtility" requestor="java.lang.Object" selector="queryInventoryPrice" cardinality="singleton"/>
+  	</Service>
+ 
+</Configuration>

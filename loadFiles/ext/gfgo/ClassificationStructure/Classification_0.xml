@@ -1,0 +1,3461 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE NmLoader
+  SYSTEM "standardX26.dtd">
+<NmLoader>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>apponewpart</csvname>
+      <csvhierarchyDisplayName>appo属性</csvhierarchyDisplayName>
+      <csvorganizerPaths></csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name/>
+      <csvdescription/>
+      <csvdata_type>ORG</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier/>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>pp</csvname>
+      <csvhierarchyDisplayName>pp</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>品牌</csvdisplay_name>
+      <csvdescription>pp</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>pp</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>tds</csvname>
+      <csvhierarchyDisplayName>tds</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>通道数/Number of channels</csvdisplay_name>
+      <csvdescription>tds</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>tds</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>gddy</csvname>
+      <csvhierarchyDisplayName>gddy</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>供电电压</csvdisplay_name>
+      <csvdescription>gddy</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>gddy</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>oadzlxxlcdh</csvname>
+      <csvhierarchyDisplayName>oadzlxxlcdh</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>OA电子料选型流程单号</csvdisplay_name>
+      <csvdescription>oadzlxxlcdh</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>oadzlxxlcdh</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>rdtx</csvname>
+      <csvhierarchyDisplayName>rdtx</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>熔断特性/Fuse Type</csvdisplay_name>
+      <csvdescription>rdtx</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>rdtx</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>czlb</csvname>
+      <csvhierarchyDisplayName>czlb</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>插座类别/Type</csvdisplay_name>
+      <csvdescription>czlb</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>czlb</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>ksj</csvname>
+      <csvhierarchyDisplayName>ksj</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>可视角</csvdisplay_name>
+      <csvdescription>ksj</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>ksj</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>gldy</csvname>
+      <csvhierarchyDisplayName>gldy</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>隔离电压/Viso</csvdisplay_name>
+      <csvdescription>gldy</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>gldy</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>cxxh</csvname>
+      <csvhierarchyDisplayName>cxxh</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>磁芯型号/Core Type</csvdisplay_name>
+      <csvdescription>cxxh</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>cxxh</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>dywc</csvname>
+      <csvhierarchyDisplayName>dywc</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>电压误差/Voltage Tolerance</csvdisplay_name>
+      <csvdescription>dywc</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>dywc</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>FlexPCBThickness</csvname>
+      <csvhierarchyDisplayName>FlexPCBThickness</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>软板板厚/Flex PCB Thickness</csvdisplay_name>
+      <csvdescription>FlexPCBThickness</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>FlexPCBThickness</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>appopart</csvname>
+      <csvhierarchyDisplayName>appopart</csvhierarchyDisplayName>
+      <csvorganizerPaths></csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name/>
+      <csvdescription>appo</csvdescription>
+      <csvdata_type>ORG</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier/>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>cpxl</csvname>
+      <csvhierarchyDisplayName>cpxl</csvhierarchyDisplayName>
+      <csvorganizerPaths>appopart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>产品系列</csvdisplay_name>
+      <csvdescription>cpxl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>cpxl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>jgbc</csvname>
+      <csvhierarchyDisplayName>jgbc</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>激光波长</csvdisplay_name>
+      <csvdescription>jgbc</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>jgbc</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>edgzwd</csvname>
+      <csvhierarchyDisplayName>edgzwd</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>额度工作温度/Topr</csvdisplay_name>
+      <csvdescription>edgzwd</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>edgzwd</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>edscdy</csvname>
+      <csvhierarchyDisplayName>edscdy</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>额定输出电压/Rating Output Voltage</csvdisplay_name>
+      <csvdescription>edscdy</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>edscdy</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>wddy</csvname>
+      <csvhierarchyDisplayName>wddy</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>稳压电压/Vz</csvdisplay_name>
+      <csvdescription>wddy</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>wddy</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>gjpt</csvname>
+      <csvhierarchyDisplayName>gjpt</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>光机平台</csvdisplay_name>
+      <csvdescription>gjpt</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>gjpt</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>jydz</csvname>
+      <csvhierarchyDisplayName>jydz</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>绝缘电阻/Insulation Impedance</csvdisplay_name>
+      <csvdescription>jydz</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>jydz</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>brand</csvname>
+      <csvhierarchyDisplayName>brand</csvhierarchyDisplayName>
+      <csvorganizerPaths>appopart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>品牌</csvdisplay_name>
+      <csvdescription>brand</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>brand</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>zxsy</csvname>
+      <csvhierarchyDisplayName>zxsy</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>最小声压/Min. Sound Pressure</csvdisplay_name>
+      <csvdescription>zxsy</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>zxsy</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>bzdlb</csvname>
+      <csvhierarchyDisplayName>bzdlb</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>包装袋类别</csvdisplay_name>
+      <csvdescription>bzdlb</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>bzdlb</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>qt</csvname>
+      <csvhierarchyDisplayName>qt</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>其它</csvdisplay_name>
+      <csvdescription>qt</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>qt</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>RigidPCBCopperThickness</csvname>
+      <csvhierarchyDisplayName>RigidPCBCopperThickness</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>硬板铜厚/Rigid PCB Copper Thickness</csvdisplay_name>
+      <csvdescription>RigidPCBCopperThickness</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>RigidPCBCopperThickness</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>drxs</csvname>
+      <csvhierarchyDisplayName>drxs</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>导热系数</csvdisplay_name>
+      <csvdescription>drxs</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>drxs</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>jgqsl</csvname>
+      <csvhierarchyDisplayName>jgqsl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>激光器数量</csvdisplay_name>
+      <csvdescription>jgqsl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>jgqsl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>bjyqyxh</csvname>
+      <csvhierarchyDisplayName>bjyqyxh</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>背胶要求与型号</csvdisplay_name>
+      <csvdescription>bjyqyxh</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>bjyqyxh</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>whlb</csvname>
+      <csvhierarchyDisplayName>whlb</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>维护类别</csvdisplay_name>
+      <csvdescription>whlb</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>whlb</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>fbcc</csvname>
+      <csvhierarchyDisplayName>fbcc</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>方棒尺寸</csvdisplay_name>
+      <csvdescription>fbcc</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>fbcc</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>libraryref</csvname>
+      <csvhierarchyDisplayName>libraryref</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>符号名称</csvdisplay_name>
+      <csvdescription>libraryref</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>libraryref</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>jttsb</csvname>
+      <csvhierarchyDisplayName>jttsb</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>镜头投射比</csvdisplay_name>
+      <csvdescription>jttsb</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>jttsb</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>syys</csvname>
+      <csvhierarchyDisplayName>syys</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>丝印颜色/Silkscreen Colors</csvdisplay_name>
+      <csvdescription>syys</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>syys</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>footprintpath</csvname>
+      <csvhierarchyDisplayName>footprintpath</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>封装路径1</csvdisplay_name>
+      <csvdescription>footprintpath</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>footprintpath</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>rl</csvname>
+      <csvhierarchyDisplayName>rl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>容量/Capacity</csvdisplay_name>
+      <csvdescription>rl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>rl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>zbc</csvname>
+      <csvhierarchyDisplayName>zbc</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>主波长</csvdisplay_name>
+      <csvdescription>zbc</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>zbc</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>zydk</csvname>
+      <csvhierarchyDisplayName>zydk</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>增益带宽（放大器）/Gain Bandwidth</csvdisplay_name>
+      <csvdescription>zydk</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>zydk</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>bc</csvname>
+      <csvhierarchyDisplayName>bc</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>波长</csvdisplay_name>
+      <csvdescription>bc</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>bc</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>edsrdy</csvname>
+      <csvhierarchyDisplayName>edsrdy</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>额定输入电压/Input Voltage</csvdisplay_name>
+      <csvdescription>edsrdy</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>edsrdy</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>xhlx</csvname>
+      <csvhierarchyDisplayName>xhlx</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>信号类型</csvdisplay_name>
+      <csvdescription>xhlx</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>xhlx</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>bh</csvname>
+      <csvhierarchyDisplayName>bh</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>板厚/Board Thickness</csvdisplay_name>
+      <csvdescription>bh</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>bh</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>rz</csvname>
+      <csvhierarchyDisplayName>rz</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>容值/Capacitance Value</csvdisplay_name>
+      <csvdescription>rz</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>rz</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>cpzt</csvname>
+      <csvhierarchyDisplayName>cpzt</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>产品状态</csvdisplay_name>
+      <csvdescription>cpzt</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>cpzt</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>cxzl</csvname>
+      <csvhierarchyDisplayName>cxzl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>磁芯种类/Core Type</csvdisplay_name>
+      <csvdescription>cxzl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>cxzl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>RigidPCBThickness</csvname>
+      <csvhierarchyDisplayName>RigidPCBThickness</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>硬板板厚/RigidPCBThickness</csvdisplay_name>
+      <csvdescription>RigidPCBThickness</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>RigidPCBThickness</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>appodoc</csvname>
+      <csvhierarchyDisplayName>appodoc</csvhierarchyDisplayName>
+      <csvorganizerPaths></csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name/>
+      <csvdescription/>
+      <csvdata_type>ORG</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier/>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>rjbb</csvname>
+      <csvhierarchyDisplayName>rjbb</csvhierarchyDisplayName>
+      <csvorganizerPaths>appodoc</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>软件版本</csvdisplay_name>
+      <csvdescription>rjbb</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>rjbb</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>zdyxsydy</csvname>
+      <csvhierarchyDisplayName>zdyxsydy</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>最大允许使用电压/Max. Allowably Working Voltage</csvdisplay_name>
+      <csvdescription>zdyxsydy</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>zdyxsydy</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>qtyq</csvname>
+      <csvhierarchyDisplayName>qtyq</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>其它要求</csvdisplay_name>
+      <csvdescription>qtyq</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>qtyq</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>fzdr</csvname>
+      <csvhierarchyDisplayName>fzdr</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>负载电容/Output Load</csvdisplay_name>
+      <csvdescription>fzdr</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>fzdr</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>dgz</csvname>
+      <csvhierarchyDisplayName>dgz</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>电感值/Inductance Value</csvdisplay_name>
+      <csvdescription>dgz</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>dgz</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>gobocc</csvname>
+      <csvhierarchyDisplayName>gobocc</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>GoBo尺寸</csvdisplay_name>
+      <csvdescription>gobocc</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>gobocc</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>tgl</csvname>
+      <csvhierarchyDisplayName>tgl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>透光率</csvdisplay_name>
+      <csvdescription>tgl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>tgl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>sm</csvname>
+      <csvhierarchyDisplayName>sm</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>寿命/Life</csvdisplay_name>
+      <csvdescription>sm</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>sm</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>cc</csvname>
+      <csvhierarchyDisplayName>cc</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>尺寸</csvdisplay_name>
+      <csvdescription>cc</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>cc</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>cd</csvname>
+      <csvhierarchyDisplayName>cd</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>长度</csvdisplay_name>
+      <csvdescription>cd</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>cd</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>cxyq</csvname>
+      <csvhierarchyDisplayName>cxyq</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>成型要求/Lead Wire</csvdisplay_name>
+      <csvdescription>cxyq</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>cxyq</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>sw</csvname>
+      <csvhierarchyDisplayName>sw</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>色温</csvdisplay_name>
+      <csvdescription>sw</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>sw</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>dclx</csvname>
+      <csvhierarchyDisplayName>dclx</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>电池类型/Battery Type</csvdisplay_name>
+      <csvdescription>dclx</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>dclx</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>sy</csvname>
+      <csvhierarchyDisplayName>sy</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>丝印</csvdisplay_name>
+      <csvdescription>sy</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>sy</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>jtlx</csvname>
+      <csvhierarchyDisplayName>jtlx</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>镜头类型</csvdisplay_name>
+      <csvdescription>jtlx</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>jtlx</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>cj</csvname>
+      <csvhierarchyDisplayName>cj</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>厂家</csvdisplay_name>
+      <csvdescription>cj</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>cj</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>cl</csvname>
+      <csvhierarchyDisplayName>cl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>材料</csvdisplay_name>
+      <csvdescription>cl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>cl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>kgpl</csvname>
+      <csvhierarchyDisplayName>kgpl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>开关频率/Fsw</csvdisplay_name>
+      <csvdescription>kgpl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>kgpl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>nzromramrl</csvname>
+      <csvhierarchyDisplayName>nzromramrl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>内置ROM/RAM容量/ Internal ROM/RAM Capacity</csvdisplay_name>
+      <csvdescription>nzromramrl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>nzromramrl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>cs</csvname>
+      <csvhierarchyDisplayName>cs</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>厂商/Manufacturer</csvdisplay_name>
+      <csvdescription>cs</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>cs</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>footprintref</csvname>
+      <csvhierarchyDisplayName>footprintref</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>封装名称1</csvdisplay_name>
+      <csvdescription>footprintref</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>footprintref</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>cdrl</csvname>
+      <csvhierarchyDisplayName>cdrl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>触点容量/Contact Capacity</csvdisplay_name>
+      <csvdescription>cdrl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>cdrl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>cz</csvname>
+      <csvhierarchyDisplayName>cz</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>材质/Material</csvdisplay_name>
+      <csvdescription>cz</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>cz</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>wkcz</csvname>
+      <csvhierarchyDisplayName>wkcz</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>外壳材质</csvdisplay_name>
+      <csvdescription>wkcz</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>wkcz</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>tr</csvname>
+      <csvhierarchyDisplayName>tr</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>TR</csvdisplay_name>
+      <csvdescription>tr</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>tr</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>ESDfhdj</csvname>
+      <csvhierarchyDisplayName>ESDfhdj</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>ESD防护等级</csvdisplay_name>
+      <csvdescription>ESDfhdj</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>ESDfhdj</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>dzpins</csvname>
+      <csvhierarchyDisplayName>dzpins</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>端子PIN数</csvdisplay_name>
+      <csvdescription>dzpins</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>dzpins</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>zdcjdl</csvname>
+      <csvhierarchyDisplayName>zdcjdl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>最大C极电流/Ic</csvdisplay_name>
+      <csvdescription>zdcjdl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>zdcjdl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>dzlx</csvname>
+      <csvhierarchyDisplayName>dzlx</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>端子类型</csvdisplay_name>
+      <csvdescription>dzlx</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>dzlx</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>bmclgy</csvname>
+      <csvhierarchyDisplayName>bmclgy</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>表面处理工艺/Surface Finished</csvdisplay_name>
+      <csvdescription>bmclgy</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>bmclgy</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>ymdy</csvname>
+      <csvhierarchyDisplayName>ymdy</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>压敏电压/Varistor Voltage</csvdisplay_name>
+      <csvdescription>ymdy</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>ymdy</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>wdyq</csvname>
+      <csvhierarchyDisplayName>wdyq</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>温度要求</csvdisplay_name>
+      <csvdescription>wdyq</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>wdyq</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>bzcc</csvname>
+      <csvhierarchyDisplayName>bzcc</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>包装尺寸</csvdisplay_name>
+      <csvdescription>bzcc</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>bzcc</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>cwzz</csvname>
+      <csvhierarchyDisplayName>cwzz</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>常温阻值/Normal temp. Value</csvdisplay_name>
+      <csvdescription>cwzz</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>cwzz</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>datasheet</csvname>
+      <csvhierarchyDisplayName>datasheet</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>规格书名称</csvdisplay_name>
+      <csvdescription>datasheet</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>datasheet</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>zdpl</csvname>
+      <csvhierarchyDisplayName>zdpl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>振荡频率/Nominal Frequency</csvdisplay_name>
+      <csvdescription>zdpl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>zdpl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>ccsd</csvname>
+      <csvhierarchyDisplayName>ccsd</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>储存湿度</csvdisplay_name>
+      <csvdescription>ccsd</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>ccsd</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>pmscj</csvname>
+      <csvhierarchyDisplayName>pmscj</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>屏幕视场角</csvdisplay_name>
+      <csvdescription>pmscj</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>pmscj</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>edjcdy</csvname>
+      <csvhierarchyDisplayName>edjcdy</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>额定击穿电压/VBR</csvdisplay_name>
+      <csvdescription>edjcdy</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>edjcdy</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>RigidPCBLayer</csvname>
+      <csvhierarchyDisplayName>RigidPCBLayer</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>硬板板层/Rigid PCB Layer</csvdisplay_name>
+      <csvdescription>RigidPCBLayer</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>RigidPCBLayer</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>wbdl</csvname>
+      <csvhierarchyDisplayName>wbdl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>纹波电流/Ripple Current</csvdisplay_name>
+      <csvdescription>wbdl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>wbdl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>sfdpb</csvname>
+      <csvhierarchyDisplayName>sfdpb</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>是否带屏蔽</csvdisplay_name>
+      <csvdescription>sfdpb</csvdescription>
+      <csvdata_type>BOOL</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>sfdpb</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>sfzycp</csvname>
+      <csvhierarchyDisplayName>sfzycp</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>是否自研成品</csvdisplay_name>
+      <csvdescription>sfzycp</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>sfzycp</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>edsrgl</csvname>
+      <csvhierarchyDisplayName>edsrgl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>额定输入功率</csvdisplay_name>
+      <csvdescription>edsrgl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>edsrgl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>shj</csvname>
+      <csvhierarchyDisplayName>shj</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>损耗角/tanδ</csvdisplay_name>
+      <csvdescription>shj</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>shj</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>ccrl</csvname>
+      <csvhierarchyDisplayName>ccrl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>存储容量/Memory Capacity</csvdisplay_name>
+      <csvdescription>ccrl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>ccrl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>drlx</csvname>
+      <csvhierarchyDisplayName>drlx</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>电容类型/Capacitance Type</csvdisplay_name>
+      <csvdescription>drlx</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>drlx</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>jcsgj</csvname>
+      <csvhierarchyDisplayName>jcsgj</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>进出水管径</csvdisplay_name>
+      <csvdescription>jcsgj</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>jcsgj</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>xsfkxh</csvname>
+      <csvhierarchyDisplayName>xsfkxh</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>线数、反馈信号</csvdisplay_name>
+      <csvdescription>xsfkxh</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>xsfkxh</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>fgqd</csvname>
+      <csvhierarchyDisplayName>fgqd</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>发光强度/Lumen</csvdisplay_name>
+      <csvdescription>fgqd</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>fgqd</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>Zyear</csvname>
+      <csvhierarchyDisplayName>Zyear</csvhierarchyDisplayName>
+      <csvorganizerPaths>appopart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>治具年份</csvdisplay_name>
+      <csvdescription>Zyear</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>Zyear</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>xplx</csvname>
+      <csvhierarchyDisplayName>xplx</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>芯片类型/Type</csvdisplay_name>
+      <csvdescription>xplx</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>xplx</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>wdxs</csvname>
+      <csvhierarchyDisplayName>wdxs</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>温度系数/Temperture coefficient</csvdisplay_name>
+      <csvdescription>wdxs</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>wdxs</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>jgqxh</csvname>
+      <csvhierarchyDisplayName>jgqxh</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>激光器型号</csvdisplay_name>
+      <csvdescription>jgqxh</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>jgqxh</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>gmlx</csvname>
+      <csvhierarchyDisplayName>gmlx</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>管帽类型</csvdisplay_name>
+      <csvdescription>gmlx</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>gmlx</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>ysjlx</csvname>
+      <csvhierarchyDisplayName>ysjlx</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>压缩机类型</csvdisplay_name>
+      <csvdescription>ysjlx</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>ysjlx</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>agrz</csvname>
+      <csvhierarchyDisplayName>agrz</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>安规认证/Agency approvals</csvdisplay_name>
+      <csvdescription>agrz</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>agrz</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>cxgyyq</csvname>
+      <csvhierarchyDisplayName>cxgyyq</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>成型工艺要求/Lead Wire</csvdisplay_name>
+      <csvdescription>cxgyyq</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>cxgyyq</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>scdy</csvname>
+      <csvhierarchyDisplayName>scdy</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>输出电压/VO</csvdisplay_name>
+      <csvdescription>scdy</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>scdy</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>zdmcgy</csvname>
+      <csvhierarchyDisplayName>zdmcgy</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>最大脉冲功率/Ppp</csvdisplay_name>
+      <csvdescription>zdmcgy</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>zdmcgy</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>dlfdbs</csvname>
+      <csvhierarchyDisplayName>dlfdbs</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>电流放大倍数/Hfe</csvdisplay_name>
+      <csvdescription>dlfdbs</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>dlfdbs</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>jggl</csvname>
+      <csvhierarchyDisplayName>jggl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>激光功率</csvdisplay_name>
+      <csvdescription>jggl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>jggl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>fdnl</csvname>
+      <csvhierarchyDisplayName>fdnl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>分断能力/Fuse Ability</csvdisplay_name>
+      <csvdescription>fdnl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>fdnl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>wj</csvname>
+      <csvhierarchyDisplayName>wj</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>外径</csvdisplay_name>
+      <csvdescription>wj</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>wj</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>pmdbd</csvname>
+      <csvhierarchyDisplayName>pmdbd</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>屏幕对比度</csvdisplay_name>
+      <csvdescription>pmdbd</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>pmdbd</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>librarypath</csvname>
+      <csvhierarchyDisplayName>librarypath</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>符号路径</csvdisplay_name>
+      <csvdescription>librarypath</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>librarypath</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>kgdl</csvname>
+      <csvhierarchyDisplayName>kgdl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>开关电流/Switching Current</csvdisplay_name>
+      <csvdescription>kgdl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>kgdl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>tyhmbl</csvname>
+      <csvhierarchyDisplayName>tyhmbl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>投影画面比例</csvdisplay_name>
+      <csvdescription>tyhmbl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>tyhmbl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>bmcljywyq</csvname>
+      <csvhierarchyDisplayName>bmcljywyq</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>表面处理及盐雾要求</csvdisplay_name>
+      <csvdescription>bmcljywyq</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>bmcljywyq</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>cpnbxh</csvname>
+      <csvhierarchyDisplayName>cpnbxh</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>成品内部型号</csvdisplay_name>
+      <csvdescription>cpnbxh</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>cpnbxh</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>ws</csvname>
+      <csvhierarchyDisplayName>ws</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>位数/Digit</csvdisplay_name>
+      <csvdescription>ws</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>ws</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>gd</csvname>
+      <csvhierarchyDisplayName>gd</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>高度</csvdisplay_name>
+      <csvdescription>gd</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>gd</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>footprintref2</csvname>
+      <csvhierarchyDisplayName>footprintref2</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>封装名称2</csvdisplay_name>
+      <csvdescription>footprintref2</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>footprintref2</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>gl</csvname>
+      <csvhierarchyDisplayName>gl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>功率</csvdisplay_name>
+      <csvdescription>gl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>gl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>ppfw</csvname>
+      <csvhierarchyDisplayName>ppfw</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>频偏范围/Frequency Stability</csvdisplay_name>
+      <csvdescription>ppfw</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>ppfw</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>fhdj</csvname>
+      <csvhierarchyDisplayName>fhdj</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>防火等级</csvdisplay_name>
+      <csvdescription>fhdj</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>fhdj</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>fxdl</csvname>
+      <csvhierarchyDisplayName>fxdl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>反向电流/IR</csvdisplay_name>
+      <csvdescription>fxdl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>fxdl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>qdlx</csvname>
+      <csvhierarchyDisplayName>qdlx</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>驱动类型/Type</csvdisplay_name>
+      <csvdescription>qdlx</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>qdlx</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>xc</csvname>
+      <csvhierarchyDisplayName>xc</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>线长</csvdisplay_name>
+      <csvdescription>xc</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>xc</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>scdl</csvname>
+      <csvhierarchyDisplayName>scdl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>输出电流/IO</csvdisplay_name>
+      <csvdescription>scdl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>scdl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>yxlb</csvname>
+      <csvhierarchyDisplayName>yxlb</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>牙型类别</csvdisplay_name>
+      <csvdescription>yxlb</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>yxlb</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>oldCpzt</csvname>
+      <csvhierarchyDisplayName>oldCpzt</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>产品状态(旧)</csvdisplay_name>
+      <csvdescription>oldCpzt</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>oldCpzt</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>rzdw</csvname>
+      <csvhierarchyDisplayName>rzdw</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>容值单位/Capacitance Value unit</csvdisplay_name>
+      <csvdescription>rzdw</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>rzdw</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>hbsx</csvname>
+      <csvhierarchyDisplayName>hbsx</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>环保属性/Environmental Requirements</csvdisplay_name>
+      <csvdescription>hbsx</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>hbsx</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>xh</csvname>
+      <csvhierarchyDisplayName>xh</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>型号</csvdisplay_name>
+      <csvdescription>xh</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>xh</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>zdfxdy</csvname>
+      <csvhierarchyDisplayName>zdfxdy</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>最大反向电压/VR</csvdisplay_name>
+      <csvdescription>zdfxdy</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>zdfxdy</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>fyjxh</csvname>
+      <csvhierarchyDisplayName>fyjxh</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>放映机型号</csvdisplay_name>
+      <csvdescription>fyjxh</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>fyjxh</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>gy</csvname>
+      <csvhierarchyDisplayName>gy</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>工艺/Technique</csvdisplay_name>
+      <csvdescription>gy</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>gy</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>xj</csvname>
+      <csvhierarchyDisplayName>xj</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>线径</csvdisplay_name>
+      <csvdescription>xj</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>xj</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>xl</csvname>
+      <csvhierarchyDisplayName>xl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>效率/Efficiency</csvdisplay_name>
+      <csvdescription>xl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>xl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>gzdy</csvname>
+      <csvhierarchyDisplayName>gzdy</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>工作电压/VCEO</csvdisplay_name>
+      <csvdescription>gzdy</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>gzdy</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>lbwj</csvname>
+      <csvhierarchyDisplayName>lbwj</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>喇叭外径</csvdisplay_name>
+      <csvdescription>lbwj</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>lbwj</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>hd</csvname>
+      <csvhierarchyDisplayName>hd</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>厚度</csvdisplay_name>
+      <csvdescription>hd</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>hd</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>bcfw</csvname>
+      <csvhierarchyDisplayName>bcfw</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>波长范围</csvdisplay_name>
+      <csvdescription>bcfw</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>bcfw</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>gnms</csvname>
+      <csvhierarchyDisplayName>gnms</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>功能描述/Function Description</csvdisplay_name>
+      <csvdescription>gnms</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>gnms</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>scgl</csvname>
+      <csvhierarchyDisplayName>scgl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>输出功率/Output Power</csvdisplay_name>
+      <csvdescription>scgl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>scgl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>hsgl</csvname>
+      <csvhierarchyDisplayName>hsgl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>耗散功率/Pd</csvdisplay_name>
+      <csvdescription>hsgl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>hsgl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>ccwd</csvname>
+      <csvhierarchyDisplayName>ccwd</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>储存温度</csvdisplay_name>
+      <csvdescription>ccwd</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>ccwd</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>zdgzdl</csvname>
+      <csvhierarchyDisplayName>zdgzdl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>最大工作电流/Max. Working Current</csvdisplay_name>
+      <csvdescription>zdgzdl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>zdgzdl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>ghdx</csvname>
+      <csvhierarchyDisplayName>ghdx</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>功耗大小/Power Dissipation</csvdisplay_name>
+      <csvdescription>ghdx</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>ghdx</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>dtdz</csvname>
+      <csvhierarchyDisplayName>dtdz</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>导通电阻/RDS(on)</csvdisplay_name>
+      <csvdescription>dtdz</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>dtdz</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>zddl</csvname>
+      <csvhierarchyDisplayName>zddl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>最大电流/Max. Current</csvdisplay_name>
+      <csvdescription>zddl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>zddl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>footprintpath2</csvname>
+      <csvhierarchyDisplayName>footprintpath2</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>封装路径2</csvdisplay_name>
+      <csvdescription>footprintpath2</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>footprintpath2</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>zdcejjdy</csvname>
+      <csvhierarchyDisplayName>zdcejjdy</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>最大CE极间电压/Vceo</csvdisplay_name>
+      <csvdescription>zdcejjdy</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>zdcejjdy</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>sybb</csvname>
+      <csvhierarchyDisplayName>sybb</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>丝印版本</csvdisplay_name>
+      <csvdescription>sybb</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>sybb</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>xqedgl</csvname>
+      <csvhierarchyDisplayName>xqedgl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>线圈额定功率/Coil Rating Power</csvdisplay_name>
+      <csvdescription>xqedgl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>xqedgl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>bzh</csvname>
+      <csvhierarchyDisplayName>bzh</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>标准号</csvdisplay_name>
+      <csvdescription>bzh</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>bzh</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>xsxh</csvname>
+      <csvhierarchyDisplayName>xsxh</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>销售型号</csvdisplay_name>
+      <csvdescription>xsxh</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>xsxh</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>lbzj</csvname>
+      <csvhierarchyDisplayName>lbzj</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>喇叭直径/Speaker Diameter</csvdisplay_name>
+      <csvdescription>lbzj</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>lbzj</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>kzlb</csvname>
+      <csvhierarchyDisplayName>kzlb</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>卡座类别/Slot Type</csvdisplay_name>
+      <csvdescription>kzlb</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>kzlb</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>qfsj</csvname>
+      <csvhierarchyDisplayName>qfsj</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>全反射角</csvdisplay_name>
+      <csvdescription>qfsj</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>qfsj</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>ys</csvname>
+      <csvhierarchyDisplayName>ys</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>颜色/Colors</csvdisplay_name>
+      <csvdescription>ys</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>ys</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>sdyq</csvname>
+      <csvhierarchyDisplayName>sdyq</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>湿度要求</csvdisplay_name>
+      <csvdescription>sdyq</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>sdyq</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>yy</csvname>
+      <csvhierarchyDisplayName>yy</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>语言</csvdisplay_name>
+      <csvdescription>yy</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>yy</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>sfjckg</csvname>
+      <csvhierarchyDisplayName>sfjckg</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>是否集成开关/Internal Switch</csvdisplay_name>
+      <csvdescription>sfjckg</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>sfjckg</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>jgys</csvname>
+      <csvhierarchyDisplayName>jgys</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>激光颜色</csvdisplay_name>
+      <csvdescription>jgys</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>jgys</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>xhao</csvname>
+      <csvhierarchyDisplayName>xhao</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>线号</csvdisplay_name>
+      <csvdescription>xhao</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>xhao</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>txlx</csvname>
+      <csvhierarchyDisplayName>txlx</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>通讯类型</csvdisplay_name>
+      <csvdescription>txlx</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>txlx</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>csdz</csvname>
+      <csvhierarchyDisplayName>csdz</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>初始电阻/Initial Resistance</csvdisplay_name>
+      <csvdescription>csdz</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>csdz</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>pmcc</csvname>
+      <csvhierarchyDisplayName>pmcc</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>屏幕尺寸</csvdisplay_name>
+      <csvdescription>pmcc</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>pmcc</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>fslx</csvname>
+      <csvhierarchyDisplayName>fslx</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>风扇类型</csvdisplay_name>
+      <csvdescription>fslx</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>fslx</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>zd</csvname>
+      <csvhierarchyDisplayName>zd</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>锥度</csvdisplay_name>
+      <csvdescription>zd</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>zd</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>jjj</csvname>
+      <csvhierarchyDisplayName>jjj</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>脚间距/Pitch</csvdisplay_name>
+      <csvdescription>jjj</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>jjj</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>srstdy</csvname>
+      <csvhierarchyDisplayName>srstdy</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>输入失调电压(比较器)/VIO</csvdisplay_name>
+      <csvdescription>srstdy</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>srstdy</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>zf</csvname>
+      <csvhierarchyDisplayName>zf</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>组份</csvdisplay_name>
+      <csvdescription>zf</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>zf</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>dmdcc</csvname>
+      <csvhierarchyDisplayName>dmdcc</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>DMD尺寸</csvdisplay_name>
+      <csvdescription>dmdcc</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>dmdcc</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>gzdyfw</csvname>
+      <csvhierarchyDisplayName>gzdyfw</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>工作电压范围/VIN</csvdisplay_name>
+      <csvdescription>gzdyfw</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>gzdyfw</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>zj</csvname>
+      <csvhierarchyDisplayName>zj</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>直径</csvdisplay_name>
+      <csvdescription>zj</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>zj</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>fbl</csvname>
+      <csvhierarchyDisplayName>fbl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>分辨率</csvdisplay_name>
+      <csvdescription>fbl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>fbl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>zk</csvname>
+      <csvhierarchyDisplayName>zk</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>阻抗/Impedance</csvdisplay_name>
+      <csvdescription>zk</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>zk</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>zl</csvname>
+      <csvhierarchyDisplayName>zl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>重量</csvdisplay_name>
+      <csvdescription>zl</csvdescription>
+      <csvdata_type>FLOAT</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>zl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>jgssfz</csvname>
+      <csvhierarchyDisplayName>jgssfz</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>激光损伤阈值</csvdisplay_name>
+      <csvdescription>jgssfz</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>jgssfz</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>xsfw</csvname>
+      <csvhierarchyDisplayName>xsfw</csvhierarchyDisplayName>
+      <csvorganizerPaths>appopart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>销售范围</csvdisplay_name>
+      <csvdescription>销售范围</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>xsfw</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>tzpl</csvname>
+      <csvhierarchyDisplayName>tzpl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>特征频率/fT</csvdisplay_name>
+      <csvdescription>tzpl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>tzpl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>jju</csvname>
+      <csvhierarchyDisplayName>jju</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>间距</csvdisplay_name>
+      <csvdescription>jju</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>jju</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>wxcc</csvname>
+      <csvhierarchyDisplayName>wxcc</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>外形尺寸/Outline dimension</csvdisplay_name>
+      <csvdescription>wxcc</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>wxcc</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>yglsd</csvname>
+      <csvhierarchyDisplayName>yglsd</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>荧光轮色段</csvdisplay_name>
+      <csvdescription>yglsd</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>yglsd</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>zs</csvname>
+      <csvhierarchyDisplayName>zs</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>转数</csvdisplay_name>
+      <csvdescription>zs</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>zs</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>jd</csvname>
+      <csvhierarchyDisplayName>jd</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>精度/Tolerance</csvdisplay_name>
+      <csvdescription>jd</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>jd</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>fsl</csvname>
+      <csvhierarchyDisplayName>fsl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>反射率</csvdisplay_name>
+      <csvdescription>fsl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>fsl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>zy</csvname>
+      <csvhierarchyDisplayName>zy</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>增益</csvdisplay_name>
+      <csvdescription>zy</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>zy</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>zz</csvname>
+      <csvhierarchyDisplayName>zz</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>阻值/Resistance Value</csvdisplay_name>
+      <csvdescription>zz</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>zz</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>jj</csvname>
+      <csvhierarchyDisplayName>jj</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>焦距</csvdisplay_name>
+      <csvdescription>jj</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>jj</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>xhdm</csvname>
+      <csvhierarchyDisplayName>xhdm</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>型号代码</csvdisplay_name>
+      <csvdescription>xhdm</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>xhdm</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>FlexPCBLayer</csvname>
+      <csvhierarchyDisplayName>FlexPCBLayer</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>软板板层/Flex PCB Layer</csvdisplay_name>
+      <csvdescription>FlexPCBLayer</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>FlexPCBLayer</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>rzzb</csvname>
+      <csvhierarchyDisplayName>rzzb</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>绕组匝比/Turn Ratio</csvdisplay_name>
+      <csvdescription>rzzb</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>rzzb</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>eddl</csvname>
+      <csvhierarchyDisplayName>eddl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>额定电流/Rating Current</csvdisplay_name>
+      <csvdescription>eddl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>eddl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>djcc</csvname>
+      <csvhierarchyDisplayName>djcc</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>对角尺寸</csvdisplay_name>
+      <csvdescription>djcc</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>djcc</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>gcxmmc</csvname>
+      <csvhierarchyDisplayName>gcxmmc</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>工程项目名称</csvdisplay_name>
+      <csvdescription>gcxmmc</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>gcxmmc</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>pins</csvname>
+      <csvhierarchyDisplayName>pins</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>PIN数</csvdisplay_name>
+      <csvdescription>pins</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>pins</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>xszs</csvname>
+      <csvhierarchyDisplayName>xszs</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>显色指数</csvdisplay_name>
+      <csvdescription>xszs</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>xszs</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>csxh</csvname>
+      <csvhierarchyDisplayName>csxh</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>厂商型号/Manufacturer Part No.</csvdisplay_name>
+      <csvdescription>csxh</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>csxh</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>jx</csvname>
+      <csvhierarchyDisplayName>jx</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>机型</csvdisplay_name>
+      <csvdescription>jx</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>jx</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>fzlx</csvname>
+      <csvhierarchyDisplayName>fzlx</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>封装类型</csvdisplay_name>
+      <csvdescription>fzlx</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>fzlx</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>fjing</csvname>
+      <csvhierarchyDisplayName>fjing</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>F#</csvdisplay_name>
+      <csvdescription>fjing</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>fjing</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>gyxh</csvname>
+      <csvhierarchyDisplayName>gyxh</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>光源型号</csvdisplay_name>
+      <csvdescription>gyxh</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>gyxh</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>zdljdl</csvname>
+      <csvhierarchyDisplayName>zdljdl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>最大漏极电流/ID</csvdisplay_name>
+      <csvdescription>zdljdl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>zdljdl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>jks</csvname>
+      <csvhierarchyDisplayName>jks</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>接口数*/Number of Interfaces</csvdisplay_name>
+      <csvdescription>jks</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>jks</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>cjfx</csvname>
+      <csvhierarchyDisplayName>cjfx</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>插脚方向/Entry Type</csvdisplay_name>
+      <csvdescription>cjfx</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>cjfx</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>jscc</csvname>
+      <csvhierarchyDisplayName>jscc</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>机身尺寸</csvdisplay_name>
+      <csvdescription>jscc</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>jscc</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>srfs</csvname>
+      <csvhierarchyDisplayName>srfs</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>散热方式/Cooling Mode</csvdisplay_name>
+      <csvdescription>srfs</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>srfs</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>eddy</csvname>
+      <csvhierarchyDisplayName>eddy</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>额定电压/Voltage</csvdisplay_name>
+      <csvdescription>eddy</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>eddy</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>SubstrateMaterial</csvname>
+      <csvhierarchyDisplayName>SubstrateMaterial</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>基材/Substrate Material</csvdisplay_name>
+      <csvdescription>SubstrateMaterial</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>SubstrateMaterial</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>sfywk</csvname>
+      <csvhierarchyDisplayName>sfywk</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>是否有外壳/Shell or not</csvdisplay_name>
+      <csvdescription>sfywk</csvdescription>
+      <csvdata_type>BOOL</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>sfywk</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>bhdl</csvname>
+      <csvhierarchyDisplayName>bhdl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>饱和电流/Isat</csvdisplay_name>
+      <csvdescription>bhdl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>bhdl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>ssxm</csvname>
+      <csvhierarchyDisplayName>ssxm</csvhierarchyDisplayName>
+      <csvorganizerPaths>appodoc</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>所属项目</csvdisplay_name>
+      <csvdescription>ssxm</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>ssxm</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>gmyzb</csvname>
+      <csvhierarchyDisplayName>gmyzb</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>共模抑制比(放大器)/CMRR</csvdisplay_name>
+      <csvdescription>gmyzb</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>gmyzb</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>bdtjgfs</csvname>
+      <csvhierarchyDisplayName>bdtjgfs</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>半岛体结构方式</csvdisplay_name>
+      <csvdescription>bdtjgfs</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>bdtjgfs</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>thou</csvname>
+      <csvhierarchyDisplayName>thou</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>铜厚/Copper Thickness</csvdisplay_name>
+      <csvdescription>thou</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>thou</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>bceng</csvname>
+      <csvhierarchyDisplayName>bceng</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>板层/Layer</csvdisplay_name>
+      <csvdescription>bceng</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>bceng</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>zldz</csvname>
+      <csvhierarchyDisplayName>zldz</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>直流电阻/DC Resistance</csvdisplay_name>
+      <csvdescription>zldz</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>zldz</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>zddsjxdy</csvname>
+      <csvhierarchyDisplayName>zddsjxdy</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>最大DS极向电压/VDS</csvdisplay_name>
+      <csvdescription>zddsjxdy</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>zddsjxdy</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>sysm</csvname>
+      <csvhierarchyDisplayName>sysm</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>使用寿命/Life</csvdisplay_name>
+      <csvdescription>sysm</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>sysm</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>zll</csvname>
+      <csvhierarchyDisplayName>zll</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>制冷量</csvdisplay_name>
+      <csvdescription>zll</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>zll</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>lg</csvname>
+      <csvhierarchyDisplayName>lg</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>漏感/Leakage Inductance</csvdisplay_name>
+      <csvdescription>lg</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>lg</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>zldw</csvname>
+      <csvhierarchyDisplayName>zldw</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>重量单位</csvdisplay_name>
+      <csvdescription>zldw</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>zldw</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>fxhfsj</csvname>
+      <csvhierarchyDisplayName>fxhfsj</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>反向恢复时间/Trr</csvdisplay_name>
+      <csvdescription>fxhfsj</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>fxhfsj</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>tbsm</csvname>
+      <csvhierarchyDisplayName>tbsm</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>特别说明</csvdisplay_name>
+      <csvdescription>tbsm</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>tbsm</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>lm</csvname>
+      <csvhierarchyDisplayName>lm</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>流明</csvdisplay_name>
+      <csvdescription>lm</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>lm</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>cxcz</csvname>
+      <csvhierarchyDisplayName>cxcz</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>磁芯材质/Core material</csvdisplay_name>
+      <csvdescription>cxcz</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>cxcz</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>sfxnj</csvname>
+      <csvhierarchyDisplayName>sfxnj</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>是否虚拟件</csvdisplay_name>
+      <csvdescription>sfxnj</csvdescription>
+      <csvdata_type>BOOL</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>sfxnj</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>chdj</csvname>
+      <csvhierarchyDisplayName>chdj</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>存货等级</csvdisplay_name>
+      <csvdescription>chdj</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>chdj</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>ledsl</csvname>
+      <csvhierarchyDisplayName>ledsl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>LED数量</csvdisplay_name>
+      <csvdescription>ledsl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>ledsl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>lx</csvname>
+      <csvhierarchyDisplayName>lx</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>类型</csvdisplay_name>
+      <csvdescription>lx</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>lx</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>dtyj</csvname>
+      <csvhierarchyDisplayName>dtyj</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>导通压降/VF</csvdisplay_name>
+      <csvdescription>dtyj</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>dtyj</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>ctlx</csvname>
+      <csvhierarchyDisplayName>ctlx</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>插头类型/Socket Type</csvdisplay_name>
+      <csvdescription>ctlx</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>ctlx</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>kzhxh</csvname>
+      <csvhierarchyDisplayName>kzhxh</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>控制盒型号</csvdisplay_name>
+      <csvdescription>kzhxh</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>kzhxh</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>nbxh</csvname>
+      <csvhierarchyDisplayName>nbxh</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>内部型号</csvdisplay_name>
+      <csvdescription>nbxh</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>nbxh</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>lwgg</csvname>
+      <csvhierarchyDisplayName>lwgg</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>螺纹规格</csvdisplay_name>
+      <csvdescription>lwgg</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>lwgg</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>tjzllb</csvname>
+      <csvhierarchyDisplayName>tjzllb</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>透镜阵列类别</csvdisplay_name>
+      <csvdescription>tjzllb</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>tjzllb</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>yjjklx</csvname>
+      <csvhierarchyDisplayName>yjjklx</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>硬件接口类型/Hardware Interface Type</csvdisplay_name>
+      <csvdescription>yjjklx</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>yjjklx</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>pinjdl</csvname>
+      <csvhierarchyDisplayName>pinjdl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>PIN脚电流/Current Max.Per Contact</csvdisplay_name>
+      <csvdescription>pinjdl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>pinjdl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>dbd</csvname>
+      <csvhierarchyDisplayName>dbd</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>对比度</csvdisplay_name>
+      <csvdescription>dbd</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>dbd</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>pcldlm</csvname>
+      <csvhierarchyDisplayName>pcldlm</csvhierarchyDisplayName>
+      <csvorganizerPaths>appopart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>标称亮度lm</csvdisplay_name>
+      <csvdescription>pcldlm</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>pcldlm</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>fyjyqcc</csvname>
+      <csvhierarchyDisplayName>fyjyqcc</csvhierarchyDisplayName>
+      <csvorganizerPaths>appopart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>放映机引擎尺寸</csvdisplay_name>
+      <csvdescription>放映机引擎尺寸</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>fyjyqcc</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>ysjgl</csvname>
+      <csvhierarchyDisplayName>ysjgl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>压缩机功率</csvdisplay_name>
+      <csvdescription>ysjgl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>ysjgl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>czyqddj</csvname>
+      <csvhierarchyDisplayName>czyqddj</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>材质与强度等级</csvdisplay_name>
+      <csvdescription>czyqddj</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>czyqddj</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>pcbmc_sybb</csvname>
+      <csvhierarchyDisplayName>pcbmc_sybb</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>PCB名称_丝印版本/PCB Name_Silkscreen Version</csvdisplay_name>
+      <csvdescription>pcbmc_sybb</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>pcbmc_sybb</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>srdyfw</csvname>
+      <csvhierarchyDisplayName>srdyfw</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>输入电压范围/Vin</csvdisplay_name>
+      <csvdescription>srdyfw</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>srdyfw</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>jglx</csvname>
+      <csvhierarchyDisplayName>jglx</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>加工类型</csvdisplay_name>
+      <csvdescription>jglx</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>jglx</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>fylb</csvname>
+      <csvhierarchyDisplayName>fylb</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>复眼类别</csvdisplay_name>
+      <csvdescription>fylb</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>fylb</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>xsjs</csvname>
+      <csvhierarchyDisplayName>xsjs</csvhierarchyDisplayName>
+      <csvorganizerPaths>appopart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>显示技术</csvdisplay_name>
+      <csvdescription>xsjs</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>xsjs</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>nj</csvname>
+      <csvhierarchyDisplayName>nj</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>内径</csvdisplay_name>
+      <csvdescription>nj</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>nj</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>jcdz</csvname>
+      <csvhierarchyDisplayName>jcdz</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>接触电阻/Contact Resistance</csvdisplay_name>
+      <csvdescription>jcdz</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>jcdz</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>nl</csvname>
+      <csvhierarchyDisplayName>nl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>耐落</csvdisplay_name>
+      <csvdescription>nl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>nl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>sscpx</csvname>
+      <csvhierarchyDisplayName>sscpx</csvhierarchyDisplayName>
+      <csvorganizerPaths>appodoc</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>所属产品线</csvdisplay_name>
+      <csvdescription>sscpx</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>sscpx</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>xqzz</csvname>
+      <csvhierarchyDisplayName>xqzz</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>线圈阻值/Coil Value</csvdisplay_name>
+      <csvdescription>xqzz</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>xqzz</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>pinjs</csvname>
+      <csvhierarchyDisplayName>pinjs</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>PIN脚数/Circuits</csvdisplay_name>
+      <csvdescription>pinjs</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>pinjs</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>gqlx</csvname>
+      <csvhierarchyDisplayName>gqlx</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>光纤类型</csvdisplay_name>
+      <csvdescription>gqlx</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>gqlx</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>dydx</csvname>
+      <csvhierarchyDisplayName>dydx</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>单元大小</csvdisplay_name>
+      <csvdescription>dydx</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>dydx</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>pmzy</csvname>
+      <csvhierarchyDisplayName>pmzy</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>屏幕增益</csvdisplay_name>
+      <csvdescription>pmzy</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>pmzy</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>nw</csvname>
+      <csvhierarchyDisplayName>nw</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>耐温</csvdisplay_name>
+      <csvdescription>nw</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>nw</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>ny</csvname>
+      <csvhierarchyDisplayName>ny</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>耐压/Withstand Voltage</csvdisplay_name>
+      <csvdescription>ny</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>ny</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>gylx</csvname>
+      <csvhierarchyDisplayName>gylx</csvhierarchyDisplayName>
+      <csvorganizerPaths>appopart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>光源类型</csvdisplay_name>
+      <csvdescription>gylx</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>gylx</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>ldtx</csvname>
+      <csvhierarchyDisplayName>ldtx</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>螺钉头型</csvdisplay_name>
+      <csvdescription>ldtx</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>ldtx</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>pinjdy</csvname>
+      <csvhierarchyDisplayName>pinjdy</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>PIN脚电压/Voltage Max.</csvdisplay_name>
+      <csvdescription>pinjdy</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>pinjdy</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>edgzdl</csvname>
+      <csvhierarchyDisplayName>edgzdl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>额定工作电流</csvdisplay_name>
+      <csvdescription>edgzdl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>edgzdl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>zycs</csvname>
+      <csvhierarchyDisplayName>zycs</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>重要参数</csvdisplay_name>
+      <csvdescription>zycs</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>zycs</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>fblResolution</csvname>
+      <csvhierarchyDisplayName>fblResolution</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>分辨率/Resolution</csvdisplay_name>
+      <csvdescription>分辨率/Resolution</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>fblResolution</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>bmcl</csvname>
+      <csvhierarchyDisplayName>bmcl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>表面处理</csvdisplay_name>
+      <csvdescription>bmcl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>bmcl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>SolderMaskColors</csvname>
+      <csvhierarchyDisplayName>SolderMaskColors</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>阻焊颜色/SolderMask Colors</csvdisplay_name>
+      <csvdescription>SolderMaskColors</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>SolderMaskColors</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>qddy</csvname>
+      <csvhierarchyDisplayName>qddy</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>驱动电压/VGS*</csvdisplay_name>
+      <csvdescription>qddy</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>qddy</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>yxdj</csvname>
+      <csvhierarchyDisplayName>yxdj</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>优选等级</csvdisplay_name>
+      <csvdescription>yxdj</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>yxdj</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>wgys</csvname>
+      <csvhierarchyDisplayName>wgys</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>外观颜色/Color</csvdisplay_name>
+      <csvdescription>wgys</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>wgys</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>ggxh</csvname>
+      <csvhierarchyDisplayName>ggxh</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>规格型号</csvdisplay_name>
+      <csvdescription>ggxh</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>ggxh</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>tsyq</csvname>
+      <csvhierarchyDisplayName>tsyq</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>特殊要求</csvdisplay_name>
+      <csvdescription>tsyq</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>tsyq</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>qddh</csvname>
+      <csvhierarchyDisplayName>qddh</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>驱动电荷/Qg*</csvdisplay_name>
+      <csvdescription>qddh</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>qddh</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>fsbj</csvname>
+      <csvhierarchyDisplayName>fsbj</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>发散半角</csvdisplay_name>
+      <csvdescription>fsbj</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>fsbj</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>edscdl</csvname>
+      <csvhierarchyDisplayName>edscdl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>额定输出电流/Output Current</csvdisplay_name>
+      <csvdescription>edscdl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>edscdl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>sfdsrq</csvname>
+      <csvhierarchyDisplayName>sfdsrq</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>是否带散热器</csvdisplay_name>
+      <csvdescription>sfdsrq</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>sfdsrq</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>FlexPCBCopperThickness</csvname>
+      <csvhierarchyDisplayName>FlexPCBCopperThickness</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>软板铜厚/FlexPCBCopperThickness</csvdisplay_name>
+      <csvdescription>FlexPCBCopperThickness</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>FlexPCBCopperThickness</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>zzdw</csvname>
+      <csvhierarchyDisplayName>zzdw</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>阻值单位/Resistance Value unit</csvdisplay_name>
+      <csvdescription>zzdw</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>zzdw</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>wjclccmmas</csvname>
+      <csvhierarchyDisplayName>wjclccmmas</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>微镜阵列尺寸/Micro-Mirror Array Size</csvdisplay_name>
+      <csvdescription>微镜阵列尺寸/Micro-Mirror Array Size</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>wjclccmmas</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>edgl</csvname>
+      <csvhierarchyDisplayName>edgl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>额定功率/Power Rating</csvdisplay_name>
+      <csvdescription>edgl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>edgl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>dsords</csvname>
+      <csvhierarchyDisplayName>dsords</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>单色or多色</csvdisplay_name>
+      <csvdescription>dsords</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>dsords</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>gysdm</csvname>
+      <csvhierarchyDisplayName>gysdm</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>供应商代码</csvdisplay_name>
+      <csvdescription>gysdm</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>gysdm</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>qddl</csvname>
+      <csvhierarchyDisplayName>qddl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>驱动电流</csvdisplay_name>
+      <csvdescription>qddl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>qddl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>csb</csvname>
+      <csvhierarchyDisplayName>csb</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>传输比/CTR</csvdisplay_name>
+      <csvdescription>csb</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>csb</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>azfxlx</csvname>
+      <csvhierarchyDisplayName>azfxlx</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>安装方向类型/Assembly Direction Type</csvdisplay_name>
+      <csvdescription>azfxlx</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>azfxlx</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>pl</csvname>
+      <csvhierarchyDisplayName>pl</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>频率/Frequency</csvdisplay_name>
+      <csvdescription>pl</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>pl</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>qtzycs</csvname>
+      <csvhierarchyDisplayName>qtzycs</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>其他重要参数</csvdisplay_name>
+      <csvdescription>qtzycs</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>qtzycs</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>gkzlx</csvname>
+      <csvhierarchyDisplayName>gkzlx</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>管壳/座类型</csvdisplay_name>
+      <csvdescription>gkzlx</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>gkzlx</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+</NmLoader>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE listofactions SYSTEM "actions.dtd">
+<listofactions>
+    <objecttype name="work" class="wt.workflow.work.WorkItem">
+        <action name="complete" enabledwhensuspended="true" ajax="row">
+            <command class="ext.generic.reviewObject.command.CusNmWorkItemCommands" method="complete"
+                     onClick="EnableTextBox()"/>
+        </action>
+        <action name="save" enabledwhensuspended="true" ajax="row">
+            <command class="ext.generic.reviewObject.command.CusNmWorkItemCommands" method="save"
+                     onClick="EnableTextBox()"/>
+        </action>
+    </objecttype>
+
+    <objecttype name="reviewObject" resourceBundle="ext.generic.reviewObject.resource.ReviewObjectResourceRB">
+        <action name="collectItemsByRule" ajax="component">
+            <command class="ext.generic.reviewObject.processor.CollectItemsByRuleProcessor" method="execute"/>
+        </action>
+
+        <!--action name="reloadReviewObject" ajax="component" selectRequired="true">
+            <command class="ext.generic.reviewObject.processor.ReloadReviewObjectProcessor" method="execute" />
+        </action-->
+        <action name="reloadReviewObject" ajax="page" selectRequired="true">
+            <command class="ext.generic.reviewObject.processor.ReloadReviewObjectProcessor" method="execute"
+                     url="netmarkets/jsp/ext/generic/reviewObject/reloadReviewObject.jsp" windowType="popup"/>
+        </action>
+
+        <action name="reloadReviewObjectStep" ajax="page">
+            <command url="netmarkets/jsp/ext/generic/reviewObject/reloadReviewObjectStep.jsp" windowType="wizard_step"/>
+        </action>
+
+        <action name="reviewObjectPaste" ajax="page">
+            <command class="ext.generic.reviewObject.processor.PasteReviewObjectProcessor" method="execute"
+                     windowType="popup" url="netmarkets/jsp/ext/generic/reviewObject/PaseReviewObject.jsp"/>
+        </action>
+
+        <action name="reviewObjectPaste_step">
+            <command url="netmarkets/jsp/ext/generic/reviewObject/PaseReviewObject_step.jsp" windowType="wizard_step"/>
+        </action>
+
+        <action name="removeReviewObject" multiselect="true" ajax="component" selectRequired="true">
+            <command class="ext.generic.reviewObject.processor.RemoveReviewObjectProcessor" method="execute"
+                     onClick="JCAConfirm(event,'ext.generic.reviewObject.resource.ReviewObjectResourceRB.REMOVE_SELECTED_REVIEWOBJS_MSG')"/>
+        </action>
+
+        <action name="updateReviewObject" multiselect="true" ajax="component">
+            <command class="ext.generic.reviewObject.processor.UpdateReviewObjectProcessor" method="execute"/>
+        </action>
+
+        <action name="assignTask" ajax="component">
+            <command class="ext.generic.reviewObject.processor.AssignTaskProcessor" method="execute" windowType="popup"
+                     url="netmarkets/jsp/ext/generic/reviewObject/assign_User.jsp"/>
+        </action>
+
+        <action name="assignTask_step">
+            <command url="netmarkets/jsp/ext/generic/reviewObject/assign_User_step.jsp" windowType="wizard_step"/>
+        </action>
+
+        <action name="addDatasheetStep">
+            <command url="netmarkets/jsp/ext/generic/reviewObject/addDatasheetStep.jsp" windowType="wizard_step"/>
+        </action>
+
+        <!-- 随签对象表单：添加规格书 -->
+        <action name="addDatasheet">
+            <command url="netmarkets/jsp/ext/generic/reviewObject/addDatasheet.jsp" method="execute"
+                     windowType="popup"/>
+        </action>
+        <!-- 添加规格书页面‘确定’按钮 -->
+        <action name="addButton">
+            <command onClick="datasheetBySearch()"/>
+        </action>
+        <!-- 添加规格书页面‘取消’按钮 -->
+        <action name="clientButton">
+            <command onClick="window.close();"/>
+        </action>
+    </objecttype>
+</listofactions>
+   

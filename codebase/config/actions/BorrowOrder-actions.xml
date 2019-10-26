@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE listofactions SYSTEM "actions.dtd">
+<listofactions>
+	<objecttype name="borrowOrder" class="ext.generic.borrow.BorrowOrder"
+		resourceBundle="ext.generic.borrow.borrowResource">
+		<action name="create" ajax="page">
+			<command
+				class="ext.generic.borrow.forms.processors.CreateBorrowOrderFormProcessor"
+				method="execute" windowType="popup" />
+		</action>
+		
+		 <action name="viewInNewPage">
+        <command url="/app/#ptc1/tcomp/infoPage" windowType="popup"/>
+        <moreurlinfo>height=600,width=800,menubar=yes,toolbar=yes</moreurlinfo>
+      </action>
+		<action name="createWizardStep" afterJS="getTableItemInCreateRelateBorrowObjectTable">
+			<command windowType="wizard_step" />
+		</action>
+
+		<action name="editPage" ajax="page" >
+			<command
+				class="ext.generic.borrow.forms.processors.EditBorrowOrderFormProcessor"
+				method="execute" windowType="popup" />
+				
+				<includeFilter name="editBorrowOrderActionFilter" />
+		</action>
+
+		<action name="editWizardStep">
+			<command windowType="wizard_step" />
+		</action>
+
+	</objecttype>
+
+	<objecttype name="borrowOrderLink" resourceBundle="ext.generic.borrow.borrowResource">
+		<action name="infoPageTable">
+			<component name="borrow.order.info.page.table.builder" />
+			
+			<includeFilter name="infoPageBorrowOrderTableComponentFilter" />
+		</action>
+		
+		<action name="itemBorrowOrderList">
+			<component name="item.borrow.order.list.table.builder" />
+			
+			<includeFilter name="itemBorrowOrderListTableComponentFilter" />
+		</action>
+	</objecttype>
+
+	<objecttype name="borrowObjects" class="wt.fc.Persistable" resourceBundle="ext.generic.borrow.borrowResource">
+
+		<action name="createPageRemove" ajax="component">
+			<command windowType="no_content" onClick="afterdeleteobject()"/>
+		</action>
+
+		<action name="createPageAdd" ajax="component">
+			<command
+				class="" method="" windowType="popup" url="/netmarkets/jsp/borrowOrder/createPageAdd.jsp"/>
+		</action>
+
+		<action name="createPageAddStep">
+			<command windowType="wizard_step" url="/netmarkets/jsp/borrowOrder/createPageAddStep.jsp"/>
+		</action>
+
+        <action name="searchContext">
+            <command class="ext.generic.borrow.forms.processors.SearchContextProcessor" method="execute" windowType="popup" url="/netmarkets/jsp/borrowOrder/searchContext.jsp"/>
+        </action>
+        <action name="searchContext_step">
+            <command windowType="wizard_step" url="/netmarkets/jsp/borrowOrder/searchContext_step.jsp"/>
+        </action>
+
+		<action name="infoPageRemove" ajax="component">
+			<command class="" method="execute" />
+		</action>
+
+		<action name="infoPageAdd" ajax="component">
+			<command class="" method="execute" windowType="popup"
+				url="/netmarkets/jsp/borrowOrder/infoPageAdd.jsp" />
+		</action>
+ 
+	</objecttype>
+	
+	<!-- add by jpu for BorrowOrder begin -->
+ <objecttype name="pdmObject" class="wt.fc.WTObject">
+	  <action name="CONTAINERMOVE" selectRequired="true" checkaccess="true" enabledwhensuspended="true" renderType="PDM" uicomponent="CONTAINERMOVE">
+         <command windowType="popup" class="java.lang.Object" method="CONTAINERMOVE"/>
+         <includeFilter name="sandboxSharingValidationSimple"/>
+         <includeFilter name="hideFromNonAgreementMgrs"/>
+         <includeFilter name="hideForNoteTemplates"/>
+         <includeFilter name="hideForNoteTemplates"/>
+         <includeFilter name="hideForChangeTemplates"/>
+         <includeFilter name="editBorrowOrderActionFilter" />  
+      </action>
+  </objecttype>
+   <!-- add by jpu for BorrowOrder end -->
+
+</listofactions>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE NmLoader
+  SYSTEM "standardX26.dtd">
+<NmLoader>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>apponewpart</csvname>
+      <csvhierarchyDisplayName>appo属性</csvhierarchyDisplayName>
+      <csvorganizerPaths></csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name/>
+      <csvdescription/>
+      <csvdata_type>ORG</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier/>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>qwwcsj</csvname>
+      <csvhierarchyDisplayName>qwwcsj</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>期望完成时间</csvdisplay_name>
+      <csvdescription>期望完成时间</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>qwwcsj</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>appo_opensWorkItem_Owner</csvname>
+      <csvhierarchyDisplayName>appo_opensWorkItem_Owner</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>当前处理人</csvdisplay_name>
+      <csvdescription>appo_opensWorkItem_Owner</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>appo_opensWorkItem_Owner</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>Customer</csvname>
+      <csvhierarchyDisplayName>Customer</csvhierarchyDisplayName>
+      <csvorganizerPaths></csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name/>
+      <csvdescription/>
+      <csvdata_type>ORG</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier/>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>changeType</csvname>
+      <csvhierarchyDisplayName>变更类型</csvhierarchyDisplayName>
+      <csvorganizerPaths>Customer</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>变更类型</csvdisplay_name>
+      <csvdescription/>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>changeType</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>appo_opensWorkItem_Name</csvname>
+      <csvhierarchyDisplayName>appo_opensWorkItem_Name</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>当前节点</csvdisplay_name>
+      <csvdescription>appo_opensWorkItem_Name</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>appo_opensWorkItem_Name</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>CompletionTime</csvname>
+      <csvhierarchyDisplayName>CompletionTime</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>计划完成时间</csvdisplay_name>
+      <csvdescription>CompletionTime</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>CompletionTime</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+</NmLoader>

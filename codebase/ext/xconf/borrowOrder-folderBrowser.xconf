@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Configuration SYSTEM "xconf.dtd">
+<Configuration targetFile="codebase/wt.properties">
+
+<!-- -*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-
+WARNING: Do not modify this file after it has been installed.  Use xconfmanager
+         to set, reset, or undefine properties for your installation
+-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*- -->
+  	
+  	<!--
+  	<Property name="com.ptc.windchill.enterprise.folder.allFolderBrowser.additionalClasses" overridable="true" default="ext.generic.borrow.BorrowOrder" />
+  	-->
+  	
+  	<Property name="com.ptc.windchill.enterprise.folder.allFolderBrowser.additionalClasses" multivalued="," default=""/>
+  	
+	<AddToProperty name="com.ptc.windchill.enterprise.folder.allFolderBrowser.additionalClasses" value="ext.generic.borrow.BorrowOrder" />
+	
+	
+</Configuration>

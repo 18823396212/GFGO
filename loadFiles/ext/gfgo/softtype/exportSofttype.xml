@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE loadFileList SYSTEM "/wt/load/windchillLoad.dtd">
+
+<!-- 
+windchill wt.load.LoadFileSet -file loadFiles/ext/gfgo/softtype/exportSofttype.xml -u orgadmin -p 1 -NOSERVERSTOP -UNATTENDED
+ -->
+<loadFileList>
+
+	<loadFile filename="ext/gfgo/softtype/exportActionItem.xml" containerPath="/"></loadFile>
+	<loadFile filename="ext/gfgo/softtype/exportBaseLine.xml" containerPath="/"></loadFile>
+	<loadFile filename="ext/gfgo/softtype/exportDoc.xml" containerPath="/"></loadFile>
+	<loadFile filename="ext/gfgo/softtype/exportECA.xml" containerPath="/"></loadFile>
+	<loadFile filename="ext/gfgo/softtype/exportECN.xml" containerPath="/"></loadFile>
+	<loadFile filename="ext/gfgo/softtype/exportEnum.xml" containerPath="/"></loadFile>
+	<loadFile filename="ext/gfgo/softtype/exportEPM.xml" containerPath="/"></loadFile>
+	<loadFile filename="ext/gfgo/softtype/exportForm.xml" containerPath="/"></loadFile>
+	<loadFile filename="ext/gfgo/softtype/exportLink.xml" containerPath="/"></loadFile>
+	<loadFile filename="ext/gfgo/softtype/exportPart.xml" containerPath="/"></loadFile>
+	<loadFile filename="ext/gfgo/softtype/exportPlanActivity.xml" containerPath="/"></loadFile>
+
+</loadFileList>

@@ -1,0 +1,87 @@
+ResourceInfo.class=wt.tools.resource.EnumResourceInfo
+
+# Entry Contents
+
+as_needed.value.translationSource.now=as needed
+as_needed.shortDescription.translationSource.now=as needed
+as_needed.value=as needed
+as_needed.shortDescription=as needed
+as_needed.order=134
+
+cu_m.value.translationSource.now=cubic meters
+cu_m.shortDescription.translationSource.now=m^3
+cu_m.value=cubic meters
+cu_m.shortDescription=m^3
+cu_m.order=70
+
+ea.value.translationSource.now=each
+ea.shortDescription.translationSource.now=each
+ea.value=个/PCS
+ea.comment=For example, how much quantity of a material would you need: 2 meters, 2 kilos, 2 each.
+ea.shortDescription=pcs
+ea.order=10
+ea.defaultValue=true
+
+kg.value.translationSource.now=kilograms
+kg.shortDescription.translationSource.now=kg
+kg.value=千克/kg
+kg.shortDescription=kg
+kg.order=30
+
+l.value.translationSource.now=liters
+l.shortDescription.translationSource.now=l
+l.value=升/l
+l.shortDescription=l
+l.order=40
+
+m.value.translationSource.now=meters
+m.shortDescription.translationSource.now=m
+m.value=米/m
+m.shortDescription=m
+m.order=42
+
+sq_m.value.translationSource.now=square meters
+sq_m.shortDescription.translationSource.now=m^2
+sq_m.value=平方米/m^2
+sq_m.shortDescription=m^2
+sq_m.order=38
+
+bag.value=包/BAG
+bag.shortDescription=bag
+bag.order=68
+
+cm.value=厘米/cm
+cm.shortDescription=cm
+cm.order=56
+
+g.value=克/g
+g.shortDescription=g
+g.order=34
+
+item.value=件/item
+item.shortDescription=item
+item.order=69
+
+mg.value=毫克/mg
+mg.shortDescription=mg
+mg.order=36
+
+ml.value=毫升/ml
+ml.shortDescription=ml
+ml.order=41
+
+mm.value=毫米/mm
+mm.shortDescription=mm
+mm.order=63
+
+vol.value=卷/VOL
+vol.shortDescription=vol
+vol.order=66
+
+in.value=英寸/in
+in.shortDescription=英寸/in
+in.order=109
+
+ft.value=英尺/ft
+ft.shortDescription=英尺/ft
+ft.order=119

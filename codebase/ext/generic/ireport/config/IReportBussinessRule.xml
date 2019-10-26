@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<!-- BOM报表层级样式配置 -->
+	<bom-level-style>
+		<!--  目前支持三种，所以请选择一种来配置 -->
+		<!-- <style name="bomOrder"  join="" ></style> --> <!-- 只输出部件所在的层级1、 2、 2、 1、 2 、1 、1 没有填充 -->
+		<!-- <style name="levelOrder"  join="-"></style> --> <!-- 层级1顺序-层级2顺序-当前层级顺序 例如：1、1-1、1-2、2、2-1、2-1-1 -->
+		<!-- <style name="fillOrder"  join=" " ></style> --> <!-- 用填充符号来代表层级，空格，原点等 -->
+
+		<style name="levelOrder"  join="-"></style>
+	</bom-level-style>
+	
+	<!-- BOM报表入口校验状态 -->
+	<validator-state-bom>
+		<state name="INWORK"></state>
+		<state name="RELEASED"></state>
+	</validator-state-bom>
+	
+	<!-- BOM报表入口校验视图 -->
+	<validator-view-bom>
+		<view name="Manufacturing"></view>
+		<view name="Design"></view>
+	</validator-view-bom>
+
+	<!-- BOM报表入口校验角色 -->
+	<validator-role-bom>
+		<role name="PRODUCT MANAGER"></role>
+	</validator-role-bom>
+	
+		<!-- BOM报表入口校验组 -->
+	<validator-group-bom>
+			<group name="test"></group>
+	</validator-group-bom>	
+	
+</config>

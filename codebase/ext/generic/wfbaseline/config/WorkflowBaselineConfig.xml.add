@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<Review>
+		<Workflow name ="GenericECNWF" /> 
+		<Baseline softType="wt.vc.baseline.ManagedBaseline" state="RELEASED" strict="true" locker="wcadmin" container="" filePath="/Default" >
+			<TopObject objType="wt.part.WTPart" softType="" state="" collectStruct="true"  >
+				<doc softType="com.ptc.InterCommData" state="" />
+				<epm softType="" state="PROTOTYPE" />
+			</TopObject> 
+			<TopObject objType="wt.doc.WTDocument" softType="" state="RELEASED" collectStruct="true"  >
+				<doc softType="" state="RELEASED" />
+				<part softType="" state="PROTOTYPE" />
+			</TopObject> 
+			<TopObject objType="wt.epm.EPMDocument" softType="" state="PROTOTYPE" collectStruct="true"  >
+				<epm softType="" state="PROTOTYPE" />
+				<part softType="" state="PROTOTYPE" />
+			</TopObject> 
+			<Baseline-number separator="">
+				<before>
+					<value name="year"/>
+				</before>
+				<after sequence="ManagedBaselineIdentity_seq" digits="6"/>
+			</Baseline-number>
+			<Baseline-name separator="_">
+				<before name="ECN"/>
+				<after>
+					<value name="TopNumber"/>
+				</after>
+			</Baseline-name>
+		</Baseline>
+	</Review>
+	
+	<!--Review>
+		<Workflow name ="GenericPartWF" /> 
+		<Baseline softType="wt.vc.baseline.ManagedBaseline" state="RELEASED" strict="true" locker="wcadmin" container="" filePath="/Default" >
+			<TopObject objType="wt.part.WTPart" softType="" state="" collectStruct="true"  >
+				<doc softType="com.ptc.InterCommData" state="RELEASED" />
+				<epm softType="" state="PROTOTYPE" />
+			</TopObject> 
+			<Baseline-number separator="">
+				<before>
+					<value name="year"/>
+				</before>
+				<after sequence="ManagedBaselineIdentity_seq" digits="6"/>
+			</Baseline-number>
+			<Baseline-name separator="_">
+				<before name="Part"/>
+				<after>
+					<value name="TopNumber"/>
+				</after>
+			</Baseline-name>
+		</Baseline>
+	</Review>
+	
+	<Review>
+		<Workflow name ="STDPhaseWF" /> 
+		<Baseline softType="wt.vc.baseline.ManagedBaseline" state="RELEASED" strict="true" locker="wcadmin" container="" filePath="/Default" >
+			<TopObject objType="wt.part.WTPart" softType="" state="" collectStruct="true"  >
+				<doc softType="" state="RELEASED" />
+				<epm softType="" state="PROTOTYPE" />
+			</TopObject> 
+			<TopObject objType="wt.doc.WTDocument" softType="" state="RELEASED" collectStruct="true"  >
+				<doc softType="" state="RELEASED" />
+				<part softType="" state="PROTOTYPE" />
+			</TopObject> 
+			<TopObject objType="wt.epm.EPMDocument" softType="" state="PROTOTYPE" collectStruct="true"  >
+				<epm softType="" state="PROTOTYPE" />
+				<part softType="" state="PROTOTYPE" />
+			</TopObject> 
+			<Baseline-number separator="">
+				<before>
+					<value name="year"/>
+				</before>
+				<after sequence="ManagedBaselineIdentity_seq" digits="6"/>
+			</Baseline-number>
+			<Baseline-name separator="_">
+				<before name="转阶段"/>
+				<after>
+					<value name="TopNumber"/>
+				</after>
+			</Baseline-name>
+		</Baseline>
+	</Review>
+	
+	<Review>
+		<Workflow name ="GenericEPMWF" /> 
+		<Baseline softType="wt.vc.baseline.ManagedBaseline" state="RELEASED" strict="true" locker="wcadmin" container="" filePath="/Default" >
+			<TopObject objType="wt.epm.EPMDocument" softType="" state="" collectStruct="true"  >
+				<doc softType="" state="RELEASED" />
+				<part softType="" state="RELEASED" />
+			</TopObject> 
+			<Baseline-number separator="">
+				<before>
+					<value name="year"/>
+				</before>
+				<after sequence="ManagedBaselineIdentity_seq" digits="6"/>
+			</Baseline-number>
+			<Baseline-name separator="_">
+				<before name="EPM"/>
+				<after>
+					<value name="TopNumber"/>
+				</after>
+			</Baseline-name>
+		</Baseline>
+	</Review-->
+
+</config>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE Configuration SYSTEM "xconf.dtd">
+<Configuration targetFile="codebase/ext/xconf/borrowOrder-dataUtilities.properties">
+
+
+<!-- -*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-
+WARNING: Do not modify this file after it has been installed.  Use xconfmanager
+         to set, reset, or undefine properties for your installation
+-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*- -->
+
+<!--
+     Copyright (c) 2006 Parametric Technology Corporation, all rights reserved.
+
+     Xconf settings specific to the Persisted Collection Module.
+     -->
+
+<Service name="com.ptc.core.components.descriptor.DataUtility">
+
+      <Option serviceClass="ext.generic.borrow.datautilities.BorrowOrderEditDataUtility"
+    	      requestor="java.lang.Object"
+    	      selector="borrowOrderDataUtilityId"
+              cardinality="duplicate"/>
+      
+      <Option serviceClass="ext.generic.borrow.datautilities.BorrowOrderInfoPageDataUtility"
+    	      requestor="java.lang.Object"
+    	      selector="borrowOrderInfoPageDataUtilityId"
+              cardinality="duplicate"/>
+      
+      <Option serviceClass="ext.generic.borrow.datautilities.ItemBorrowOrderDataUtility"
+    	      requestor="java.lang.Object"
+    	      selector="itemBorrowOrderDataUtility"
+              cardinality="duplicate"/>
+              
+       <Option serviceClass="ext.generic.borrow.datautilities.BorrowObjectInfoDataUtility"
+    	      requestor="java.lang.Object"
+    	      selector="numberLinkInfo"
+              cardinality="duplicate"/>
+       
+			 <Option serviceClass="ext.generic.borrow.datautilities.MyVersionDisplayDataUtility"
+    	      requestor="java.lang.Object"
+    	      selector="borroworder_version"
+              cardinality="duplicate"/>
+              
+       <Option serviceClass="ext.generic.borrow.datautilities.MyContainerDataUtility"
+    	      requestor="java.lang.Object"
+    	      selector="borroworder_containername"
+              cardinality="duplicate"/>      
+              
+</Service>
+
+
+
+<!-- -*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-
+WARNING: Do not modify this file after it has been installed.  Use xconfmanager
+         to set, reset, or undefine properties for your installation
+-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*- -->
+
+</Configuration>

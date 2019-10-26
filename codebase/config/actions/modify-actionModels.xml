@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE actionmodels SYSTEM "actionmodels.dtd">
+
+<actionmodels>
+
+    <model name="CustomWizardButtonsWithSubmitPrompt">
+        <description>custom submit button</description>
+        <action name="cacheButton" type="modify"/>
+        <action name="okButton" type="change"/>
+        <action name="cancelButton" type="object"/>
+    </model>
+
+</actionmodels>

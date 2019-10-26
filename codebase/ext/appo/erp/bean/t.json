@@ -1,0 +1,144 @@
+{
+  "Creator": "",
+  "NeedUpDateFields": [],
+  "NeedReturnFields": [],
+  "IsDeleteEntry": "true",
+  "SubSystemId": "",
+  "IsVerifyBaseDataField": "false",
+  "IsEntryBatchFill": "true",
+  "ValidateFlag": "true",
+  "NumberSearch": "true",
+  "InterationFlags": "",
+  "IsAutoSubmitAndAudit": "false",
+  "Model": {
+    "FID": 0,
+    "FBillTypeID": {
+      "FNUMBER": "GCBG01_SYS"
+    },
+    "FChangeReason": {
+      "FNumber": "GCBGYY01_SYS"
+    },
+    "FChangeOrgId": {
+      "FNumber": "02"
+    },
+    "FIsUpdateVersion": false,
+    "FIsUpdatePPBom": false,
+    "FEffectDate0": "2019-05-07 00:00:00",
+    "FApplyDate": "2019-05-07 00:00:00",
+    "FIsDebugMode": true,
+    "FRepItemAlterPolicy": "1",
+    "FTreeEntity": [
+      {
+        "FReplaceGroup": 1,
+        "FRowType": "2",
+        "FBOMVERSION": {
+          "FNUMBER": "A14000000010-A"
+        },
+        "FBOMCATEGORY": "1",
+        "FParentMaterialId": {
+          "FNUMBER": "A14000000010"
+        },
+        "FMATERIALIDCHILD": {
+          "FNumber": "A90000000013"
+        },
+        "FMATERIALTYPE": "1",
+        "FCHILDUNITID": {
+          "FNumber": "Pcs"
+        },
+        "FDOSAGETYPE": "2",
+        "FNUMERATOR": 1.0,
+        "FDENOMINATOR": 1.0,
+        "FOverControlMode": "1",
+        "FSUPPLYORG": {
+          "FNumber": "02"
+        },
+        "FIsCanChoose": false,
+        "FIsCanEdit": false,
+        "FIsCanReplace": false,
+        "FReplacePolicy": "1",
+        "FReplaceType": "1",
+        "FIskeyItem": true,
+        "FALLOWOVER": false,
+        "FISSkip": false,
+        "FISMinIssueQty": false,
+        "FTreeEntryIdBak": 100191,
+        "FEFFECTDATE": "2019-05-06 00:00:00",
+        "FEXPIREDATE": "9999-12-31 00:00:00",
+        "FISSUETYPE": "1",
+        "FISGETSCRAP": false,
+        "FTIMEUNIT": "1",
+        "FISKEYCOMPONENT": false,
+        "FOPERID": 10,
+        "FOWNERTYPEID": "BD_OwnerOrg",
+        "FECNRowId": "e7c0541d-a2b3-8109-11e9-70a7a6145121",
+        "FECNGroup": "e7c0541d-a2b3-8109-11e9-70a7a6145123",
+        "FParentUnitID": {
+          "FNumber": "Pcs"
+        },
+        "FParentBaseUnitId": {
+          "FNumber": "Pcs"
+        },
+        "FBomEntryId": 100191,
+        "FIsChangeMtrl": false,
+        "FIsNeedSync": false,
+        "FIsMrpRun": true
+      },
+      {
+        "FReplaceGroup": 1,
+        "FRowType": "2",
+        "FChangeLabel": "1",
+        "FBOMVERSION": {
+          "FNUMBER": "A14000000010-A"
+        },
+        "FBOMCATEGORY": "1",
+        "FParentMaterialId": {
+          "FNUMBER": "A14000000010"
+        },
+        "FMATERIALIDCHILD": {
+          "FNumber": "A90000000013"
+        },
+        "FMATERIALTYPE": "1",
+        "FCHILDUNITID": {
+          "FNumber": "Pcs"
+        },
+        "FDOSAGETYPE": "2",
+        "FNUMERATOR": 2.0,
+        "FDENOMINATOR": 2.0,
+        "FOverControlMode": "1",
+        "FSUPPLYORG": {
+          "FNumber": "02"
+        },
+        "FIsCanChoose": false,
+        "FIsCanEdit": false,
+        "FIsCanReplace": false,
+        "FReplacePolicy": "1",
+        "FReplaceType": "1",
+        "FIskeyItem": true,
+        "FALLOWOVER": false,
+        "FISSkip": false,
+        "FISMinIssueQty": false,
+        "FTreeEntryIdBak": 100191,
+        "FEFFECTDATE": "2019-05-06 00:00:00",
+        "FEXPIREDATE": "9999-12-31 00:00:00",
+        "FISSUETYPE": "1",
+        "FISGETSCRAP": false,
+        "FTIMEUNIT": "1",
+        "FISKEYCOMPONENT": false,
+        "FOPERID": 10,
+        "FOWNERTYPEID": "BD_OwnerOrg",
+        "FECNRowId": "e7c0541d-a2b3-8109-11e9-70a7a6145122",
+        "FECNGroup": "e7c0541d-a2b3-8109-11e9-70a7a6145123",
+        "FParentUnitID": {
+          "FNumber": "Pcs"
+        },
+        "FParentBaseUnitId": {
+          "FNumber": "Pcs"
+        },
+        "FBomEntryId": 100191,
+        "FIsChangeMtrl": false,
+        "FIsNeedSync": false,
+        "FIsMrpRun": true
+      }
+    ]
+  }
+}

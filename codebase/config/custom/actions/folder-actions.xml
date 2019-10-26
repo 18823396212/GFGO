@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE listofactions SYSTEM 'actions.dtd'>
+<listofactions> 
+		 <objecttype name="appo" class="" resourceBundle="ext.appo.folder.resource.APPOCreateRB"> 
+      <action name="createWizardFolders" ajax="component"> 
+	<command windowType="popup" class="ext.appo.folder.APPOCreateWizardFolderProcess" 
+		method="doOperation" url="netmarkets/jsp/appo/folder/createWizardFolders.jsp"/> 
+      </action>
+ 
+      <action name="setFolderAttribute"> 
+	<command windowType="wizard_step" url="netmarkets/jsp/appo/folder/setFolderAttribute.jsp"/> 
+      </action> 
+ </objecttype> 
+</listofactions>

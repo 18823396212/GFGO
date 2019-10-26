@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE listofactions SYSTEM "actions.dtd">
+<listofactions>
+   <objecttype class="wt.change2.WTChangeOrder2" name="changeNotice" resourceBundle="com.ptc.windchill.enterprise.change2.changeManagementActionsRB" >
+      <action ajax="component" name="create" uicomponent="CREATE_CHANGENOTICE" >
+         <description>Create change notice</description>
+         <command class="com.ptc.windchill.enterprise.change2.forms.processors.CreateChangeNoticeFormProcessor" method="execute" windowType="popup"/>
+         <includeFilter name="sandboxSharingValidationSimple"/>
+         <includeFilter name="restrictGuestMembers"/>
+         <includeFilter name="adminLockModifyChangeObjectsFilter"/>
+         <includeFilter name="ecnPublishActionFilter"/>
+      </action>
+  </objecttype>
+  
+  <objecttype class="wt.change2.WTChangeRequest2" name="changeRequest" resourceBundle="com.ptc.windchill.enterprise.change2.changeManagementActionsRB" >
+      <action ajax="component" name="create" uicomponent="CREATE_CHANGEREQUEST" >
+            <description>Create a change request</description>
+            <command class="com.ptc.windchill.enterprise.change2.forms.processors.CreateChangeRequestFormProcessor" method="execute" windowType="popup"/>
+            <includeFilter name="sandboxSharingValidationSimple"/>
+            <includeFilter name="restrictGuestMembers"/>
+            <includeFilter name="manAuthorized"/>
+            <includeFilter name="adminLockModifyChangeObjectsFilter"/>
+            <includeFilter name="ecrPublishActionFilter"/>
+      </action>
+</objecttype>
+  
+  
+	<!-- iReport导出EC报表 -->
+	<objecttype name="exportReport" resourceBundle="ext.generic.engineerChange.ECActionsRB" >
+		<action name="ecReport" >
+			  <command url="netmarkets/jsp/ext/generic/engineerChange/exportECReport.jsp" windowType="popup"/>
+			  <supportedTypes>
+				<type value="wt.change2.WTChangeOrder2"/>
+			  </supportedTypes>
+			  <includeFilter name="ExportEcReportFilter"/>
+		</action>
+	</objecttype>
+</listofactions>

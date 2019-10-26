@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE Configuration SYSTEM "xconf.dtd">
+
+<Configuration targetFile="codebase/ext/xconf/partPromotionInfo.properties">
+   <Service context="default" name="com.ptc.core.ui.validation.SimpleValidationFilter">
+   		<Option serviceClass="ext.generic.partpromotion.validator.ManualStartProcessFilter" selector="manualStartFilter" requestor="null" />
+   		<Option serviceClass="ext.generic.partpromotion.validator.ManualStartManufacturingProcessFilter" selector="ManualStartManufacturingProcessFilter" requestor="null" />
+	</Service>
+  
+</Configuration>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE Configuration SYSTEM "xconf.dtd">
+
+<Configuration targetFile="codebase/ext/xconf/esignatureInfo.properties">
+  <Service context="default" name="com.ptc.core.ui.validation.SimpleValidationFilter">
+   		<Option serviceClass="ext.generic.esignature.validator.CreateESignFileFilter" selector="createESignFileFilter" requestor="null" />
+	</Service>
+	
+	<Service name="com.ptc.core.components.descriptor.DataUtility">
+		<Option serviceClass="ext.generic.esignature.datautility.FailedMsgDataUtility" requestor="java.lang.Object" selector="FailedMsgDataUtility" cardinality="duplicate"/>
+	</Service>
+ 
+</Configuration>

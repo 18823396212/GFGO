@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Configuration SYSTEM "xconf.dtd">
+<Configuration targetFile="codebase/ext/xconf/workflowStepGuide.properties">
+<Property default="ext/xconf/workflowStepGuide.properties" name="wt.services.applicationcontext.WTServiceProviderFromProperties.customPropertyFiles"/>
+<Property default="ext/xconf/workflowStepGuide.properties" name="wt.services.applicationcontext.TypeBasedServiceProviderFromProperties.customPropertyFiles"/>
+ 
+ <Service context="default" name="com.ptc.core.components.descriptor.DataUtility">
+      <Option serviceClass="ext.generic.workflow.datautility.WorkflowStepGuideDatautility" requestor="java.lang.Object" selector="WorkflowStepGuideDatautility" cardinality="duplicate"/>
+	 </Service>
+ 	
+</Configuration>
+

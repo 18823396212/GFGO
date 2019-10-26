@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- Annotation Setup -->
+    <context:annotation-config/>
+
+    <!-- Set up basic handler adapters -->
+    <bean
+            class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
+    <bean
+            class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
+
+    <!-- Load in URLs that are not relative to /ptc1 -->
+    <bean id="defaultHandlerMapping"
+          class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <!-- Property-based mappings should override the annotated mappings -->
+        <property name="order" value="100"/>
+        <property name="alwaysUseFullPath" value="true"/>
+        <property name="mappings">
+            <ref bean="defaultHandlerMappings"/>
+        </property>
+    </bean>
+
+    <bean id="defaultHandlerMappings"
+          class="org.springframework.beans.factory.config.PropertiesFactoryBean"/>
+
+    <!--
+        Enables annotation-based handler mappings. Don't use the full path
+        here, ensure paths are relative to /ptc1
+    -->
+    <bean
+            class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+        <property name="order" value="1000"/>
+    </bean>
+
+    <!-- View Resolution -->
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass"
+                  value="org.springframework.web.servlet.view.JstlView"/>
+    </bean>
+
+    <!-- Exception Handling -->
+    <bean id="exceptionController" class="com.ptc.mvc.controllers.ExceptionController"/>
+    <bean id="exceptionResolver"
+          class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="defaultErrorView" value="/ptc1/error"/>
+    </bean>
+
+    <!-- Manages mappings for typeBased lookup-->
+    <bean id="typeBasedBeanNameFactory" class="com.ptc.mvc.util.DefaultTypeBasedNameFactory"/>
+
+    <!-- Default resolver -->
+    <bean id="defaultComponentBuilderResolver"
+          class="com.ptc.mvc.components.support.DefaultComponentBuilderResolver"/>
+
+    <alias alias="configurableComponentBuilderResolver" name="defaultComponentBuilderResolver"/>
+
+    <!-- HttpSession-scoped DataSourceSession -->
+    <bean id="dataSourceSession" factory-bean="dataSourceManager"
+          factory-method="newDataSourceSession" scope="session">
+        <aop:scoped-proxy/>
+    </bean>
+
+    <!-- Assigns a DataSourceSession to DataSourceSessionAware beans -->
+    <bean id="dataSourceSessionAwareProcessor"
+          class="com.ptc.mvc.ds.server.support.DataSourceSessionAwareProcessor">
+        <property name="session" ref="dataSourceSession"/>
+    </bean>
+
+    <!-- Service for DataSource polling -->
+    <bean id="dataSourceService" class="com.ptc.mvc.ds.server.rpc.DefaultDataSourceService"/>
+
+    <!-- Base config, concrete ones need to specify a serializer -->
+    <bean id="abstractDataSourcePoller" class="com.ptc.mvc.components.ds.DataSourcePoller"
+          abstract="true">
+        <property name="service" ref="dataSourceService"/>
+    </bean>
+
+</beans>

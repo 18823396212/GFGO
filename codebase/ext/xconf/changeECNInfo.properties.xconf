@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE Configuration SYSTEM "xconf.dtd">
+
+<Configuration targetFile="codebase/ext/xconf/changeECNInfo.properties">
+	
+	<Service context="default" name="com.ptc.core.ui.validation.SimpleValidationFilter">
+	    <Option serviceClass="ext.generic.change.validator.EcnPublishActionFilter" selector="ecnPublishActionFilter" requestor="null" />
+	</Service>
+	
+	<Service context="default" name="com.ptc.core.ui.validation.SimpleValidationFilter">
+	    <Option serviceClass="ext.generic.change.validator.EcrPublishActionFilter" selector="ecrPublishActionFilter" requestor="null" />
+	</Service>
+	
+	<Service context="default" name="com.ptc.core.ui.validation.SimpleValidationFilter">
+     <Option serviceClass="ext.generic.change.validator.PartReviseActionFilter" selector="PartReviseActionFilter" requestor="null" />
+  </Service>
+</Configuration>

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE listofactions SYSTEM "actions.dtd">
+<listofactions>
+	<objecttype name="integration" class="wt.part.WTPart">
+		<action name="queryInventoryPrice" resourceBundle="ext.generic.integration.erp.manually.IntegrationResource">
+			<command windowType="popup" url="/netmarkets/jsp/ext/generic/integration/erp/queryInventoryPrice.jsp"/>
+			<includeFilter name="queryInventoryPriceFilter"/>
+		</action>
+	</objecttype>
+	
+	<objecttype name="publish" class="wt.part.WTPart" resourceBundle="ext.generic.integration.erp.manually.IntegrationResource">
+		
+		<action name="erpManuallyPublishPart" ajax="page">
+      <command class="ext.generic.integration.erp.manually.ErpManuallyPublishPartProcessor" method="execute" checkaccess="true" onClick="JCAConfirm(event,'ext.generic.integration.erp.manually.IntegrationResource.PUBLISH_PART_FRAME')" />      
+      <includeFilter name="erpManuallyPublishPartFilter"/>  
+		</action>
+		
+		<action name="erpManuallyPublishBOM" ajax="page">
+			<command class="ext.generic.integration.erp.manually.ErpManuallyPublishBOMProcessor" method="execute" checkaccess="true" onClick="JCAConfirm(event,'ext.generic.integration.erp.manually.IntegrationResource.PUBLISH_BOM_FRAME')"/>
+		  <includeFilter name="erpManuallyPublishBOMFilter"/>
+		</action>
+		
+	</objecttype>
+
+</listofactions>

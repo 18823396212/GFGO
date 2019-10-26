@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+  <!-- 定义满足条件的生命周期状态，如设置多个生命周期，则添加多条 -->
+	<doc-lifeState name="docLifeState">INWORK</doc-lifeState>
+	
+	<!-- 是否需要是创建者 -->
+	<needCreator name="needCreator">false</needCreator>
+	
+</config>	

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE Configuration SYSTEM "xconf.dtd">
+
+<Configuration targetFile="codebase/ext/generic/integration/cis/config/cis.properties">
+ 
+	<Service context="default" name="com.ptc.core.ui.validation.SimpleValidationFilter">
+	  <Option serviceClass="ext.generic.integration.cis.validators.PublishDocValidators" selector="cisFilter" requestor="null" />
+	</Service>
+	 
+</Configuration>

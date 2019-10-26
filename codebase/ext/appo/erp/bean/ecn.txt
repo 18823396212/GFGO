@@ -1,0 +1,329 @@
+一、请求参数说明：
+1.formid：业务对象表单Id，字符串类型（必录）
+2.data：JSON格式数据（详情参考JSON格式数据）（必录）
+2.1.Creator：创建者内码（非必录）
+2.2.NeedUpDateFields：需要更新的字段，数组类型，格式：[key1,key2,...]（非必录） 注（更新单据体字段得加上单据体key）
+2.3.NeedReturnFields：需返回结果的字段集合，数组类型，格式：[key,entitykey.key,...]（非必录） 注（返回单据体字段格式：entitykey.key）
+2.4.IsDeleteEntry：是否删除已存在的分录，布尔类型，默认true（非必录）
+2.5.SubSystemId：表单所在的子系统内码，字符串类型（非必录）
+2.6.IsVerifyBaseDataField：是否验证所有的基础资料有效性，布尔类，默认false（非必录）
+2.7.IsEntryBatchFill：是否批量填充分录，默认true（非必录）
+2.8.ValidateFlag：是否验证标志，布尔类型，默认true（非必录）
+2.9.NumberSearch：是否用编码搜索基础资料，布尔类型，默认true（非必录）
+2.10.InterationFlags：交互标志集合，字符串类型，分号分隔，格式："flag1;flag2;..."（非必录），例如（允许负库存标识：STK_InvCheckResult）
+2.11.IsAutoSubmitAndAudit：是否自动提交与审核，布尔类型，默认false（非必录） 注（启用此参数，保存，提交和审核是在一个事务中）
+2.12.Model：表单数据包，JSON类型（必录） 注（1.数据包包含所有允许引入的字段，实际按需构建 2.如需创建关联关系，可参考：http://club.kingdee.com/forum.php?mod=viewthread&tid=1394265）
+
+二、返回结果：
+{"Result":{"ResponseStatus":{"ErrorCode":"","IsSuccess":"false","Errors":[{"FieldName":"","Message":"","DIndex":0}],"SuccessEntitys":[{"Id":"","Number":"","DIndex":0}],"SuccessMessages":[{"FieldName":"","Message":"","DIndex":0}],"MsgCode":""},"Id":"","Number":"","NeedReturnData":[{}]}}
+
+三、代码示例：
+// 使用webapi引用组件Kingdee.BOS.WebApi.Client.dll
+K3CloudApiClient client = new K3CloudApiClient("https://appo.test.ik3cloud.com/K3Cloud/");
+var loginResult = client.ValidateLogin("20190329100129","Administrator","888888",2052);
+var resultType = JObject.Parse(loginResult)["LoginResultType"].Value<int>();
+//登录结果类型等于1，代表登录成功
+if (resultType == 1)
+{
+client.Save("ENG_ECNOrder","{"Creator":"","NeedUpDateFields":[],"NeedReturnFields":[],"IsDeleteEntry":"true","SubSystemId":"","IsVerifyBaseDataField":"false","IsEntryBatchFill":"true","ValidateFlag":"true","NumberSearch":"true","InterationFlags":"","IsAutoSubmitAndAudit":"false","Model":{"FID":0,"FDescription":"","FBillTypeID":{"FNUMBER":""},"FChangeReason":{"FNumber":""},"FChangeOrgId":{"FNumber":""},"FIsUpdateVersion":"false","FIsUpdatePPBom":"false","FECNChangeDate":"1900-01-01","FECNChangerId":{"FUserID":""},"FEffectDate0":"1900-01-01","FApplyDate":"1900-01-01","FIsDebugMode":"false","FECREntrySeq":"","FECREntryId":"","FRepItemAlterPolicy":"","F_APPO_ECNMC":"","FTreeEntity":[{"FENTRYID":0,"FReplaceGroup":0,"FRowType":"","FChangeLabel":"","FBOMVERSION":{"FNUMBER":""},"FBOMCATEGORY":"","FParentMaterialId":{"FNUMBER":""},"FInsertRow":0,"FMATERIALIDCHILD":{"FNumber":""},"FMATERIALTYPE":"","FPROCESSID":{"FNumber":""},"FCHILDUNITID":{"FNumber":""},"FDOSAGETYPE":"","FNUMERATOR":0,"FDENOMINATOR":0,"FFIXSCRAPQTY":0,"FSCRAPRATE":0,"FChildSupplyOrgId":{"FNumber":""},"FBOMID":{"FNumber":""},"FMEMO":"","FOverControlMode":"","FOptQueue":"","FSUPPLYORG":{"FNumber":""},"FSTOCKID":{"FNumber":""},"FSTOCKLOCID":{"FSTOCKLOCID__FF100001":{"FNumber":""},"FSTOCKLOCID__FF100002":{"FNumber":""},"FSTOCKLOCID__FF100003":{"FNumber":""},"FSTOCKLOCID__FF100004":{"FNumber":""}},"FIsCanChoose":"false","FIsCanEdit":"false","FIsCanReplace":"false","FReplacePolicy":"","FReplaceType":"","FReplacePriority":0,"FMRPPriority":0,"FIskeyItem":"false","FALLOWOVER":"false","FISSkip":"false","FISMinIssueQty":"false","FTreeEntryIdBak":0,"FCfgFeatureEntryId":0,"FEFFECTDATE":"1900-01-01","FEXPIREDATE":"1900-01-01","FISSUETYPE":"","FBACKFLUSHTYPE":"","FISGETSCRAP":"false","FOFFSETTIME":0,"FTIMEUNIT":"","FISKEYCOMPONENT":"false","FOPERID":0,"FPOSITIONNO":"","FOWNERTYPEID":"","FOWNERID":{"FNumber":""},"FDISASSMBLERATE":0,"FECNRowId":"","FECNParentRowId":"","FECNGroup":"","FParentUnitID":{"FNumber":""},"FParentBaseUnitId":{"FNumber":""},"FBomEntryId":0,"FECNRowExpandType":0,"FIsChangeMtrl":"false","FUpdatedVersion":{"FNUMBER":""},"FIsNeedSync":"false","FSUPPLYMODE":"","FIsMrpRun":"false","FAuxPropId":{"FAUXPROPID__FF100001":{"FNumber":""},"FAUXPROPID__FF100002":{"FNumber":""}}}],"FUpdateVersionEntity":[{"FEntryID":0,"FMaterialIdU":{"FNUMBER":""},"FSRCBOM":"","FUPDTBOM":""}]}}");
+}
+
+四、JSON格式数据：
+{
+"Creator": "",
+"NeedUpDateFields": [],
+"NeedReturnFields": [],
+"IsDeleteEntry": "true",
+"SubSystemId": "",
+"IsVerifyBaseDataField": "false",
+"IsEntryBatchFill": "true",
+"ValidateFlag": "true",
+"NumberSearch": "true",
+"InterationFlags": "",
+"IsAutoSubmitAndAudit": "false",
+"Model": {
+"FID": 0,
+"FDescription": "",
+"FBillTypeID": {
+"FNUMBER": ""
+},
+"FChangeReason": {
+"FNumber": ""
+},
+"FChangeOrgId": {
+"FNumber": ""
+},
+"FIsUpdateVersion": "false",
+"FIsUpdatePPBom": "false",
+"FECNChangeDate": "1900-01-01",
+"FECNChangerId": {
+"FUserID": ""
+},
+"FEffectDate0": "1900-01-01",
+"FApplyDate": "1900-01-01",
+"FIsDebugMode": "false",
+"FECREntrySeq": "",
+"FECREntryId": "",
+"FRepItemAlterPolicy": "",
+"F_APPO_ECNMC": "",
+"FTreeEntity": [
+{
+"FENTRYID": 0,
+"FReplaceGroup": 0,
+"FRowType": "",
+"FChangeLabel": "",
+"FBOMVERSION": {
+"FNUMBER": ""
+},
+"FBOMCATEGORY": "",
+"FParentMaterialId": {
+"FNUMBER": ""
+},
+"FInsertRow": 0,
+"FMATERIALIDCHILD": {
+"FNumber": ""
+},
+"FMATERIALTYPE": "",
+"FPROCESSID": {
+"FNumber": ""
+},
+"FCHILDUNITID": {
+"FNumber": ""
+},
+"FDOSAGETYPE": "",
+"FNUMERATOR": 0,
+"FDENOMINATOR": 0,
+"FFIXSCRAPQTY": 0,
+"FSCRAPRATE": 0,
+"FChildSupplyOrgId": {
+"FNumber": ""
+},
+"FBOMID": {
+"FNumber": ""
+},
+"FMEMO": "",
+"FOverControlMode": "",
+"FOptQueue": "",
+"FSUPPLYORG": {
+"FNumber": ""
+},
+"FSTOCKID": {
+"FNumber": ""
+},
+"FSTOCKLOCID": {
+"FSTOCKLOCID__FF100001": {
+"FNumber": ""
+},
+"FSTOCKLOCID__FF100002": {
+"FNumber": ""
+},
+"FSTOCKLOCID__FF100003": {
+"FNumber": ""
+},
+"FSTOCKLOCID__FF100004": {
+"FNumber": ""
+}
+},
+"FIsCanChoose": "false",
+"FIsCanEdit": "false",
+"FIsCanReplace": "false",
+"FReplacePolicy": "",
+"FReplaceType": "",
+"FReplacePriority": 0,
+"FMRPPriority": 0,
+"FIskeyItem": "false",
+"FALLOWOVER": "false",
+"FISSkip": "false",
+"FISMinIssueQty": "false",
+"FTreeEntryIdBak": 0,
+"FCfgFeatureEntryId": 0,
+"FEFFECTDATE": "1900-01-01",
+"FEXPIREDATE": "1900-01-01",
+"FISSUETYPE": "",
+"FBACKFLUSHTYPE": "",
+"FISGETSCRAP": "false",
+"FOFFSETTIME": 0,
+"FTIMEUNIT": "",
+"FISKEYCOMPONENT": "false",
+"FOPERID": 0,
+"FPOSITIONNO": "",
+"FOWNERTYPEID": "",
+"FOWNERID": {
+"FNumber": ""
+},
+"FDISASSMBLERATE": 0,
+"FECNRowId": "",
+"FECNParentRowId": "",
+"FECNGroup": "",
+"FParentUnitID": {
+"FNumber": ""
+},
+"FParentBaseUnitId": {
+"FNumber": ""
+},
+"FBomEntryId": 0,
+"FECNRowExpandType": 0,
+"FIsChangeMtrl": "false",
+"FUpdatedVersion": {
+"FNUMBER": ""
+},
+"FIsNeedSync": "false",
+"FSUPPLYMODE": "",
+"FIsMrpRun": "false",
+"FAuxPropId": {
+"FAUXPROPID__FF100001": {
+"FNumber": ""
+},
+"FAUXPROPID__FF100002": {
+"FNumber": ""
+}
+}
+}
+],
+"FUpdateVersionEntity": [
+{
+"FEntryID": 0,
+"FMaterialIdU": {
+"FNUMBER": ""
+},
+"FSRCBOM": "",
+"FUPDTBOM": ""
+}
+]
+}
+}
+
+五、字段说明：
+单据头：FBillHead
+实体主键：FID
+单据编号：FBillNo
+单据状态：FDocumentStatus
+审核人：FApproverId
+审核日期：FApproveDate
+修改人：FModifierId
+创建日期：FCreateDate
+创建人：FCreatorId
+修改日期：FModifyDate
+作废日期：FCancelDate
+作废人：FCanceler
+作废状态：FCancelStatus
+备注：FDescription
+单据类型：FBillTypeID  (必填项)
+变更原因：FChangeReason
+变更组织：FChangeOrgId
+版本升级：FIsUpdateVersion
+更新用料清单：FIsUpdatePPBom
+申请单号：FApplyBillNo
+申请组织：FApplyOrgId
+申请部门：FApplyDeptId
+申请人：FApplierId
+变更状态：FECNStatus0
+变更日期：FECNChangeDate
+变更人：FECNChangerId
+变更类型：FChangeType
+生效日期：FEffectDate0
+申请日期：FApplyDate
+调试模式：FIsDebugMode
+申请单行号：FECREntrySeq
+申请单分录号：FECREntryId
+子项更换：FRepItemAlterPolicy  (必填项)
+ECN名称：F_APPO_ECNMC
+子项明细：FTreeEntity
+实体主键：FENTRYID
+父级行主键：FParentRowId
+行展开类型：FRowExpandType
+行标识：FRowId
+项次：FReplaceGroup
+子项物料编码：FMATERIALIDCHILD  (必填项)
+子项物料名称：FCHILDITEMNAME
+子项规格型号：FCHILDITEMMODEL
+子项物料属性：FCHILDITEMPROPERTY
+子项标识：FEntryRowId
+子项类型：FMATERIALTYPE  (必填项)
+作业：FPROCESSID
+子项单位：FCHILDUNITID  (必填项)
+用量类型：FDOSAGETYPE  (必填项)
+用量:分子：FNUMERATOR
+用量:分母：FDENOMINATOR
+固定损耗：FFIXSCRAPQTY
+变动损耗率%：FSCRAPRATE
+供应组织：FChildSupplyOrgId
+子项BOM版本：FBOMID
+备注：FMEMO
+超发控制方式：FOverControlMode  (必填项)
+工序序列：FOptQueue
+发料组织：FSUPPLYORG
+默认发料仓库：FSTOCKID
+默认发料仓位：FSTOCKLOCID
+子项基本单位：FChildBaseUnitID
+基本单位分子：FBaseNumerator
+基本单位固定损耗：FBaseFixscrapQty
+可选择：FIsCanChoose
+基本单位分母：FBaseDenominator
+可修改：FIsCanEdit
+替代策略：FReplacePolicy
+可替换：FIsCanReplace
+替代方式：FReplaceType
+替代优先级：FReplacePriority
+动态优先级：FMRPPriority
+替代主料：FIskeyItem
+PLMBOM分录内码：FPLMBOMEntryId
+BOM分录来源：FBOMEntrySRC
+允许超发：FALLOWOVER
+最小发料批量：FBPMinIssueQty
+库存单位：FBPStoreUnitID
+跳层：FISSkip
+子项明细Id备份(引入时与BOP关联)：FTreeEntryIdBak
+领料考虑最小发料批量：FISMinIssueQty
+父项特征件分录内码：FCfgFeatureEntryId
+配置BOM分录内码：FCFGBOMENTRYID
+生效日期：FEFFECTDATE  (必填项)
+失效日期：FEXPIREDATE  (必填项)
+发料方式：FISSUETYPE  (必填项)
+倒冲时机：FBACKFLUSHTYPE
+是否发损耗：FISGETSCRAP
+偏置时间：FOFFSETTIME
+时间单位：FTIMEUNIT  (必填项)
+是否关键件：FISKEYCOMPONENT
+工序：FOPERID
+位置号：FPOSITIONNO
+货主类型：FOWNERTYPEID  (必填项)
+货主：FOWNERID
+辅助属性：FAuxPropId
+拆卸成本拆分比例：FDISASSMBLERATE
+标准用量：FQty2
+实际用量：FActualQty
+父项物料编码：FParentMaterialId
+BOM版本：FBOMVERSION
+ECN行类型：FRowType
+ECN行标识：FECNRowId
+ECN父行标识：FECNParentRowId
+ECN行组别：FECNGroup
+BOM分类：FBOMCATEGORY
+变更标识：FChangeLabel
+单位：FParentUnitID
+基本计量单位：FParentBaseUnitId
+BOM子项内码：FBomEntryId
+ECN变更状态：FECNStatus
+ECN行展开类型：FECNRowExpandType
+更换子项物料：FIsChangeMtrl
+父项物料名称：FBaseProperty
+新版本：FUpdatedVersion
+同步标记：FIsNeedSync
+供料方式：FSUPPLYMODE
+插入项次：FInsertRow
+MRP运算：FIsMrpRun
+BOM版本升级明细：FUpdateVersionEntity
+实体主键：FEntryID
+原BOM版本：FSRCBOM
+指定BOM版本：FUPDTBOM
+主产品编码：FMaterialIdU
+关联关系表：FBillHead_Link
+实体主键：FLinkId
+业务流程图：FBillHead_Link_FFlowId
+推进路线：FBillHead_Link_FFlowLineId
+转换规则：FBillHead_Link_FRuleId
+源单表内码：FBillHead_Link_FSTableId
+源单表：FBillHead_Link_FSTableName
+源单内码：FBillHead_Link_FSBillId
+源单分录内码：FBillHead_Link_FSId

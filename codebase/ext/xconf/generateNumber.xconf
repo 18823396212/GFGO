@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Configuration SYSTEM "xconf.dtd">
+<Configuration xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<!-- -*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-
+WARNING: Do not modify this file after it has been installed.  Use xconfmanager
+         to set, reset, or undefine properties for your installation
+-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*- -->
+
+<!--
+     Copyright (c) 2009 Parametric Technology Corporation, all rights reserved.
+
+     Xconf settings specific to ManagedCollection Module.
+  -->
+
+<!--
+    List the .xconf files are that are applicable to the ManagedCollection Module
+ -->
+
+    <ConfigurationRef xlink:href="generateNumber-services.xconf"/>
+    <ConfigurationRef xlink:href="generateNumberInfo.properties.xconf"/>
+   
+<!-- -*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-
+WARNING: Do not modify this file after it has been installed.  Use xconfmanager
+         to set, reset, or undefine properties for your installation
+-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*-!-*- -->
+
+</Configuration>

@@ -1,0 +1,252 @@
+{
+  "Creator": "",
+  "NeedUpDateFields": [],
+  "NeedReturnFields": [],
+  "IsDeleteEntry": "true",
+  "SubSystemId": "",
+  "IsVerifyBaseDataField": "false",
+  "IsEntryBatchFill": "true",
+  "ValidateFlag": "true",
+  "NumberSearch": "true",
+  "InterationFlags": "",
+  "IsAutoSubmitAndAudit": "false",
+  "Model": {
+    "FID": 0,
+    "FBillNo":"ECN12121212",//单据编号
+    "FBillTypeID": {
+      "FNUMBER": "GCBG01_SYS"//单据类型
+    },
+    "FChangeReason": {
+      "FNumber": "GCBGYY01_SYS" //变更原先 GCBGYY01_SYS客户要求 GCBGYY02_SYS成本控制  GCBGYY03_SYS性能改进
+    },
+    "FChangeOrgId": {
+      "FNumber": "100"
+    },
+    "FIsUpdateVersion": false,//版本升级
+    "FIsUpdatePPBom": false,//更新BOM清单
+    "FEffectDate0": "2019-04-24 00:00:00",
+    "FApplyDate": "2019-04-24 00:00:00",
+    "FIsDebugMode": true,
+    "FRepItemAlterPolicy": "1",//子项更换 删除替代料
+    "FTreeEntity": [
+      {
+        "FReplaceGroup": 2,//项次
+        "FRowType": "3",//ECN行类型
+        "FChangeLabel": "3",//变更标识 2新增。3删除
+        "FBOMVERSION": {
+          "FNUMBER": "A100111112_V1.0"//BOM版本
+        },
+        "FBOMCATEGORY": "1",//BOM分类
+        "FParentMaterialId": {//父项物料编码
+          "FNUMBER": "A100111112"
+        },
+        "FMATERIALIDCHILD": {//子项
+          "FNumber": "A30003500002"
+        },
+        "FMATERIALTYPE": "1",//子项类型
+        "FCHILDUNITID": {
+          "FNumber": "Pcs"
+        },
+        "FNUMERATOR": 1.0,//分子
+        "FDENOMINATOR": 1.0,//分母
+        "FMEMO": "备注2",//备注
+        "FIsCanChoose": false,
+        "FIsCanEdit": false,
+        "FIsCanReplace": false,
+        "FReplacePolicy": "1",
+        "FReplaceType": "1",
+        "FIskeyItem": true,
+        "FALLOWOVER": false,
+        "FISSkip": false,
+        "FISMinIssueQty": false,
+        "FTreeEntryIdBak": 100167,//子项明细Id备份(引入时与BOP关联)
+        "FEFFECTDATE": "2019-04-24 00:00:00",//生效
+        "FEXPIREDATE": "9999-12-31 00:00:00",//失效
+        "FTIMEUNIT": "1",
+        "FOPERID": 10,
+        "FPOSITIONNO": "22",//位号
+        "FOWNERTYPEID": "BD_OwnerOrg",
+        "FECNRowId": "005056a7-4e26-80c3-11e9-666b8c791211",//ECN行标识
+        "FECNGroup": "005056a7-4e26-80c3-11e9-666b8c791212",//ECN行组别
+        "FBomEntryId": 100167 //BOM子项内码
+
+      },
+      {
+        "FReplaceGroup": 1,
+        "FRowType": "2",
+        "FBOMVERSION": {
+          "FNUMBER": "A100111112_V1.0"
+        },
+        "FBOMCATEGORY": "1",
+        "FParentMaterialId": {
+          "FNUMBER": "A100111112"
+        },
+        "FMATERIALIDCHILD": {
+          "FNumber": "A11111111"
+        },
+        "FMATERIALTYPE": "1",
+        "FCHILDUNITID": {
+          "FNumber": "kg"
+        },
+        "FDOSAGETYPE": "2",
+        "FNUMERATOR": 1.0,
+        "FDENOMINATOR": 1.0,
+        "FChildSupplyOrgId": {
+          "FNumber": "100"
+        },
+        "FMEMO": "备注1",
+        "FOverControlMode": "1",
+        "FSUPPLYORG": {
+          "FNumber": "100"
+        },
+        "FIsCanChoose": false,
+        "FIsCanEdit": false,
+        "FIsCanReplace": false,
+        "FReplacePolicy": "1",
+        "FReplaceType": "1",
+        "FIskeyItem": true,
+        "FALLOWOVER": false,
+        "FISSkip": false,
+        "FISMinIssueQty": false,
+        "FTreeEntryIdBak": 100166,
+        "FEFFECTDATE": "2019-04-24 00:00:00",
+        "FEXPIREDATE": "9999-12-31 00:00:00",
+        "FISSUETYPE": "1",
+        "FISGETSCRAP": true,
+        "FTIMEUNIT": "1",
+        "FISKEYCOMPONENT": false,
+        "FOPERID": 10,
+        "FPOSITIONNO": "99",
+        "FOWNERTYPEID": "BD_OwnerOrg",
+        "FECNRowId": "005056a7-4e26-80c3-11e9-666bae376a1b",
+        "FECNGroup": "005056a7-4e26-80c3-11e9-666bae376a1d",
+        "FParentUnitID": {
+          "FNumber": "Pcs"
+        },
+        "FParentBaseUnitId": {
+          "FNumber": "Pcs"
+        },
+        "FBomEntryId": 100166,
+        "FIsChangeMtrl": false,
+        "FIsNeedSync": false,
+        "FIsMrpRun": true
+      },
+      {
+        "FReplaceGroup": 1,
+        "FRowType": "2",
+        "FChangeLabel": "1",
+        "FBOMVERSION": {
+          "FNUMBER": "A100111112_V1.0"
+        },
+        "FBOMCATEGORY": "1",
+        "FParentMaterialId": {
+          "FNUMBER": "A100111112"
+        },
+        "FMATERIALIDCHILD": {
+          "FNumber": "A11111111"
+        },
+        "FMATERIALTYPE": "1",
+        "FCHILDUNITID": {
+          "FNumber": "kg"
+        },
+        "FDOSAGETYPE": "2",
+        "FNUMERATOR": 1.0,
+        "FDENOMINATOR": 1.0,
+        "FChildSupplyOrgId": {
+          "FNumber": "100"
+        },
+        "FMEMO": "备注1",
+        "FOverControlMode": "1",
+        "FSUPPLYORG": {
+          "FNumber": "100"
+        },
+        "FIsCanChoose": false,
+        "FIsCanEdit": false,
+        "FIsCanReplace": false,
+        "FReplacePolicy": "1",
+        "FReplaceType": "1",
+        "FIskeyItem": true,
+        "FALLOWOVER": false,
+        "FISSkip": false,
+        "FISMinIssueQty": false,
+        "FTreeEntryIdBak": 100166,
+        "FEFFECTDATE": "2019-04-24 00:00:00",
+        "FEXPIREDATE": "9999-12-31 00:00:00",
+        "FISSUETYPE": "1",
+        "FISGETSCRAP": true,
+        "FTIMEUNIT": "1",
+        "FISKEYCOMPONENT": false,
+        "FOPERID": 10,
+        "FPOSITIONNO": "99",
+        "FOWNERTYPEID": "BD_OwnerOrg",
+        "FECNRowId": "005056a7-4e26-80c3-11e9-666bae376a1c",
+        "FECNGroup": "005056a7-4e26-80c3-11e9-666bae376a1d",
+        "FParentUnitID": {
+          "FNumber": "Pcs"
+        },
+        "FParentBaseUnitId": {
+          "FNumber": "Pcs"
+        },
+        "FBomEntryId": 100166,
+        "FIsChangeMtrl": false,
+        "FIsNeedSync": false,
+        "FIsMrpRun": true
+      },
+      {
+        "FRowType": "1",
+        "FChangeLabel": "2",
+        "FBOMVERSION": {
+          "FNUMBER": "A100111112_V1.0"
+        },
+        "FBOMCATEGORY": "1",
+        "FParentMaterialId": {
+          "FNUMBER": "A100111112"
+        },
+        "FMATERIALIDCHILD": {
+          "FNumber": "A30003500002"
+        },
+        "FMATERIALTYPE": "1",
+        "FCHILDUNITID": {
+          "FNumber": "Pcs"
+        },
+        "FDOSAGETYPE": "2",
+        "FNUMERATOR": 1.0,
+        "FDENOMINATOR": 1.0,
+        "FChildSupplyOrgId": {
+          "FNumber": "100"
+        },
+        "FOverControlMode": "1",
+        "FSUPPLYORG": {
+          "FNumber": "100"
+        },
+        "FIsCanChoose": false,
+        "FIsCanEdit": false,
+        "FIsCanReplace": false,
+        "FIskeyItem": false,
+        "FALLOWOVER": false,
+        "FISSkip": false,
+        "FISMinIssueQty": false,
+        "FEFFECTDATE": "2019-04-24 00:00:00",
+        "FEXPIREDATE": "9999-12-31 00:00:00",
+        "FISSUETYPE": "1",
+        "FISGETSCRAP": true,
+        "FTIMEUNIT": "1",
+        "FISKEYCOMPONENT": false,
+        "FOPERID": 10,
+        "FOWNERTYPEID": "BD_OwnerOrg",
+        "FECNRowId": "005056a7-4e26-80c3-11e9-666bbbabfadc",
+        "FECNGroup": "005056a7-4e26-80c3-11e9-666bbbabfadd",
+        "FParentUnitID": {
+          "FNumber": "Pcs"
+        },
+        "FParentBaseUnitId": {
+          "FNumber": "Pcs"
+        },
+        "FECNRowExpandType": 16,
+        "FIsChangeMtrl": false,
+        "FIsNeedSync": false,
+        "FIsMrpRun": true
+      }
+    ]
+  }
+}

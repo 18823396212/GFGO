@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE Configuration SYSTEM "xconf.dtd">
+
+<Configuration targetFile="codebase/ext/xconf/checkdoc.properties">
+
+  <Service context="default" name="com.ptc.core.ui.validation.SimpleValidationFilter">
+   		<Option serviceClass="ext.generic.checkdoc.validator.PartCheckDocFilter" requestor="null" selector="PartCheckDocFilter" cardinality="duplicate" />
+	</Service>
+  
+</Configuration>

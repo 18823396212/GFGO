@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.ptc.com/schema/mvc"	
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+http://www.ptc.com/schema/mvc http://www.ptc.com/schema/mvc/mvc-10.0.xsd">
+
+	<!-- Configurations in this file override all other configurations -->
+	<bean id="borrow.order.identifier.attribute.panel" class="ext.generic.borrow.mvc.builders.BorrowOrderIdentifierAttributesPanel"/>
+	<bean id="borrow.order.layout.attributes.panel" class="ext.generic.borrow.mvc.builders.BorrowOrderLayoutBuilder"/>
+	<bean id="borrow.order.create.page.table.builder" class="ext.generic.borrow.mvc.builders.CreatePageBorrowOrderTableBuilder"/>
+	<bean id="borrow.order.info.page.table.builde" class="ext.generic.borrow.mvc.builders.InfoPageBorrowOrderTableBuilder"/>
+	<bean id="item.borrow.order.list.table.builder" class="ext.generic.borrow.mvc.builders.ItemBorrowOrderListTableBuilder"/>
+	<bean class="ext.generic.borrow.mvc.builders.BorrowOrderInfoBuilder"/>
+</beans>

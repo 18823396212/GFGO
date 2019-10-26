@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <clear-obj-iba>
+	<!-- 修订事件 -->	
+	<clear-event name="revise" event="NEW_VERSION" clear="true" > 
+		<WTPart-IBAS name="partReleaseStatus;;;bomReleaseStatus;;;erpErrorMsg"></WTPart-IBAS>    <!-- 多个IBA内部值以三个英文分号分隔;;; -->                                                 
+		<WTDocument-IBAS name="MESReleaseStatus"></WTDocument-IBAS>
+		<EPMDocument-IBAS name="MESReleaseStatus"></EPMDocument-IBAS>
+	</clear-event>
+
+	<!-- 复制事件 -->	
+	<clear-event name="copy" event="POST_STORE" clear="true" > 
+		<WTPart-IBAS name="partReleaseStatus;;;bomReleaseStatus;;;erpErrorMsg"></WTPart-IBAS>    <!-- 多个IBA内部值以三个英文分号分隔;;; -->                                                 
+		<WTDocument-IBAS name="MESReleaseStatus"></WTDocument-IBAS>
+		<EPMDocument-IBAS name="MESReleaseStatus"></EPMDocument-IBAS>
+	</clear-event>
+
+	<!-- 另存为事件 -->	
+	<clear-event name="saveas" event="POST_MODIFY" clear="true" > 
+		<WTPart-IBAS name="partReleaseStatus;;;bomReleaseStatus;;;erpErrorMsg"></WTPart-IBAS>    <!-- 多个IBA内部值以三个英文分号分隔;;; -->                                                 
+		<WTDocument-IBAS name="MESReleaseStatus"></WTDocument-IBAS>
+		<EPMDocument-IBAS name="MESReleaseStatus"></EPMDocument-IBAS>
+	</clear-event>
+
+	<!-- 检入事件 -->	
+	<clear-event name="checkin" event="POST_CHECKIN" clear="false" > 
+		<WTPart-IBAS name="partReleaseStatus;;;bomReleaseStatus;;;erpErrorMsg"></WTPart-IBAS>    <!-- 多个IBA内部值以三个英文分号分隔;;; -->                                                 
+		<WTDocument-IBAS name="MESReleaseStatus"></WTDocument-IBAS>
+		<EPMDocument-IBAS name="MESReleaseStatus"></EPMDocument-IBAS>
+	</clear-event>
+
+	<!-- 重命名事件 -->	
+	<clear-event name="rename" event="POST_STORE" clear="false" > 
+		<WTPart-IBAS name="partReleaseStatus;;;bomReleaseStatus;;;erpErrorMsg"></WTPart-IBAS>    <!-- 多个IBA内部值以三个英文分号分隔;;; -->                                                 
+		<WTDocument-IBAS name=""></WTDocument-IBAS>
+		<EPMDocument-IBAS name=""></EPMDocument-IBAS>
+	</clear-event>
+  
+  </clear-obj-iba>
+</root>	

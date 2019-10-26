@@ -1,0 +1,11 @@
+<AvailableAttributes>
+    <Class name="ext.generic.borrow.BorrowOrder">
+        <Include name="wt.enterprise.Managed"/>
+        <Include name="wt.inf.container.WTContained"/>
+        <Include name="wt.fc.Persistable"/>
+
+         <Attribute id="name" jsId="objName" type="text"/>
+        <Attribute id="number"/>        
+    </Class>
+</AvailableAttributes>
+
