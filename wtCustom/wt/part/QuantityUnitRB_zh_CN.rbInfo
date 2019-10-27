@@ -1,4 +1,23 @@
 ResourceInfo.class=wt.tools.resource.EnumResourceInfo
+ResourceInfo.customizable=true
+ResourceInfo.deprecated=false
+
+
+# Entry Format (values equal to default value are not included)
+# <key>.value=
+# <key>.category=
+# <key>.comment=
+# <key>.argComment<n>=
+# <key>.constant=
+# <key>.customizable=
+# <key>.deprecated=
+# <key>.abbreviatedDisplay=
+# <key>.fullDisplay=
+# <key>.shortDescription=
+# <key>.longDescription=
+# <key>.order=
+# <key>.defaultValue=
+# <key>.selectable=
 
 # Entry Contents
 
@@ -16,7 +35,7 @@ cu_m.order=70
 
 ea.value.translationSource.now=each
 ea.shortDescription.translationSource.now=each
-ea.value=¸ö/PCS
+ea.value=ä¸ª/PCS
 ea.comment=For example, how much quantity of a material would you need: 2 meters, 2 kilos, 2 each.
 ea.shortDescription=pcs
 ea.order=10
@@ -24,64 +43,64 @@ ea.defaultValue=true
 
 kg.value.translationSource.now=kilograms
 kg.shortDescription.translationSource.now=kg
-kg.value=Ç§¿Ë/kg
+kg.value=åƒå…‹/kg
 kg.shortDescription=kg
 kg.order=30
 
 l.value.translationSource.now=liters
 l.shortDescription.translationSource.now=l
-l.value=Éı/l
+l.value=å‡/l
 l.shortDescription=l
 l.order=40
 
 m.value.translationSource.now=meters
 m.shortDescription.translationSource.now=m
-m.value=Ã×/m
+m.value=ç±³/m
 m.shortDescription=m
 m.order=42
 
 sq_m.value.translationSource.now=square meters
 sq_m.shortDescription.translationSource.now=m^2
-sq_m.value=Æ½·½Ã×/m^2
+sq_m.value=å¹³æ–¹ç±³/m^2
 sq_m.shortDescription=m^2
 sq_m.order=38
 
-bag.value=°ü/BAG
+bag.value=åŒ…/BAG
 bag.shortDescription=bag
 bag.order=68
 
-cm.value=ÀåÃ×/cm
+cm.value=å˜ç±³/cm
 cm.shortDescription=cm
 cm.order=56
 
-g.value=¿Ë/g
+g.value=å…‹/g
 g.shortDescription=g
 g.order=34
 
-item.value=¼ş/item
+item.value=ä»¶/item
 item.shortDescription=item
 item.order=69
 
-mg.value=ºÁ¿Ë/mg
+mg.value=æ¯«å…‹/mg
 mg.shortDescription=mg
 mg.order=36
 
-ml.value=ºÁÉı/ml
+ml.value=æ¯«å‡/ml
 ml.shortDescription=ml
 ml.order=41
 
-mm.value=ºÁÃ×/mm
+mm.value=æ¯«ç±³/mm
 mm.shortDescription=mm
 mm.order=63
 
-vol.value=¾í/VOL
+vol.value=å·/VOL
 vol.shortDescription=vol
 vol.order=66
 
-in.value=Ó¢´ç/in
-in.shortDescription=Ó¢´ç/in
+in.value=è‹±å¯¸/in
+in.shortDescription=è‹±å¯¸/in
 in.order=109
 
-ft.value=Ó¢³ß/ft
-ft.shortDescription=Ó¢³ß/ft
+ft.value=è‹±å°º/ft
+ft.shortDescription=è‹±å°º/ft
 ft.order=119

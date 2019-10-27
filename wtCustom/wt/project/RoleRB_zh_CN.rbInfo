@@ -1,409 +1,419 @@
 ResourceInfo.class=wt.tools.resource.EnumResourceInfo
+ResourceInfo.customizable=true
+ResourceInfo.deprecated=false
+
+# Entry Format (values equal to default value are not included)
+# <key>.value=
+# <key>.category=
+# <key>.comment=
+# <key>.argComment<n>=
+# <key>.constant=
+# <key>.customizable=
+# <key>.deprecated=
+# <key>.abbreviatedDisplay=
+# <key>.fullDisplay=
+# <key>.shortDescription=
+# <key>.longDescription=
+# <key>.order=
+# <key>.defaultValue=
+# <key>.selectable=
 
 # Entry Contents
 
 PROJECT MANAGER.value.translationSource.now=Project Manager
 PROJECT MANAGER.shortDescription.translationSource.now=Project Manager role
-PROJECT MANAGER.value=ÏîÄ¿¾­Àí¸ºÔğÈË
-PROJECT MANAGER.shortDescription=ÏîÄ¿¾­Àí¸ºÔğÈË½ÇÉ«
+PROJECT MANAGER.value=é¡¹ç›®ç»ç†è´Ÿè´£äºº
+PROJECT MANAGER.shortDescription=é¡¹ç›®ç»ç†è´Ÿè´£äººè§’è‰²
 PROJECT MANAGER.order=295
 
 SOURCING MANAGER.value.translationSource.now=Sourcing Manager
 SOURCING MANAGER.shortDescription.translationSource.now=Sourcing Manager
-SOURCING MANAGER.value=²É¹º¾­Àí¸ºÔğÈË
-SOURCING MANAGER.shortDescription=²É¹º¾­Àí¸ºÔğÈË
+SOURCING MANAGER.value=é‡‡è´­ç»ç†è´Ÿè´£äºº
+SOURCING MANAGER.shortDescription=é‡‡è´­ç»ç†è´Ÿè´£äºº
 SOURCING MANAGER.order=520
 
-Assessor.value=ÉóºËÕß
-Assessor.shortDescription=Á÷³Ì½ÇÉ« ÉóºËÕß
+Assessor.value=å®¡æ ¸è€…
+Assessor.shortDescription=æµç¨‹è§’è‰² å®¡æ ¸è€…
 Assessor.order=2600
 
-Temporary_code_reviewer.value=ÁÙÊ±±àÂëÉóºËÕß
-Temporary_code_reviewer.shortDescription=Á÷³Ì½ÇÉ« ÁÙÊ±±àÂëÉóºËÕß
+Temporary_code_reviewer.value=ä¸´æ—¶ç¼–ç å®¡æ ¸è€…
+Temporary_code_reviewer.shortDescription=æµç¨‹è§’è‰² ä¸´æ—¶ç¼–ç å®¡æ ¸è€…
 Temporary_code_reviewer.order=201939
 
-Corrector.value=Ğ£¶ÔÕß
-Corrector.shortDescription=Á÷³Ì½ÇÉ« Ğ£¶ÔÕß
+Corrector.value=æ ¡å¯¹è€…
+Corrector.shortDescription=æµç¨‹è§’è‰² æ ¡å¯¹è€…
 Corrector.order=2610
 
-DRAWINGISSUER.value=Í¼Ö½·¢·ÅÔ±
-DRAWINGISSUER.shortDescription=Í¼Ö½·¢·ÅÔ±
+DRAWINGISSUER.value=å›¾çº¸å‘æ”¾å‘˜
+DRAWINGISSUER.shortDescription=å›¾çº¸å‘æ”¾å‘˜
 DRAWINGISSUER.order=2880
 
-Normalizer.value=±ê×¼»¯Éó²éÕß
-Normalizer.shortDescription=Á÷³Ì½ÇÉ« ±ê×¼»¯Éó²éÕß
+Normalizer.value=æ ‡å‡†åŒ–å®¡æŸ¥è€…
+Normalizer.shortDescription=æµç¨‹è§’è‰² æ ‡å‡†åŒ–å®¡æŸ¥è€…
 Normalizer.order=2620
 
-PRINTER.value=´òÓ¡¹ÜÀíÔ±
-PRINTER.shortDescription=Á÷³Ì½ÇÉ« ´òÓ¡¹ÜÀíÔ±
+PRINTER.value=æ‰“å°ç®¡ç†å‘˜
+PRINTER.shortDescription=æµç¨‹è§’è‰² æ‰“å°ç®¡ç†å‘˜
 PRINTER.order=2870
 
-ProcessReview.value=¹¤ÒÕĞÔÉó²éÕß
-ProcessReview.shortDescription=Á÷³Ì½ÇÉ« ¹¤ÒÕĞÔÉó²éÕß
+ProcessReview.value=å·¥è‰ºæ€§å®¡æŸ¥è€…
+ProcessReview.shortDescription=æµç¨‹è§’è‰² å·¥è‰ºæ€§å®¡æŸ¥è€…
 ProcessReview.order=2860
 
-Receiver.value=½ÓÊÕÕß
-Receiver.shortDescription=Á÷³Ì½ÇÉ« ½ÓÊÕÕß
+Receiver.value=æ¥æ”¶è€…
+Receiver.shortDescription=æµç¨‹è§’è‰² æ¥æ”¶è€…
 Receiver.order=2630
 
-Signer.value=»áÇ©Õß
-Signer.shortDescription=Á÷³Ì½ÇÉ« »áÇ©Õß
+Signer.value=ä¼šç­¾è€…
+Signer.shortDescription=æµç¨‹è§’è‰² ä¼šç­¾è€…
 Signer.order=2640
 
-Validator.value=Éó¶¨Õß
-Validator.shortDescription=Á÷³Ì½ÇÉ« Éó¶¨Õß
+Validator.value=å®¡å®šè€…
+Validator.shortDescription=æµç¨‹è§’è‰² å®¡å®šè€…
 Validator.order=2850
 
-product_line_leader.value=²úÆ·Ïß¸ºÔğÈË
-product_line_leader.shortDescription=²úÆ·Ïß¸ºÔğÈË
+product_line_leader.value=äº§å“çº¿è´Ÿè´£äºº
+product_line_leader.shortDescription=äº§å“çº¿è´Ÿè´£äºº
 product_line_leader.order=201801
 
-product_manager.value=²úÆ·¾­Àí
-product_manager.shortDescription=²úÆ·¾­Àí
+product_manager.value=äº§å“ç»ç†
+product_manager.shortDescription=äº§å“ç»ç†
 product_manager.order=201802
 
-project_manager.value=ÏîÄ¿¾­Àí
-project_manager.shortDescription=ÏîÄ¿¾­Àí
+project_manager.value=é¡¹ç›®ç»ç†
+project_manager.shortDescription=é¡¹ç›®ç»ç†
 project_manager.order=201803
 
-system_development.value=ÏµÍ³¿ª·¢
-system_development.shortDescription=ÏµÍ³¿ª·¢
+system_development.value=ç³»ç»Ÿå¼€å‘
+system_development.shortDescription=ç³»ç»Ÿå¼€å‘
 system_development.order=201804
 
-optical_development.value=¹âÑ§¿ª·¢
-optical_development.shortDescription=¹âÑ§¿ª·¢
+optical_development.value=å…‰å­¦å¼€å‘
+optical_development.shortDescription=å…‰å­¦å¼€å‘
 optical_development.order=201805
 
-hardware_development.value=Ó²¼ş¿ª·¢
-hardware_development.shortDescription=Ó²¼ş¿ª·¢
+hardware_development.value=ç¡¬ä»¶å¼€å‘
+hardware_development.shortDescription=ç¡¬ä»¶å¼€å‘
 hardware_development.order=201806
 
-software_development.value=Èí¼ş¿ª·¢
-software_development.shortDescription=Èí¼ş¿ª·¢
+software_development.value=è½¯ä»¶å¼€å‘
+software_development.shortDescription=è½¯ä»¶å¼€å‘
 software_development.order=201807
 
-optical_structure_development.value=¹â»ú½á¹¹¿ª·¢
-optical_structure_development.shortDescription=¹â»ú½á¹¹¿ª·¢
+optical_structure_development.value=å…‰æœºç»“æ„å¼€å‘
+optical_structure_development.shortDescription=å…‰æœºç»“æ„å¼€å‘
 optical_structure_development.order=201808
 
-structure_development.value=½á¹¹¿ª·¢
-structure_development.shortDescription=½á¹¹¿ª·¢
+structure_development.value=ç»“æ„å¼€å‘
+structure_development.shortDescription=ç»“æ„å¼€å‘
 structure_development.order=201809
 
-packaging_development.value=°ü×°¿ª·¢
-packaging_development.shortDescription=°ü×°¿ª·¢
+packaging_development.value=åŒ…è£…å¼€å‘
+packaging_development.shortDescription=åŒ…è£…å¼€å‘
 packaging_development.order=201810
 
-data_development.value=×ÊÁÏ¿ª·¢
-data_development.shortDescription=×ÊÁÏ¿ª·¢
+data_development.value=èµ„æ–™å¼€å‘
+data_development.shortDescription=èµ„æ–™å¼€å‘
 data_development.order=201811
 
-thermal_design.value=ÈÈÉè¼Æ
-thermal_design.shortDescription=ÈÈÉè¼Æ
+thermal_design.value=çƒ­è®¾è®¡
+thermal_design.shortDescription=çƒ­è®¾è®¡
 thermal_design.order=201812
 
-id_design.value=IDÉè¼Æ
-id_design.shortDescription=IDÉè¼Æ
+id_design.value=IDè®¾è®¡
+id_design.shortDescription=IDè®¾è®¡
 id_design.order=201813
 
-cable_development.value=ÏßÀÂ¿ª·¢
-cable_development.shortDescription=ÏßÀÂ¿ª·¢
+cable_development.value=çº¿ç¼†å¼€å‘
+cable_development.shortDescription=çº¿ç¼†å¼€å‘
 cable_development.order=201814
 
-process_development.value=¹¤ÒÕ¿ª·¢
-process_development.shortDescription=¹¤ÒÕ¿ª·¢
+process_development.value=å·¥è‰ºå¼€å‘
+process_development.shortDescription=å·¥è‰ºå¼€å‘
 process_development.order=201815
 
-pcb_design.value=PCBÉè¼Æ
-pcb_design.shortDescription=PCBÉè¼Æ
+pcb_design.value=PCBè®¾è®¡
+pcb_design.shortDescription=PCBè®¾è®¡
 pcb_design.order=201816
 
-purchasing_representative.value=²É¹º´ú±í
-purchasing_representative.shortDescription=²É¹º´ú±í
+purchasing_representative.value=é‡‡è´­ä»£è¡¨
+purchasing_representative.shortDescription=é‡‡è´­ä»£è¡¨
 purchasing_representative.order=201817
 
-quality_representative.value=ÖÊÁ¿´ú±í
-quality_representative.shortDescription=ÖÊÁ¿´ú±í
+quality_representative.value=è´¨é‡ä»£è¡¨
+quality_representative.shortDescription=è´¨é‡ä»£è¡¨
 quality_representative.order=201818
 
-manufacturing_representative.value=NPI¹¤³ÌÊ¦
-manufacturing_representative.shortDescription=NPI¹¤³ÌÊ¦
+manufacturing_representative.value=NPIå·¥ç¨‹å¸ˆ
+manufacturing_representative.shortDescription=NPIå·¥ç¨‹å¸ˆ
 manufacturing_representative.order=201819
 
-pmc_representative.value=PMC´ú±í
-pmc_representative.shortDescription=PMC´ú±í
+pmc_representative.value=PMCä»£è¡¨
+pmc_representative.shortDescription=PMCä»£è¡¨
 pmc_representative.order=201820
 
-after_sale_representative.value=ÊÛºó´ú±í
-after_sale_representative.shortDescription=ÊÛºó´ú±í
+after_sale_representative.value=å”®åä»£è¡¨
+after_sale_representative.shortDescription=å”®åä»£è¡¨
 after_sale_representative.order=201821
 
-intellectual_property_representative.value=ÖªÊ¶²úÈ¨´ú±í
-intellectual_property_representative.shortDescription=ÖªÊ¶²úÈ¨´ú±í
+intellectual_property_representative.value=çŸ¥è¯†äº§æƒä»£è¡¨
+intellectual_property_representative.shortDescription=çŸ¥è¯†äº§æƒä»£è¡¨
 intellectual_property_representative.order=201822
 
-financial_representative.value=²ÆÎñ´ú±í
-financial_representative.shortDescription=²ÆÎñ´ú±í
+financial_representative.value=è´¢åŠ¡ä»£è¡¨
+financial_representative.shortDescription=è´¢åŠ¡ä»£è¡¨
 financial_representative.order=201823
 
-test_representative.value=²âÊÔ´ú±í
-test_representative.shortDescription=²âÊÔ´ú±í
+test_representative.value=æµ‹è¯•ä»£è¡¨
+test_representative.shortDescription=æµ‹è¯•ä»£è¡¨
 test_representative.order=201824
 
-product_certification.value=²úÆ·ÈÏÖ¤
-product_certification.shortDescription=²úÆ·ÈÏÖ¤
+product_certification.value=äº§å“è®¤è¯
+product_certification.shortDescription=äº§å“è®¤è¯
 product_certification.order=201825
 
-director_system_leader.value=ÑĞ·¢ÏµÍ³¸ºÔğÈË
-director_system_leader.shortDescription=ÑĞ·¢ÏµÍ³¸ºÔğÈË
+director_system_leader.value=ç ”å‘ç³»ç»Ÿè´Ÿè´£äºº
+director_system_leader.shortDescription=ç ”å‘ç³»ç»Ÿè´Ÿè´£äºº
 director_system_leader.order=201826
 
-financial_officer.value=²ÆÎñ¸ºÔğÈË
-financial_officer.shortDescription=²ÆÎñ¸ºÔğÈË
+financial_officer.value=è´¢åŠ¡è´Ÿè´£äºº
+financial_officer.shortDescription=è´¢åŠ¡è´Ÿè´£äºº
 financial_officer.order=201827
 
-engineering_leader.value=¹¤³Ì¸ºÔğÈË
-engineering_leader.shortDescription=¹¤³Ì¸ºÔğÈË
+engineering_leader.value=å·¥ç¨‹è´Ÿè´£äºº
+engineering_leader.shortDescription=å·¥ç¨‹è´Ÿè´£äºº
 engineering_leader.order=201828
 
-quality_leader.value=ÖÊÁ¿¸ºÔğÈË
-quality_leader.shortDescription=ÖÊÁ¿¸ºÔğÈË
+quality_leader.value=è´¨é‡è´Ÿè´£äºº
+quality_leader.shortDescription=è´¨é‡è´Ÿè´£äºº
 quality_leader.order=201829
 
-pmc_leader.value=PMC¸ºÔğÈË
-pmc_leader.shortDescription=PMC¸ºÔğÈË
+pmc_leader.value=PMCè´Ÿè´£äºº
+pmc_leader.shortDescription=PMCè´Ÿè´£äºº
 pmc_leader.order=201830
 
-dqa_leader.value=DQA¸ºÔğÈË
-dqa_leader.shortDescription=DQA¸ºÔğÈË
+dqa_leader.value=DQAè´Ÿè´£äºº
+dqa_leader.shortDescription=DQAè´Ÿè´£äºº
 dqa_leader.order=201831
 
-test_manager.value=²âÊÔ¾­Àí
-test_manager.shortDescription=²âÊÔ¾­Àí
+test_manager.value=æµ‹è¯•ç»ç†
+test_manager.shortDescription=æµ‹è¯•ç»ç†
 test_manager.order=201832
 
-light_machine_leader.value=¹â»ú¸ºÔğÈË
-light_machine_leader.shortDescription=¹â»ú¸ºÔğÈË
+light_machine_leader.value=å…‰æœºè´Ÿè´£äºº
+light_machine_leader.shortDescription=å…‰æœºè´Ÿè´£äºº
 light_machine_leader.order=201833
 
-optical_manager.value=¹âÑ§¾­Àí
-optical_manager.shortDescription=¹âÑ§¾­Àí
+optical_manager.value=å…‰å­¦ç»ç†
+optical_manager.shortDescription=å…‰å­¦ç»ç†
 optical_manager.order=201834
 
-optical_structure_manager.value=¹â»ú½á¹¹¾­Àí
-optical_structure_manager.shortDescription=¹â»ú½á¹¹¾­Àí
+optical_structure_manager.value=å…‰æœºç»“æ„ç»ç†
+optical_structure_manager.shortDescription=å…‰æœºç»“æ„ç»ç†
 optical_structure_manager.order=201835
 
-software_leader.value=Èí¼ş¸ºÔğÈË
-software_leader.shortDescription=Èí¼ş¸ºÔğÈË
+software_leader.value=è½¯ä»¶è´Ÿè´£äºº
+software_leader.shortDescription=è½¯ä»¶è´Ÿè´£äºº
 software_leader.order=201836
 
-software_manager.value=Èí¼ş¾­Àí
-software_manager.shortDescription=Èí¼ş¾­Àí
+software_manager.value=è½¯ä»¶ç»ç†
+software_manager.shortDescription=è½¯ä»¶ç»ç†
 software_manager.order=201837
 
-rd_management_leader.value=ÑĞ·¢¹ÜÀí¸ºÔğÈË
-rd_management_leader.shortDescription=ÑĞ·¢¹ÜÀí¸ºÔğÈË
+rd_management_leader.value=ç ”å‘ç®¡ç†è´Ÿè´£äºº
+rd_management_leader.shortDescription=ç ”å‘ç®¡ç†è´Ÿè´£äºº
 rd_management_leader.order=201838
 
-project_management_leader.value=ÏîÄ¿¹ÜÀí¸ºÔğÈË
-project_management_leader.shortDescription=ÏîÄ¿¹ÜÀí¸ºÔğÈË
+project_management_leader.value=é¡¹ç›®ç®¡ç†è´Ÿè´£äºº
+project_management_leader.shortDescription=é¡¹ç›®ç®¡ç†è´Ÿè´£äºº
 project_management_leader.order=201839
 
-harderware_leader.value=Ó²¼ş¸ºÔğÈË
-harderware_leader.shortDescription=Ó²¼ş¸ºÔğÈË
+harderware_leader.value=ç¡¬ä»¶è´Ÿè´£äºº
+harderware_leader.shortDescription=ç¡¬ä»¶è´Ÿè´£äºº
 harderware_leader.order=201840
 
-harderware_manager.value=Ó²¼ş¾­Àí
-harderware_manager.shortDescription=Ó²¼ş¾­Àí
+harderware_manager.value=ç¡¬ä»¶ç»ç†
+harderware_manager.shortDescription=ç¡¬ä»¶ç»ç†
 harderware_manager.order=201841
 
-pcb_design_manager.value=PCBÉè¼Æ¾­Àí
-pcb_design_manager.shortDescription=PCBÉè¼Æ¾­Àí
+pcb_design_manager.value=PCBè®¾è®¡ç»ç†
+pcb_design_manager.shortDescription=PCBè®¾è®¡ç»ç†
 pcb_design_manager.order=201842
 
-cis_manager.value=CIS¿â¹ÜÀíÔ±
-cis_manager.shortDescription=CIS¿â¹ÜÀíÔ±
+cis_manager.value=CISåº“ç®¡ç†å‘˜
+cis_manager.shortDescription=CISåº“ç®¡ç†å‘˜
 cis_manager.order=201843
 
-machine_engineering_leader.value=Õû»ú¹¤³Ì¸ºÔğÈË
-machine_engineering_leader.shortDescription=Õû»ú¹¤³Ì¸ºÔğÈË
+machine_engineering_leader.value=æ•´æœºå·¥ç¨‹è´Ÿè´£äºº
+machine_engineering_leader.shortDescription=æ•´æœºå·¥ç¨‹è´Ÿè´£äºº
 machine_engineering_leader.order=201844
 
-structure_manager.value=½á¹¹¾­Àí
-structure_manager.shortDescription=½á¹¹¾­Àí
+structure_manager.value=ç»“æ„ç»ç†
+structure_manager.shortDescription=ç»“æ„ç»ç†
 structure_manager.order=201845
 
-process_development_manager.value=¹¤ÒÕ¿ª·¢¾­Àí
-process_development_manager.shortDescription=¹¤ÒÕ¿ª·¢¾­Àí
+process_development_manager.value=å·¥è‰ºå¼€å‘ç»ç†
+process_development_manager.shortDescription=å·¥è‰ºå¼€å‘ç»ç†
 process_development_manager.order=201846
 
-cable_development_manager.value=ÏßÀÂ¿ª·¢¾­Àí
-cable_development_manager.shortDescription=ÏßÀÂ¿ª·¢¾­Àí
+cable_development_manager.value=çº¿ç¼†å¼€å‘ç»ç†
+cable_development_manager.shortDescription=çº¿ç¼†å¼€å‘ç»ç†
 cable_development_manager.order=201847
 
-packaging_development_manager.value=°ü×°¿ª·¢¾­Àí
-packaging_development_manager.shortDescription=°ü×°¿ª·¢¾­Àí
+packaging_development_manager.value=åŒ…è£…å¼€å‘ç»ç†
+packaging_development_manager.shortDescription=åŒ…è£…å¼€å‘ç»ç†
 packaging_development_manager.order=201848
 
-thermal_design_manager.value=ÈÈÉè¼Æ¾­Àí
-thermal_design_manager.shortDescription=ÈÈÉè¼Æ¾­Àí
+thermal_design_manager.value=çƒ­è®¾è®¡ç»ç†
+thermal_design_manager.shortDescription=çƒ­è®¾è®¡ç»ç†
 thermal_design_manager.order=201849
 
-id_manager.value=ID¾­Àí
-id_manager.shortDescription=ID¾­Àí
+id_manager.value=IDç»ç†
+id_manager.shortDescription=IDç»ç†
 id_manager.order=201850
 
-rd_assistant.value=ÑĞ·¢ÖúÀí
-rd_assistant.shortDescription=ÑĞ·¢ÖúÀí
+rd_assistant.value=ç ”å‘åŠ©ç†
+rd_assistant.shortDescription=ç ”å‘åŠ©ç†
 rd_assistant.order=201851
 
-data_management_engineer.value=Êı¾İ¹ÜÀí¹¤³ÌÊ¦
-data_management_engineer.shortDescription=Êı¾İ¹ÜÀí¹¤³ÌÊ¦
+data_management_engineer.value=æ•°æ®ç®¡ç†å·¥ç¨‹å¸ˆ
+data_management_engineer.shortDescription=æ•°æ®ç®¡ç†å·¥ç¨‹å¸ˆ
 data_management_engineer.order=201852
 
-sales_representative.value=ÏúÊÛ´ú±í
-sales_representative.shortDescription=ÏúÊÛ´ú±í
+sales_representative.value=é”€å”®ä»£è¡¨
+sales_representative.shortDescription=é”€å”®ä»£è¡¨
 sales_representative.order=201853
 
-rd_material_staff.value=ÑĞ·¢ÎïÁÏÔ±
-rd_material_staff.shortDescription=ÑĞ·¢ÎïÁÏÔ±
+rd_material_staff.value=ç ”å‘ç‰©æ–™å‘˜
+rd_material_staff.shortDescription=ç ”å‘ç‰©æ–™å‘˜
 rd_material_staff.order=201854
 
-director.value=ÑĞ¾¿ÔºÔº³¤
-director.shortDescription=ÑĞ¾¿ÔºÔº³¤
+director.value=ç ”ç©¶é™¢é™¢é•¿
+director.shortDescription=ç ”ç©¶é™¢é™¢é•¿
 director.order=201855
 
-project_director_leader.value=ÑĞ¾¿ÔºÏîÄ¿¼¼Êõ¸ºÔğÈË
-project_director_leader.shortDescription=ÑĞ¾¿ÔºÏîÄ¿¼¼Êõ¸ºÔğÈË
+project_director_leader.value=ç ”ç©¶é™¢é¡¹ç›®æŠ€æœ¯è´Ÿè´£äºº
+project_director_leader.shortDescription=ç ”ç©¶é™¢é¡¹ç›®æŠ€æœ¯è´Ÿè´£äºº
 project_director_leader.order=201856
 
-researcher.value=ÑĞ¾¿Ô±
-researcher.shortDescription=ÑĞ¾¿Ô±
+researcher.value=ç ”ç©¶å‘˜
+researcher.shortDescription=ç ”ç©¶å‘˜
 researcher.order=201857
 
-material_development.value=²ÄÁÏ¿ª·¢
-material_development.shortDescription=²ÄÁÏ¿ª·¢
+material_development.value=ææ–™å¼€å‘
+material_development.shortDescription=ææ–™å¼€å‘
 material_development.order=201858
 
-material_manager.value=²ÄÁÏ¾­Àí
-material_manager.shortDescription=²ÄÁÏ¾­Àí
+material_manager.value=ææ–™ç»ç†
+material_manager.shortDescription=ææ–™ç»ç†
 material_manager.order=201859
 
-fpga_development.value=FPGA¿ª·¢
-fpga_development.shortDescription=FPGA¿ª·¢
+fpga_development.value=FPGAå¼€å‘
+fpga_development.shortDescription=FPGAå¼€å‘
 fpga_development.order=201860
 
-rd_representative.value=ÑĞ·¢´ú±í
-rd_representative.shortDescription=ÑĞ·¢´ú±í
+rd_representative.value=ç ”å‘ä»£è¡¨
+rd_representative.shortDescription=ç ”å‘ä»£è¡¨
 rd_representative.order=201861
 
-encapsulation_development.value=·â×°ÑĞ·¢
-encapsulation_development.shortDescription=·â×°ÑĞ·¢
+encapsulation_development.value=å°è£…ç ”å‘
+encapsulation_development.shortDescription=å°è£…ç ”å‘
 encapsulation_development.order=201862
 
-encapsulation_development_manager.value=·â×°ÑĞ·¢¾­Àí
-encapsulation_development_manager.shortDescription=·â×°ÑĞ·¢¾­Àí
+encapsulation_development_manager.value=å°è£…ç ”å‘ç»ç†
+encapsulation_development_manager.shortDescription=å°è£…ç ”å‘ç»ç†
 encapsulation_development_manager.order=201863
 
-product_certification_manager.value=²úÆ·ÈÏÖ¤¾­Àí
-product_certification_manager.shortDescription=²úÆ·ÈÏÖ¤¾­Àí
+product_certification_manager.value=äº§å“è®¤è¯ç»ç†
+product_certification_manager.shortDescription=äº§å“è®¤è¯ç»ç†
 product_certification_manager.order=201864
 
-company_leader.value=¹«Ë¾¸ß²ã
-company_leader.shortDescription=¹«Ë¾¸ß²ã
+company_leader.value=å…¬å¸é«˜å±‚
+company_leader.shortDescription=å…¬å¸é«˜å±‚
 company_leader.order=201865
 
-purchasing_leader.value=²É¹º¸ºÔğÈË
-purchasing_leader.shortDescription=²É¹º¸ºÔğÈË
+purchasing_leader.value=é‡‡è´­è´Ÿè´£äºº
+purchasing_leader.shortDescription=é‡‡è´­è´Ÿè´£äºº
 purchasing_leader.order=201866
 
-rd_director.value=ÑĞ·¢×Ü¼à
-rd_director.shortDescription=ÑĞ·¢×Ü¼à
+rd_director.value=ç ”å‘æ€»ç›‘
+rd_director.shortDescription=ç ”å‘æ€»ç›‘
 rd_director.order=201867
 
-product_line_director_leader.value=²úÆ·ÏßÑĞ·¢¸ºÔğÈË
-product_line_director_leader.shortDescription=²úÆ·ÏßÑĞ·¢¸ºÔğÈË
+product_line_director_leader.value=äº§å“çº¿ç ”å‘è´Ÿè´£äºº
+product_line_director_leader.shortDescription=äº§å“çº¿ç ”å‘è´Ÿè´£äºº
 product_line_director_leader.order=201868
 
-engineering_manager.value=¹¤³Ì´ú±í
-engineering_manager.shortDescription=¹¤³Ì´ú±í
+engineering_manager.value=å·¥ç¨‹ä»£è¡¨
+engineering_manager.shortDescription=å·¥ç¨‹ä»£è¡¨
 engineering_manager.order=201869
 
-it_representative.value=IT´ú±í
-it_representative.shortDescription=IT´ú±í
+it_representative.value=ITä»£è¡¨
+it_representative.shortDescription=ITä»£è¡¨
 it_representative.order=201870
 
-executive_representative.value=ĞĞÕş´ú±í
-executive_representative.shortDescription=ĞĞÕş´ú±í
+executive_representative.value=è¡Œæ”¿ä»£è¡¨
+executive_representative.shortDescription=è¡Œæ”¿ä»£è¡¨
 executive_representative.order=201871
 
-standardized_engineer.value=±ê×¼»¯¹¤³ÌÊ¦
-standardized_engineer.shortDescription=±ê×¼»¯¹¤³ÌÊ¦
+standardized_engineer.value=æ ‡å‡†åŒ–å·¥ç¨‹å¸ˆ
+standardized_engineer.shortDescription=æ ‡å‡†åŒ–å·¥ç¨‹å¸ˆ
 standardized_engineer.order=201872
 
-Electronic_purchasing_representative.value=µç×ÓÁÏ²É¹º´ú±í
-Electronic_purchasing_representative.shortDescription=µç×ÓÁÏ²É¹º´ú±í
+Electronic_purchasing_representative.value=ç”µå­æ–™é‡‡è´­ä»£è¡¨
+Electronic_purchasing_representative.shortDescription=ç”µå­æ–™é‡‡è´­ä»£è¡¨
 Electronic_purchasing_representative.order=201873
 
-dian_zi_liao_chan_pin_ren_zheng.value=µç×ÓÁÏ²úÆ·ÈÏÖ¤
-dian_zi_liao_chan_pin_ren_zheng.shortDescription=µç×ÓÁÏ²úÆ·ÈÏÖ¤
+dian_zi_liao_chan_pin_ren_zheng.value=ç”µå­æ–™äº§å“è®¤è¯
+dian_zi_liao_chan_pin_ren_zheng.shortDescription=ç”µå­æ–™äº§å“è®¤è¯
 dian_zi_liao_chan_pin_ren_zheng.order=202003
 
-Electronic_sqe.value=µç×ÓÁÏSQE
-Electronic_sqe.shortDescription=µç×ÓÁÏSQE
+Electronic_sqe.value=ç”µå­æ–™SQE
+Electronic_sqe.shortDescription=ç”µå­æ–™SQE
 Electronic_sqe.order=201874
 
-solution_development.value=½â¾ö·½°¸¿ª·¢
-solution_development.shortDescription=½â¾ö·½°¸¿ª·¢
+solution_development.value=è§£å†³æ–¹æ¡ˆå¼€å‘
+solution_development.shortDescription=è§£å†³æ–¹æ¡ˆå¼€å‘
 solution_development.order=201875
 
+project_manager_group.value=é¡¹ç›®ç»ç†ä¸“ä¸šç»„
+project_manager_group.shortDescription=é¡¹ç›®ç»ç†ä¸“ä¸šç»„
 
-project_manager_group.value=ÏîÄ¿¾­Àí×¨Òµ×é
-project_manager_group.shortDescription=ÏîÄ¿¾­Àí×¨Òµ×é
+system_development_group.value=ç³»ç»Ÿå¼€å‘ä¸“ä¸šç»„
+system_development_group.shortDescription=ç³»ç»Ÿå¼€å‘ä¸“ä¸šç»„
 
-system_development_group.value=ÏµÍ³¿ª·¢×¨Òµ×é
-system_development_group.shortDescription=ÏµÍ³¿ª·¢×¨Òµ×é
+optical_development_group.value=å…‰å­¦å¼€å‘ä¸“ä¸šç»„
+optical_development_group.shortDescription=å…‰å­¦å¼€å‘ä¸“ä¸šç»„
 
-optical_development_group.value=¹âÑ§¿ª·¢×¨Òµ×é
-optical_development_group.shortDescription=¹âÑ§¿ª·¢×¨Òµ×é
+hardware_development_group.value=ç¡¬ä»¶å¼€å‘ä¸“ä¸šç»„
+hardware_development_group.shortDescription=ç¡¬ä»¶å¼€å‘ä¸“ä¸šç»„
 
-hardware_development_group.value=Ó²¼ş¿ª·¢×¨Òµ×é
-hardware_development_group.shortDescription=Ó²¼ş¿ª·¢×¨Òµ×é
+software_development_group.value=è½¯ä»¶å¼€å‘ä¸“ä¸šç»„
+software_development_group.shortDescription=è½¯ä»¶å¼€å‘ä¸“ä¸šç»„
 
-software_development_group.value=Èí¼ş¿ª·¢×¨Òµ×é
-software_development_group.shortDescription=Èí¼ş¿ª·¢×¨Òµ×é
+optical_structure_development_group.value=å…‰æœºç»“æ„å¼€å‘ä¸“ä¸šç»„
+optical_structure_development_group.shortDescription=å…‰æœºç»“æ„å¼€å‘ä¸“ä¸šç»„
 
-optical_structure_development_group.value=¹â»ú½á¹¹¿ª·¢×¨Òµ×é
-optical_structure_development_group.shortDescription=¹â»ú½á¹¹¿ª·¢×¨Òµ×é
+structure_development_group.value=ç»“æ„å¼€å‘ä¸“ä¸šç»„
+structure_development_group.shortDescription=ç»“æ„å¼€å‘ä¸“ä¸šç»„
 
-structure_development_group.value=½á¹¹¿ª·¢×¨Òµ×é
-structure_development_group.shortDescription=½á¹¹¿ª·¢×¨Òµ×é
+packaging_development_group.value=åŒ…è£…å¼€å‘ä¸“ä¸šç»„
+packaging_development_group.shortDescription=åŒ…è£…å¼€å‘ä¸“ä¸šç»„
 
-packaging_development_group.value=°ü×°¿ª·¢×¨Òµ×é
-packaging_development_group.shortDescription=°ü×°¿ª·¢×¨Òµ×é
+thermal_design_group.value=çƒ­è®¾è®¡ä¸“ä¸šç»„
+thermal_design_group.shortDescription=çƒ­è®¾è®¡ä¸“ä¸šç»„
 
-thermal_design_group.value=ÈÈÉè¼Æ×¨Òµ×é
-thermal_design_group.shortDescription=ÈÈÉè¼Æ×¨Òµ×é
+cable_development_group.value=çº¿ç¼†å¼€å‘ä¸“ä¸šç»„
+cable_development_group.shortDescription=çº¿ç¼†å¼€å‘ä¸“ä¸šç»„
 
-cable_development_group.value=ÏßÀÂ¿ª·¢×¨Òµ×é
-cable_development_group.shortDescription=ÏßÀÂ¿ª·¢×¨Òµ×é
-
-
-product_leader.value=²úÆ·¸ºÔğÈË
-product_leader.shortDescription=²úÆ·¸ºÔğÈË
+product_leader.value=äº§å“è´Ÿè´£äºº
+product_leader.shortDescription=äº§å“è´Ÿè´£äºº
 product_leader.order=201877
 
-
-manufacturing_manager.value=NPI´ú±í
-manufacturing_manager.shortDescription=NPI´ú±í
+manufacturing_manager.value=NPIä»£è¡¨
+manufacturing_manager.shortDescription=NPIä»£è¡¨
 manufacturing_manager.order=201878
 
-engineering_representative.value=¹¤³Ì¹¤³ÌÊ¦
-engineering_representative.shortDescription=¹¤³Ì¹¤³ÌÊ¦
+engineering_representative.value=å·¥ç¨‹å·¥ç¨‹å¸ˆ
+engineering_representative.shortDescription=å·¥ç¨‹å·¥ç¨‹å¸ˆ
 engineering_representative.order=201879
-
-
-
-
-

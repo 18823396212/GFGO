@@ -1,17 +1,35 @@
 ResourceInfo.class=wt.tools.resource.EnumResourceInfo
+ResourceInfo.customizable=true
+ResourceInfo.deprecated=false
+
+# Entry Format (values equal to default value are not included)
+# <key>.value=
+# <key>.comment=
+# <key>.argComment<n>=
+# <key>.constant=
+# <key>.customizable=
+# <key>.deprecated=
+# <key>.abbreviatedDisplay=
+# <key>.fullDisplay=
+# <key>.shortDescription=
+# <key>.longDescription=
+# <key>.comment=
+# <key>.order=
+# <key>.defaultValue=
+# <key>.selectable=
 
 # Entry Contents
 
 buy.value.translationSource.now=Buy
 buy.shortDescription.translationSource.now=Buy state
-buy.value=Íâ¹º
-buy.shortDescription=Íâ¹º×´Ì¬
+buy.value=å¤–è´­
+buy.shortDescription=å¤–è´­çŠ¶æ€
 buy.order=20
 
 make.value.translationSource.now=Make
 make.shortDescription.translationSource.now=Make state
-make.value=×ÔÖÆ
-make.shortDescription=×ÔÖÆ×´Ì¬
+make.value=è‡ªåˆ¶
+make.shortDescription=è‡ªåˆ¶çŠ¶æ€
 make.order=10
 
 singlesource.value.translationSource.now=Buy - Single Source
@@ -20,8 +38,8 @@ singlesource.value=Buy - Single Source
 singlesource.shortDescription=Buy Single Source state
 singlesource.order=30
 
-Outsourcing.value=ÍâĞ­
-Outsourcing.shortDescription=ÍâĞ­
+Outsourcing.value=å¤–å
+Outsourcing.shortDescription=å¤–å
 Outsourcing.order=25
 
 outsource.value=outsource

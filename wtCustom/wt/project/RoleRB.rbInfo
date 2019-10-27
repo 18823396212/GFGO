@@ -1,7 +1,6 @@
-﻿ResourceInfo.class=wt.tools.resource.EnumResourceInfo
+ResourceInfo.class=wt.tools.resource.EnumResourceInfo
 ResourceInfo.customizable=true
 ResourceInfo.deprecated=false
-ResourceInfo.replacement=false
 ResourceInfo.UUID=8db111cc-5428-4d8b-b2e9-ed3a5b20baf0
 
 # Entry Format (values equal to default value are not included)
@@ -358,7 +357,6 @@ dian_zi_liao_chan_pin_ren_zheng.value=dian_zi_liao_chan_pin_ren_zheng
 dian_zi_liao_chan_pin_ren_zheng.shortDescription=dian_zi_liao_chan_pin_ren_zheng
 dian_zi_liao_chan_pin_ren_zheng.order=202003
 
-
 Electronic_sqe.value=Electronic_sqe
 Electronic_sqe.shortDescription=Electronic_sqe
 Electronic_sqe.order=201874
@@ -405,8 +403,6 @@ manufacturing_manager.value=manufacturing_manager
 manufacturing_manager.shortDescription=manufacturing_manager
 manufacturing_manager.order=201878
 
-
 engineering_representative.value=engineering_representative
 engineering_representative.shortDescription=engineering_representative
 engineering_representative.order=201879
-

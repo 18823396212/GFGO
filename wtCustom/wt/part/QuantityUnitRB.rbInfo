@@ -1,7 +1,6 @@
 ResourceInfo.class=wt.tools.resource.EnumResourceInfo
 ResourceInfo.customizable=true
 ResourceInfo.deprecated=false
-ResourceInfo.replacement=false
 ResourceInfo.UUID=f02e5a5a-f978-438f-be4d-93306237cc68
 
 

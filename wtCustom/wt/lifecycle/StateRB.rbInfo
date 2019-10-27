@@ -1,9 +1,7 @@
 ResourceInfo.class=wt.tools.resource.EnumResourceInfo
 ResourceInfo.customizable=true
 ResourceInfo.deprecated=false
-ResourceInfo.replacement=false
 ResourceInfo.UUID=48de8535-78c4-4872-bb60-fa3b4042c6ec
-
 
 # Entry Format (values equal to default value are not included)
 # <key>.value=
@@ -58,4 +56,5 @@ PROTOTYPE_DESIGN.shortDescription=PROTOTYPE_DESIGN
 
 PROTOTYPE_WAIT_FOR_CONVERSION.value=PROTOTYPE_WAIT_FOR_CONVERSION
 PROTOTYPE_WAIT_FOR_CONVERSION.shortDescription=PROTOTYPE_WAIT_FOR_CONVERSION
+
 

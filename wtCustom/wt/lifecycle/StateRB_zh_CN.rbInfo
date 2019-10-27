@@ -1,56 +1,74 @@
 ResourceInfo.class=wt.tools.resource.EnumResourceInfo
+ResourceInfo.customizable=true
+ResourceInfo.deprecated=false
+
+# Entry Format (values equal to default value are not included)
+# <key>.value=
+# <key>.category=
+# <key>.comment=
+# <key>.argComment<n>=
+# <key>.constant=
+# <key>.customizable=
+# <key>.deprecated=
+# <key>.abbreviatedDisplay=
+# <key>.fullDisplay=
+# <key>.shortDescription=
+# <key>.longDescription=
+# <key>.order=
+# <key>.defaultValue=
+# <key>.selectable=
 
 # Entry Contents
 
 ARCHIVED.value.translationSource.now=Archived
 ARCHIVED.shortDescription.translationSource.now=Archived state
-ARCHIVED.value=???
-ARCHIVED.shortDescription=?????
+ARCHIVED.value=已归档
+ARCHIVED.shortDescription=已归档状态
 
 IN REVIEW.value.translationSource.now=In Review
 IN REVIEW.shortDescription.translationSource.now=In Review state
-IN REVIEW.value=??????????
-IN REVIEW.shortDescription=????????????
+IN REVIEW.value=正在审阅中
+IN REVIEW.shortDescription=正在审阅中状态
 
 REWORK.value.translationSource.now=Rework
 REWORK.shortDescription.translationSource.now=Rework state
-REWORK.value=???????
-REWORK.shortDescription=?????????
+REWORK.value=重新工作
+REWORK.shortDescription=重新工作状态
 
 #<TRANSLATE>
 
 UNDERREVIEW.value.translationSource.was=Under Review
 UNDERREVIEW.value.translationSource.now=Under Review
 UNDERREVIEW.shortDescription.translationSource.now=Under review state
-UNDERREVIEW.value=????????
-UNDERREVIEW.shortDescription=??????????
+UNDERREVIEW.value=正在审阅
+UNDERREVIEW.shortDescription=正在审阅状态
 
-MODEL_CHANGE.value=????????????
-MODEL_CHANGE.shortDescription=????????????
+MODEL_CHANGE.value=试生产更改中
+MODEL_CHANGE.shortDescription=试生产更改中
 
-MODEL_STAGE.value=??????
-MODEL_STAGE.shortDescription=??????
+MODEL_STAGE.value=试生产
+MODEL_STAGE.shortDescription=试生产
 
-MODEL_WAIT_FOR_CONVERSION.value=?????????
-MODEL_WAIT_FOR_CONVERSION.shortDescription=?????????
+MODEL_WAIT_FOR_CONVERSION.value=试生产待转
+MODEL_WAIT_FOR_CONVERSION.shortDescription=试生产待转
 
-NEWITEM.value=???????
-NEWITEM.shortDescription=???????
+NEWITEM.value=新建物料
+NEWITEM.shortDescription=新建物料
 
-PENDINGREVIEW.value=??????
-PENDINGREVIEW.shortDescription=??????
+PENDINGREVIEW.value=提交审阅
+PENDINGREVIEW.shortDescription=提交审阅
 
-PRODUCTION_CHANGE.value=??????????
-PRODUCTION_CHANGE.shortDescription=??????????
+PRODUCTION_CHANGE.value=批产更改中
+PRODUCTION_CHANGE.shortDescription=批产更改中
 
-PRODUCTION_STAGE.value=????
-PRODUCTION_STAGE.shortDescription=????
+PRODUCTION_STAGE.value=批产
+PRODUCTION_STAGE.shortDescription=批产
 
-PROTOTYPE_DESIGN.value=????????
-PROTOTYPE_DESIGN.shortDescription=????????
+PROTOTYPE_DESIGN.value=原型更改中
+PROTOTYPE_DESIGN.shortDescription=原型更改中
 
-PROTOTYPE_WAIT_FOR_CONVERSION.value=?????
-PROTOTYPE_WAIT_FOR_CONVERSION.shortDescription=?????
+PROTOTYPE_WAIT_FOR_CONVERSION.value=原型待转
+PROTOTYPE_WAIT_FOR_CONVERSION.shortDescription=原型待转
 
-WAITREVIEW.value=??????
-WAITREVIEW.shortDescription=??????
+WAITREVIEW.value=待审阅
+WAITREVIEW.shortDescription=待审阅

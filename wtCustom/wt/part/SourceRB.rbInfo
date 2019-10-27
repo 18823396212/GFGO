@@ -1,13 +1,10 @@
 ResourceInfo.class=wt.tools.resource.EnumResourceInfo
 ResourceInfo.customizable=true
 ResourceInfo.deprecated=false
-ResourceInfo.replacement=false
 ResourceInfo.UUID=c67f40ad-f6fe-4486-b3cd-6a78b7844cb4
-
 
 # Entry Format (values equal to default value are not included)
 # <key>.value=
-# <key>.category=
 # <key>.comment=
 # <key>.argComment<n>=
 # <key>.constant=
@@ -17,11 +14,29 @@ ResourceInfo.UUID=c67f40ad-f6fe-4486-b3cd-6a78b7844cb4
 # <key>.fullDisplay=
 # <key>.shortDescription=
 # <key>.longDescription=
+# <key>.comment=
 # <key>.order=
 # <key>.defaultValue=
 # <key>.selectable=
 
 # Entry Contents
+
+#commodity.value=Commodity
+#commodity.shortDescription=Commodity state
+#commodity.order=40
+
+singlesource.value=Buy - Single Source
+singlesource.shortDescription=Buy Single Source state
+singlesource.order=30
+
+buy.value=Buy
+buy.shortDescription=Buy state
+buy.order=20
+
+make.value=Make
+make.shortDescription=Make state
+make.order=10
+make.defaultValue=true
 
 Outsourcing.value=Outsourcing
 Outsourcing.shortDescription=Outsourcing
