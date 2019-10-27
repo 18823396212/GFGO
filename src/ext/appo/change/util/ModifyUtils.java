@@ -8,6 +8,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import wt.access.AccessPermission;
 import wt.change2.*;
+import wt.configurablelink.ConfigurableDescribeLink;
 import wt.doc.WTDocument;
 import wt.epm.EPMDocument;
 import wt.fc.*;
@@ -21,6 +22,7 @@ import wt.org.WTPrincipal;
 import wt.org.WTPrincipalReference;
 import wt.part.WTPart;
 import wt.part.WTPartUsageLink;
+import wt.pds.StatementSpec;
 import wt.project.Role;
 import wt.query.ArrayExpression;
 import wt.query.ClassAttribute;
@@ -30,6 +32,7 @@ import wt.session.SessionHelper;
 import wt.team.Team;
 import wt.team.TeamHelper;
 import wt.team.TeamManaged;
+import wt.type.ClientTypedUtility;
 import wt.type.TypeDefinitionReference;
 import wt.type.TypedUtilityServiceHelper;
 import wt.util.WTException;
@@ -734,6 +737,80 @@ public class ModifyUtils implements ChangeConstants {
                 ChangeHelper2.service.storeAssociations(ChangeRecord2.class, eca, tempVector);
             }
         }
+    }
+
+    /**
+     * 查询对象(RoleA)关联的某一类型的ConfigurableDescribeLink
+     * @param persistable
+     * @param type
+     * @return
+     * @throws WTException
+     */
+    public static Map<Persistable, ConfigurableDescribeLink> getDescribedBy(Persistable persistable, String type) throws WTException {
+        Map<Persistable, ConfigurableDescribeLink> linkMap = new HashMap<>();
+        try {
+            QuerySpec querySpec = new QuerySpec(ConfigurableDescribeLink.class);
+            querySpec.setAdvancedQueryEnabled(true);
+
+            SearchCondition sc = new SearchCondition(ConfigurableDescribeLink.class, "roleAObjectRef.key.id", SearchCondition.EQUAL, persistable.getPersistInfo().getObjectIdentifier().getId());
+            querySpec.appendWhere(sc, new int[]{0});
+
+            querySpec.appendAnd();
+            TypeDefinitionReference tdr = ClientTypedUtility.getTypeDefinitionReference(type);
+            sc = new SearchCondition(ConfigurableDescribeLink.class, "typeDefinitionReference.key.branchId", SearchCondition.EQUAL, tdr.getKey().getBranchId());
+            querySpec.appendWhere(sc, new int[]{0});
+
+            LOGGER.info(">>>>>>>>>>getRelationDocLink.querySpec:" + querySpec.toString());
+            QueryResult result = PersistenceHelper.manager.find((StatementSpec) querySpec);
+            LOGGER.info(">>>>>>>>>>getRelationDocLink.result:" + result.size());
+            while (result.hasMoreElements()) {
+                Object object = result.nextElement();
+                if (object instanceof ConfigurableDescribeLink) {
+                    ConfigurableDescribeLink link = (ConfigurableDescribeLink) object;
+                    linkMap.put(link.getRoleBObject(), link);
+                }
+            }
+        } catch (Exception e) {
+            throw new WTException(e.getStackTrace());
+        }
+        return linkMap;
+    }
+
+    /**
+     * 查询对象(RoleB)关联的某一类型的ConfigurableDescribeLink
+     * @param persistable
+     * @param type
+     * @return
+     * @throws WTException
+     */
+    public static Map<Persistable, ConfigurableDescribeLink> getDescribed(Persistable persistable, String type) throws WTException {
+        Map<Persistable, ConfigurableDescribeLink> linkMap = new HashMap<>();
+        try {
+            QuerySpec querySpec = new QuerySpec(ConfigurableDescribeLink.class);
+            querySpec.setAdvancedQueryEnabled(true);
+
+            SearchCondition sc = new SearchCondition(ConfigurableDescribeLink.class, "roleBObjectRef.key.id", SearchCondition.EQUAL, persistable.getPersistInfo().getObjectIdentifier().getId());
+            querySpec.appendWhere(sc, new int[]{0});
+
+            querySpec.appendAnd();
+            TypeDefinitionReference tdr = ClientTypedUtility.getTypeDefinitionReference(type);
+            sc = new SearchCondition(ConfigurableDescribeLink.class, "typeDefinitionReference.key.branchId", SearchCondition.EQUAL, tdr.getKey().getBranchId());
+            querySpec.appendWhere(sc, new int[]{0});
+
+            LOGGER.info(">>>>>>>>>>getRelationDocLink.querySpec:" + querySpec.toString());
+            QueryResult result = PersistenceHelper.manager.find((StatementSpec) querySpec);
+            LOGGER.info(">>>>>>>>>>getRelationDocLink.result:" + result.size());
+            while (result.hasMoreElements()) {
+                Object object = result.nextElement();
+                if (object instanceof ConfigurableDescribeLink) {
+                    ConfigurableDescribeLink link = (ConfigurableDescribeLink) object;
+                    linkMap.put(link.getRoleAObject(), link);
+                }
+            }
+        } catch (Exception e) {
+            throw new WTException(e.getStackTrace());
+        }
+        return linkMap;
     }
 
 }

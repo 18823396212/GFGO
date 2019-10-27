@@ -108,6 +108,11 @@ public class TransactionECAUtil implements ChangeConstants, ModifyConstants {
                 String needDate = dataJSONObject.getString(ChangeConstants.NEEDDATE_COMPID);
                 ModifyUtils.updateNeedDate(eca, needDate);
             }
+
+
+            //创建模型对象，保存事务性任务属性。并与ECN建立关联关系
+
+
         } catch (Exception e) {
             throw new WTException(e.getStackTrace());
         }

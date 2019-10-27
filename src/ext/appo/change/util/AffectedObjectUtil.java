@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import wt.change2.ChangeHelper2;
 import wt.change2.WTChangeActivity2;
 import wt.change2.WTChangeOrder2;
+import wt.configurablelink.ConfigurableDescribeLink;
 import wt.doc.WTDocument;
 import wt.epm.EPMDocument;
 import wt.fc.*;
@@ -85,67 +86,65 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
      * @throws WTException
      */
     private void getPageChangeTaskArray() throws WTException {
-        if (NMCOMMANDBEAN != null) {
-            try {
-                // 获取新增数据列
-                Map<String, Object> parameterMap = NMCOMMANDBEAN.getParameterMap();
-                if (parameterMap.containsKey(CHANGETASK_ARRAY)) {
-                    String[] changeTaskArrayStr = (String[]) parameterMap.get(CHANGETASK_ARRAY);
-                    if (changeTaskArrayStr != null && changeTaskArrayStr.length > 0) {
-                        String datasJSON = changeTaskArrayStr[0];
-                        LOGGER.info(">>>>>>>>>>datasJSON: " + datasJSON);
-                        if (PIStringUtils.isNotNull(datasJSON)) {
-                            JSONArray jsonArray = new JSONArray(datasJSON);
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                Persistable persistable = null;
-                                // 存储页面属性信息
-                                Map<String, String> attributesMap = new HashMap<>();
-                                JSONObject jsonObject = new JSONObject(jsonArray.getString(i));
-                                Iterator<String> keyIterator = jsonObject.keys();
-                                while (keyIterator.hasNext()) {
-                                    // 属性ID
-                                    String key = keyIterator.next();
-                                    // 属性值
-                                    String value = jsonObject.getString(key);
-                                    if (PIStringUtils.isNotNull(value)) {
-                                        if (key.equalsIgnoreCase(OID_COMPID)) {
-                                            persistable = (new ReferenceFactory()).getReference(value).getObject();
-                                            continue;
-                                        }
-                                        if (key.equals(COMPLETIONTIME_COMPID)) {
-                                            if (value.contains(" ")) {
-                                                value = value.substring(0, value.indexOf(" ")).trim();
-                                            }
-                                            if (value.contains("-")) {
-                                                value = (new SimpleDateFormat(ChangeConstants.SIMPLE_DATE_FORMAT_02)).format((new SimpleDateFormat(ChangeConstants.SIMPLE_DATE_FORMAT_03)).parse(value));
-                                            }
-                                        }
-                                        attributesMap.put(key, value);
+        try {
+            // 获取新增数据列
+            Map<String, Object> parameterMap = NMCOMMANDBEAN.getParameterMap();
+            if (parameterMap.containsKey(CHANGETASK_ARRAY)) {
+                String[] changeTaskArrayStr = (String[]) parameterMap.get(CHANGETASK_ARRAY);
+                if (changeTaskArrayStr != null && changeTaskArrayStr.length > 0) {
+                    String datasJSON = changeTaskArrayStr[0];
+                    LOGGER.info(">>>>>>>>>>datasJSON: " + datasJSON);
+                    if (PIStringUtils.isNotNull(datasJSON)) {
+                        JSONArray jsonArray = new JSONArray(datasJSON);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            Persistable persistable = null;
+                            // 存储页面属性信息
+                            Map<String, String> attributesMap = new HashMap<>();
+                            JSONObject jsonObject = new JSONObject(jsonArray.getString(i));
+                            Iterator<String> keyIterator = jsonObject.keys();
+                            while (keyIterator.hasNext()) {
+                                // 属性ID
+                                String key = keyIterator.next();
+                                // 属性值
+                                String value = jsonObject.getString(key);
+                                if (PIStringUtils.isNotNull(value)) {
+                                    if (key.equalsIgnoreCase(OID_COMPID)) {
+                                        persistable = (new ReferenceFactory()).getReference(value).getObject();
+                                        continue;
                                     }
+                                    if (key.equals(COMPLETIONTIME_COMPID)) {
+                                        if (value.contains(" ")) {
+                                            value = value.substring(0, value.indexOf(" ")).trim();
+                                        }
+                                        if (value.contains("-")) {
+                                            value = (new SimpleDateFormat(ChangeConstants.SIMPLE_DATE_FORMAT_02)).format((new SimpleDateFormat(ChangeConstants.SIMPLE_DATE_FORMAT_03)).parse(value));
+                                        }
+                                    }
+                                    attributesMap.put(key, value);
                                 }
-                                if (persistable != null) {
-                                    PAGEDATAMAP.put(persistable, attributesMap);
-                                }
-                                if (persistable instanceof WTPart) {
-                                    WTPart part = (WTPart) persistable;
-                                    AFFECTEDPARTNUMBER.add(part.getNumber() + part.getViewName());
-                                    AFFECTEDPART.add(part);
-                                }
-                                if (persistable instanceof WTDocument) {
-                                    AFFECTEDDOCNUMBER.add(ModifyUtils.getNumber(persistable));
-                                    AFFECTEDDOC.add(persistable);
-                                }
-                                if (persistable instanceof EPMDocument) {
-                                    AFFECTEDDOCNUMBER.add(ModifyUtils.getNumber(persistable));
-                                    AFFECTEDDOC.add(persistable);
-                                }
+                            }
+                            if (persistable != null) {
+                                PAGEDATAMAP.put(persistable, attributesMap);
+                            }
+                            if (persistable instanceof WTPart) {
+                                WTPart part = (WTPart) persistable;
+                                AFFECTEDPARTNUMBER.add(part.getNumber() + part.getViewName());
+                                AFFECTEDPART.add(part);
+                            }
+                            if (persistable instanceof WTDocument) {
+                                AFFECTEDDOCNUMBER.add(ModifyUtils.getNumber(persistable));
+                                AFFECTEDDOC.add(persistable);
+                            }
+                            if (persistable instanceof EPMDocument) {
+                                AFFECTEDDOCNUMBER.add(ModifyUtils.getNumber(persistable));
+                                AFFECTEDDOC.add(persistable);
                             }
                         }
                     }
                 }
-            } catch (Exception e) {
-                throw new WTException(e.getStackTrace());
             }
+        } catch (Exception e) {
+            throw new WTException(e.getStackTrace());
         }
     }
 
@@ -300,34 +299,72 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
             MESSAGES.add("受影响对象列表不能为空！");
         }
 
-        //8.1、检查受影响对象是否存在未结束的ECN（包含的ECA非取消状态），有则不允许创建。
+        //8.1、检查受影响对象是否存在未结束的ECN（包含的ECA非取消状态、以及暂存状态的ECN），有则不允许创建。
         for (Persistable persistable : PAGEDATAMAP.keySet()) {
             if (persistable instanceof WTPart) {
                 WTPart part = (WTPart) persistable;
-                LOGGER.info(">>>>>>>>>>part:" + part.getNumber());
+                String number = part.getNumber();
+                LOGGER.info(">>>>>>>>>>part:" + number);
 
-                //获取所有大版本的最新小版本
-                QueryResult queryResult = VersionControlHelper.service.allVersionsOf(part.getMaster());
+                boolean flog = true;
+                //先检查每个大版本的最新小版本是否有关联的ECA、ECN非「已取消」「已解决」状态
+                QueryResult queryResult = VersionControlHelper.service.allVersionsOf(part.getMaster());//获取所有大版本的最新小版本
                 while (queryResult.hasMoreElements()) {
                     WTPart oldPart = (WTPart) queryResult.nextElement();
 
+                    boolean flag = false;
                     //获取对象所有关联的ECA对象
                     QueryResult result = ChangeHelper2.service.getAffectingChangeActivities(oldPart);
                     LOGGER.info(">>>>>>>>>>result size:" + result.size());
                     while (result.hasMoreElements()) {
                         WTChangeActivity2 changeActivity2 = (WTChangeActivity2) result.nextElement();
                         LOGGER.info(">>>>>>>>>>changeActivity2:" + changeActivity2.getNumber());
+                        //判断关联的ECA是否非「已取消」「已解决」状态
                         if ((!ChangeUtils.checkState(changeActivity2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeActivity2, ChangeConstants.RESOLVED))) {
-                            MESSAGES.add("物料: " + part.getNumber() + " 存在未解决的ECA: " + changeActivity2.getNumber() + " 不能同时提交两个ECA！");
+                            MESSAGES.add("物料: " + number + " 存在未解决的ECA: " + changeActivity2.getNumber() + " 不能同时提交两个ECA！");
+                            flag = true;
+                            flog = false;
+                            break;
                         }
 
                         WTChangeOrder2 changeOrder2 = ChangeUtils.getEcnByEca(changeActivity2);
                         LOGGER.info(">>>>>>>>>>changeOrder2:" + changeOrder2.getNumber());
                         if (!ORDER2.getNumber().startsWith(changeOrder2.getNumber())) {
+                            //判断关联的ECN是否非「已取消」「已解决」状态
                             if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))) {
-                                MESSAGES.add("物料: " + part.getNumber() + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
+                                MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
+                                flag = true;
+                                flog = false;
+                                break;
                             }
                         }
+                    }
+                    if (flag) break;
+                }
+
+                //再检查「暂存」的情况，遍历所有版本检查是否关联非「已取消」「已解决」状态的ECN
+                if (flog) {
+                    boolean flag = false;
+                    QueryResult result = VersionControlHelper.service.allIterationsFrom(part);//获取部件的所有版本
+                    while (result.hasMoreElements()) {
+                        WTPart oldPart = (WTPart) result.nextElement();
+                        Map<Persistable, ConfigurableDescribeLink> linkMap = ModifyUtils.getDescribed(oldPart, ModifyConstants.TYPE_4);
+                        LOGGER.info(">>>>>>>>>>checkOne.linkMap: " + linkMap);
+                        for (Persistable persistable1 : linkMap.keySet()) {
+                            if (persistable1 instanceof WTChangeOrder2) {
+                                WTChangeOrder2 changeOrder2 = (WTChangeOrder2) persistable1;
+                                LOGGER.info(">>>>>>>>>>changeOrder2:" + changeOrder2.getNumber());
+                                if (!ORDER2.getNumber().startsWith(changeOrder2.getNumber())) {
+                                    //判断关联的ECN是否非「已取消」「已解决」状态
+                                    if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))) {
+                                        MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
+                                        flag = true;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        if (flag) break;
                     }
                 }
             }
@@ -340,9 +377,7 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
                 messages.append(IdentityFactory.getDisplayIdentifier(persistable)).append("\n");
             }
         }
-        if (messages.length() > 0) {
-            MESSAGES.add(messages.toString() + " 状态不满足：已归档或已发布！");
-        }
+        if (messages.length() > 0) MESSAGES.add(messages.toString() + " 状态不满足：已归档或已发布！");
 
         //8.3、检查受影响对象不能为标准件。
         messages = new StringBuilder();
@@ -357,9 +392,7 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
         } catch (WTException | IOException e) {
             throw new WTException(e.getStackTrace());
         }
-        if (messages.length() > 0) {
-            MESSAGES.add(messages.toString() + " 业务定义为标准件，不能变更升版！");
-        }
+        if (messages.length() > 0) MESSAGES.add(messages.toString() + " 业务定义为标准件，不能变更升版！");
 
         //8.4、A“ECN和完成功能” ，提交的时候校验图纸是否收集，如果没有收集，要给提交人提示“xx部件未收集图纸，请收集图纸！”
         for (Map.Entry<WTPart, Collection<Persistable>> entryMap : PARTASSOCIATIONDOC.entrySet()) {
@@ -371,9 +404,7 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
             }
 
             Set<String> result = PICollectionUtils.intersect(numbers, AFFECTEDDOCNUMBER);
-            if (result.size() < 1) {
-                MESSAGES.add("部件: " + part.getNumber() + "未收集图纸，请收集图纸！");
-            }
+            if (result.size() < 1) MESSAGES.add("部件: " + part.getNumber() + "未收集图纸，请收集图纸！");
         }
     }
 

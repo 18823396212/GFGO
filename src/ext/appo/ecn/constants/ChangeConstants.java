@@ -47,7 +47,7 @@ public interface ChangeConstants {
 	String ARTICLEINVENTORY_COMPID = "ArticleInventory"; 
 	String CENTRALWAREHOUSEINVENTORY_COMPID = "CentralWarehouseInventory"; 
 	String PASSAGEINVENTORY_COMPID = "PassageInventory"; 
-	String RESPONSIBLEPERSON_COMPID = "ResponsiblePerson"; 
+	String RESPONSIBLEPERSON_COMPID = "ResponsiblePerson"; //责任人
 	String ARTICLEDISPOSE_COMPID = "ArticleDispose"; 
 	String PASSAGEDISPOSE_COMPID = "PassageDispose"; 
 	String INVENTORYDISPOSE_COMPID = "InventoryDispose"; 

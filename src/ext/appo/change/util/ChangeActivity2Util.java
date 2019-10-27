@@ -18,10 +18,7 @@ import wt.log4j.LogR;
 import wt.part.WTPart;
 import wt.util.WTException;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Vector;
+import java.util.*;
 
 /*
  * 8.6、根据受影响对象，及变更类型，及类型(升版)创建ECA对象（BOM变更创建多个ECA对象，图纸变更分别创建不同的ECA对象，关联不同的图纸变更对象），
@@ -33,6 +30,7 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
     private Map<Persistable, Map<String, String>> PAGEDATAMAP = new HashMap<>();//ECN受影响对象集合
     private Map<Persistable, Collection<Persistable>> CONSTRUCTRELATION = new HashMap<>();//ECA受影响对象集合
     private WTChangeOrder2 ORDER2;
+    public Set<WTChangeActivity2> ACTIVITY2S = new HashSet<>();//创建的ECA集合
 
     public ChangeActivity2Util(WTChangeOrder2 changeOrder2, Map<Persistable, Map<String, String>> pageDataMap, Map<Persistable, Collection<Persistable>> constructRelation) throws WTException {
         ORDER2 = changeOrder2;
@@ -135,6 +133,8 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
                             }
                         }
                     }
+                    eca = (WTChangeActivity2) PersistenceHelper.manager.refresh(eca);
+                    ACTIVITY2S.add(eca);
                 }
             }
         } catch (Exception e) {
@@ -150,8 +150,6 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
         for (Map.Entry<Persistable, Map<String, String>> entryMap : PAGEDATAMAP.entrySet()) {
             Map<String, Object> attributesMap = new HashMap<>();
             for (Map.Entry<String, String> ibaEntryMap : entryMap.getValue().entrySet()) {
-                // 过滤「受影响对象列表备注」
-                if (ibaEntryMap.getKey().equals(AADDESCRIPTION_COMPID)) continue;
                 attributesMap.put(ibaEntryMap.getKey(), ibaEntryMap.getValue());
             }
             PIAttributeHelper.service.forceUpdateSoftAttributes(entryMap.getKey(), attributesMap);
