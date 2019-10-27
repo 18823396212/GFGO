@@ -1,4 +1,4 @@
-ResourceInfo.class=wt.tools.resource.EnumResourceInfo
+﻿ResourceInfo.class=wt.tools.resource.EnumResourceInfo
 ResourceInfo.customizable=true
 ResourceInfo.deprecated=false
 
