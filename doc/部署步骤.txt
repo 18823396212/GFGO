@@ -1,0 +1,17 @@
+1. 停止Windchill 服务
+   
+
+2. 注册服务:
+    复制codebase/descendentRegistry.properties.addition文件内容到Windchill/codebase/descendentRegistry.properties文件尾部。
+    复制codebase/modelRegistry.properties.addition文件内容到Windchill/codebase/modelRegistry.properties文件尾部。
+
+3. 创建模型自定义表
+    oracle 用户 进入  代码目录/db\sql3 目录
+    A，执行sqlplus /nolog
+    B，conn <dbUser>/<dbPass>    例如：conn username/password
+    C，执行 @ext/appo/change/Make_pkg_change_Table.sql
+    D，执行 @ext/appo/change/Make_pkg_change_Index.sql
+    E，执行 exit
+
+
+4. 启动Windchill 服务

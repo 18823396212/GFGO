@@ -18,11 +18,11 @@
 
 <jsp:include page="${mvc:getComponentURL('ext.appo.ecn.mvc.builder.ChangeTaskTableBuilder')}" flush="true"/>
 
-<input type="hidden" name="datasArray" id="datasArray"></input>
+<input type="hidden" name="datasArray" id="datasArray"/>
 
-<input type="hidden" name="changeTaskArray" id="changeTaskArray"></input>
+<input type="hidden" name="changeTaskArray" id="changeTaskArray"/>
 
-<input type="hidden" name="affectedProductID" id="affectedProductID"></input>
+<input type="hidden" name="affectedProductID" id="affectedProductID"/>
 
 <SCRIPT LANGUAGE="JavaScript">
     // 受影响对象列表‘收集对象’及‘添加受影响对象’按钮调用
