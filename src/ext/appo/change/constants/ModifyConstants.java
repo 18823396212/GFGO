@@ -29,4 +29,17 @@ public interface ModifyConstants {
     //分隔符
     String SEPARATOR_1 = "_";
 
+    /**
+     * ECN与受影响对象链接
+     */
+    String LINKTYPE_1 = "ChangeOrder2AffectedLink";
+    /**
+     * ECN与受影响产品链接
+     */
+    String LINKTYPE_2 = "ChangeOrder2EndItemsLink";
+    /**
+     * ECN与事务性任务链接
+     */
+    String LINKTYPE_3 = "ChangeOrder2TransactionLink";
+
 }

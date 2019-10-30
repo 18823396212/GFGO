@@ -34,7 +34,7 @@ import wt.util.WTException;
                 @GeneratedProperty(
                         name = "changeActivity2",
                         type = String.class,
-                        javaDoc = "ECA对象OID"
+                        javaDoc = "ECA对象VID"
                 )
         },
         tableProperties = @TableProperties(

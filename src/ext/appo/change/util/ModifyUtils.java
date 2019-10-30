@@ -126,6 +126,33 @@ public class ModifyUtils implements ChangeConstants {
     }
 
     /***
+     * 获取对象编码
+     * @param persistable
+     * @return
+     */
+    public static String geBranchId(Persistable persistable) {
+        if (persistable instanceof ObjectReference) {
+            persistable = ((ObjectReference) persistable).getObject();
+        }
+
+        String branchId = "";
+        if (persistable instanceof WTPart) {
+            branchId = String.valueOf(((WTPart) persistable).getBranchIdentifier());
+        } else if (persistable instanceof EPMDocument) {
+            branchId = String.valueOf(((EPMDocument) persistable).getBranchIdentifier());
+        } else if (persistable instanceof WTDocument) {
+            branchId = String.valueOf(((WTDocument) persistable).getBranchIdentifier());
+        } else if (persistable instanceof WTChangeRequest2) {
+            branchId = String.valueOf(((WTChangeRequest2) persistable).getBranchIdentifier());
+        } else if (persistable instanceof WTChangeOrder2) {
+            branchId = String.valueOf(((WTChangeOrder2) persistable).getBranchIdentifier());
+        } else if (persistable instanceof WTChangeActivity2) {
+            branchId = String.valueOf(((WTChangeActivity2) persistable).getBranchIdentifier());
+        }
+        return branchId;
+    }
+
+    /***
      * 批量查询上层父件
      * @param collection 子件集合
      * @throws WTException

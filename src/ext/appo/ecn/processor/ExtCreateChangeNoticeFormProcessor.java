@@ -5,32 +5,30 @@ import com.ptc.core.components.forms.FormProcessingStatus;
 import com.ptc.core.components.forms.FormResult;
 import com.ptc.netmarkets.util.beans.NmCommandBean;
 import com.ptc.windchill.enterprise.change2.forms.processors.CreateChangeNoticeFormProcessor;
+import ext.appo.change.ModifyHelper;
 import ext.appo.change.constants.ModifyConstants;
+import ext.appo.change.models.CorrelationObjectLink;
+import ext.appo.change.models.TransactionTask;
 import ext.appo.change.util.*;
 import ext.appo.ecn.constants.ChangeConstants;
 import ext.lang.PIStringUtils;
 import ext.pi.core.PIAttributeHelper;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
+import org.json.JSONObject;
+import wt.change2.WTChangeActivity2;
 import wt.change2.WTChangeOrder2;
-import wt.configurablelink.ConfigurableDescribeLink;
 import wt.fc.Persistable;
-import wt.fc.PersistenceHelper;
 import wt.fc.ReferenceFactory;
-import wt.fc.collections.WTHashSet;
-import wt.fc.collections.WTSet;
 import wt.log4j.LogR;
 import wt.part.WTPart;
 import wt.session.SessionContext;
 import wt.session.SessionHelper;
-import wt.type.TypeDefinitionReference;
-import wt.type.TypedUtilityServiceHelper;
 import wt.util.WTException;
-import wt.vc.Iterated;
 
 import java.util.*;
 
-public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormProcessor {
+public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormProcessor implements ChangeConstants, ModifyConstants {
 
     private static final String CLASSNAME = ExtCreateChangeNoticeFormProcessor.class.getName();
     private static final Logger LOGGER = LogR.getLogger(CLASSNAME);
@@ -43,8 +41,6 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
     private Map<Persistable, Collection<Persistable>> CONSTRUCTRELATION = new HashMap<>();//根据受影响对象表单构建创建ECA时需要填充的数据关系
     private Set<Persistable> AFFECTEDOBJECT = new HashSet<>();//所有受影响对象，包括收集对象
     private Set<String> AFFECTEDDOC = new HashSet<>();//创建页面受影响对象列表的WTDocument编码
-
-    private Set<String> MESSAGES = new HashSet<>();
     //add by tongwang 20191023 end
 
     @Override
@@ -54,24 +50,13 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
 
         SessionContext previous = SessionContext.newContext();
         try {
-            // 当前用户设置为管理员，用于忽略权限
-            SessionHelper.manager.setAdministrator();
+            SessionHelper.manager.setAdministrator();// 当前用户设置为管理员，用于忽略权限
             WTChangeOrder2 changeOrder2 = (WTChangeOrder2) objectBeans.get(0).getObject();//ECN
 
             String actionName = nmcommandBean.getRequest().getParameter(ACTIONNAME);
             LOGGER.info(">>>>>>>>>>actionName: " + actionName);
             //暂存操作
             if (ACTIONNAME_1.equals(actionName)) {
-                //只创建流程（检查是否生命周期触发）
-                //保存页面受影响对象列表、受影响产品列表、事务性任务列表数据与ECN建立关联关系
-                //当点击ECN编辑按钮时，受影响对象列表、受影响产品列表、事务性任务列表初始化逻辑：
-                //1.未创建ECA的情况，获取ECN关联的数据进行初始化；再次点击暂存按钮增量建立关联关系
-                //2.已创建ECA的情况，参照旧逻辑从关联的ECA初始化数据
-                //3.已创建ECA并点击过暂存按钮的情况，参照旧逻辑从关联的ECA初始化数据；并且从流程变量中获取新增数据
-                //4.编辑页面点击确定时，创建完ECA后清空流程变量
-
-                //以上方式不好，考虑使用Link记录
-
                 /*
                  * 9.0、至少一条受影响对象，必填项验证。
                  * 9.1、检查受影响对象是否存在未结束的ECN，有则不允许创建。
@@ -87,8 +72,12 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
                     linkAffectedItems(changeOrder2, affectedObjectUtil.PAGEDATAMAP.keySet());
 
                     //存储事务性任务列表数据
-                }
+                    Set<TransactionTask> tasks = saveTransactionECA(changeOrder2, nmcommandBean);
+                    LOGGER.info(">>>>>>>>>>postProcess.tasks: " + tasks);
 
+                    //根据上一步骤收集的模型对象，与ECN建立关联关系
+                    linkTransactionECA(changeOrder2, tasks);
+                }
             }
             //确定操作
             else if (ACTIONNAME_2.equals(actionName)) {
@@ -110,6 +99,7 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
                     TransactionECAUtil ecaUtil = new TransactionECAUtil(changeOrder2, nmcommandBean);
 
                     //根据上一步骤收集的模型对象，与ECN建立关联关系
+                    linkTransactionECA(changeOrder2, ecaUtil.TASKS);
 
                     /*
                      * 更新受影响对象的IBA属性
@@ -133,14 +123,175 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
 
             // 更新ECN「所属产品类别」「所属项目」
             UpdateSoftAttribute(nmcommandBean, changeOrder2);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new WTException(e.getLocalizedMessage());
         } finally {
             SessionContext.setContext(previous);
         }
 
         return result;
+    }
+
+    /**
+     * 创建 暂存 按钮的事务性任务-模型对象
+     * @param changeOrder
+     * @param nmcommandBean
+     * @throws WTException
+     * @return
+     */
+    public Set<TransactionTask> saveTransactionECA(WTChangeOrder2 changeOrder, NmCommandBean nmcommandBean) throws WTException {
+        Set<TransactionTask> tasks = new HashSet<>();//事务性任务模型对象
+        try {
+            Map<String, Object> parameterMap = nmcommandBean.getParameterMap();
+            LOGGER.info(">>>>>>>>>>saveTransactionECA.parameterMap: " + parameterMap);
+            if (parameterMap.containsKey(DATA_ARRAY)) {
+                String[] datasArrayStr = (String[]) parameterMap.get(DATA_ARRAY);
+                if (datasArrayStr != null && datasArrayStr.length > 0) {
+                    String datasJSON = datasArrayStr[0];
+                    LOGGER.info(">>>>>>>>>>saveTransactionECA.datasJSON: " + datasJSON);
+                    if (PIStringUtils.isNotNull(datasJSON)) {
+                        JSONObject jsonObject = new JSONObject(datasJSON);
+                        Iterator<?> keyIterator = jsonObject.keys();
+                        while (keyIterator.hasNext()) {
+                            Object key = keyIterator.next();
+                            // 数据信息
+                            JSONObject dataJSONObject = new JSONObject(jsonObject.getString((String) key));
+                            LOGGER.info(">>>>>>>>>>saveTransactionECA.dataJSONObject: " + dataJSONObject);
+
+                            WTChangeActivity2 eca = null;
+                            // ECA对象OID
+                            if (dataJSONObject.has(CHANGEACTIVITY2_COMPID)) {
+                                String ecaOID = dataJSONObject.getString(CHANGEACTIVITY2_COMPID);
+                                if (PIStringUtils.isNotNull(ecaOID)) {
+                                    eca = (WTChangeActivity2) (new ReferenceFactory()).getReference(ecaOID).getObject();
+                                }
+                            }
+
+                            String changeTheme = "";//变更主题
+                            if (dataJSONObject.has(CHANGETHEME_COMPID))
+                                changeTheme = dataJSONObject.getString(CHANGETHEME_COMPID);//变更主题
+                            String changeDescribe = "";//变更任务描述
+                            if (dataJSONObject.has(CHANGEDESCRIBE_COMPID))
+                                changeDescribe = dataJSONObject.getString(CHANGEDESCRIBE_COMPID);//变更任务描述
+                            String responsible = "";//责任人
+                            if (dataJSONObject.has(RESPONSIBLE_COMPID))
+                                responsible = dataJSONObject.getString(RESPONSIBLE_COMPID);//责任人
+                            String needDate = "";//期望完成日期
+                            if (dataJSONObject.has(NEEDDATE_COMPID))
+                                needDate = dataJSONObject.getString(NEEDDATE_COMPID);//期望完成日期
+                            LOGGER.info(">>>>>>>>>>changeTheme: " + changeTheme + " changeDescribe: " + changeDescribe + " responsible: " + responsible + " needDate: " + needDate);
+
+                            //创建模型对象，保存事务性任务属性
+                            TransactionTask task = ModifyHelper.service.queryTransactionTask(eca);
+                            if (task == null) {
+                                tasks.add(ModifyHelper.service.newTransactionTask(changeTheme, changeDescribe, responsible, needDate, eca));
+                            } else {
+                                tasks.add(ModifyHelper.service.updateTransactionTask(task, changeTheme, changeDescribe, responsible, needDate));
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            throw new WTException(e.getStackTrace());
+        }
+        return tasks;
+    }
+
+    /**
+     * 新增ChangeOrder2与受影响对象的关系
+     * @param changeOrder2
+     * @param collections
+     * @throws Exception
+     */
+    public void linkAffectedItems(WTChangeOrder2 changeOrder2, Collection<Persistable> collections) throws WTException {
+        if (changeOrder2 == null || collections.size() < 1) return;
+
+        String ecnVid = ModifyUtils.geBranchId(changeOrder2);
+        LOGGER.info(">>>>>>>>>>linkAffectedItems.ecnVid: " + ecnVid);
+        for (Persistable persistable : collections) {
+            String branchId = ModifyUtils.geBranchId(persistable);
+            LOGGER.info(">>>>>>>>>>linkAffectedItems.branchId: " + branchId);
+            CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, branchId, LINKTYPE_1);
+            LOGGER.info(">>>>>>>>>>linkAffectedItems.link: " + link);
+            if (link == null) {
+                ModifyHelper.service.newCorrelationObjectLink(changeOrder2, persistable, LINKTYPE_1, ecnVid, branchId);
+            } else {
+                ModifyHelper.service.updateCorrelationObjectLink(ecnVid, branchId, LINKTYPE_1);
+            }
+        }
+    }
+
+    /***
+     * 新增ChangeOrder2与受影响产品的关系
+     * @param nmcommandBean
+     * @param changeOrder2
+     * @throws WTException
+     */
+    public void linkAffectedEndItems(NmCommandBean nmcommandBean, WTChangeOrder2 changeOrder2) throws WTException {
+        if (nmcommandBean == null || changeOrder2 == null) return;
+
+        try {
+            Map<String, Object> parameterMap = nmcommandBean.getParameterMap();
+            if (parameterMap.containsKey(AFFECTED_PRODUCT_ID)) {
+                String[] endItemsArrayStr = (String[]) parameterMap.get(AFFECTED_PRODUCT_ID);
+                if (endItemsArrayStr != null && endItemsArrayStr.length > 0) {
+                    String endItemsJSON = endItemsArrayStr[0];
+                    LOGGER.info(">>>>>>>>>>linkAffectedEndItems.endItemsJSON: " + endItemsJSON);
+                    if (PIStringUtils.isNull(endItemsJSON)) return;
+
+                    // 页面表单中所有产品对象
+                    Collection<Persistable> collection = new HashSet<>();
+                    JSONArray jsonArray = new JSONArray(endItemsJSON);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        String oid = jsonArray.getString(i);
+                        if (PIStringUtils.isNotNull(oid)) {
+                            if (!oid.contains(WTPart.class.getName())) continue;
+                            collection.add(((new ReferenceFactory()).getReference(oid).getObject()));
+                        }
+                    }
+                    LOGGER.info(">>>>>>>>>>linkAffectedEndItems.collection: " + collection);
+
+                    String ecnVid = ModifyUtils.geBranchId(changeOrder2);
+                    LOGGER.info(">>>>>>>>>>linkAffectedEndItems.ecnVid: " + ecnVid);
+                    for (Persistable persistable : collection) {
+                        String branchId = ModifyUtils.geBranchId(persistable);
+                        LOGGER.info(">>>>>>>>>>linkAffectedEndItems.branchId: " + branchId);
+                        CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, branchId, LINKTYPE_2);
+                        LOGGER.info(">>>>>>>>>>linkAffectedEndItems.link: " + link);
+                        if (link == null) {
+                            ModifyHelper.service.newCorrelationObjectLink(changeOrder2, persistable, LINKTYPE_2, ecnVid, branchId);
+                        } else {
+                            ModifyHelper.service.updateCorrelationObjectLink(ecnVid, branchId, LINKTYPE_2);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            throw new WTException(e.getStackTrace());
+        }
+    }
+
+    /**
+     * 新增ChangeOrder2与事务性任务的关系
+     * @param changeOrder2
+     * @param tasks
+     * @throws Exception
+     */
+    public void linkTransactionECA(WTChangeOrder2 changeOrder2, Set<TransactionTask> tasks) throws WTException {
+        if (changeOrder2 == null || tasks.size() < 1) return;
+
+        String ecnVid = String.valueOf(changeOrder2.getBranchIdentifier());
+        LOGGER.info(">>>>>>>>>>linkTransactionECA.ecnVid: " + ecnVid);
+        for (TransactionTask task : tasks) {
+            String taskOid = String.valueOf(task.getPersistInfo().getObjectIdentifier().getId());
+            LOGGER.info(">>>>>>>>>>linkTransactionECA.taskOid: " + taskOid);
+            CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, taskOid, LINKTYPE_3);
+            LOGGER.info(">>>>>>>>>>linkTransactionECA.link: " + link);
+            if (link == null) {
+                ModifyHelper.service.newCorrelationObjectLink(changeOrder2, task, LINKTYPE_3, ecnVid, taskOid);
+            } else {
+                ModifyHelper.service.updateCorrelationObjectLink(ecnVid, taskOid, LINKTYPE_3);
+            }
+        }
     }
 
     /**
@@ -158,124 +309,20 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
                 if (value instanceof List) {
                     List<?> list = (List<?>) value;
                     if (list.size() > 0) {
-                        PIAttributeHelper.service.forceUpdateSoftAttribute(changeOrder2, ModifyConstants.ATTRIBUTE_2, list.get(0));//所属产品类别
+                        PIAttributeHelper.service.forceUpdateSoftAttribute(changeOrder2, ATTRIBUTE_2, list.get(0));//所属产品类别
                     }
                 } else if (value != null) {
-                    PIAttributeHelper.service.forceUpdateSoftAttribute(changeOrder2, ModifyConstants.ATTRIBUTE_2, value);//所属产品类别
+                    PIAttributeHelper.service.forceUpdateSoftAttribute(changeOrder2, ATTRIBUTE_2, value);//所属产品类别
                 }
             } else if (key.contains("ssxm")) {
                 Object value = comboBox.get(key);
                 if (value instanceof List) {
                     List<?> list = (List<?>) value;
                     if (list.size() > 0) {
-                        PIAttributeHelper.service.forceUpdateSoftAttribute(changeOrder2, ModifyConstants.ATTRIBUTE_3, list.get(0));//所属项目
+                        PIAttributeHelper.service.forceUpdateSoftAttribute(changeOrder2, ATTRIBUTE_3, list.get(0));//所属项目
                     }
                 } else if (value != null) {
-                    PIAttributeHelper.service.forceUpdateSoftAttribute(changeOrder2, ModifyConstants.ATTRIBUTE_3, value);//所属项目
-                }
-            }
-        }
-    }
-
-    /**
-     * 新增ChangeOrder2与受影响对象的关系
-     * @param changeOrder2
-     * @param collections
-     * @throws Exception
-     */
-    public void linkAffectedItems(WTChangeOrder2 changeOrder2, Collection<Persistable> collections) throws Exception {
-        if (changeOrder2 == null || collections.size() < 1) return;
-
-        // 获取需要移除的Link
-        Collection<ConfigurableDescribeLink> removeArray = new HashSet<>();
-        Map<Persistable, ConfigurableDescribeLink> linkMap = ModifyUtils.getDescribedBy(changeOrder2, ModifyConstants.TYPE_4);
-        LOGGER.info(">>>>>>>>>>linkAffectedItems.linkMap: " + linkMap);
-        for (Persistable persistable : linkMap.keySet()) {
-            if (collections.contains(persistable)) {
-                collections.remove(persistable);
-            } else {
-                removeArray.add(linkMap.get(persistable));
-            }
-        }
-
-        LOGGER.info(">>>>>>>>>>linkAffectedItems.removeArray: " + removeArray);
-        if (removeArray.size() > 0) {
-            PersistenceHelper.manager.delete(new WTHashSet(removeArray));
-        }
-
-        LOGGER.info(">>>>>>>>>>linkAffectedItems.collections: " + collections);
-        if (collections.size() > 0) {
-            TypeDefinitionReference td = TypedUtilityServiceHelper.service.getTypeDefinitionReference(ModifyConstants.TYPE_4);
-            if (td == null) {
-                throw new WTException(ModifyConstants.TYPE_4 + " 可配置Link软类型未创建!");
-            }
-            WTSet wtSet = new WTHashSet();
-            for (Persistable persistable : collections) {
-                if (persistable instanceof Iterated)
-                    wtSet.add(ConfigurableDescribeLink.newConfigurableDescribeLink(changeOrder2, (Iterated) persistable, td));
-            }
-            PersistenceHelper.manager.save(wtSet);
-        }
-    }
-
-    /***
-     * 新增ChangeOrder2与受影响产品的关系
-     * @param nmcommandBean
-     * @param changeOrder2
-     * @throws WTException
-     */
-    public void linkAffectedEndItems(NmCommandBean nmcommandBean, WTChangeOrder2 changeOrder2) throws Exception {
-        if (nmcommandBean == null || changeOrder2 == null) return;
-
-        Map<String, Object> parameterMap = nmcommandBean.getParameterMap();
-        if (parameterMap.containsKey(ChangeConstants.AFFECTED_PRODUCT_ID)) {
-            String[] endItemsArrayStr = (String[]) parameterMap.get(ChangeConstants.AFFECTED_PRODUCT_ID);
-            if (endItemsArrayStr != null && endItemsArrayStr.length > 0) {
-                String endItemsJSON = endItemsArrayStr[0];
-                LOGGER.info(">>>>>>>>>>endItemsJSON: " + endItemsJSON);
-                if (PIStringUtils.isNull(endItemsJSON)) return;
-
-                // 页面表单中所有产品对象
-                Collection<Persistable> collection = new HashSet<>();
-                JSONArray jsonArray = new JSONArray(endItemsJSON);
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    String oid = jsonArray.getString(i);
-                    if (PIStringUtils.isNotNull(oid)) {
-                        if (!oid.contains(WTPart.class.getName())) continue;
-                        collection.add(((new ReferenceFactory()).getReference(oid).getObject()));
-                    }
-                }
-                LOGGER.info(">>>>>>>>>>collection1: " + collection);
-
-                // 获取需要移除的Link
-                Collection<ConfigurableDescribeLink> removeArray = new HashSet<>();
-                Map<Persistable, ConfigurableDescribeLink> linkMap = ModifyUtils.getDescribedBy(changeOrder2, ModifyConstants.TYPE_5);
-                LOGGER.info(">>>>>>>>>>linkMap: " + linkMap);
-                for (Persistable persistable : linkMap.keySet()) {
-                    if (collection.contains(persistable)) {
-                        collection.remove(persistable);
-                    } else {
-                        removeArray.add(linkMap.get(persistable));
-                    }
-                }
-
-                LOGGER.info(">>>>>>>>>>removeArray: " + removeArray);
-                if (removeArray.size() > 0) {
-                    PersistenceHelper.manager.delete(new WTHashSet(removeArray));
-                }
-
-                LOGGER.info(">>>>>>>>>>collection2: " + collection);
-                if (collection.size() > 0) {
-                    TypeDefinitionReference td = TypedUtilityServiceHelper.service.getTypeDefinitionReference(ModifyConstants.TYPE_5);
-                    if (td == null) {
-                        throw new WTException(ModifyConstants.TYPE_5 + " 可配置Link软类型未创建!");
-                    }
-                    WTSet wtSet = new WTHashSet();
-                    for (Persistable persistable : collection) {
-                        if (persistable instanceof Iterated)
-                            wtSet.add(ConfigurableDescribeLink.newConfigurableDescribeLink(changeOrder2, (Iterated) persistable, td));
-                    }
-                    PersistenceHelper.manager.save(wtSet);
+                    PIAttributeHelper.service.forceUpdateSoftAttribute(changeOrder2, ATTRIBUTE_3, value);//所属项目
                 }
             }
         }

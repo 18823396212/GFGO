@@ -1,7 +1,9 @@
 package ext.appo.change.util;
 
 import com.ptc.netmarkets.util.beans.NmCommandBean;
+import ext.appo.change.ModifyHelper;
 import ext.appo.change.constants.ModifyConstants;
+import ext.appo.change.models.TransactionTask;
 import ext.appo.ecn.constants.ChangeConstants;
 import ext.lang.PIStringUtils;
 import org.apache.log4j.Logger;
@@ -13,8 +15,10 @@ import wt.fc.ReferenceFactory;
 import wt.log4j.LogR;
 import wt.util.WTException;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 处理事务性任务(ECA)相关的逻辑
@@ -22,6 +26,7 @@ import java.util.Map;
 public class TransactionECAUtil implements ChangeConstants, ModifyConstants {
 
     private static final Logger LOGGER = LogR.getLogger(TransactionECAUtil.class.getName());
+    public Set<TransactionTask> TASKS = new HashSet<>();//事务性任务模型对象
 
     /**
      * 创建事务性任务(ECA)
@@ -84,19 +89,29 @@ public class TransactionECAUtil implements ChangeConstants, ModifyConstants {
      */
     public void createEditChangeActivity2(WTChangeOrder2 changeOrder, JSONObject dataJSONObject, WTChangeActivity2 eca) throws WTException {
         try {
+
+            String changeTheme = "";//变更主题
+            if (dataJSONObject.has(CHANGETHEME_COMPID))
+                changeTheme = dataJSONObject.getString(CHANGETHEME_COMPID);//变更主题
+            String changeDescribe = "";//变更任务描述
+            if (dataJSONObject.has(CHANGEDESCRIBE_COMPID))
+                changeDescribe = dataJSONObject.getString(CHANGEDESCRIBE_COMPID);//变更任务描述
+            String responsible = "";//责任人
+            if (dataJSONObject.has(RESPONSIBLE_COMPID)) responsible = dataJSONObject.getString(RESPONSIBLE_COMPID);//责任人
+            String needDate = "";//期望完成日期
+            if (dataJSONObject.has(NEEDDATE_COMPID)) needDate = dataJSONObject.getString(NEEDDATE_COMPID);//期望完成日期
+            LOGGER.info(">>>>>>>>>>changeTheme: " + changeTheme + " changeDescribe: " + changeDescribe + " responsible: " + responsible + " needDate: " + needDate);
+
             if (eca == null) {
-                // TODO 创建时需把名称带上
-                eca = ModifyUtils.createChangeTask(changeOrder, dataJSONObject.getString(CHANGETHEME_COMPID), null, dataJSONObject.getString(CHANGEDESCRIBE_COMPID), TYPE_3, dataJSONObject.getString(RESPONSIBLE_COMPID));
+                eca = ModifyUtils.createChangeTask(changeOrder,changeTheme , null, changeDescribe, TYPE_3, responsible);
             } else {
                 // 名称修改
-                String newName = dataJSONObject.getString(CHANGETHEME_COMPID);
-                if (!eca.getName().equals(newName)) {
-                    ModifyUtils.setChangeActivity2Name(eca, newName);
+                if (!eca.getName().equals(changeTheme)) {
+                    ModifyUtils.setChangeActivity2Name(eca, changeTheme);
                 }
                 // 工作负责人修改
-                ModifyUtils.setChangeActivity2Assignee(eca, dataJSONObject.getString(RESPONSIBLE_COMPID));
+                ModifyUtils.setChangeActivity2Assignee(eca, responsible);
                 // 说明修改
-                String changeDescribe = dataJSONObject.getString(CHANGEDESCRIBE_COMPID);
                 if (!changeDescribe.equals(eca.getDescription())) {
                     eca.setDescription(changeDescribe);
                     eca = (WTChangeActivity2) PersistenceHelper.manager.save(eca);
@@ -105,14 +120,16 @@ public class TransactionECAUtil implements ChangeConstants, ModifyConstants {
 
             // 期望完成日期
             if (dataJSONObject.has(ChangeConstants.NEEDDATE_COMPID)) {
-                String needDate = dataJSONObject.getString(ChangeConstants.NEEDDATE_COMPID);
                 ModifyUtils.updateNeedDate(eca, needDate);
             }
 
-
-            //创建模型对象，保存事务性任务属性。并与ECN建立关联关系
-
-
+            //创建模型对象，保存事务性任务属性
+            TransactionTask task = ModifyHelper.service.queryTransactionTask(eca);
+            if (task == null) {
+                TASKS.add(ModifyHelper.service.newTransactionTask(changeTheme, changeDescribe, responsible, needDate, eca));
+            } else {
+                TASKS.add(ModifyHelper.service.updateTransactionTask(task, changeTheme, changeDescribe, responsible, needDate));
+            }
         } catch (Exception e) {
             throw new WTException(e.getStackTrace());
         }

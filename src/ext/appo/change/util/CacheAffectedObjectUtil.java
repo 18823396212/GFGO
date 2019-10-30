@@ -1,6 +1,7 @@
 package ext.appo.change.util;
 
 import com.ptc.netmarkets.util.beans.NmCommandBean;
+import ext.appo.change.ModifyHelper;
 import ext.appo.change.constants.ModifyConstants;
 import ext.appo.ecn.common.util.ChangeUtils;
 import ext.appo.ecn.constants.ChangeConstants;
@@ -177,25 +178,25 @@ public class CacheAffectedObjectUtil implements ChangeConstants, ModifyConstants
                     if (flag) break;
                 }
 
-                //再检查「暂存」的情况，遍历所有版本检查是否关联非「已取消」「已解决」状态的ECN
+                //再检查「暂存」的情况，遍历所有大版本的最新小版本检查是否关联非「已取消」「已解决」状态的ECN
                 if (flog) {
                     boolean flag = false;
-                    QueryResult result = VersionControlHelper.service.allIterationsFrom(part);//获取部件的所有版本
+                    QueryResult result = VersionControlHelper.service.allVersionsOf(part.getMaster());//获取所有大版本的最新小版本
                     while (result.hasMoreElements()) {
                         WTPart oldPart = (WTPart) result.nextElement();
-                        Map<Persistable, ConfigurableDescribeLink> linkMap = ModifyUtils.getDescribed(oldPart, ModifyConstants.TYPE_4);
-                        LOGGER.info(">>>>>>>>>>checkOne.linkMap: " + linkMap);
-                        for (Persistable persistable1 : linkMap.keySet()) {
-                            if (persistable1 instanceof WTChangeOrder2) {
-                                WTChangeOrder2 changeOrder2 = (WTChangeOrder2) persistable1;
-                                LOGGER.info(">>>>>>>>>>changeOrder2:" + changeOrder2.getNumber());
-                                if (!ORDER2.getNumber().startsWith(changeOrder2.getNumber())) {
-                                    //判断关联的ECN是否非「已取消」「已解决」状态
-                                    if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))) {
-                                        MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
-                                        flag = true;
-                                        break;
-                                    }
+                        String branchId = ModifyUtils.geBranchId(oldPart);
+                        LOGGER.info(">>>>>>>>>>checkTwo.branchId: " + branchId);
+
+                        Set<WTChangeOrder2> order2s = ModifyHelper.service.queryWTChangeOrder2(branchId, ModifyConstants.LINKTYPE_1);
+                        LOGGER.info(">>>>>>>>>>checkTwo.order2s: " + order2s);
+                        for (WTChangeOrder2 changeOrder2 : order2s) {
+                            LOGGER.info(">>>>>>>>>>checkTwo.changeOrder2:" + changeOrder2.getNumber());
+                            if (!ORDER2.getNumber().startsWith(changeOrder2.getNumber())) {
+                                //判断关联的ECN是否非「已取消」「已解决」状态
+                                if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))) {
+                                    MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
+                                    flag = true;
+                                    break;
                                 }
                             }
                         }
