@@ -1,11 +1,7 @@
-<%@ taglib prefix="jca" uri="http://www.ptc.com/windchill/taglib/components"
-%>
-<%@ taglib prefix="cwiz" uri="http://www.ptc.com/windchill/taglib/changeWizards"
-%>
-<%@ taglib prefix="rwiz" uri="http://www.ptc.com/windchill/taglib/reservation"
-%>
-<%@ taglib uri="http://www.ptc.com/windchill/taglib/attachments" prefix="attachments"
-%>
+<%@ taglib prefix="jca" uri="http://www.ptc.com/windchill/taglib/components" %>
+<%@ taglib prefix="cwiz" uri="http://www.ptc.com/windchill/taglib/changeWizards" %>
+<%@ taglib prefix="rwiz" uri="http://www.ptc.com/windchill/taglib/reservation" %>
+<%@ taglib uri="http://www.ptc.com/windchill/taglib/attachments" prefix="attachments" %>
 <%@ include file="/netmarkets/jsp/components/beginWizard.jspf" %>
 <%@ taglib prefix="fmt" uri="http://www.ptc.com/windchill/taglib/fmt" %>
 <%@include file="/netmarkets/jsp/components/includeWizBean.jspf" %>
