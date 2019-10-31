@@ -3,8 +3,12 @@
 <listofactions>
 
     <objecttype name="modify" resourceBundle="ext.appo.change.resource.ModifyResource">
-        <action name="cacheButton" ajax="row">
-            <command class="" method="" windowType="page" url="javascript:ChangeManagementSubmitHandler.submitChangeWizard();"/>
+        <action name="createCacheButton" id="PJL_wizard_createCache">
+            <command class="ext.appo.ecn.processor.ExtCreateChangeNoticeFormProcessor" method="excute"/>
+        </action>
+
+        <action name="editCacheButton" id="PJL_wizard_editCache">
+            <command class="ext.appo.ecn.processor.ExtEditChangeNoticeFormProcessor" method="excute"/>
         </action>
     </objecttype>
 

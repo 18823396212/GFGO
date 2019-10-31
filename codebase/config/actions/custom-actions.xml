@@ -122,14 +122,26 @@
     </objecttype>
 
     <objecttype name="changeNotice" resourceBundle="ext.appo.ecn.resource.changeNoticeActionsRB">
+        <!--modify by wangtong at 20191024 start-->
         <!-- 创建工程ECN对象 -->
         <action name="createEngineeringChangeOrder" ajax="component" uicomponent="CREATE_CHANGENOTICE">
-            <command url="/netmarkets/jsp/ext/appo/changeNotice/createEngineeringECN.jsp" windowType="popup" class="ext.appo.ecn.processor.ExtCreateChangeNoticeFormProcessor" method="excute"/>
+            <command url="/netmarkets/jsp/ext/appo/changeNotice/createEngineeringECN.jsp" windowType="popup" class="ext.appo.change.processor.ExtCreateChangeNoticeFormProcessor" method="excute"/>
         </action>
 
         <action name="createEngineeringChangeOrderStep" id="createEngineeringChangeOrderStep" preloadWizardPage="false" required="false">
             <command url="netmarkets/jsp/ext/appo/changeNotice/createEngineeringECNStep.jsp" class="" windowType="wizard_step"/>
         </action>
+
+        <!-- 编辑工程ECN对象 -->
+        <action name="editEngineeringChangeOrder" ajax="row">
+            <command url="/netmarkets/jsp/ext/appo/changeNotice/editEngineeringECN.jsp" windowType="popup" class="ext.appo.change.processor.ExtEditChangeNoticeFormProcessor" method="excute"/>
+            <includeFilter name="editECNFilter"/>
+        </action>
+
+        <action name="editEngineeringChangeOrderStep" id="editEngineeringChangeOrderStep" preloadWizardPage="false" required="false">
+            <command url="netmarkets/jsp/ext/appo/changeNotice/editEngineeringECNStep.jsp" class="" windowType="wizard_step"/>
+        </action>
+        <!--modify by wangtong at 20191024 end-->
 
         <!-- 受影响上层物料表 -->
         <action name="affectedUpperMaterialsTableBuilder">
@@ -140,16 +152,6 @@
         <action name="affectedDownMaterialsTableBuilder">
             <component name="ext.appo.ecn.mvc.builder.AffectedDownMaterialsTableBuilder" windowType="page"/>
             <includeFilter name="AffectedMaterialsFilter"></includeFilter>
-        </action>
-
-        <!-- 编辑工程ECN对象 -->
-        <action name="editEngineeringChangeOrder" ajax="row">
-            <command url="/netmarkets/jsp/ext/appo/changeNotice/editEngineeringECN.jsp" windowType="popup" class="ext.appo.ecn.processor.ExtEditChangeNoticeFormProcessor" method="excute"/>
-            <includeFilter name="editECNFilter"/>
-        </action>
-
-        <action name="editEngineeringChangeOrderStep" id="editEngineeringChangeOrderStep" preloadWizardPage="false" required="false">
-            <command url="netmarkets/jsp/ext/appo/changeNotice/editEngineeringECNStep.jsp" class="" windowType="wizard_step"/>
         </action>
 
         <!-- 受影响对象表单 -->
