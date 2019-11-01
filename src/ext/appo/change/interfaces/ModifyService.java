@@ -141,11 +141,13 @@ public interface ModifyService {
 
     /**
      * 查询事务性任务
+     * @param changeOrder2
      * @param changeActivity2
+     * @param changeTheme
      * @return
      * @throws WTException
      */
-    TransactionTask queryTransactionTask(WTChangeActivity2 changeActivity2) throws WTException;
+    TransactionTask queryTransactionTask(WTChangeOrder2 changeOrder2, WTChangeActivity2 changeActivity2, String changeTheme) throws WTException;
 
     /**
      * 查询对象关联的ECN

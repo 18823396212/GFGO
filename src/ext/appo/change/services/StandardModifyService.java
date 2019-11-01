@@ -391,25 +391,47 @@ public class StandardModifyService extends StandardManager implements ModifyServ
 
     /**
      * 查询事务性任务
+     * @param changeOrder2
      * @param changeActivity2
+     * @param changeTheme
      * @return
      * @throws WTException
      */
     @Override
-    public TransactionTask queryTransactionTask(WTChangeActivity2 changeActivity2) throws WTException {
-        if (changeActivity2 != null) {
-            QuerySpec qs = new QuerySpec(TransactionTask.class);
+    public TransactionTask queryTransactionTask(WTChangeOrder2 changeOrder2, WTChangeActivity2 changeActivity2, String changeTheme) throws WTException {
+        if (changeOrder2 != null && StringUtils.isNotEmpty(changeTheme)) {
+            QuerySpec qs = new QuerySpec();
+            qs.setAdvancedQueryEnabled(true);
 
-            SearchCondition sc = new SearchCondition(TransactionTask.class, TransactionTask.CHANGE_ACTIVITY2, SearchCondition.EQUAL, String.valueOf(changeActivity2.getBranchIdentifier()));
-            qs.appendWhere(sc, new int[]{0});
+            int taskIndex = qs.appendClassList(TransactionTask.class, true);
+            int linkIndex = qs.appendClassList(CorrelationObjectLink.class, false);
+
+            SearchCondition sc = new SearchCondition(CorrelationObjectLink.class, CorrelationObjectLink.ECN_BRANCH_IDENTIFIER, SearchCondition.EQUAL, String.valueOf(changeOrder2.getBranchIdentifier()));
+            qs.appendWhere(sc, new int[]{linkIndex});
+
+            qs.appendAnd();
+            sc = new SearchCondition(CorrelationObjectLink.class, "roleBObjectRef.key.id", TransactionTask.class, "thePersistInfo.theObjectIdentifier.id");
+            qs.appendWhere(sc, new int[]{linkIndex, taskIndex});
+
+            if (changeActivity2 == null) {
+                qs.appendAnd();
+                sc = new SearchCondition(TransactionTask.class, TransactionTask.CHANGE_THEME, SearchCondition.EQUAL, changeTheme);
+                qs.appendWhere(sc, new int[]{taskIndex});
+            } else {
+                qs.appendAnd();
+                String activity2 = PersistenceHelper.getObjectIdentifier(changeActivity2).toString();
+                sc = new SearchCondition(TransactionTask.class, TransactionTask.CHANGE_ACTIVITY2, SearchCondition.EQUAL, activity2);
+                qs.appendWhere(sc, new int[]{taskIndex});
+            }
 
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("=====queryTransactionTask.sql=" + qs);
+                LOGGER.debug("=====queryCorrelationObjectLink.sql=" + qs);
             }
 
             QueryResult result = PersistenceHelper.manager.find(qs);
             if (result.hasMoreElements()) {
-                return (TransactionTask) result.nextElement();
+                Object[] objects = (Object[]) result.nextElement();
+                return (TransactionTask) objects[0];
             }
         }
         return null;

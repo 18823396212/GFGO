@@ -49,12 +49,16 @@ public class ExtEditChangeNoticeFormProcessor extends EditChangeNoticeFormProces
         try {
             SessionHelper.manager.setAdministrator();// 当前用户设置为管理员，用于忽略权限
             WTChangeOrder2 changeOrder2 = (WTChangeOrder2) objectBeans.get(0).getObject();//ECN
-            AffectedObjectUtil affectedObjectUtil = new AffectedObjectUtil(nmcommandBean, changeOrder2);
+            AffectedObjectUtil affectedObjectUtil = new AffectedObjectUtil(nmcommandBean, changeOrder2);//受影响对象列表
+            TransactionECAUtil transactionUtil = new TransactionECAUtil(changeOrder2, nmcommandBean);//事务性任务列表
+            ChangeActivity2Util activity2Util = new ChangeActivity2Util(changeOrder2, affectedObjectUtil.PAGEDATAMAP, affectedObjectUtil.CONSTRUCTRELATION);
 
-            String routingName = nmcommandBean.getRequest().getParameter(ROUTINGNAME);
-            LOGGER.info(">>>>>>>>>>routingName: " + routingName);
+            //String routingName = nmcommandBean.getRequest().getParameter(ROUTINGNAME);
+            //LOGGER.info(">>>>>>>>>>routingName: " + routingName);
+
+            Set<String> messages = new HashSet<>();
             //暂存操作
-            if (ROUTINGNAME_1.equals(routingName)) {
+            //if (ROUTINGNAME_1.equals(routingName)) {
                 /*
                  * 9.0、至少一条受影响对象，必填项验证。
                  * 9.1、检查受影响对象是否存在未结束的ECN，有则不允许创建。
@@ -62,26 +66,29 @@ public class ExtEditChangeNoticeFormProcessor extends EditChangeNoticeFormProces
                  * 9.3、检查受影响对象不能为标准件。
                  */
                 affectedObjectUtil.cacheButton();
-                String message = affectedObjectUtil.compoundMessage();
-                if (message.length() > 0) {
-                    throw new WTException(message);
+                //校验 任务主题 是否重复
+                transactionUtil.check();
+
+                messages.addAll(affectedObjectUtil.MESSAGES);
+                messages.addAll(transactionUtil.MESSAGES);
+                if (messages.size() > 0) {
+                    throw new WTException(compoundMessage(messages));
                 } else {
                     //更新受影响对象的IBA属性
-                    ChangeActivity2Util activity2Util = new ChangeActivity2Util(changeOrder2, affectedObjectUtil.PAGEDATAMAP, affectedObjectUtil.CONSTRUCTRELATION);
                     activity2Util.cacheButton();
 
                     //新增ChangeOrder2与受影响对象的关系
                     linkAffectedItems(changeOrder2, affectedObjectUtil.PAGEDATAMAP.keySet());
 
-                    //存储事务性任务列表数据
-                    Set<TransactionTask> tasks = saveTransactionECA(changeOrder2, nmcommandBean);
-                    LOGGER.info(">>>>>>>>>>postProcess.tasks: " + tasks);
+                    //创建事务性任务-模型对象
+                    transactionUtil.createTransactionECA();
 
                     //根据上一步骤收集的模型对象，与ECN建立关联关系
-                    linkTransactionECA(changeOrder2, tasks);
+                    linkTransactionECA(changeOrder2, transactionUtil.TASKS);
                 }
-            } else {
-                /*
+            //}
+            /*else {
+                *//*
                  * 8.0、至少一条受影响对象，必填项验证。
                  * 8.1、检查受影响对象是否存在未结束的ECN（包含的ECA非取消状态），有则不允许创建。
                  * 8.2、检查受影响对象的状态必须是已归档及已发布。
@@ -89,7 +96,7 @@ public class ExtEditChangeNoticeFormProcessor extends EditChangeNoticeFormProces
                  * 8.4、A“ECN和完成功能” ，提交的时候校验图纸是否收集，如果没有收集，要给提交人提示“xx部件未收集图纸，请收集图纸！”
                  * 校验需要收集上层对象的部件是否满足收集条件
                  * 检查是否存在单独进行变更的说明文档
-                 */
+                 *//*
                 affectedObjectUtil.okButton();
                 String message = affectedObjectUtil.compoundMessage();
                 if (message.length() > 0) {
@@ -101,12 +108,12 @@ public class ExtEditChangeNoticeFormProcessor extends EditChangeNoticeFormProces
                     //根据上一步骤收集的模型对象，与ECN建立关联关系
                     linkTransactionECA(changeOrder2, ecaUtil.TASKS);
 
-                    /*
+                    *//*
                      * 更新受影响对象的IBA属性
                      * 8.6、根据受影响对象，及变更类型，及类型(升版)创建ECA对象（BOM变更创建多个ECA对象，图纸变更分别创建不同的ECA对象，关联不同的图纸变更对象），
                      * 8.7、ECA “受影响对象” 做修订（图纸关联多个物料的场景只需修订一次），并与ECA关联“产生的对象”中 ，并在ECN列表中显示“产生的对象”中显示。
                      * 并ECA关联“受影响对象”，同步生成“产生的对象”。
-                     */
+                     *//*
                     ChangeActivity2Util activity2Util = new ChangeActivity2Util(changeOrder2, affectedObjectUtil.PAGEDATAMAP, affectedObjectUtil.CONSTRUCTRELATION);
                     activity2Util.okButton();
 
@@ -118,7 +125,7 @@ public class ExtEditChangeNoticeFormProcessor extends EditChangeNoticeFormProces
                     }
                     linkAffectedItems(changeOrder2, collections);
                 }
-            }
+            }*/
 
             // 新增受影响产品列表与ECN的关系(ECN与受影响产品链接)
             linkAffectedEndItems(nmcommandBean, changeOrder2);
@@ -130,72 +137,6 @@ public class ExtEditChangeNoticeFormProcessor extends EditChangeNoticeFormProces
         }
 
         return result;
-    }
-
-    /**
-     * 创建 暂存 按钮的事务性任务-模型对象
-     * @param changeOrder
-     * @param nmcommandBean
-     * @return
-     * @throws WTException
-     */
-    public Set<TransactionTask> saveTransactionECA(WTChangeOrder2 changeOrder, NmCommandBean nmcommandBean) throws WTException {
-        Set<TransactionTask> tasks = new HashSet<>();//事务性任务模型对象
-        try {
-            Map<String, Object> parameterMap = nmcommandBean.getParameterMap();
-            LOGGER.info(">>>>>>>>>>saveTransactionECA.parameterMap: " + parameterMap);
-            if (parameterMap.containsKey(DATA_ARRAY)) {
-                String[] datasArrayStr = (String[]) parameterMap.get(DATA_ARRAY);
-                if (datasArrayStr != null && datasArrayStr.length > 0) {
-                    String datasJSON = datasArrayStr[0];
-                    LOGGER.info(">>>>>>>>>>saveTransactionECA.datasJSON: " + datasJSON);
-                    if (PIStringUtils.isNotNull(datasJSON)) {
-                        JSONObject jsonObject = new JSONObject(datasJSON);
-                        Iterator<?> keyIterator = jsonObject.keys();
-                        while (keyIterator.hasNext()) {
-                            Object key = keyIterator.next();
-                            // 数据信息
-                            JSONObject dataJSONObject = new JSONObject(jsonObject.getString((String) key));
-                            LOGGER.info(">>>>>>>>>>saveTransactionECA.dataJSONObject: " + dataJSONObject);
-
-                            WTChangeActivity2 eca = null;
-                            // ECA对象OID
-                            if (dataJSONObject.has(CHANGEACTIVITY2_COMPID)) {
-                                String ecaOID = dataJSONObject.getString(CHANGEACTIVITY2_COMPID);
-                                if (PIStringUtils.isNotNull(ecaOID)) {
-                                    eca = (WTChangeActivity2) (new ReferenceFactory()).getReference(ecaOID).getObject();
-                                }
-                            }
-
-                            String changeTheme = "";//变更主题
-                            if (dataJSONObject.has(CHANGETHEME_COMPID))
-                                changeTheme = dataJSONObject.getString(CHANGETHEME_COMPID);//变更主题
-                            String changeDescribe = "";//变更任务描述
-                            if (dataJSONObject.has(CHANGEDESCRIBE_COMPID))
-                                changeDescribe = dataJSONObject.getString(CHANGEDESCRIBE_COMPID);//变更任务描述
-                            String responsible = "";//责任人
-                            if (dataJSONObject.has(RESPONSIBLE_COMPID))
-                                responsible = dataJSONObject.getString(RESPONSIBLE_COMPID);//责任人
-                            String needDate = "";//期望完成日期
-                            if (dataJSONObject.has(NEEDDATE_COMPID))
-                                needDate = dataJSONObject.getString(NEEDDATE_COMPID);//期望完成日期
-                            LOGGER.info(">>>>>>>>>>changeTheme: " + changeTheme + " changeDescribe: " + changeDescribe + " responsible: " + responsible + " needDate: " + needDate);
-
-                            //创建模型对象，保存事务性任务属性
-                            TransactionTask task = ModifyHelper.service.queryTransactionTask(eca);
-                            if (task == null) {
-                                tasks.add(ModifyHelper.service.newTransactionTask(changeTheme, changeDescribe, responsible, needDate, eca));
-                            } else {
-                                tasks.add(ModifyHelper.service.updateTransactionTask(task, changeTheme, changeDescribe, responsible, needDate));
-                            }
-                        }
-                    }
-                }
-            }
-        } catch (Exception e) {
-            throw new WTException(e.getStackTrace());
-        }
-        return tasks;
     }
 
     /**
@@ -328,6 +269,23 @@ public class ExtEditChangeNoticeFormProcessor extends EditChangeNoticeFormProces
                 }
             }
         }
+    }
+
+    /**
+     * 合成错误信息
+     * @param messages
+     * @return
+     */
+    public String compoundMessage(Set<String> messages) {
+        StringBuilder builder = new StringBuilder();
+        if (messages.size() > 0) {
+            builder.append("无法保存变更申请，存在以下问题：").append("\n");
+            int i = 1;
+            for (String message : messages) {
+                builder.append(i++).append(". ").append(message).append("\n");
+            }
+        }
+        return builder.toString();
     }
 
 }

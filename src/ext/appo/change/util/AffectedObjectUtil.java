@@ -52,7 +52,7 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
     private Set<WTPart> AFFECTEDPART = new HashSet<>();//ECN受影响对象-部件集合
     private Set<Persistable> AFFECTEDDOC = new HashSet<>();//ECN受影响对象-文档集合
     private Set<Persistable> DISSOCIATEDOC = new HashSet<>();//ECN受影响对象-需要单独走ECA的文档集合（游离）
-    private Set<String> MESSAGES = new HashSet<>();
+    public Set<String> MESSAGES = new HashSet<>();
 
     public AffectedObjectUtil(NmCommandBean nmcommandBean, WTChangeOrder2 changeOrder2) throws WTException {
         NMCOMMANDBEAN = nmcommandBean;
@@ -557,22 +557,6 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
             throw new WTException(e.getStackTrace());
         }
         if (messages.length() > 0) MESSAGES.add(messages.toString() + " 业务定义为标准件，不能变更升版！");
-    }
-
-    /**
-     * 合成错误信息
-     * @return
-     */
-    public String compoundMessage() {
-        StringBuilder builder = new StringBuilder();
-        if (MESSAGES.size() > 0) {
-            builder.append("无法创建变更申请，存在以下问题：").append("\n");
-            int i = 1;
-            for (String message : MESSAGES) {
-                builder.append(i++).append(". ").append(message).append("\n");
-            }
-        }
-        return builder.toString();
     }
 
 }
