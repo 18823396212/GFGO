@@ -7,12 +7,14 @@ import com.ptc.mvc.components.*;
 import com.ptc.mvc.util.ClientMessageSource;
 import com.ptc.netmarkets.util.beans.NmCommandBean;
 import com.ptc.netmarkets.util.beans.NmHelperBean;
-import ext.appo.ecn.common.util.ChangeUtils;
+import ext.appo.change.ModifyHelper;
+import ext.appo.change.constants.ModifyConstants;
+import ext.appo.change.util.AffectedObjectUtil;
+import ext.appo.change.util.ModifyUtils;
 import ext.appo.ecn.constants.ChangeConstants;
 import ext.lang.PIStringUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
-import wt.change2.AffectedActivityData;
 import wt.change2.ChangeActivityIfc;
 import wt.change2.Changeable2;
 import wt.change2.WTChangeOrder2;
@@ -29,73 +31,62 @@ import java.util.HashSet;
 import java.util.Map;
 
 @ComponentBuilder("ext.appo.ecn.mvc.builder.AffectedItemsTableBuilder")
-public class AffectedItemsTableBuilder extends AbstractComponentBuilder {
+public class AffectedItemsTableBuilder extends AbstractComponentBuilder implements ChangeConstants, ModifyConstants {
 
-    private static final String CLASSNAME = AffectedItemsTableBuilder.class.getName();
-    private static final Logger LOG = LogR.getLogger(CLASSNAME);
-
+    private static final Logger LOGGER = LogR.getLogger(AffectedItemsTableBuilder.class.getName());
     private static final String TABLE_ID = "ext.appo.ecn.mvc.builder.AffectedItemsTableBuilder";
-
     ClientMessageSource messageChange2ClientResource = getMessageSource("ext.appo.ecn.resource.changeNoticeActionsRB");
 
     @Override
     public Object buildComponentData(ComponentConfig paramComponentConfig, ComponentParams paramComponentParams) throws Exception {
+        Collection<Persistable> collection = new HashSet<>();
+
         SessionContext previous = SessionContext.newContext();
         try {
-            // 当前用户设置为管理员，用于忽略权限
             SessionHelper.manager.setAdministrator();
-
-            // 收集对象
-            Collection<Persistable> returnArray = new HashSet<>();
             NmHelperBean nmhelperbean = ((JcaComponentParams) paramComponentParams).getHelperBean();
             NmCommandBean commandbean = nmhelperbean.getNmCommandBean();
-            // 获取操作对象
-            Object object = commandbean.getActionOid().getRefObject();
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("object :" + object);
-            }
-            // 获取页面添加数据
-            Map<Persistable, Map<String, String>> pageChangeTaskArray = ChangeUtils.getPageChangeTaskArray(commandbean);
-            if (pageChangeTaskArray == null || pageChangeTaskArray.size() == 0) {
-                // 编辑添加数据过滤问题
-                Map<String, Object> parameterMap = commandbean.getParameterMap();
-                if (!parameterMap.containsKey(ChangeConstants.CHANGETASK_ARRAY)) {
-                    if (object instanceof WTChangeOrder2) {
-                        // 获取ECN中所有受影响对象
-                        Map<ChangeActivityIfc, Collection<Changeable2>> ecaDatasMap = ChangeUtils.getChangeablesBeforeInfo((WTChangeOrder2) object);
-                        // 查询受影响的活动对象，限制ECA状态不为‘已取消’
-                        Collection<AffectedActivityData> adArray = ChangeUtils.getAffectedActivityDatas(ecaDatasMap, ChangeConstants.CANCELLED);
-                        for (AffectedActivityData affectedActivityData : adArray) {
-                            returnArray.add(affectedActivityData.getRoleBObject());
-                        }
-                    }
-                }
-            } else {
-                for (Map.Entry<Persistable, Map<String, String>> entryMap : pageChangeTaskArray.entrySet()) {
-                    returnArray.add(entryMap.getKey());
-                }
-            }
-            // 获取新增数据
             HttpServletRequest request = commandbean.getRequest();
-            //获取选择的部件Oid
-            String selectOids = request.getParameter("selectOids");
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("selectOids = " + selectOids);
+            Map<String, Object> parameterMap = commandbean.getParameterMap();
+            Object object = commandbean.getActionOid().getRefObject();// 获取操作对象
+            LOGGER.info("=====buildComponentData.object: " + object);
+
+            //获取已暂存或已创建ECA的数据
+            if (object instanceof WTChangeOrder2) {
+                WTChangeOrder2 changeOrder2 = (WTChangeOrder2) object;
+                AffectedObjectUtil affectedObjectUtil = new AffectedObjectUtil(commandbean, changeOrder2);
+                Map<Persistable, Map<String, String>> pageDataMap = affectedObjectUtil.PAGEDATAMAP;
+                if (pageDataMap.isEmpty()) {
+                    if (!parameterMap.containsKey(CHANGETASK_ARRAY)) {
+                        // 获取ECN中所有受影响对象
+                        Map<ChangeActivityIfc, Collection<Changeable2>> dataMap = ModifyUtils.getChangeablesBefore(changeOrder2);
+                        for (Map.Entry<ChangeActivityIfc, Collection<Changeable2>> entry : dataMap.entrySet()) {
+                            collection.addAll(entry.getValue());
+                        }
+
+                        //获取ECN暂存的受影响对象
+                        collection.addAll(ModifyHelper.service.queryPersistable(changeOrder2, LINKTYPE_1));
+                    }
+                } else {
+                    collection.addAll(pageDataMap.keySet());
+                }
             }
+
+            // 获取新增数据
+            String selectOids = request.getParameter("selectOids");
+            LOGGER.info("=====buildComponentData.selectOids: " + selectOids);
+
             if (PIStringUtils.isNotNull(selectOids)) {
                 JSONArray jsonArray = new JSONArray(selectOids);
                 for (int i = 0; i < jsonArray.length(); i++) {
-                    returnArray.add((new ReferenceFactory()).getReference(jsonArray.getString(i)).getObject());
+                    collection.add((new ReferenceFactory()).getReference(jsonArray.getString(i)).getObject());
                 }
             }
-
-            return returnArray;
-        } catch (Exception e) {
-            e.printStackTrace();
         } finally {
             SessionContext.setContext(previous);
         }
-        return null;
+
+        return collection;
     }
 
     @Override

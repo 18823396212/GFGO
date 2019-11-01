@@ -24,6 +24,10 @@
 
 <input type="hidden" name="affectedProductID" id="affectedProductID"/>
 
+<!--modify by wangtong at 20191024 start-->
+<input type="hidden" name="routingName" id="routingName"/>
+<!--modify by wangtong at 20191024 end-->
+
 <SCRIPT LANGUAGE="JavaScript">
     // 受影响对象列表‘收集对象’及‘添加受影响对象’按钮调用
     function addCollectItemsForAffectedEndItems(itemsOid) {
@@ -398,6 +402,12 @@
         setTimeout("saveDatasArray()", 1000);
 
         setTimeout("saveChangeTaskArray()", 1000);
+
+        //add by tongwang 20191023 start
+        document.getElementById("PJL_wizard_cache").onclick = function () {
+            document.getElementById("routingName").value = "cacheButton";
+        };
+        //add by tongwang 20191023 end
     });
 
     function submitSaveData() {

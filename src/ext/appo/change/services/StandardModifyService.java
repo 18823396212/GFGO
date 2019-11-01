@@ -50,7 +50,7 @@ public class StandardModifyService extends StandardManager implements ModifyServ
             task.setChangeDescribe(changeDescribe);
             task.setResponsible(responsible);
             task.setNeedDate(needDate);
-            if (changeActivity2 != null) task.setChangeActivity2(String.valueOf(changeActivity2.getBranchIdentifier()));
+            if (changeActivity2 != null) task.setChangeActivity2(PersistenceHelper.getObjectIdentifier(changeActivity2).toString());
             PersistenceServerHelper.manager.insert(task);
             task = (TransactionTask) PersistenceHelper.manager.refresh(task);
         } catch (Exception e) {

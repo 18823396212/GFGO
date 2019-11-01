@@ -840,4 +840,60 @@ public class ModifyUtils implements ChangeConstants {
         return linkMap;
     }
 
+    /***
+     * 获取ECN中所有ECA与受影响对象
+     * @param changeOrder2
+     * @return
+     * @throws WTException
+     */
+    public static Map<ChangeActivityIfc, Collection<Changeable2>> getChangeablesBefore(WTChangeOrder2 changeOrder2) throws WTException {
+        Map<ChangeActivityIfc, Collection<Changeable2>> dataMap = new HashMap<>();
+        if (changeOrder2 == null) return dataMap;
+
+        Collection<ChangeActivityIfc> collection = getChangeActivities(changeOrder2);
+        for (ChangeActivityIfc changeActivityIfc : collection) {
+            // 受影响对象集合
+            Collection<Changeable2> changeable2s = new HashSet<>();
+            // 获取ECA中所有受影响对象
+            QueryResult result = ChangeHelper2.service.getChangeablesBefore(changeActivityIfc);
+            while (result.hasMoreElements()) {
+                Object object = result.nextElement();
+                if (object instanceof ObjectReference) {
+                    object = ((ObjectReference) object).getObject();
+                }
+                if (object instanceof Changeable2) {
+                    changeable2s.add((Changeable2) object);
+                }
+            }
+            dataMap.put(changeActivityIfc, changeable2s);
+        }
+
+        return dataMap;
+    }
+
+    /***
+     * 获取更改通告中所有更改任务
+     * @param changeOrder2
+     *            变更通告
+     * @return
+     * @throws WTException
+     */
+    public static Collection<ChangeActivityIfc> getChangeActivities(WTChangeOrder2 changeOrder2) throws WTException {
+        Collection<ChangeActivityIfc> datasArray = new HashSet<>();
+        if (changeOrder2 == null) return datasArray;
+
+        QueryResult result = ChangeHelper2.service.getChangeActivities(changeOrder2);
+        while (result.hasMoreElements()) {
+            Object object = result.nextElement();
+            if (object instanceof ObjectReference) {
+                object = ((ObjectReference) object).getObject();
+            }
+            if (object instanceof WTChangeActivity2) {
+                datasArray.add((WTChangeActivity2) object);
+            }
+        }
+
+        return datasArray;
+    }
+
 }

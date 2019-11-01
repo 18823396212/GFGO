@@ -13,7 +13,6 @@ import org.json.JSONObject;
 import wt.change2.ChangeHelper2;
 import wt.change2.WTChangeActivity2;
 import wt.change2.WTChangeOrder2;
-import wt.configurablelink.ConfigurableDescribeLink;
 import wt.fc.Persistable;
 import wt.fc.QueryResult;
 import wt.fc.ReferenceFactory;

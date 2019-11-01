@@ -13,7 +13,5 @@ public class ModifyResource extends WTListResourceBundle {
     public static final String MY_CUSTOM_2 = "modify.cacheButton.description";
     @RBEntry("cache")
     public static final String MY_CUSTOM_3 = "modify.cacheButton.title";
-    //@RBEntry("netmarkets/images/reports_24.png")
-    //public static final String MY_CUSTOM_4 = "navigation.report.icon";
 
 }

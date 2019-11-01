@@ -32,9 +32,8 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
 
     private static final String CLASSNAME = CreateChangeNoticeFormProcessor.class.getName();
     private static final Logger LOGGER = LogR.getLogger(CLASSNAME);
-    private static final String ACTIONNAME = "actionName";
-    private static final String ACTIONNAME_1 = "cacheButton";
-    private static final String ACTIONNAME_2 = "createEngineeringChangeOrder";//editEngineeringChangeOrder
+    private static final String ROUTINGNAME = "routingName";
+    private static final String ROUTINGNAME_1 = "cacheButton";
     private static final String SEPARATOR_1 = "_";
     private Map<Persistable, Map<String, String>> PAGEDATAMAP = new HashMap<>();//页面中changeTaskArray控件值并根据规则解析为对应集合
     private Map<Persistable, Collection<Persistable>> CONSTRUCTRELATION = new HashMap<>();//根据受影响对象表单构建创建ECA时需要填充的数据关系
@@ -50,22 +49,27 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
         try {
             SessionHelper.manager.setAdministrator();// 当前用户设置为管理员，用于忽略权限
             WTChangeOrder2 changeOrder2 = (WTChangeOrder2) objectBeans.get(0).getObject();//ECN
+            AffectedObjectUtil affectedObjectUtil = new AffectedObjectUtil(nmcommandBean, changeOrder2);
 
-            String actionName = nmcommandBean.getRequest().getParameter(ACTIONNAME);
-            LOGGER.info(">>>>>>>>>>actionName: " + actionName);
+            String routingName = nmcommandBean.getRequest().getParameter(ROUTINGNAME);
+            LOGGER.info(">>>>>>>>>>routingName: " + routingName);
             //暂存操作
-            if (ACTIONNAME_1.equals(actionName)) {
+            if (ROUTINGNAME_1.equals(routingName)) {
                 /*
                  * 9.0、至少一条受影响对象，必填项验证。
                  * 9.1、检查受影响对象是否存在未结束的ECN，有则不允许创建。
                  * 9.2、检查受影响对象的状态必须是已归档及已发布。
                  * 9.3、检查受影响对象不能为标准件。
                  */
-                CacheAffectedObjectUtil affectedObjectUtil = new CacheAffectedObjectUtil(nmcommandBean, changeOrder2);
+                affectedObjectUtil.cacheButton();
                 String message = affectedObjectUtil.compoundMessage();
                 if (message.length() > 0) {
                     throw new WTException(message);
                 } else {
+                    //更新受影响对象的IBA属性
+                    ChangeActivity2Util activity2Util = new ChangeActivity2Util(changeOrder2, affectedObjectUtil.PAGEDATAMAP, affectedObjectUtil.CONSTRUCTRELATION);
+                    activity2Util.cacheButton();
+
                     //新增ChangeOrder2与受影响对象的关系
                     linkAffectedItems(changeOrder2, affectedObjectUtil.PAGEDATAMAP.keySet());
 
@@ -76,9 +80,7 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
                     //根据上一步骤收集的模型对象，与ECN建立关联关系
                     linkTransactionECA(changeOrder2, tasks);
                 }
-            }
-            //确定操作
-            else if (ACTIONNAME_2.equals(actionName)) {
+            } else {
                 /*
                  * 8.0、至少一条受影响对象，必填项验证。
                  * 8.1、检查受影响对象是否存在未结束的ECN（包含的ECA非取消状态），有则不允许创建。
@@ -88,7 +90,7 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
                  * 校验需要收集上层对象的部件是否满足收集条件
                  * 检查是否存在单独进行变更的说明文档
                  */
-                AffectedObjectUtil affectedObjectUtil = new AffectedObjectUtil(nmcommandBean, changeOrder2);
+                affectedObjectUtil.okButton();
                 String message = affectedObjectUtil.compoundMessage();
                 if (message.length() > 0) {
                     throw new WTException(message);
@@ -104,7 +106,8 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
                      * 8.6、根据受影响对象，及变更类型，及类型(升版)创建ECA对象（BOM变更创建多个ECA对象，图纸变更分别创建不同的ECA对象，关联不同的图纸变更对象），
                      * 并ECA关联“受影响对象”，同步生成“产生的对象”。
                      */
-                    new ChangeActivity2Util(changeOrder2, affectedObjectUtil.PAGEDATAMAP, affectedObjectUtil.CONSTRUCTRELATION);
+                    ChangeActivity2Util activity2Util = new ChangeActivity2Util(changeOrder2, affectedObjectUtil.PAGEDATAMAP, affectedObjectUtil.CONSTRUCTRELATION);
+                    activity2Util.okButton();
 
                     //新增ChangeOrder2与受影响对象的关系
                     Collection<Persistable> collections = new HashSet<>();
@@ -132,8 +135,8 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
      * 创建 暂存 按钮的事务性任务-模型对象
      * @param changeOrder
      * @param nmcommandBean
-     * @throws WTException
      * @return
+     * @throws WTException
      */
     public Set<TransactionTask> saveTransactionECA(WTChangeOrder2 changeOrder, NmCommandBean nmcommandBean) throws WTException {
         Set<TransactionTask> tasks = new HashSet<>();//事务性任务模型对象

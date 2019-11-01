@@ -3,16 +3,9 @@
 
 <actionmodels>
 
-    <model name="CreateWizardButtonsWithSubmitPrompt">
+    <model name="CustomWizardButtonsWithSubmitPrompt">
         <description>custom submit button</description>
-        <action name="createCacheButton" type="modify"/>
-        <action name="okButton" type="change"/>
-        <action name="cancelButton" type="object"/>
-    </model>
-
-    <model name="EditWizardButtonsWithSubmitPrompt">
-        <description>custom submit button</description>
-        <action name="editCacheButton" type="modify"/>
+        <action name="cacheButton" type="modify"/>
         <action name="okButton" type="change"/>
         <action name="cancelButton" type="object"/>
     </model>

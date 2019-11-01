@@ -32,14 +32,31 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
     private WTChangeOrder2 ORDER2;
     public Set<WTChangeActivity2> ACTIVITY2S = new HashSet<>();//创建的ECA集合
 
-    public ChangeActivity2Util(WTChangeOrder2 changeOrder2, Map<Persistable, Map<String, String>> pageDataMap, Map<Persistable, Collection<Persistable>> constructRelation) throws WTException {
+    public ChangeActivity2Util(WTChangeOrder2 changeOrder2, Map<Persistable, Map<String, String>> pageDataMap, Map<Persistable, Collection<Persistable>> constructRelation) {
         ORDER2 = changeOrder2;
         PAGEDATAMAP.putAll(pageDataMap);
         CONSTRUCTRELATION.putAll(constructRelation);
         LOGGER.info(">>>>>>>>>>ORDER2:" + ORDER2);
         LOGGER.info(">>>>>>>>>>PAGEDATAMAP:" + PAGEDATAMAP);
         LOGGER.info(">>>>>>>>>>CONSTRUCTRELATION:" + CONSTRUCTRELATION);
+    }
 
+    /**
+     * 暂存按钮
+     * @throws WTException
+     */
+    public void cacheButton() throws WTException {
+        if (!PAGEDATAMAP.isEmpty()) {
+            //更新受影响对象的IBA属性
+            updateAttributes();
+        }
+    }
+
+    /**
+     * 完成按钮
+     * @throws WTException
+     */
+    public void okButton() throws WTException {
         if (ORDER2 != null && !PAGEDATAMAP.isEmpty() && !CONSTRUCTRELATION.isEmpty()) {
             //更新受影响对象的IBA属性
             updateAttributes();
