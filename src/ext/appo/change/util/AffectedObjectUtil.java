@@ -273,7 +273,7 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
                 //物料分类为「PCB」「E1500000」的部件
                 if (ModifyUtils.specificNode(part, VALUE_2) || ModifyUtils.specificNode(part, VALUE_3)) {
                     Set<String> result = PICollectionUtils.intersect(parentInfoArray, AFFECTEDPARTNUMBER);
-                    if (result.size() < 1) {
+                    if (parentInfoArray.size() > 0 && result.size() < 1) {
                         MESSAGES.add(part.getDisplayIdentity() + " PCB部件上层父件必须至少收集一个！");
                     }
                 }
@@ -406,7 +406,7 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
             }
 
             Set<String> result = PICollectionUtils.intersect(numbers, AFFECTEDDOCNUMBER);
-            if (result.size() < 1) MESSAGES.add("部件: " + part.getNumber() + "未收集图纸，请收集图纸！");
+            if (numbers.size() > 0 && result.size() < 1) MESSAGES.add("部件: " + part.getNumber() + "未收集图纸，请收集图纸！");
         }
     }
 
