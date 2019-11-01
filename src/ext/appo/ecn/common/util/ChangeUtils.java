@@ -661,7 +661,7 @@ public class ChangeUtils implements ChangeConstants {
      * @throws WTException
      */
     public static Map<ChangeActivityIfc, Collection<Changeable2>> getChangeablesBeforeInfo(WTChangeOrder2 ecn) throws WTException {
-        Map<ChangeActivityIfc, Collection<Changeable2>> datasMap = new HashMap<ChangeActivityIfc, Collection<Changeable2>>();
+        Map<ChangeActivityIfc, Collection<Changeable2>> datasMap = new HashMap<>();
         if (ecn == null) {
             return datasMap;
         }
@@ -671,7 +671,7 @@ public class ChangeUtils implements ChangeConstants {
             Collection<ChangeActivityIfc> ecaArray = ChangeUtils.getChangeActivities(ecn);
             for (ChangeActivityIfc changeActivityIfc : ecaArray) {
                 // 受影响对象集合
-                Collection<Changeable2> datasArray = new HashSet<Changeable2>();
+                Collection<Changeable2> datasArray = new HashSet<>();
                 // 获取ECA中所有受影响对象
                 QueryResult qr = ChangeHelper2.service.getChangeablesBefore(changeActivityIfc);
                 while (qr.hasMoreElements()) {
@@ -686,9 +686,8 @@ public class ChangeUtils implements ChangeConstants {
                 datasMap.put(changeActivityIfc, datasArray);
             }
         } catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
-            throw new WTException(e.getLocalizedMessage());
+            throw new WTException(e.getStackTrace());
         }
 
         return datasMap;
