@@ -123,18 +123,18 @@
 
     <objecttype name="changeNotice" resourceBundle="ext.appo.ecn.resource.changeNoticeActionsRB">
         <!--modify by wangtong at 20191024 start-->
-        <!-- 创建工程ECN对象 -->
+        <!-- 创建变更申请ECN对象 -->
         <action name="createEngineeringChangeOrder" ajax="component" uicomponent="CREATE_CHANGENOTICE">
-            <command url="/netmarkets/jsp/ext/appo/changeNotice/createEngineeringECN.jsp" windowType="popup" class="ext.appo.change.processor.ExtCreateChangeNoticeFormProcessor" method="excute"/>
+            <command url="/netmarkets/jsp/ext/appo/change/request/createEngineeringECN.jsp" windowType="popup" class="ext.appo.change.processor.ExtCreateChangeNoticeFormProcessor" method="excute"/>
         </action>
 
         <action name="createEngineeringChangeOrderStep" id="createEngineeringChangeOrderStep" preloadWizardPage="false" required="false">
-            <command url="netmarkets/jsp/ext/appo/changeNotice/createEngineeringECNStep.jsp" class="" windowType="wizard_step"/>
+            <command url="/netmarkets/jsp/ext/appo/change/request/createEngineeringECNStep.jsp" class="" windowType="wizard_step"/>
         </action>
 
-        <!-- 编辑工程ECN对象 -->
+        <!-- 编辑变更申请ECN对象 -->
         <action name="editEngineeringChangeOrder" ajax="row">
-            <command url="/netmarkets/jsp/ext/appo/changeNotice/editEngineeringECN.jsp" windowType="popup" class="ext.appo.change.processor.ExtEditChangeNoticeFormProcessor" method="excute"/>
+            <command url="/netmarkets/jsp/ext/appo/changeNotice/editEngineeringECN.jsp" windowType="popup" class="ext.appo.ecn.processor.ExtEditChangeNoticeFormProcessor" method="excute"/>
             <includeFilter name="editECNFilter"/>
         </action>
 

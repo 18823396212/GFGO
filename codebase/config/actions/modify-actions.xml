@@ -6,6 +6,16 @@
         <action name="cacheButton" id="PJL_wizard_cache">
             <command class="" method="" windowType="page" url="javascript:ChangeManagementSubmitHandler.submitChangeWizard();"/>
         </action>
+
+        <!-- 编辑变更申请ECN对象 -->
+        <action name="editChangeOrder" ajax="row">
+            <command url="/netmarkets/jsp/ext/appo/change/request/editChangeOrder.jsp" windowType="popup" class="ext.appo.change.processor.ExtEditChangeNoticeFormProcessor" method="excute"/>
+            <includeFilter name="editECNFilter"/>
+        </action>
+
+        <action name="editChangeOrderStep" id="editChangeOrderStep" preloadWizardPage="false" required="false">
+            <command url="/netmarkets/jsp/ext/appo/change/request/editChangeOrderStep.jsp" class="" windowType="wizard_step"/>
+        </action>
     </objecttype>
 
 </listofactions>

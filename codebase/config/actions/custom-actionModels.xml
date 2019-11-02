@@ -553,8 +553,7 @@
         <action name="separator" type="separator"/>
         <action name="createProductFamily" type="productfamily"/>
         <action name="separator" type="separator"/>
-        <action name="createMpmprocessplan"
-                type="mpml"/>                                           <!-- New Process Plan -->
+        <action name="createMpmprocessplan" type="mpml"/>                                           <!-- New Process Plan -->
         <action name="createMPMResource" type="mpml"/>                                           <!-- New Resource -->
         <action name="createMPMStandardCC" type="mpml"/>
         <!-- <action   name="separator"                                  type="separator" />

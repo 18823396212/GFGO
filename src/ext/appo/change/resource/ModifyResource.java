@@ -14,4 +14,13 @@ public class ModifyResource extends WTListResourceBundle {
     @RBEntry("cache")
     public static final String MY_CUSTOM_3 = "modify.cacheButton.title";
 
+    @RBEntry("edit")
+    public static final String MY_CUSTOM_4 = "modify.editChangeOrder.description";
+    @RBEntry("edit")
+    public static final String MY_CUSTOM_5 = "modify.editChangeOrder.title";
+    @RBEntry("edit")
+    public static final String MY_CUSTOM_6 = "modify.editChangeOrder.tooltip";
+    @RBEntry("edit.gif")
+    public static final String MY_CUSTOM_7 = "modify.editChangeOrder.icon";
+
 }
