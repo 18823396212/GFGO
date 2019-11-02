@@ -51,7 +51,6 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
             WTChangeOrder2 changeOrder2 = (WTChangeOrder2) objectBeans.get(0).getObject();//ECN
             AffectedObjectUtil affectedObjectUtil = new AffectedObjectUtil(nmcommandBean, changeOrder2);//受影响对象列表
             TransactionECAUtil transactionUtil = new TransactionECAUtil(changeOrder2, nmcommandBean);//事务性任务列表
-            ChangeActivity2Util activity2Util = new ChangeActivity2Util(changeOrder2, affectedObjectUtil.PAGEDATAMAP, affectedObjectUtil.CONSTRUCTRELATION);
 
             String routingName = nmcommandBean.getRequest().getParameter(ROUTINGNAME);
             LOGGER.info(">>>>>>>>>>routingName: " + routingName);
@@ -74,6 +73,8 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
                 if (messages.size() > 0) {
                     throw new WTException(compoundMessage(messages));
                 } else {
+                    ChangeActivity2Util activity2Util = new ChangeActivity2Util(changeOrder2, affectedObjectUtil.PAGEDATAMAP, affectedObjectUtil.CONSTRUCTRELATION);
+
                     //更新受影响对象的IBA属性
                     activity2Util.cacheButton();
 
@@ -106,6 +107,8 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
                 if (messages.size() > 0) {
                     throw new WTException(compoundMessage(messages));
                 } else {
+                    ChangeActivity2Util activity2Util = new ChangeActivity2Util(changeOrder2, affectedObjectUtil.PAGEDATAMAP, affectedObjectUtil.CONSTRUCTRELATION);
+
                     //8.5、创建事务性任务的ECA；
                     transactionUtil.createEditChangeActivity2();
 

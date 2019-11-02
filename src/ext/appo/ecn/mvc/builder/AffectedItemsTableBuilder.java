@@ -51,13 +51,14 @@ public class AffectedItemsTableBuilder extends AbstractComponentBuilder implemen
             Object object = commandbean.getActionOid().getRefObject();// 获取操作对象
             LOGGER.info("=====buildComponentData.object: " + object);
 
-            //获取已暂存或已创建ECA的数据
-            if (object instanceof WTChangeOrder2) {
-                WTChangeOrder2 changeOrder2 = (WTChangeOrder2) object;
-                AffectedObjectUtil affectedObjectUtil = new AffectedObjectUtil(commandbean, changeOrder2);
-                Map<Persistable, Map<String, String>> pageDataMap = affectedObjectUtil.PAGEDATAMAP;
-                if (pageDataMap.isEmpty()) {
-                    if (!parameterMap.containsKey(CHANGETASK_ARRAY)) {
+            AffectedObjectUtil affectedObjectUtil = new AffectedObjectUtil(commandbean, null);
+            Map<Persistable, Map<String, String>> pageDataMap = affectedObjectUtil.PAGEDATAMAP;
+            if (pageDataMap.isEmpty()) {
+                if (!parameterMap.containsKey(CHANGETASK_ARRAY)) {
+                    //获取已暂存或已创建ECA的数据
+                    if (object instanceof WTChangeOrder2) {
+                        WTChangeOrder2 changeOrder2 = (WTChangeOrder2) object;
+
                         // 获取ECN中所有受影响对象
                         Map<ChangeActivityIfc, Collection<Changeable2>> dataMap = ModifyUtils.getChangeablesBefore(changeOrder2);
                         for (Map.Entry<ChangeActivityIfc, Collection<Changeable2>> entry : dataMap.entrySet()) {
@@ -67,9 +68,9 @@ public class AffectedItemsTableBuilder extends AbstractComponentBuilder implemen
                         //获取ECN暂存的受影响对象
                         collection.addAll(ModifyHelper.service.queryPersistable(changeOrder2, LINKTYPE_1));
                     }
-                } else {
-                    collection.addAll(pageDataMap.keySet());
                 }
+            } else {
+                collection.addAll(pageDataMap.keySet());
             }
 
             // 获取新增数据

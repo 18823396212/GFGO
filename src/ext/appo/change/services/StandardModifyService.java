@@ -161,7 +161,8 @@ public class StandardModifyService extends StandardManager implements ModifyServ
 
                 Persistable persistable = link.getPersistable();
                 LOGGER.info("=====updateCorrelationObjectLink.persistable: " + persistable);
-                persistable = getLatestVersion((Iterated) persistable);
+
+                if (!(persistable instanceof TransactionTask)) persistable = getLatestVersion((Iterated) persistable);
                 LOGGER.info("=====updateCorrelationObjectLink.persistable: " + persistable);
                 link.setPersistable(persistable);
 
