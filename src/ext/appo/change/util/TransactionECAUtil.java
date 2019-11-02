@@ -3,6 +3,7 @@ package ext.appo.change.util;
 import com.ptc.netmarkets.util.beans.NmCommandBean;
 import ext.appo.change.ModifyHelper;
 import ext.appo.change.constants.ModifyConstants;
+import ext.appo.change.models.CorrelationObjectLink;
 import ext.appo.change.models.TransactionTask;
 import ext.appo.ecn.constants.ChangeConstants;
 import ext.lang.PIStringUtils;
@@ -10,7 +11,9 @@ import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import wt.change2.WTChangeActivity2;
 import wt.change2.WTChangeOrder2;
+import wt.fc.Persistable;
 import wt.fc.PersistenceHelper;
+import wt.fc.PersistenceServerHelper;
 import wt.fc.ReferenceFactory;
 import wt.log4j.LogR;
 import wt.util.WTException;
@@ -163,6 +166,7 @@ public class TransactionECAUtil implements ChangeConstants, ModifyConstants {
      */
     public void createTransactionECA() throws WTException {
         if (ORDER2 != null) {
+            Set<String> taskIds = new HashSet<>();
             for (Map<String, String> attributeMap : TRANSACTIONS) {
                 String changeTheme = attributeMap.get(CHANGETHEME_COMPID);//变更主题
                 String changeDescribe = attributeMap.get(CHANGEDESCRIBE_COMPID);//变更任务描述
@@ -184,8 +188,24 @@ public class TransactionECAUtil implements ChangeConstants, ModifyConstants {
                     task = ModifyHelper.service.updateTransactionTask(task, changeTheme, changeDescribe, responsible, needDate);
                 }
                 TASKS.add(task);
+                taskIds.add(String.valueOf(task.getPersistInfo().getObjectIdentifier().getId()));
             }
             LOGGER.info(">>>>>>>>>>createTransactionECA.TASKS: " + TASKS);
+            LOGGER.info(">>>>>>>>>>createTransactionECA.taskIds: " + taskIds);
+
+            Set<CorrelationObjectLink> links = ModifyHelper.service.queryCorrelationObjectLinks(ORDER2, LINKTYPE_3);
+            for (CorrelationObjectLink link : links) {
+                Persistable persistable = link.getPersistable();
+                if (persistable instanceof TransactionTask) {
+                    TransactionTask task = (TransactionTask) persistable;
+                    String taskId = String.valueOf(task.getPersistInfo().getObjectIdentifier().getId());
+                    if (!taskIds.contains(taskId)) {
+                        LOGGER.info(">>>>>>>>>>createTransactionECA.taskId: " + taskId);
+                        PersistenceServerHelper.manager.remove(link);
+                        PersistenceServerHelper.manager.remove(task);
+                    }
+                }
+            }
         }
     }
 

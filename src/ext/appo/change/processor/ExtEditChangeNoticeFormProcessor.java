@@ -32,6 +32,8 @@ import java.util.*;
 public class ExtEditChangeNoticeFormProcessor extends EditChangeNoticeFormProcessor implements ChangeConstants, ModifyConstants {
 
     private static final Logger LOGGER = LogR.getLogger(EditChangeNoticeFormProcessor.class.getName());
+    private static final String ROUTINGNAME = "routingName";
+    private static final String ROUTINGNAME_1 = "cacheButton";
     private Map<Persistable, Map<String, String>> PAGEDATAMAP = new HashMap<>();//页面中changeTaskArray控件值并根据规则解析为对应集合
     private Map<Persistable, Collection<Persistable>> CONSTRUCTRELATION = new HashMap<>();//根据受影响对象表单构建创建ECA时需要填充的数据关系
     private Set<Persistable> AFFECTEDOBJECT = new HashSet<>();//所有受影响对象，包括收集对象
@@ -49,42 +51,87 @@ public class ExtEditChangeNoticeFormProcessor extends EditChangeNoticeFormProces
             AffectedObjectUtil affectedObjectUtil = new AffectedObjectUtil(nmcommandBean, changeOrder2);//受影响对象列表
             TransactionECAUtil transactionUtil = new TransactionECAUtil(changeOrder2, nmcommandBean);//事务性任务列表
 
+            String routingName = nmcommandBean.getRequest().getParameter(ROUTINGNAME);
+            LOGGER.info(">>>>>>>>>>routingName: " + routingName);
+
             Set<String> messages = new HashSet<>();
-            /*
-             * 8.0、至少一条受影响对象，必填项验证。
-             * 8.1、检查受影响对象是否存在未结束的ECN（包含的ECA非取消状态），有则不允许创建。
-             * 8.2、检查受影响对象的状态必须是已归档及已发布。
-             * 8.3、检查受影响对象不能为标准件。
-             * 8.4、A“ECN和完成功能” ，提交的时候校验图纸是否收集，如果没有收集，要给提交人提示“xx部件未收集图纸，请收集图纸！”
-             * 校验需要收集上层对象的部件是否满足收集条件
-             * 检查是否存在单独进行变更的说明文档
-             */
-            affectedObjectUtil.okButton();
-            //校验 任务主题 是否重复
-            transactionUtil.check();
+            //暂存操作
+            if (ROUTINGNAME_1.equals(routingName)) {
+                /*
+                 * 9.0、至少一条受影响对象，必填项验证。
+                 * 9.1、检查受影响对象是否存在未结束的ECN，有则不允许创建。
+                 * 9.2、检查受影响对象的状态必须是已归档及已发布。
+                 * 9.3、检查受影响对象不能为标准件。
+                 */
+                affectedObjectUtil.cacheButton();
+                //校验 任务主题 是否重复
+                transactionUtil.check();
 
-            messages.addAll(affectedObjectUtil.MESSAGES);
-            messages.addAll(transactionUtil.MESSAGES);
+                messages.addAll(affectedObjectUtil.MESSAGES);
+                messages.addAll(transactionUtil.MESSAGES);
+                if (messages.size() > 0) {
+                    throw new WTException(compoundMessage(messages));
+                } else {
+                    ChangeActivity2Util activity2Util = new ChangeActivity2Util(changeOrder2, affectedObjectUtil.PAGEDATAMAP, affectedObjectUtil.CONSTRUCTRELATION);
 
-            if (messages.size() > 0) {
-                throw new WTException(compoundMessage(messages));
+                    //更新受影响对象的IBA属性
+                    activity2Util.cacheButton();
+
+                    //新增ChangeOrder2与受影响对象的关系
+                    linkAffectedItems(changeOrder2, affectedObjectUtil.PAGEDATAMAP.keySet());
+
+                    //创建事务性任务-模型对象
+                    transactionUtil.createTransactionECA();
+
+                    //根据上一步骤收集的模型对象，与ECN建立关联关系
+                    linkTransactionECA(changeOrder2, transactionUtil.TASKS);
+                }
             } else {
-                ChangeActivity2Util activity2Util = new ChangeActivity2Util(changeOrder2, affectedObjectUtil.PAGEDATAMAP, affectedObjectUtil.CONSTRUCTRELATION);
+                /*
+                 * 8.0、至少一条受影响对象，必填项验证。
+                 * 8.1、检查受影响对象是否存在未结束的ECN（包含的ECA非取消状态），有则不允许创建。
+                 * 8.2、检查受影响对象的状态必须是已归档及已发布。
+                 * 8.3、检查受影响对象不能为标准件。
+                 * 8.4、A“ECN和完成功能” ，提交的时候校验图纸是否收集，如果没有收集，要给提交人提示“xx部件未收集图纸，请收集图纸！”
+                 * 校验需要收集上层对象的部件是否满足收集条件
+                 * 检查是否存在单独进行变更的说明文档
+                 */
+                affectedObjectUtil.okButton();
+                //校验 任务主题 是否重复
+                transactionUtil.check();
 
-                //更新受影响对象的IBA属性
-                activity2Util.cacheButton();
+                messages.addAll(affectedObjectUtil.MESSAGES);
+                messages.addAll(transactionUtil.MESSAGES);
 
-                //新增ChangeOrder2与受影响对象的关系
-                linkAffectedItems(changeOrder2, affectedObjectUtil.PAGEDATAMAP.keySet());
+                if (messages.size() > 0) {
+                    throw new WTException(compoundMessage(messages));
+                } else {
+                    ChangeActivity2Util activity2Util = new ChangeActivity2Util(changeOrder2, affectedObjectUtil.PAGEDATAMAP, affectedObjectUtil.CONSTRUCTRELATION);
 
-                //更新已有事务性任务的属性；
-                transactionUtil.createEditChangeActivity2();
+                    //8.5、创建事务性任务的ECA；
+                    transactionUtil.createEditChangeActivity2();
 
-                //创建事务性任务-模型对象，已存在则更新
-                transactionUtil.createTransactionECA();
+                    //创建事务性任务-模型对象，已存在则更新
+                    transactionUtil.createTransactionECA();
 
-                //根据上一步骤收集的模型对象，与ECN建立关联关系
-                linkTransactionECA(changeOrder2, transactionUtil.TASKS);
+                    //根据上一步骤收集的模型对象，与ECN建立关联关系
+                    linkTransactionECA(changeOrder2, transactionUtil.TASKS);
+
+                    /*
+                     * 更新受影响对象的IBA属性
+                     * 8.6、根据受影响对象，及变更类型，及类型(升版)创建ECA对象（BOM变更创建多个ECA对象，图纸变更分别创建不同的ECA对象，关联不同的图纸变更对象），
+                     * 并ECA关联“受影响对象”，同步生成“产生的对象”。
+                     */
+                    activity2Util.okButton();
+
+                    //新增ChangeOrder2与受影响对象的关系
+                    Collection<Persistable> collections = new HashSet<>();
+                    for (Map.Entry<Persistable, Collection<Persistable>> entry : affectedObjectUtil.CONSTRUCTRELATION.entrySet()) {
+                        collections.add(entry.getKey());
+                        collections.addAll(entry.getValue());
+                    }
+                    linkAffectedItems(changeOrder2, collections);
+                }
             }
 
             // 新增受影响产品列表与ECN的关系(ECN与受影响产品链接)

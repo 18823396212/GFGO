@@ -9,14 +9,15 @@ import ext.appo.change.ModifyHelper;
 import ext.appo.change.constants.ModifyConstants;
 import ext.appo.change.models.CorrelationObjectLink;
 import ext.appo.change.models.TransactionTask;
-import ext.appo.change.util.*;
+import ext.appo.change.util.AffectedObjectUtil;
+import ext.appo.change.util.ChangeActivity2Util;
+import ext.appo.change.util.ModifyUtils;
+import ext.appo.change.util.TransactionECAUtil;
 import ext.appo.ecn.constants.ChangeConstants;
 import ext.lang.PIStringUtils;
 import ext.pi.core.PIAttributeHelper;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
-import org.json.JSONObject;
-import wt.change2.WTChangeActivity2;
 import wt.change2.WTChangeOrder2;
 import wt.fc.Persistable;
 import wt.fc.ReferenceFactory;
@@ -110,7 +111,7 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
                     //8.5、创建事务性任务的ECA；
                     transactionUtil.createEditChangeActivity2();
 
-                    //创建事务性任务-模型对象
+                    //创建事务性任务-模型对象，已存在则更新
                     transactionUtil.createTransactionECA();
 
                     //根据上一步骤收集的模型对象，与ECN建立关联关系
