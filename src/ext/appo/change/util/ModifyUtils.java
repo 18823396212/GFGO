@@ -389,7 +389,7 @@ public class ModifyUtils implements ChangeConstants {
             setChangeActivity2Assignee(changeActivity, assigneeName);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new WTException(e.getLocalizedMessage());
+            throw new WTException(e.getStackTrace());
         }
         LOGGER.info(">>>>>>>>>>changeActivity:" + changeActivity);
         return changeActivity;

@@ -87,8 +87,8 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
                     // ECA类型
                     String type = "";
                     String changeObjectType = attributesMap.get(CHANGOBJECTETYPE_COMPID);//变更对象类型
-                    if (VALUE_5.equals(changeObjectType)) type = TYPE_1;
-                    else if (VALUE_6.equals(changeObjectType)) type = TYPE_2;
+                    if (changeObjectType.contains(VALUE_5)) type = TYPE_1;
+                    else if (changeObjectType.contains(VALUE_6)) type = TYPE_2;
                     //游离WTDocument、EPMDocument(图纸单独走变更的场景)，创建图纸变更ECA
                     if (StringUtils.isEmpty(type) && !(changeable2 instanceof WTPart)) type = TYPE_2;
                     LOGGER.info(">>>>>>>>>>createChangeActivity2.type:" + type);

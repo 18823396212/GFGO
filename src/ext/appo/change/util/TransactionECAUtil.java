@@ -130,6 +130,7 @@ public class TransactionECAUtil implements ChangeConstants, ModifyConstants {
 
                     if (activity2 == null) {
                         activity2 = ModifyUtils.createChangeTask(ORDER2, changeTheme, null, changeDescribe, TYPE_3, responsible);
+                        attributeMap.put(CHANGEACTIVITY2_COMPID, PersistenceHelper.getObjectIdentifier(activity2).toString());
                     } else {
                         // 名称修改
                         if (!activity2.getName().equals(changeTheme)) {

@@ -30,11 +30,9 @@ import java.util.*;
 
 public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormProcessor implements ChangeConstants, ModifyConstants {
 
-    private static final String CLASSNAME = CreateChangeNoticeFormProcessor.class.getName();
-    private static final Logger LOGGER = LogR.getLogger(CLASSNAME);
+    private static final Logger LOGGER = LogR.getLogger(CreateChangeNoticeFormProcessor.class.getName());
     private static final String ROUTINGNAME = "routingName";
     private static final String ROUTINGNAME_1 = "cacheButton";
-    private static final String SEPARATOR_1 = "_";
     private Map<Persistable, Map<String, String>> PAGEDATAMAP = new HashMap<>();//页面中changeTaskArray控件值并根据规则解析为对应集合
     private Map<Persistable, Collection<Persistable>> CONSTRUCTRELATION = new HashMap<>();//根据受影响对象表单构建创建ECA时需要填充的数据关系
     private Set<Persistable> AFFECTEDOBJECT = new HashSet<>();//所有受影响对象，包括收集对象
