@@ -77,7 +77,10 @@ public class ExtEditChangeNoticeFormProcessor extends EditChangeNoticeFormProces
                 //新增ChangeOrder2与受影响对象的关系
                 linkAffectedItems(changeOrder2, affectedObjectUtil.PAGEDATAMAP.keySet());
 
-                //创建事务性任务-模型对象
+                //更新已有事务性任务的属性；
+                transactionUtil.createEditChangeActivity2();
+
+                //创建事务性任务-模型对象，已存在则更新
                 transactionUtil.createTransactionECA();
 
                 //根据上一步骤收集的模型对象，与ECN建立关联关系

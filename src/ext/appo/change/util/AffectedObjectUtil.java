@@ -347,17 +347,18 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
                     while (result.hasMoreElements()) {
                         WTChangeActivity2 changeActivity2 = (WTChangeActivity2) result.nextElement();
                         LOGGER.info(">>>>>>>>>>changeActivity2:" + changeActivity2.getNumber());
-                        //判断关联的ECA是否非「已取消」「已解决」状态
-                        if ((!ChangeUtils.checkState(changeActivity2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeActivity2, ChangeConstants.RESOLVED))) {
-                            MESSAGES.add("物料: " + number + " 存在未解决的ECA: " + changeActivity2.getNumber() + " 不能同时提交两个ECA！");
-                            flag = true;
-                            flog = false;
-                            break;
-                        }
 
                         WTChangeOrder2 changeOrder2 = ChangeUtils.getEcnByEca(changeActivity2);
                         LOGGER.info(">>>>>>>>>>changeOrder2:" + changeOrder2.getNumber());
                         if (!ORDER2.getNumber().startsWith(changeOrder2.getNumber())) {
+                            //判断关联的ECA是否非「已取消」「已解决」状态
+                            if ((!ChangeUtils.checkState(changeActivity2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeActivity2, ChangeConstants.RESOLVED))) {
+                                MESSAGES.add("物料: " + number + " 存在未解决的ECA: " + changeActivity2.getNumber() + " 不能同时提交两个ECA！");
+                                flag = true;
+                                flog = false;
+                                break;
+                            }
+
                             //判断关联的ECN是否非「已取消」「已解决」状态
                             if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))) {
                                 MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
