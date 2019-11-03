@@ -74,7 +74,7 @@
             if (changeTaskArray.length > 0) {
                 for (var j = 0; j < inputFormArray.length; j++) {
                     var inputForm = inputFormArray[j];
-                    if (inputForm.type == 'text') {
+                    if (inputForm.type === 'text') {
                         if ((inputForm.id.indexOf('ResponsiblePerson') > -1) && (inputForm.id.indexOf('userPicker') > -1)) {
                             for (var i = 0; i < changeTaskArray.length; i++) {
                                 var datasArray = changeTaskArray[i];
@@ -92,22 +92,27 @@
 
     // 受影响对象列表‘移除’按钮调用
     function removeAffectedEndItems(event) {
-        // 移除数据
         var selectRows = PTC.jca.table.Utils.getTableSelectedRowsById('ext.appo.change.mvc.builder.AffectedItemsTableBuilder', false, false);
-        if (selectRows.length == 0) {
+        if (selectRows.length === 0) {
             alert("至少选择一项进行删除!");
             return;
         }
+        // 移除数据
         var table = PTC.jca.table.Utils.getTable('ext.appo.change.mvc.builder.AffectedItemsTableBuilder');
-        var rowDatas = PTC.jca.table.Utils.getRowData(table);
-        var rowCount = rowDatas.length;
-        var oidArray = new Array();
+        var oidArray = [];
         for (var i = 0; i < selectRows.length; i++) {
             oidArray.push(getOidFromRowValue(selectRows[i].value));
         }
-        PTC.jca.table.Utils.removeRows(table, oidArray);
+        //PTC.jca.table.Utils.removeRows(table, oidArray);
         // 数据保存
         saveChangeTaskArray();
+        //移除Link
+        var oid = "<%=request.getParameter("oid")%>";
+        var params = "oid=" + oid + "&selectOid=" + JSON.stringify(oidArray);
+        var url = "netmarkets/jsp/ext/appo/change/request/removeAffectedLink.jsp";
+        var removeVid = eval("(" + ajaxRequest(url, params) + ")");
+        console.log(removeVid);
+        PTC.jca.table.Utils.removeRows(table, removeVid);
     }
 
     var table_id = "ext.appo.change.mvc.builder.ChangeTaskTableBuilder";
@@ -115,7 +120,7 @@
     // 移除事务性任务
     function deleteChangeTask() {
         var selectRows = PTC.jca.table.Utils.getTableSelectedRowsById(table_id, false, false);
-        if (selectRows.length == 0) {
+        if (selectRows.length === 0) {
             alert("至少选择一项进行删除!");
             return;
         }
@@ -124,14 +129,14 @@
         var rowDatas = PTC.jca.table.Utils.getRowData(table);
         var rowCount = rowDatas.length;
 
-        var oidArray = new Array();
+        var oidArray = [];
         for (var i = 0; i < selectRows.length; i++) {
             oidArray.push(getOidFromRowValue(selectRows[i].value));
         }
         PTC.jca.table.Utils.removeRows(table, oidArray);
 
         // 保存数据
-        delaySaveDatasArray
+        delaySaveDatasArray();
     }
 
     // 添加数据至事务性任务
@@ -142,8 +147,13 @@
         // 构建列基本数据
         var url = "netmarkets/jsp/ext/appo/changeNotice/createTransactionalChangeActivity2.jsp";
         var lineID = trim1(ajaxRequest(url, ""));
-        var json = {'changeTheme': '', 'changeDescribe': '', 'responsible': '', 'changeActivity2': '', 'needDate': ''};
-        datasArray[lineID] = json;
+        datasArray[lineID] = {
+            'changeTheme': '',
+            'changeDescribe': '',
+            'responsible': '',
+            'changeActivity2': '',
+            'needDate': ''
+        };
         // 添加列
         reloadTable(JSON.stringify(datasArray));
     }
@@ -163,14 +173,14 @@
     // 移除  AffectedEndItemsTableBuilder(受影响产品) 中数据
     function deleteAffectedEndItems() {
         var selectRows = PTC.jca.table.Utils.getTableSelectedRowsById('ext.appo.change.mvc.builder.AffectedEndItemsTableBuilder', false, false);
-        if (selectRows.length == 0) {
+        if (selectRows.length === 0) {
             alert("至少选择一项进行删除!");
             return;
         }
         var table = PTC.jca.table.Utils.getTable('ext.appo.change.mvc.builder.AffectedEndItemsTableBuilder');
         var rowDatas = PTC.jca.table.Utils.getRowData(table);
         var rowCount = rowDatas.length;
-        var oidArray = new Array();
+        var oidArray = [];
         for (var i = 0; i < selectRows.length; i++) {
             oidArray.push(getOidFromRowValue(selectRows[i].value));
         }
@@ -190,14 +200,14 @@
     // 收集受影响对象表中选中数据的上层产品对象
     function collectUpperProduct() {
         var selectRows = PTC.jca.table.Utils.getTableSelectedRowsById('ext.appo.change.mvc.builder.AffectedItemsTableBuilder', false, false);
-        if (selectRows.length == 0) {
+        if (selectRows.length === 0) {
             alert("至少选择一条数据进行收集操作!");
             return;
         }
         // 保存数据
         saveChangeTaskArray();
 
-        var oidArray = new Array();
+        var oidArray = [];
         for (var i = 0; i < selectRows.length; i++) {
             oidArray.push(getOidFromRowValue(selectRows[i].value));
         }
@@ -218,7 +228,7 @@
         // 输入参数转换JSON
         var addJson = eval("(" + param + ")");
         for (var i = 0; i < addJson.length; i++) {
-            if (affectedProductID.indexOf(addJson[i]) == -1) {
+            if (affectedProductID.indexOf(addJson[i]) === -1) {
                 affectedProductID[affectedProductID.length] = addJson[i];
             }
         }
@@ -273,10 +283,10 @@
             }
             if (tableRow.hasOwnProperty('ResponsiblePerson')) {
                 var responsiblePersonValue = tableRow['ResponsiblePerson'].gui.comparable;
-                if (responsiblePersonValue.length == 0) {
+                if (responsiblePersonValue.length === 0) {
                     for (var j = 0; j < inputFormArray.length; j++) {
                         var inputForm = inputFormArray[j];
-                        if (inputForm.type == 'text') {
+                        if (inputForm.type === 'text') {
                             if ((inputForm.id.indexOf('ResponsiblePerson') > -1) && (inputForm.id.indexOf(tableRow.oid) > -1)) {
                                 responsiblePersonValue = inputForm.value;
                                 break;
@@ -395,10 +405,10 @@
             }
             if (record.data.responsible) {
                 var responsibleValue = record.data.responsible.gui.comparable;
-                if (responsibleValue.length == 0) {
+                if (responsibleValue.length === 0) {
                     for (var j = 0; j < inputFormArray.length; j++) {
                         var inputForm = inputFormArray[j];
-                        if (inputForm.type == 'text') {
+                        if (inputForm.type === 'text') {
                             if ((inputForm.id.indexOf('responsible') > -1) && (inputForm.id.indexOf(record.data.oid) > -1)) {
                                 responsibleValue = inputForm.value;
                                 break;

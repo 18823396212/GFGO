@@ -1,16 +1,15 @@
 <%@ page import="ext.appo.change.ModifyHelper" %>
 <%@ page import="ext.appo.change.constants.ModifyConstants" %>
 <%@ page import="ext.appo.change.models.CorrelationObjectLink" %>
+<%@ page import="ext.appo.change.models.TransactionTask" %>
 <%@ page import="ext.appo.change.util.ModifyUtils" %>
 <%@ page import="ext.pi.core.PICoreHelper" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%@ page import="org.json.JSONArray" %>
-<%@ page import="wt.fc.ObjectReference" %>
+<%@ page import="wt.change2.WTChangeActivity2" %>
 <%@ page import="wt.fc.Persistable" %>
-<%@ page import="wt.fc.QueryResult" %>
+<%@ page import="wt.fc.PersistenceServerHelper" %>
 <%@ page import="wt.org.WTPrincipal" %>
-<%@ page import="wt.part.PartDocHelper" %>
-<%@ page import="wt.part.WTPart" %>
 <%@ page import="wt.pom.Transaction" %>
 <%@ page import="wt.session.SessionHelper" %>
 <%@page pageEncoding="UTF-8" %>
@@ -37,29 +36,28 @@
             for (int i = 0; i < selects.length(); i++) {
                 Persistable persistable = ModifyUtils.getPersistable(selects.getString(i));
                 System.out.println("=====persistable: " + persistable);
-                if (persistable == null) continue;
+                if (persistable instanceof TransactionTask) {
+                    TransactionTask task = (TransactionTask) persistable;
 
-                //移除ECN与所选受影响对象的Link
-                String branchId = String.valueOf(PICoreHelper.service.getBranchId(persistable));
-                System.out.println("=====branchId: " + branchId);
-                CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, branchId, ModifyConstants.LINKTYPE_1);
-                System.out.println("=====link: " + link);
-                ModifyHelper.service.removeCorrelationObjectLink(link);
-
-                //所选对象为WTPart，移除关联的文档
-                if (persistable instanceof WTPart) {
-                    QueryResult result = PartDocHelper.service.getAssociatedDocuments((WTPart) persistable);//获取部件关联的图文档
-                    System.out.println("=====result: " + result.size());
-                    while (result.hasMoreElements()) {
-                        Object object = result.nextElement();
-                        if (object instanceof ObjectReference) {
-                            object = ((ObjectReference) object).getObject();
-                        }
-                        branchId = String.valueOf(PICoreHelper.service.getBranchId(object));
-                        link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, branchId, ModifyConstants.LINKTYPE_1);
-                        if (link != null) removeVid.put(PICoreHelper.service.getVid(object));
-                        ModifyHelper.service.removeCorrelationObjectLink(link);
+                    //删除所选事务性任务模型对应的ECA、事务性任务的产生对象不回退！
+                    persistable = ModifyUtils.getPersistable(task.getChangeActivity2());
+                    System.out.println("=====ChangeActivity2: " + persistable);
+                    if (persistable instanceof WTChangeActivity2) {
+                        WTChangeActivity2 activity2 = (WTChangeActivity2) persistable;
+                        ModifyUtils.removeAffectedActivityData(activity2);
+                        ModifyUtils.removeChangeRecord(activity2);
+                        PersistenceServerHelper.manager.remove(activity2);
                     }
+
+                    //移除ECN与所选事务性任务模型对象的Link
+                    String ida2a2 = String.valueOf(PICoreHelper.service.getIda2a2(task));
+                    System.out.println("=====ida2a2: " + ida2a2);
+                    CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, ida2a2, ModifyConstants.LINKTYPE_3);
+                    System.out.println("=====link: " + link);
+                    ModifyHelper.service.removeCorrelationObjectLink(link);
+
+                    //删除所选事务性任务模型对象
+                    ModifyHelper.service.deleteTransactionTask(task);
                 }
                 removeVid.put(selects.getString(i));
             }

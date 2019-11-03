@@ -70,22 +70,20 @@
             alert("至少选择一项进行删除!");
             return;
         }
-        // 移除数据
-        var table = PTC.jca.table.Utils.getTable('ext.appo.change.mvc.builder.AffectedItemsTableBuilder');
         var oidArray = [];
         for (var i = 0; i < selectRows.length; i++) {
             oidArray.push(getOidFromRowValue(selectRows[i].value));
         }
-        //PTC.jca.table.Utils.removeRows(table, oidArray);
-        // 数据保存
-        saveChangeTaskArray();
         //移除Link
         var oid = "<%=request.getParameter("oid")%>";
         var params = "oid=" + oid + "&selectOid=" + JSON.stringify(oidArray);
         var url = "netmarkets/jsp/ext/appo/change/request/removeAffectedLink.jsp";
         var removeVid = eval("(" + ajaxRequest(url, params) + ")");
-        console.log(removeVid);
+        // 移除数据
+        var table = PTC.jca.table.Utils.getTable('ext.appo.change.mvc.builder.AffectedItemsTableBuilder');
         PTC.jca.table.Utils.removeRows(table, removeVid);
+        // 数据保存
+        saveChangeTaskArray();
     }
 
     var table_id = "ext.appo.change.mvc.builder.ChangeTaskTableBuilder";
@@ -97,17 +95,18 @@
             alert("至少选择一项进行删除!");
             return;
         }
-
-        var table = PTC.jca.table.Utils.getTable(table_id);
-        var rowDatas = PTC.jca.table.Utils.getRowData(table);
-        var rowCount = rowDatas.length;
-
         var oidArray = [];
         for (var i = 0; i < selectRows.length; i++) {
             oidArray.push(getOidFromRowValue(selectRows[i].value));
         }
-        PTC.jca.table.Utils.removeRows(table, oidArray);
-
+        //移除Link
+        var oid = "<%=request.getParameter("oid")%>";
+        var params = "oid=" + oid + "&selectOid=" + JSON.stringify(oidArray);
+        var url = "netmarkets/jsp/ext/appo/change/request/removeChangeTaskLink.jsp";
+        var removeVid = eval("(" + ajaxRequest(url, params) + ")");
+        // 移除数据
+        var table = PTC.jca.table.Utils.getTable(table_id);
+        PTC.jca.table.Utils.removeRows(table, removeVid);
         // 保存数据
         delaySaveDatasArray();
     }
@@ -143,22 +142,25 @@
         PTC.jca.table.Utils.reload(table_id, {changeTaskBeanID: param}, true);
     }
 
-    // 移除  AffectedEndItemsTableBuilder 中数据
+    // 移除  AffectedEndItemsTableBuilder(受影响产品) 中数据
     function deleteAffectedEndItems() {
         var selectRows = PTC.jca.table.Utils.getTableSelectedRowsById('ext.appo.change.mvc.builder.AffectedEndItemsTableBuilder', false, false);
         if (selectRows.length === 0) {
             alert("至少选择一项进行删除!");
             return;
         }
-        var table = PTC.jca.table.Utils.getTable('ext.appo.change.mvc.builder.AffectedEndItemsTableBuilder');
-        var rowDatas = PTC.jca.table.Utils.getRowData(table);
-        var rowCount = rowDatas.length;
         var oidArray = [];
         for (var i = 0; i < selectRows.length; i++) {
             oidArray.push(getOidFromRowValue(selectRows[i].value));
         }
-        PTC.jca.table.Utils.removeRows(table, oidArray);
-
+        //移除Link
+        var oid = "<%=request.getParameter("oid")%>";
+        var params = "oid=" + oid + "&selectOid=" + JSON.stringify(oidArray);
+        var url = "netmarkets/jsp/ext/appo/change/request/removeAffectedEndItemsLink.jsp";
+        var removeVid = eval("(" + ajaxRequest(url, params) + ")");
+        // 移除数据
+        var table = PTC.jca.table.Utils.getTable('ext.appo.change.mvc.builder.AffectedEndItemsTableBuilder');
+        PTC.jca.table.Utils.removeRows(table, removeVid);
         // 重新收集表格数据
         var affectedProductID = [];
         var tableObj = PTC.jca.table.Utils.getTableRows('ext.appo.change.mvc.builder.AffectedEndItemsTableBuilder');

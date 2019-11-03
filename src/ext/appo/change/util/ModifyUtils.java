@@ -126,6 +126,41 @@ public class ModifyUtils implements ChangeConstants {
     }
 
     /***
+     * 获取对象的版本
+     * @param persistable
+     * @return
+     */
+    public static String getVersion(Persistable persistable) {
+        if (persistable instanceof ObjectReference) {
+            persistable = ((ObjectReference) persistable).getObject();
+        }
+
+        String version = "";
+
+        if (persistable instanceof WTPart) {
+            WTPart part = (WTPart) persistable;
+            version = part.getVersionIdentifier().getValue() + "." + part.getIterationIdentifier().getValue();
+        } else if (persistable instanceof EPMDocument) {
+            EPMDocument document = (EPMDocument) persistable;
+            version = document.getVersionIdentifier().getValue() + "." + document.getIterationIdentifier().getValue();
+        } else if (persistable instanceof WTDocument) {
+            WTDocument document = (WTDocument) persistable;
+            version = document.getVersionIdentifier().getValue() + "." + document.getIterationIdentifier().getValue();
+        } else if (persistable instanceof WTChangeRequest2) {
+            WTChangeRequest2 request2 = (WTChangeRequest2) persistable;
+            version = request2.getVersionIdentifier().getValue() + "." + request2.getIterationIdentifier().getValue();
+        } else if (persistable instanceof WTChangeOrder2) {
+            WTChangeOrder2 order2 = (WTChangeOrder2) persistable;
+            version = order2.getVersionIdentifier().getValue() + "." + order2.getIterationIdentifier().getValue();
+        } else if (persistable instanceof WTChangeActivity2) {
+            WTChangeActivity2 activity2 = (WTChangeActivity2) persistable;
+            version = activity2.getVersionIdentifier().getValue() + "." + activity2.getIterationIdentifier().getValue();
+        }
+
+        return version;
+    }
+
+    /***
      * 获取对象编码
      * @param persistable
      * @return
@@ -872,6 +907,37 @@ public class ModifyUtils implements ChangeConstants {
     }
 
     /***
+     * 获取ECN中所有ECA与产生对象
+     * @param changeOrder2
+     * @return
+     * @throws WTException
+     */
+    public static Map<ChangeActivityIfc, Collection<Changeable2>> getChangeablesAfter(WTChangeOrder2 changeOrder2) throws WTException {
+        Map<ChangeActivityIfc, Collection<Changeable2>> datasMap = new HashMap<>();
+        if (changeOrder2 == null) return datasMap;
+
+        Collection<ChangeActivityIfc> collection = getChangeActivities(changeOrder2);
+        for (ChangeActivityIfc changeActivityIfc : collection) {
+            // 产生对象集合
+            Collection<Changeable2> changeable2s = new HashSet<>();
+            // 获取ECA中所有产生对象
+            QueryResult result = ChangeHelper2.service.getChangeablesAfter(changeActivityIfc);
+            while (result.hasMoreElements()) {
+                Object object = result.nextElement();
+                if (object instanceof ObjectReference) {
+                    object = ((ObjectReference) object).getObject();
+                }
+                if (object instanceof Changeable2) {
+                    changeable2s.add((Changeable2) object);
+                }
+            }
+            datasMap.put(changeActivityIfc, changeable2s);
+        }
+
+        return datasMap;
+    }
+
+    /***
      * 获取更改通告中所有更改任务
      * @param changeOrder2
      *            变更通告
@@ -904,10 +970,66 @@ public class ModifyUtils implements ChangeConstants {
      * @throws WTException
      */
     public static Persistable getPersistable(String id) throws WTException {
-        ReferenceFactory factory = new ReferenceFactory();
-        WTReference reference = factory.getReference(id);
-        if (reference != null) return reference.getObject();
+        if (StringUtils.isNotEmpty(id)) {
+            ReferenceFactory factory = new ReferenceFactory();
+            WTReference reference = factory.getReference(id);
+            if (reference != null) return reference.getObject();
+        }
         return null;
+    }
+
+    /**
+     * 移除受影响对象
+     * @param activity2
+     * @throws WTException
+     */
+    public static void removeAffectedActivityData(ChangeActivity2 activity2) throws WTException {
+        QueryResult result = ChangeHelper2.service.getChangeablesBefore(activity2);
+        while (result.hasMoreElements()) {
+            Object object = result.nextElement();
+            ChangeHelper2.service.unattachChangeable((Changeable2) object, activity2, AffectedActivityData.class, AffectedActivityData.ROLE_AOBJECT_ROLE);
+        }
+    }
+
+    /**
+     * 移除产生对象
+     * @param activity2
+     * @throws WTException
+     */
+    public static void removeChangeRecord(ChangeActivity2 activity2) throws WTException {
+        QueryResult result = ChangeHelper2.service.getChangeablesAfter(activity2);
+        while (result.hasMoreElements()) {
+            Object object = result.nextElement();
+            ChangeHelper2.service.unattachChangeable((Changeable2) object, activity2, ChangeRecord2.class, ChangeRecord2.ROLE_AOBJECT_ROLE);
+        }
+    }
+
+    /**
+     * 删除受影响对象
+     * @param activity2
+     * @param changeable
+     * @throws WTException
+     */
+    public static void deleteAffectedActivityData(ChangeActivity2 activity2, Changeable2 changeable) throws WTException {
+        QueryResult result = PersistenceHelper.manager.find(AffectedActivityData.class, changeable, AffectedActivityData.CHANGEABLE2_ROLE, activity2);
+        while (result.hasMoreElements()) {
+            AffectedActivityData activityData = (AffectedActivityData) result.nextElement();
+            ChangeHelper2.service.deleteAffectedActivityData(activityData);
+        }
+    }
+
+    /**
+     * 删除产生对象
+     * @param activity2
+     * @param changeable
+     * @throws WTException
+     */
+    public static void deleteChangeRecord(ChangeActivity2 activity2, Changeable2 changeable) throws WTException {
+        QueryResult result = PersistenceHelper.manager.find(ChangeRecord2.class, changeable, ChangeRecord2.CHANGEABLE2_ROLE, activity2);
+        while (result.hasMoreElements()) {
+            ChangeRecord2 changeRecord = (ChangeRecord2) result.nextElement();
+            ChangeHelper2.service.deleteChangeRecord(changeRecord);
+        }
     }
 
 }

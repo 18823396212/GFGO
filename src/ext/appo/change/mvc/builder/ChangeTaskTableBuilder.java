@@ -6,6 +6,7 @@ import com.ptc.jca.mvc.components.JcaComponentParams;
 import com.ptc.jca.mvc.components.JcaTableConfig;
 import com.ptc.mvc.components.*;
 import com.ptc.mvc.util.ClientMessageSource;
+import com.ptc.netmarkets.model.NmOid;
 import com.ptc.netmarkets.util.beans.NmCommandBean;
 import com.ptc.netmarkets.util.beans.NmHelperBean;
 import com.ptc.windchill.enterprise.change2.ChangeTaskRoleParticipantHelper;
@@ -203,7 +204,13 @@ public class ChangeTaskTableBuilder extends AbstractComponentBuilder implements 
                 changeTaskBean.setChangeActivity2(changeActivity2);
                 changeTaskBean.setNeedDate(task.getNeedDate());
 
-                if (!map.containsKey(changeActivity2)) collection.add(changeTaskBean);
+                NmOid nmOid = NmOid.newNmOid(PICoreHelper.service.getOid(task));
+                changeTaskBean.setOid(nmOid);
+                if (map.containsKey(changeActivity2)) {
+                    map.get(changeActivity2).setOid(nmOid);
+                } else {
+                    collection.add(changeTaskBean);
+                }
             }
         }
 

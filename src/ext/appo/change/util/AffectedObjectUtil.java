@@ -10,12 +10,11 @@ import ext.appo.part.filter.StandardPartsRevise;
 import ext.lang.PICollectionUtils;
 import ext.lang.PIStringUtils;
 import ext.pi.core.PICoreHelper;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import wt.change2.ChangeHelper2;
-import wt.change2.WTChangeActivity2;
-import wt.change2.WTChangeOrder2;
+import wt.change2.*;
 import wt.configurablelink.ConfigurableDescribeLink;
 import wt.doc.WTDocument;
 import wt.epm.EPMDocument;
@@ -40,6 +39,7 @@ import java.util.*;
 public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
 
     private static final Logger LOGGER = LogR.getLogger(AffectedObjectUtil.class.getName());
+    private static final String SEPARATOR_1 = "-";
     private NmCommandBean NMCOMMANDBEAN;
     private WTChangeOrder2 ORDER2;
     public Map<Persistable, Map<String, String>> PAGEDATAMAP = new HashMap<>();//ECN受影响对象集合
@@ -50,6 +50,7 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
     private Map<String, Set<String>> PARENTMAP = new HashMap<>();//子件对应的上层父件编码集合
     private Set<String> AFFECTEDPARTNUMBER = new HashSet<>();//ECN受影响对象-部件编码集合
     private Set<String> AFFECTEDDOCNUMBER = new HashSet<>();//ECN受影响对象-文档编码集合
+    private Set<String> NUMBERS = new HashSet<>();//ECN受影响对象-编码集合
     private Set<WTPart> AFFECTEDPART = new HashSet<>();//ECN受影响对象-部件集合
     private Set<Persistable> AFFECTEDDOC = new HashSet<>();//ECN受影响对象-文档集合
     private Set<Persistable> DISSOCIATEDOC = new HashSet<>();//ECN受影响对象-需要单独走ECA的文档集合（游离）
@@ -75,6 +76,7 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
              * 9.1、检查受影响对象是否存在未结束的ECN，有则不允许创建。
              * 9.2、检查受影响对象的状态必须是已归档及已发布。
              * 9.3、检查受影响对象不能为标准件。
+             * 检查受影响对象列表中是否存在已修订的对象
              */
             checkFour();
         }
@@ -104,6 +106,7 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
              * 8.2、检查受影响对象的状态必须是已归档及已发布。
              * 8.3、检查受影响对象不能为标准件。
              * 8.4、A“ECN和完成功能” ，提交的时候校验图纸是否收集，如果没有收集，要给提交人提示“xx部件未收集图纸，请收集图纸！”
+             * 检查受影响对象列表中是否存在已修订的对象
              */
             checkTwo();
             //检查是否存在单独进行变更的说明文档
@@ -155,6 +158,7 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
                             }
                             if (persistable != null) {
                                 PAGEDATAMAP.put(persistable, attributesMap);
+                                NUMBERS.add(ModifyUtils.getNumber(persistable) + SEPARATOR_1 + ModifyUtils.getVersion(persistable));
                             }
                             if (persistable instanceof WTPart) {
                                 WTPart part = (WTPart) persistable;
@@ -321,6 +325,7 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
      * 8.2、检查受影响对象的状态必须是已归档及已发布。
      * 8.3、检查受影响对象不能为标准件。
      * 8.4、A“ECN和完成功能” ，提交的时候校验图纸是否收集，如果没有收集，要给提交人提示“xx部件未收集图纸，请收集图纸！”
+     * 检查受影响对象列表中是否存在已修订的对象
      */
     private void checkTwo() throws WTException {
         //8.0、至少一条受影响对象，必填项验证。
@@ -436,6 +441,9 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
             Set<String> result = PICollectionUtils.intersect(numbers, AFFECTEDDOCNUMBER);
             if (numbers.size() > 0 && result.size() < 1) MESSAGES.add("部件: " + part.getNumber() + "未收集图纸，请收集图纸！");
         }
+
+        //检查受影响对象列表中是否存在已修订的对象
+        checkRevised();
     }
 
     /**
@@ -458,6 +466,7 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
      * 9.1、检查受影响对象是否存在未结束的ECN，有则不允许创建。
      * 9.2、检查受影响对象的状态必须是已归档及已发布。
      * 9.3、检查受影响对象不能为标准件。
+     * 检查受影响对象列表中是否存在已修订的对象
      */
     private void checkFour() throws WTException {
         //9.0、至少一条受影响对象，必填项验证。
@@ -560,6 +569,33 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
             throw new WTException(e.getStackTrace());
         }
         if (messages.length() > 0) MESSAGES.add(messages.toString() + " 业务定义为标准件，不能变更升版！");
+
+        //检查受影响对象列表中是否存在已修订的对象
+        checkRevised();
+    }
+
+    /**
+     * 检查受影响对象列表中是否存在已修订的对象
+     * @throws WTException
+     */
+    private void checkRevised() throws WTException {
+        LOGGER.info(">>>>>>>>>>checkRevised.NUMBERS: " + NUMBERS);
+        Map<ChangeActivityIfc, Collection<Changeable2>> map = ModifyUtils.getChangeablesAfter(ORDER2);
+        LOGGER.info(">>>>>>>>>>checkRevised.map: " + map.size());
+        for (Map.Entry<ChangeActivityIfc, Collection<Changeable2>> entry : map.entrySet()) {
+            LOGGER.info(">>>>>>>>>>checkRevised.entry.getKey(): " + entry.getKey());
+            ChangeActivity2 activity2 = (ChangeActivity2) entry.getKey();
+            Collection<Changeable2> collection = entry.getValue();
+            LOGGER.info(">>>>>>>>>>checkRevised.collection: " + collection.size());
+            for (Changeable2 changeable2 : collection) {
+                String number = ModifyUtils.getNumber(changeable2) + SEPARATOR_1 + ModifyUtils.getVersion(changeable2);
+                LOGGER.info(">>>>>>>>>>checkRevised.number: " + number);
+                if (SEPARATOR_1.equals(number)) continue;
+                if (NUMBERS.contains(number)) {
+                    MESSAGES.add("受影响对象「" + number + "」已存在当前变更申请关联的变更任务「" + activity2.getNumber() + "」的产生对象中！");
+                }
+            }
+        }
     }
 
 }

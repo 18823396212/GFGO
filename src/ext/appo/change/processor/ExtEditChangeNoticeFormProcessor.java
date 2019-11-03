@@ -63,6 +63,7 @@ public class ExtEditChangeNoticeFormProcessor extends EditChangeNoticeFormProces
                  * 9.1、检查受影响对象是否存在未结束的ECN，有则不允许创建。
                  * 9.2、检查受影响对象的状态必须是已归档及已发布。
                  * 9.3、检查受影响对象不能为标准件。
+                 * 检查受影响对象列表中是否存在已修订的对象
                  */
                 affectedObjectUtil.cacheButton();
                 //校验 任务主题 是否重复
@@ -96,6 +97,7 @@ public class ExtEditChangeNoticeFormProcessor extends EditChangeNoticeFormProces
                  * 8.4、A“ECN和完成功能” ，提交的时候校验图纸是否收集，如果没有收集，要给提交人提示“xx部件未收集图纸，请收集图纸！”
                  * 校验需要收集上层对象的部件是否满足收集条件
                  * 检查是否存在单独进行变更的说明文档
+                 * 检查受影响对象列表中是否存在已修订的对象
                  */
                 affectedObjectUtil.okButton();
                 //校验 任务主题 是否重复
