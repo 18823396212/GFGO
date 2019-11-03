@@ -16,6 +16,7 @@ import ext.appo.change.util.TransactionECAUtil;
 import ext.appo.ecn.constants.ChangeConstants;
 import ext.lang.PIStringUtils;
 import ext.pi.core.PIAttributeHelper;
+import ext.pi.core.PICoreHelper;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import wt.change2.WTChangeOrder2;
@@ -155,10 +156,10 @@ public class ExtEditChangeNoticeFormProcessor extends EditChangeNoticeFormProces
     public void linkAffectedItems(WTChangeOrder2 changeOrder2, Collection<Persistable> collections) throws WTException {
         if (changeOrder2 == null || collections.size() < 1) return;
 
-        String ecnVid = ModifyUtils.geBranchId(changeOrder2);
+        String ecnVid = String.valueOf(PICoreHelper.service.getBranchId(changeOrder2));
         LOGGER.info(">>>>>>>>>>linkAffectedItems.ecnVid: " + ecnVid);
         for (Persistable persistable : collections) {
-            String branchId = ModifyUtils.geBranchId(persistable);
+            String branchId = String.valueOf(PICoreHelper.service.getBranchId(persistable));
             LOGGER.info(">>>>>>>>>>linkAffectedItems.branchId: " + branchId);
             CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, branchId, LINKTYPE_1);
             LOGGER.info(">>>>>>>>>>linkAffectedItems.link: " + link);
@@ -200,10 +201,10 @@ public class ExtEditChangeNoticeFormProcessor extends EditChangeNoticeFormProces
                     }
                     LOGGER.info(">>>>>>>>>>linkAffectedEndItems.collection: " + collection);
 
-                    String ecnVid = ModifyUtils.geBranchId(changeOrder2);
+                    String ecnVid = String.valueOf(PICoreHelper.service.getBranchId(changeOrder2));
                     LOGGER.info(">>>>>>>>>>linkAffectedEndItems.ecnVid: " + ecnVid);
                     for (Persistable persistable : collection) {
-                        String branchId = ModifyUtils.geBranchId(persistable);
+                        String branchId = String.valueOf(PICoreHelper.service.getBranchId(persistable));
                         LOGGER.info(">>>>>>>>>>linkAffectedEndItems.branchId: " + branchId);
                         CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, branchId, LINKTYPE_2);
                         LOGGER.info(">>>>>>>>>>linkAffectedEndItems.link: " + link);

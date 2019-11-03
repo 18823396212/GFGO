@@ -91,7 +91,7 @@ public class StandardModifyService extends StandardManager implements ModifyServ
      */
     @Override
     public void deleteTransactionTask(TransactionTask task) throws WTException {
-        PersistenceServerHelper.manager.remove(task);
+        if (task != null) PersistenceServerHelper.manager.remove(task);
     }
 
     /**
@@ -101,7 +101,7 @@ public class StandardModifyService extends StandardManager implements ModifyServ
      */
     @Override
     public void removeCorrelationObjectLink(CorrelationObjectLink link) throws WTException {
-        PersistenceServerHelper.manager.remove(link);
+        if (link != null) PersistenceServerHelper.manager.remove(link);
     }
 
     /**

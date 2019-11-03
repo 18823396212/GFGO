@@ -896,4 +896,18 @@ public class ModifyUtils implements ChangeConstants {
         return datasArray;
     }
 
+    /**
+     * 根据OID、VID获取对象
+     * 例如VR:wt.change2.WTChangeOrder2:292078
+     * @param id
+     * @return
+     * @throws WTException
+     */
+    public static Persistable getPersistable(String id) throws WTException {
+        ReferenceFactory factory = new ReferenceFactory();
+        WTReference reference = factory.getReference(id);
+        if (reference != null) return reference.getObject();
+        return null;
+    }
+
 }

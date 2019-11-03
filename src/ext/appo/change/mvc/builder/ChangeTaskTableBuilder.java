@@ -61,9 +61,10 @@ public class ChangeTaskTableBuilder extends AbstractComponentBuilder implements 
             collection.addAll(queryTransactionTask(changeOrder2, map));
         }
         LOGGER.info("=====buildComponentData.map: " + map);
+        collection.addAll(map.values());
 
         //添加新增数据
-        collection.addAll(addDatasArray(nmCommandBean, map));
+        addDatasArray(nmCommandBean, collection);
         LOGGER.info("=====buildComponentData.collection: " + collection);
 
         return collection;
@@ -202,9 +203,7 @@ public class ChangeTaskTableBuilder extends AbstractComponentBuilder implements 
                 changeTaskBean.setChangeActivity2(changeActivity2);
                 changeTaskBean.setNeedDate(task.getNeedDate());
 
-
-                if (StringUtils.isNotEmpty(changeActivity2)) map.put(changeActivity2, changeTaskBean);
-                else collection.add(changeTaskBean);
+                if (!map.containsKey(changeActivity2)) collection.add(changeTaskBean);
             }
         }
 
@@ -214,15 +213,13 @@ public class ChangeTaskTableBuilder extends AbstractComponentBuilder implements 
     /**
      * 新增数据，处理重复数据
      * @param nmCommandBean
-     * @param map
+     * @param collection
      * @throws WTException
-     * @return
      */
-    public Collection<ChangeTaskBean> addDatasArray(NmCommandBean nmCommandBean, Map<String, ChangeTaskBean> map) throws Exception {
-        Collection<ChangeTaskBean> collection = new HashSet<>();
-
+    public void addDatasArray(NmCommandBean nmCommandBean, Collection<ChangeTaskBean> collection) throws Exception {
         String jsonString = nmCommandBean.getRequest().getParameter(ChangeConstants.CHANGETASKBEAN_ID);
         if (PIStringUtils.isNotNull(jsonString)) {
+            collection.removeAll(collection);
             JSONObject object = new JSONObject(jsonString);
             Iterator<?> keyIterator = object.keys();
             while (keyIterator.hasNext()) {
@@ -241,10 +238,7 @@ public class ChangeTaskTableBuilder extends AbstractComponentBuilder implements 
                     changeTaskBean.setResponsible(jsonObject.getString(ChangeConstants.RESPONSIBLE_COMPID));
                 }
                 if (jsonObject.has(ChangeConstants.CHANGEACTIVITY2_COMPID)) {
-                    String changeActivity2 = jsonObject.getString(ChangeConstants.CHANGEACTIVITY2_COMPID);
-                    changeTaskBean.setChangeActivity2(changeActivity2);
-                    //如果页面上有对应ECA的数据，从map中移除
-                    map.remove(changeActivity2);
+                    changeTaskBean.setChangeActivity2(jsonObject.getString(ChangeConstants.CHANGEACTIVITY2_COMPID));
                 }
                 if (jsonObject.has(ChangeConstants.NEEDDATE_COMPID)) {
                     changeTaskBean.setNeedDate(jsonObject.getString(ChangeConstants.NEEDDATE_COMPID));
@@ -252,9 +246,6 @@ public class ChangeTaskTableBuilder extends AbstractComponentBuilder implements 
                 collection.add(changeTaskBean);
             }
         }
-        collection.addAll(map.values());
-
-        return collection;
     }
 
 }

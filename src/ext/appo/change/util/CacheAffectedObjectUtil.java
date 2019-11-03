@@ -7,6 +7,7 @@ import ext.appo.ecn.common.util.ChangeUtils;
 import ext.appo.ecn.constants.ChangeConstants;
 import ext.appo.part.filter.StandardPartsRevise;
 import ext.lang.PIStringUtils;
+import ext.pi.core.PICoreHelper;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -183,7 +184,7 @@ public class CacheAffectedObjectUtil implements ChangeConstants, ModifyConstants
                     QueryResult result = VersionControlHelper.service.allVersionsOf(part.getMaster());//获取所有大版本的最新小版本
                     while (result.hasMoreElements()) {
                         WTPart oldPart = (WTPart) result.nextElement();
-                        String branchId = ModifyUtils.geBranchId(oldPart);
+                        String branchId = String.valueOf(PICoreHelper.service.getBranchId(oldPart));
                         LOGGER.info(">>>>>>>>>>checkTwo.branchId: " + branchId);
 
                         Set<WTChangeOrder2> order2s = ModifyHelper.service.queryWTChangeOrder2(branchId, ModifyConstants.LINKTYPE_1);

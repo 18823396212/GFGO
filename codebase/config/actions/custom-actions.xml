@@ -146,12 +146,12 @@
         <!-- 受影响上层物料表 -->
         <action name="affectedUpperMaterialsTableBuilder">
             <component name="ext.appo.ecn.mvc.builder.AffectedUpperMaterialsTableBuilder" windowType="page"/>
-            <includeFilter name="AffectedMaterialsFilter"></includeFilter>
+            <includeFilter name="AffectedMaterialsFilter"/>
         </action>
         <!-- 受影响下层物料表 -->
         <action name="affectedDownMaterialsTableBuilder">
             <component name="ext.appo.ecn.mvc.builder.AffectedDownMaterialsTableBuilder" windowType="page"/>
-            <includeFilter name="AffectedMaterialsFilter"></includeFilter>
+            <includeFilter name="AffectedMaterialsFilter"/>
         </action>
 
         <!-- 受影响对象表单 -->
@@ -208,15 +208,16 @@
             <command onClick="additionAffectedEndItems()" windowType="no_content" />
         </action-->
 
+        <!--modify by wangtong at 20191024 start-->
         <!-- 移除受影响对象 -->
         <action name="removeAffectedEndItems" renderType="GENERAL" selectRequired="true">
             <command onClick="removeAffectedEndItems(event)" windowType="no_content"/>
         </action>
+        <!--modify by wangtong at 20191024 end-->
 
         <!-- 受影响对象表单：弹出收集对象列表 -->
         <action name="collectItems">
-            <command url="netmarkets/jsp/ext/appo/changeNotice/collectItems.jsp"
-                     class="com.ptc.cat.ui.client.action.LaunchURLAction" method="execute" windowType="popup"/>
+            <command url="netmarkets/jsp/ext/appo/changeNotice/collectItems.jsp" class="com.ptc.cat.ui.client.action.LaunchURLAction" method="execute" windowType="popup"/>
         </action>
 
         <action name="collectItemsStep">
@@ -225,13 +226,11 @@
 
         <!-- 受影响对象表单：添加受影响对象 -->
         <action name="additionAffectedEndItems">
-            <command url="/netmarkets/jsp/ext/appo/changeNotice/additionAffectedEndItems.jsp"
-                     class="com.ptc.cat.ui.client.action.LaunchURLAction" method="execute" windowType="popup"/>
+            <command url="/netmarkets/jsp/ext/appo/changeNotice/additionAffectedEndItems.jsp" class="com.ptc.cat.ui.client.action.LaunchURLAction" method="execute" windowType="popup"/>
         </action>
 
         <action name="additionAffectedEndItemsStep">
-            <command url="netmarkets/jsp/ext/appo/changeNotice/additionAffectedEndItemsStep.jsp"
-                     windowType="wizard_step"/>
+            <command url="netmarkets/jsp/ext/appo/changeNotice/additionAffectedEndItemsStep.jsp" windowType="wizard_step"/>
         </action>
 
         <!-- 收集对象页面‘确定’按钮 -->
