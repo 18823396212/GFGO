@@ -92,27 +92,20 @@
 
     // 受影响对象列表‘移除’按钮调用
     function removeAffectedEndItems(event) {
+        // 移除数据
         var selectRows = PTC.jca.table.Utils.getTableSelectedRowsById('ext.appo.change.mvc.builder.AffectedItemsTableBuilder', false, false);
         if (selectRows.length === 0) {
             alert("至少选择一项进行删除!");
             return;
         }
-        // 移除数据
         var table = PTC.jca.table.Utils.getTable('ext.appo.change.mvc.builder.AffectedItemsTableBuilder');
         var oidArray = [];
         for (var i = 0; i < selectRows.length; i++) {
             oidArray.push(getOidFromRowValue(selectRows[i].value));
         }
-        //PTC.jca.table.Utils.removeRows(table, oidArray);
+        PTC.jca.table.Utils.removeRows(table, oidArray);
         // 数据保存
         saveChangeTaskArray();
-        //移除Link
-        var oid = "<%=request.getParameter("oid")%>";
-        var params = "oid=" + oid + "&selectOid=" + JSON.stringify(oidArray);
-        var url = "netmarkets/jsp/ext/appo/change/request/removeAffectedLink.jsp";
-        var removeVid = eval("(" + ajaxRequest(url, params) + ")");
-        console.log(removeVid);
-        PTC.jca.table.Utils.removeRows(table, removeVid);
     }
 
     var table_id = "ext.appo.change.mvc.builder.ChangeTaskTableBuilder";
