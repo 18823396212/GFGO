@@ -9,6 +9,7 @@ public interface ModifyConstants {
     String ATTRIBUTE_1 = "Classification";//物料分类
     String ATTRIBUTE_2 = "sscpx";//所属产品类别
     String ATTRIBUTE_3 = "ssxm";//所属项目
+    String ATTRIBUTE_4 = "isReject";//是否驳回
 
     //类型定义
     String TYPE_1 = "com.pisx.BOMChangeActivity2";//BOM变更ECA

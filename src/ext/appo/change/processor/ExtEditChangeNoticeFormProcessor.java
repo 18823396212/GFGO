@@ -11,7 +11,6 @@ import ext.appo.change.models.CorrelationObjectLink;
 import ext.appo.change.models.TransactionTask;
 import ext.appo.change.util.AffectedObjectUtil;
 import ext.appo.change.util.ChangeActivity2Util;
-import ext.appo.change.util.ModifyUtils;
 import ext.appo.change.util.TransactionECAUtil;
 import ext.appo.ecn.constants.ChangeConstants;
 import ext.lang.PIStringUtils;
@@ -78,15 +77,6 @@ public class ExtEditChangeNoticeFormProcessor extends EditChangeNoticeFormProces
 
                     //更新受影响对象的IBA属性
                     activity2Util.cacheButton();
-
-                    //新增ChangeOrder2与受影响对象的关系
-                    linkAffectedItems(changeOrder2, affectedObjectUtil.PAGEDATAMAP.keySet());
-
-                    //创建事务性任务-模型对象
-                    transactionUtil.createTransactionECA();
-
-                    //根据上一步骤收集的模型对象，与ECN建立关联关系
-                    linkTransactionECA(changeOrder2, transactionUtil.TASKS);
                 }
             } else {
                 /*
@@ -109,36 +99,30 @@ public class ExtEditChangeNoticeFormProcessor extends EditChangeNoticeFormProces
                 if (messages.size() > 0) {
                     throw new WTException(compoundMessage(messages));
                 } else {
-                    ChangeActivity2Util activity2Util = new ChangeActivity2Util(changeOrder2, affectedObjectUtil.PAGEDATAMAP, affectedObjectUtil.CONSTRUCTRELATION);
-
                     //8.5、创建事务性任务的ECA；
                     transactionUtil.createEditChangeActivity2();
 
-                    //创建事务性任务-模型对象，已存在则更新
-                    transactionUtil.createTransactionECA();
-
-                    //根据上一步骤收集的模型对象，与ECN建立关联关系
-                    linkTransactionECA(changeOrder2, transactionUtil.TASKS);
-
+                    ChangeActivity2Util activity2Util = new ChangeActivity2Util(changeOrder2, affectedObjectUtil.PAGEDATAMAP, affectedObjectUtil.CONSTRUCTRELATION);
                     /*
                      * 更新受影响对象的IBA属性
                      * 8.6、根据受影响对象，及变更类型，及类型(升版)创建ECA对象（BOM变更创建多个ECA对象，图纸变更分别创建不同的ECA对象，关联不同的图纸变更对象），
                      * 并ECA关联“受影响对象”，同步生成“产生的对象”。
                      */
                     activity2Util.okButton();
-
-                    //新增ChangeOrder2与受影响对象的关系
-                    Collection<Persistable> collections = new HashSet<>();
-                    for (Map.Entry<Persistable, Collection<Persistable>> entry : affectedObjectUtil.CONSTRUCTRELATION.entrySet()) {
-                        collections.add(entry.getKey());
-                        collections.addAll(entry.getValue());
-                    }
-                    linkAffectedItems(changeOrder2, collections);
                 }
             }
 
+            //新增ChangeOrder2与受影响对象的关系
+            linkAffectedItems(changeOrder2, affectedObjectUtil.PAGEDATAMAP);
+
             // 新增受影响产品列表与ECN的关系(ECN与受影响产品链接)
             linkAffectedEndItems(nmcommandBean, changeOrder2);
+
+            //创建事务性任务-模型对象，已存在则更新
+            transactionUtil.createTransactionECA();
+
+            //根据上一步骤收集的模型对象，与ECN建立关联关系
+            linkTransactionECA(changeOrder2, transactionUtil.TASKS);
 
             // 更新ECN「所属产品类别」「所属项目」
             UpdateSoftAttribute(nmcommandBean, changeOrder2);
@@ -152,23 +136,29 @@ public class ExtEditChangeNoticeFormProcessor extends EditChangeNoticeFormProces
     /**
      * 新增ChangeOrder2与受影响对象的关系
      * @param changeOrder2
-     * @param collections
+     * @param pageDataMap
      * @throws Exception
      */
-    public void linkAffectedItems(WTChangeOrder2 changeOrder2, Collection<Persistable> collections) throws WTException {
-        if (changeOrder2 == null || collections.size() < 1) return;
+    public void linkAffectedItems(WTChangeOrder2 changeOrder2, Map<Persistable, Map<String, String>> pageDataMap) throws WTException {
+        if (changeOrder2 == null || pageDataMap.size() < 1) return;
 
         String ecnVid = String.valueOf(PICoreHelper.service.getBranchId(changeOrder2));
         LOGGER.info(">>>>>>>>>>linkAffectedItems.ecnVid: " + ecnVid);
-        for (Persistable persistable : collections) {
+        for (Map.Entry<Persistable, Map<String, String>> entry : pageDataMap.entrySet()) {
+            LOGGER.info(">>>>>>>>>>linkAffectedItems.entry: " + entry);
+            Persistable persistable = entry.getKey();
+            Map<String, String> attributeMap = entry.getValue();
+            String aadDescription = attributeMap.get(AADDESCRIPTION_COMPID);
+            LOGGER.info(">>>>>>>>>>linkAffectedItems.aadDescription: " + aadDescription);
             String branchId = String.valueOf(PICoreHelper.service.getBranchId(persistable));
             LOGGER.info(">>>>>>>>>>linkAffectedItems.branchId: " + branchId);
             CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, branchId, LINKTYPE_1);
             LOGGER.info(">>>>>>>>>>linkAffectedItems.link: " + link);
             if (link == null) {
-                ModifyHelper.service.newCorrelationObjectLink(changeOrder2, persistable, LINKTYPE_1, ecnVid, branchId);
+                ModifyHelper.service.newCorrelationObjectLink(changeOrder2, persistable, LINKTYPE_1, ecnVid, branchId, aadDescription);
             } else {
                 ModifyHelper.service.updateCorrelationObjectLink(ecnVid, branchId, LINKTYPE_1);
+                ModifyHelper.service.updateCorrelationObjectLink(link, aadDescription, link.getRouting());
             }
         }
     }
@@ -211,7 +201,7 @@ public class ExtEditChangeNoticeFormProcessor extends EditChangeNoticeFormProces
                         CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, branchId, LINKTYPE_2);
                         LOGGER.info(">>>>>>>>>>linkAffectedEndItems.link: " + link);
                         if (link == null) {
-                            ModifyHelper.service.newCorrelationObjectLink(changeOrder2, persistable, LINKTYPE_2, ecnVid, branchId);
+                            ModifyHelper.service.newCorrelationObjectLink(changeOrder2, persistable, LINKTYPE_2, ecnVid, branchId, "");
                         } else {
                             ModifyHelper.service.updateCorrelationObjectLink(ecnVid, branchId, LINKTYPE_2);
                         }
@@ -240,7 +230,7 @@ public class ExtEditChangeNoticeFormProcessor extends EditChangeNoticeFormProces
             CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, taskOid, LINKTYPE_3);
             LOGGER.info(">>>>>>>>>>linkTransactionECA.link: " + link);
             if (link == null) {
-                ModifyHelper.service.newCorrelationObjectLink(changeOrder2, task, LINKTYPE_3, ecnVid, taskOid);
+                ModifyHelper.service.newCorrelationObjectLink(changeOrder2, task, LINKTYPE_3, ecnVid, taskOid, "");
             } else {
                 ModifyHelper.service.updateCorrelationObjectLink(ecnVid, taskOid, LINKTYPE_3);
             }

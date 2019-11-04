@@ -14,6 +14,9 @@ import com.ptc.netmarkets.model.NmOid;
 import com.ptc.netmarkets.util.beans.NmCommandBean;
 import com.ptc.windchill.enterprise.change2.dataUtilities.ChangeLinkAttributeDataUtility;
 import com.ptc.windchill.enterprise.changeable.ChangeableObjectBean;
+import ext.appo.change.ModifyHelper;
+import ext.appo.change.constants.ModifyConstants;
+import ext.appo.change.models.CorrelationObjectLink;
 import ext.appo.ecn.common.util.ChangePartQueryUtils;
 import ext.appo.ecn.common.util.ChangeUtils;
 import ext.appo.ecn.constants.ChangeConstants;
@@ -24,6 +27,7 @@ import ext.generic.integration.erp.common.CommonPDMUtil;
 import ext.generic.integration.erp.ibatis.InventoryPriceIbatis;
 import ext.lang.PIStringUtils;
 import ext.pi.core.PIAttributeHelper;
+import ext.pi.core.PICoreHelper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import wt.change2.*;
@@ -261,9 +265,8 @@ public class AffectedItemsDataUtility extends ChangeLinkAttributeDataUtility {
                 component.setValue(Timestamp.valueOf(format.format(new Date())));
             }
         } catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
-            throw new WTException(e.getLocalizedMessage());
+            throw new WTException(e.getStackTrace());
         }
         component.setEditable(true);
         component.setRequired(true);
@@ -393,16 +396,27 @@ public class AffectedItemsDataUtility extends ChangeLinkAttributeDataUtility {
                             return relatedProductData.getDescription();
                         }
                     } else if (modelObject instanceof Changeable2) {
+                        //add by tongwang 20191023 start
+                        Changeable2 changeable2 = (Changeable2) modelObject;
                         Object object = paramModelContext.getNmCommandBean().getActionOid().getRefObject();
                         if (object instanceof WTChangeOrder2) {
-                            Collection<ChangeActivityIfc> changeActivities = ChangeUtils.getChangeActivities((WTChangeOrder2) object);
+                            WTChangeOrder2 changeOrder2 = (WTChangeOrder2) object;
+                            Collection<ChangeActivityIfc> changeActivities = ChangeUtils.getChangeActivities(changeOrder2);
                             for (ChangeActivityIfc changeActivityIfc : changeActivities) {
-                                AffectedActivityData affectedActivityData = ChangeUtils.getAffectedActivity(changeActivityIfc, (Changeable2) modelObject);
+                                AffectedActivityData affectedActivityData = ChangeUtils.getAffectedActivity(changeActivityIfc, changeable2);
                                 if (affectedActivityData != null) {
                                     return affectedActivityData.getDescription();
                                 }
                             }
+                            //从Link上获取属性
+                            String ecnVid = String.valueOf(PICoreHelper.service.getBranchId(changeOrder2));
+                            String branchId = String.valueOf(PICoreHelper.service.getBranchId(changeable2));
+                            CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, branchId, ModifyConstants.LINKTYPE_1);
+                            if (link != null) {
+                                return link.getAadDescription();
+                            }
                         }
+                        //add by tongwang 20191023 end
                     }
                 }
             } else {
@@ -532,9 +546,8 @@ public class AffectedItemsDataUtility extends ChangeLinkAttributeDataUtility {
                 }
             }
         } catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
-            throw new WTException(e.getLocalizedMessage());
+            throw new WTException(e.getStackTrace());
         }
 
         return enumMap;

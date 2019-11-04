@@ -1,303 +1,281 @@
 package ext.appo.change.models;
 
-@SuppressWarnings({"cast", "deprecation", "rawtypes"})
+@SuppressWarnings({"cast", "deprecation", "rawtypes", "unchecked"})
 public abstract class _TransactionTask extends wt.fc.WTObject implements java.io.Externalizable {
-    static final long serialVersionUID = 1;
+   static final long serialVersionUID = 1;
 
-    static final String RESOURCE = "ext.appo.change.models.modelsResource";
-    static final String CLASSNAME = TransactionTask.class.getName();
+   static final java.lang.String RESOURCE = "ext.appo.change.models.modelsResource";
+   static final java.lang.String CLASSNAME = TransactionTask.class.getName();
 
-    /**
-     * 变更主题
-     *
-     * @see TransactionTask
-     */
-    public static final String CHANGE_THEME = "changeTheme";
-    static int CHANGE_THEME_UPPER_LIMIT = -1;
-    String changeTheme;
+   /**
+    * 变更主题
+    *
+    * @see ext.appo.change.models.TransactionTask
+    */
+   public static final java.lang.String CHANGE_THEME = "changeTheme";
+   static int CHANGE_THEME_UPPER_LIMIT = -1;
+   java.lang.String changeTheme;
+   /**
+    * 变更主题
+    *
+    * @see ext.appo.change.models.TransactionTask
+    */
+   public java.lang.String getChangeTheme() {
+      return changeTheme;
+   }
+   /**
+    * 变更主题
+    *
+    * @see ext.appo.change.models.TransactionTask
+    */
+   public void setChangeTheme(java.lang.String changeTheme) throws wt.util.WTPropertyVetoException {
+      changeThemeValidate(changeTheme);
+      this.changeTheme = changeTheme;
+   }
+   void changeThemeValidate(java.lang.String changeTheme) throws wt.util.WTPropertyVetoException {
+      if (CHANGE_THEME_UPPER_LIMIT < 1) {
+         try { CHANGE_THEME_UPPER_LIMIT = (java.lang.Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("changeTheme").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT); }
+         catch (wt.introspection.WTIntrospectionException e) { CHANGE_THEME_UPPER_LIMIT = 200; }
+      }
+      if (changeTheme != null && !wt.fc.PersistenceHelper.checkStoredLength(changeTheme.toString(), CHANGE_THEME_UPPER_LIMIT, true))
+         throw new wt.util.WTPropertyVetoException("wt.introspection.introspectionResource", wt.introspection.introspectionResource.UPPER_LIMIT,
+               new java.lang.Object[] { new wt.introspection.PropertyDisplayName(CLASSNAME, "changeTheme"), java.lang.String.valueOf(java.lang.Math.min(CHANGE_THEME_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE/wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR)) },
+               new java.beans.PropertyChangeEvent(this, "changeTheme", this.changeTheme, changeTheme));
+   }
 
-    /**
-     * 变更主题
-     *
-     * @see TransactionTask
-     */
-    public String getChangeTheme() {
-        return changeTheme;
-    }
+   /**
+    * 变更任务描述
+    *
+    * @see ext.appo.change.models.TransactionTask
+    */
+   public static final java.lang.String CHANGE_DESCRIBE = "changeDescribe";
+   static int CHANGE_DESCRIBE_UPPER_LIMIT = -1;
+   java.lang.String changeDescribe;
+   /**
+    * 变更任务描述
+    *
+    * @see ext.appo.change.models.TransactionTask
+    */
+   public java.lang.String getChangeDescribe() {
+      return changeDescribe;
+   }
+   /**
+    * 变更任务描述
+    *
+    * @see ext.appo.change.models.TransactionTask
+    */
+   public void setChangeDescribe(java.lang.String changeDescribe) throws wt.util.WTPropertyVetoException {
+      changeDescribeValidate(changeDescribe);
+      this.changeDescribe = changeDescribe;
+   }
+   void changeDescribeValidate(java.lang.String changeDescribe) throws wt.util.WTPropertyVetoException {
+      if (CHANGE_DESCRIBE_UPPER_LIMIT < 1) {
+         try { CHANGE_DESCRIBE_UPPER_LIMIT = (java.lang.Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("changeDescribe").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT); }
+         catch (wt.introspection.WTIntrospectionException e) { CHANGE_DESCRIBE_UPPER_LIMIT = 200; }
+      }
+      if (changeDescribe != null && !wt.fc.PersistenceHelper.checkStoredLength(changeDescribe.toString(), CHANGE_DESCRIBE_UPPER_LIMIT, true))
+         throw new wt.util.WTPropertyVetoException("wt.introspection.introspectionResource", wt.introspection.introspectionResource.UPPER_LIMIT,
+               new java.lang.Object[] { new wt.introspection.PropertyDisplayName(CLASSNAME, "changeDescribe"), java.lang.String.valueOf(java.lang.Math.min(CHANGE_DESCRIBE_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE/wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR)) },
+               new java.beans.PropertyChangeEvent(this, "changeDescribe", this.changeDescribe, changeDescribe));
+   }
 
-    /**
-     * 变更主题
-     *
-     * @see TransactionTask
-     */
-    public void setChangeTheme(String changeTheme) throws wt.util.WTPropertyVetoException {
-        changeThemeValidate(changeTheme);
-        this.changeTheme = changeTheme;
-    }
+   /**
+    * 责任人
+    *
+    * @see ext.appo.change.models.TransactionTask
+    */
+   public static final java.lang.String RESPONSIBLE = "responsible";
+   static int RESPONSIBLE_UPPER_LIMIT = -1;
+   java.lang.String responsible;
+   /**
+    * 责任人
+    *
+    * @see ext.appo.change.models.TransactionTask
+    */
+   public java.lang.String getResponsible() {
+      return responsible;
+   }
+   /**
+    * 责任人
+    *
+    * @see ext.appo.change.models.TransactionTask
+    */
+   public void setResponsible(java.lang.String responsible) throws wt.util.WTPropertyVetoException {
+      responsibleValidate(responsible);
+      this.responsible = responsible;
+   }
+   void responsibleValidate(java.lang.String responsible) throws wt.util.WTPropertyVetoException {
+      if (RESPONSIBLE_UPPER_LIMIT < 1) {
+         try { RESPONSIBLE_UPPER_LIMIT = (java.lang.Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("responsible").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT); }
+         catch (wt.introspection.WTIntrospectionException e) { RESPONSIBLE_UPPER_LIMIT = 200; }
+      }
+      if (responsible != null && !wt.fc.PersistenceHelper.checkStoredLength(responsible.toString(), RESPONSIBLE_UPPER_LIMIT, true))
+         throw new wt.util.WTPropertyVetoException("wt.introspection.introspectionResource", wt.introspection.introspectionResource.UPPER_LIMIT,
+               new java.lang.Object[] { new wt.introspection.PropertyDisplayName(CLASSNAME, "responsible"), java.lang.String.valueOf(java.lang.Math.min(RESPONSIBLE_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE/wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR)) },
+               new java.beans.PropertyChangeEvent(this, "responsible", this.responsible, responsible));
+   }
 
-    void changeThemeValidate(String changeTheme) throws wt.util.WTPropertyVetoException {
-        if (CHANGE_THEME_UPPER_LIMIT < 1) {
-            try {
-                CHANGE_THEME_UPPER_LIMIT = (Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("changeTheme").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT);
-            } catch (wt.introspection.WTIntrospectionException e) {
-                CHANGE_THEME_UPPER_LIMIT = 200;
-            }
-        }
-        if (changeTheme != null && !wt.fc.PersistenceHelper.checkStoredLength(changeTheme.toString(), CHANGE_THEME_UPPER_LIMIT, true))
-            throw new wt.util.WTPropertyVetoException("wt.introspection.introspectionResource", wt.introspection.introspectionResource.UPPER_LIMIT, new Object[]{new wt.introspection.PropertyDisplayName(CLASSNAME, "changeTheme"), String.valueOf(Math.min(CHANGE_THEME_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE / wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR))}, new java.beans.PropertyChangeEvent(this, "changeTheme", this.changeTheme, changeTheme));
-    }
+   /**
+    * 期望完成日期
+    *
+    * @see ext.appo.change.models.TransactionTask
+    */
+   public static final java.lang.String NEED_DATE = "needDate";
+   static int NEED_DATE_UPPER_LIMIT = -1;
+   java.lang.String needDate;
+   /**
+    * 期望完成日期
+    *
+    * @see ext.appo.change.models.TransactionTask
+    */
+   public java.lang.String getNeedDate() {
+      return needDate;
+   }
+   /**
+    * 期望完成日期
+    *
+    * @see ext.appo.change.models.TransactionTask
+    */
+   public void setNeedDate(java.lang.String needDate) throws wt.util.WTPropertyVetoException {
+      needDateValidate(needDate);
+      this.needDate = needDate;
+   }
+   void needDateValidate(java.lang.String needDate) throws wt.util.WTPropertyVetoException {
+      if (NEED_DATE_UPPER_LIMIT < 1) {
+         try { NEED_DATE_UPPER_LIMIT = (java.lang.Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("needDate").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT); }
+         catch (wt.introspection.WTIntrospectionException e) { NEED_DATE_UPPER_LIMIT = 200; }
+      }
+      if (needDate != null && !wt.fc.PersistenceHelper.checkStoredLength(needDate.toString(), NEED_DATE_UPPER_LIMIT, true))
+         throw new wt.util.WTPropertyVetoException("wt.introspection.introspectionResource", wt.introspection.introspectionResource.UPPER_LIMIT,
+               new java.lang.Object[] { new wt.introspection.PropertyDisplayName(CLASSNAME, "needDate"), java.lang.String.valueOf(java.lang.Math.min(NEED_DATE_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE/wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR)) },
+               new java.beans.PropertyChangeEvent(this, "needDate", this.needDate, needDate));
+   }
 
-    /**
-     * 变更任务描述
-     *
-     * @see TransactionTask
-     */
-    public static final String CHANGE_DESCRIBE = "changeDescribe";
-    static int CHANGE_DESCRIBE_UPPER_LIMIT = -1;
-    String changeDescribe;
+   /**
+    * ECA对象VID
+    *
+    * @see ext.appo.change.models.TransactionTask
+    */
+   public static final java.lang.String CHANGE_ACTIVITY2 = "changeActivity2";
+   static int CHANGE_ACTIVITY2_UPPER_LIMIT = -1;
+   java.lang.String changeActivity2;
+   /**
+    * ECA对象VID
+    *
+    * @see ext.appo.change.models.TransactionTask
+    */
+   public java.lang.String getChangeActivity2() {
+      return changeActivity2;
+   }
+   /**
+    * ECA对象VID
+    *
+    * @see ext.appo.change.models.TransactionTask
+    */
+   public void setChangeActivity2(java.lang.String changeActivity2) throws wt.util.WTPropertyVetoException {
+      changeActivity2Validate(changeActivity2);
+      this.changeActivity2 = changeActivity2;
+   }
+   void changeActivity2Validate(java.lang.String changeActivity2) throws wt.util.WTPropertyVetoException {
+      if (CHANGE_ACTIVITY2_UPPER_LIMIT < 1) {
+         try { CHANGE_ACTIVITY2_UPPER_LIMIT = (java.lang.Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("changeActivity2").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT); }
+         catch (wt.introspection.WTIntrospectionException e) { CHANGE_ACTIVITY2_UPPER_LIMIT = 200; }
+      }
+      if (changeActivity2 != null && !wt.fc.PersistenceHelper.checkStoredLength(changeActivity2.toString(), CHANGE_ACTIVITY2_UPPER_LIMIT, true))
+         throw new wt.util.WTPropertyVetoException("wt.introspection.introspectionResource", wt.introspection.introspectionResource.UPPER_LIMIT,
+               new java.lang.Object[] { new wt.introspection.PropertyDisplayName(CLASSNAME, "changeActivity2"), java.lang.String.valueOf(java.lang.Math.min(CHANGE_ACTIVITY2_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE/wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR)) },
+               new java.beans.PropertyChangeEvent(this, "changeActivity2", this.changeActivity2, changeActivity2));
+   }
 
-    /**
-     * 变更任务描述
-     *
-     * @see TransactionTask
-     */
-    public String getChangeDescribe() {
-        return changeDescribe;
-    }
+   public java.lang.String getConceptualClassname() {
+      return CLASSNAME;
+   }
 
-    /**
-     * 变更任务描述
-     *
-     * @see TransactionTask
-     */
-    public void setChangeDescribe(String changeDescribe) throws wt.util.WTPropertyVetoException {
-        changeDescribeValidate(changeDescribe);
-        this.changeDescribe = changeDescribe;
-    }
+   public wt.introspection.ClassInfo getClassInfo() throws wt.introspection.WTIntrospectionException {
+      return wt.introspection.WTIntrospector.getClassInfo(getConceptualClassname());
+   }
 
-    void changeDescribeValidate(String changeDescribe) throws wt.util.WTPropertyVetoException {
-        if (CHANGE_DESCRIBE_UPPER_LIMIT < 1) {
-            try {
-                CHANGE_DESCRIBE_UPPER_LIMIT = (Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("changeDescribe").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT);
-            } catch (wt.introspection.WTIntrospectionException e) {
-                CHANGE_DESCRIBE_UPPER_LIMIT = 200;
-            }
-        }
-        if (changeDescribe != null && !wt.fc.PersistenceHelper.checkStoredLength(changeDescribe.toString(), CHANGE_DESCRIBE_UPPER_LIMIT, true))
-            throw new wt.util.WTPropertyVetoException("wt.introspection.introspectionResource", wt.introspection.introspectionResource.UPPER_LIMIT, new Object[]{new wt.introspection.PropertyDisplayName(CLASSNAME, "changeDescribe"), String.valueOf(Math.min(CHANGE_DESCRIBE_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE / wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR))}, new java.beans.PropertyChangeEvent(this, "changeDescribe", this.changeDescribe, changeDescribe));
-    }
+   public java.lang.String getType() {
+      try { return getClassInfo().getDisplayName(); }
+      catch (wt.introspection.WTIntrospectionException wte) { return wt.util.WTStringUtilities.tail(getConceptualClassname(), '.'); }
+   }
 
-    /**
-     * 责任人
-     *
-     * @see TransactionTask
-     */
-    public static final String RESPONSIBLE = "responsible";
-    static int RESPONSIBLE_UPPER_LIMIT = -1;
-    String responsible;
+   public static final long EXTERNALIZATION_VERSION_UID = 5738293078621751499L;
 
-    /**
-     * 责任人
-     *
-     * @see TransactionTask
-     */
-    public String getResponsible() {
-        return responsible;
-    }
+   public void writeExternal(java.io.ObjectOutput output) throws java.io.IOException {
+      output.writeLong( EXTERNALIZATION_VERSION_UID );
 
-    /**
-     * 责任人
-     *
-     * @see TransactionTask
-     */
-    public void setResponsible(String responsible) throws wt.util.WTPropertyVetoException {
-        responsibleValidate(responsible);
-        this.responsible = responsible;
-    }
+      super.writeExternal( output );
 
-    void responsibleValidate(String responsible) throws wt.util.WTPropertyVetoException {
-        if (RESPONSIBLE_UPPER_LIMIT < 1) {
-            try {
-                RESPONSIBLE_UPPER_LIMIT = (Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("responsible").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT);
-            } catch (wt.introspection.WTIntrospectionException e) {
-                RESPONSIBLE_UPPER_LIMIT = 200;
-            }
-        }
-        if (responsible != null && !wt.fc.PersistenceHelper.checkStoredLength(responsible.toString(), RESPONSIBLE_UPPER_LIMIT, true))
-            throw new wt.util.WTPropertyVetoException("wt.introspection.introspectionResource", wt.introspection.introspectionResource.UPPER_LIMIT, new Object[]{new wt.introspection.PropertyDisplayName(CLASSNAME, "responsible"), String.valueOf(Math.min(RESPONSIBLE_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE / wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR))}, new java.beans.PropertyChangeEvent(this, "responsible", this.responsible, responsible));
-    }
+      output.writeObject( changeActivity2 );
+      output.writeObject( changeDescribe );
+      output.writeObject( changeTheme );
+      output.writeObject( needDate );
+      output.writeObject( responsible );
+   }
 
-    /**
-     * 期望完成日期
-     *
-     * @see TransactionTask
-     */
-    public static final String NEED_DATE = "needDate";
-    static int NEED_DATE_UPPER_LIMIT = -1;
-    String needDate;
+   protected void super_writeExternal_TransactionTask(java.io.ObjectOutput output) throws java.io.IOException {
+      super.writeExternal(output);
+   }
 
-    /**
-     * 期望完成日期
-     *
-     * @see TransactionTask
-     */
-    public String getNeedDate() {
-        return needDate;
-    }
+   public void readExternal(java.io.ObjectInput input) throws java.io.IOException, java.lang.ClassNotFoundException {
+      long readSerialVersionUID = input.readLong();
+      readVersion( (ext.appo.change.models.TransactionTask) this, input, readSerialVersionUID, false, false );
+   }
+   protected void super_readExternal_TransactionTask(java.io.ObjectInput input) throws java.io.IOException, java.lang.ClassNotFoundException {
+      super.readExternal(input);
+   }
 
-    /**
-     * 期望完成日期
-     *
-     * @see TransactionTask
-     */
-    public void setNeedDate(String needDate) throws wt.util.WTPropertyVetoException {
-        needDateValidate(needDate);
-        this.needDate = needDate;
-    }
+   public void writeExternal(wt.pds.PersistentStoreIfc output) throws java.sql.SQLException, wt.pom.DatastoreException {
+      super.writeExternal( output );
 
-    void needDateValidate(String needDate) throws wt.util.WTPropertyVetoException {
-        if (NEED_DATE_UPPER_LIMIT < 1) {
-            try {
-                NEED_DATE_UPPER_LIMIT = (Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("needDate").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT);
-            } catch (wt.introspection.WTIntrospectionException e) {
-                NEED_DATE_UPPER_LIMIT = 200;
-            }
-        }
-        if (needDate != null && !wt.fc.PersistenceHelper.checkStoredLength(needDate.toString(), NEED_DATE_UPPER_LIMIT, true))
-            throw new wt.util.WTPropertyVetoException("wt.introspection.introspectionResource", wt.introspection.introspectionResource.UPPER_LIMIT, new Object[]{new wt.introspection.PropertyDisplayName(CLASSNAME, "needDate"), String.valueOf(Math.min(NEED_DATE_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE / wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR))}, new java.beans.PropertyChangeEvent(this, "needDate", this.needDate, needDate));
-    }
+      output.setString( "changeActivity2", changeActivity2 );
+      output.setString( "changeDescribe", changeDescribe );
+      output.setString( "changeTheme", changeTheme );
+      output.setString( "needDate", needDate );
+      output.setString( "responsible", responsible );
+   }
 
-    /**
-     * ECA对象OID
-     *
-     * @see TransactionTask
-     */
-    public static final String CHANGE_ACTIVITY2 = "changeActivity2";
-    static int CHANGE_ACTIVITY2_UPPER_LIMIT = -1;
-    String changeActivity2;
+   public void readExternal(wt.pds.PersistentRetrieveIfc input) throws java.sql.SQLException, wt.pom.DatastoreException {
+      super.readExternal( input );
 
-    /**
-     * ECA对象OID
-     *
-     * @see TransactionTask
-     */
-    public String getChangeActivity2() {
-        return changeActivity2;
-    }
+      changeActivity2 = input.getString( "changeActivity2" );
+      changeDescribe = input.getString( "changeDescribe" );
+      changeTheme = input.getString( "changeTheme" );
+      needDate = input.getString( "needDate" );
+      responsible = input.getString( "responsible" );
+   }
 
-    /**
-     * ECA对象OID
-     *
-     * @see TransactionTask
-     */
-    public void setChangeActivity2(String changeActivity2) throws wt.util.WTPropertyVetoException {
-        changeActivity2Validate(changeActivity2);
-        this.changeActivity2 = changeActivity2;
-    }
+   boolean readVersion5738293078621751499L( java.io.ObjectInput input, long readSerialVersionUID, boolean superDone ) throws java.io.IOException, java.lang.ClassNotFoundException {
+      if ( !superDone )
+         super.readExternal( input );
 
-    void changeActivity2Validate(String changeActivity2) throws wt.util.WTPropertyVetoException {
-        if (CHANGE_ACTIVITY2_UPPER_LIMIT < 1) {
-            try {
-                CHANGE_ACTIVITY2_UPPER_LIMIT = (Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("changeActivity2").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT);
-            } catch (wt.introspection.WTIntrospectionException e) {
-                CHANGE_ACTIVITY2_UPPER_LIMIT = 200;
-            }
-        }
-        if (changeActivity2 != null && !wt.fc.PersistenceHelper.checkStoredLength(changeActivity2.toString(), CHANGE_ACTIVITY2_UPPER_LIMIT, true))
-            throw new wt.util.WTPropertyVetoException("wt.introspection.introspectionResource", wt.introspection.introspectionResource.UPPER_LIMIT, new Object[]{new wt.introspection.PropertyDisplayName(CLASSNAME, "changeActivity2"), String.valueOf(Math.min(CHANGE_ACTIVITY2_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE / wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR))}, new java.beans.PropertyChangeEvent(this, "changeActivity2", this.changeActivity2, changeActivity2));
-    }
+      changeActivity2 = (java.lang.String) input.readObject();
+      changeDescribe = (java.lang.String) input.readObject();
+      changeTheme = (java.lang.String) input.readObject();
+      needDate = (java.lang.String) input.readObject();
+      responsible = (java.lang.String) input.readObject();
+      return true;
+   }
 
-    public String getConceptualClassname() {
-        return CLASSNAME;
-    }
+   protected boolean readVersion( TransactionTask thisObject, java.io.ObjectInput input, long readSerialVersionUID, boolean passThrough, boolean superDone ) throws java.io.IOException, java.lang.ClassNotFoundException {
+      boolean success = true;
 
-    public wt.introspection.ClassInfo getClassInfo() throws wt.introspection.WTIntrospectionException {
-        return wt.introspection.WTIntrospector.getClassInfo(getConceptualClassname());
-    }
+      if ( readSerialVersionUID == EXTERNALIZATION_VERSION_UID )
+         return readVersion5738293078621751499L( input, readSerialVersionUID, superDone );
+      else
+         success = readOldVersion( input, readSerialVersionUID, passThrough, superDone );
 
-    public String getType() {
-        try {
-            return getClassInfo().getDisplayName();
-        } catch (wt.introspection.WTIntrospectionException wte) {
-            return wt.util.WTStringUtilities.tail(getConceptualClassname(), '.');
-        }
-    }
+      if (input instanceof wt.pds.PDSObjectInput)
+         wt.fc.EvolvableHelper.requestRewriteOfEvolvedBlobbedObject();
 
-    public static final long EXTERNALIZATION_VERSION_UID = 5738293078621751499L;
+      return success;
+   }
+   protected boolean super_readVersion_TransactionTask( _TransactionTask thisObject, java.io.ObjectInput input, long readSerialVersionUID, boolean passThrough, boolean superDone ) throws java.io.IOException, java.lang.ClassNotFoundException {
+      return super.readVersion(thisObject, input, readSerialVersionUID, passThrough, superDone);
+   }
 
-    public void writeExternal(java.io.ObjectOutput output) throws java.io.IOException {
-        output.writeLong(EXTERNALIZATION_VERSION_UID);
-
-        super.writeExternal(output);
-
-        output.writeObject(changeActivity2);
-        output.writeObject(changeDescribe);
-        output.writeObject(changeTheme);
-        output.writeObject(needDate);
-        output.writeObject(responsible);
-    }
-
-    protected void super_writeExternal_TransactionTask(java.io.ObjectOutput output) throws java.io.IOException {
-        super.writeExternal(output);
-    }
-
-    public void readExternal(java.io.ObjectInput input) throws java.io.IOException, ClassNotFoundException {
-        long readSerialVersionUID = input.readLong();
-        readVersion((TransactionTask) this, input, readSerialVersionUID, false, false);
-    }
-
-    protected void super_readExternal_TransactionTask(java.io.ObjectInput input) throws java.io.IOException, ClassNotFoundException {
-        super.readExternal(input);
-    }
-
-    public void writeExternal(wt.pds.PersistentStoreIfc output) throws java.sql.SQLException, wt.pom.DatastoreException {
-        super.writeExternal(output);
-
-        output.setString("changeActivity2", changeActivity2);
-        output.setString("changeDescribe", changeDescribe);
-        output.setString("changeTheme", changeTheme);
-        output.setString("needDate", needDate);
-        output.setString("responsible", responsible);
-    }
-
-    public void readExternal(wt.pds.PersistentRetrieveIfc input) throws java.sql.SQLException, wt.pom.DatastoreException {
-        super.readExternal(input);
-
-        changeActivity2 = input.getString("changeActivity2");
-        changeDescribe = input.getString("changeDescribe");
-        changeTheme = input.getString("changeTheme");
-        needDate = input.getString("needDate");
-        responsible = input.getString("responsible");
-    }
-
-    boolean readVersion5738293078621751499L(java.io.ObjectInput input, long readSerialVersionUID, boolean superDone) throws java.io.IOException, ClassNotFoundException {
-        if (!superDone) super.readExternal(input);
-
-        changeActivity2 = (String) input.readObject();
-        changeDescribe = (String) input.readObject();
-        changeTheme = (String) input.readObject();
-        needDate = (String) input.readObject();
-        responsible = (String) input.readObject();
-        return true;
-    }
-
-    protected boolean readVersion(TransactionTask thisObject, java.io.ObjectInput input, long readSerialVersionUID, boolean passThrough, boolean superDone) throws java.io.IOException, ClassNotFoundException {
-        boolean success = true;
-
-        if (readSerialVersionUID == EXTERNALIZATION_VERSION_UID)
-            return readVersion5738293078621751499L(input, readSerialVersionUID, superDone);
-        else success = readOldVersion(input, readSerialVersionUID, passThrough, superDone);
-
-        if (input instanceof wt.pds.PDSObjectInput) wt.fc.EvolvableHelper.requestRewriteOfEvolvedBlobbedObject();
-
-        return success;
-    }
-
-    protected boolean super_readVersion_TransactionTask(_TransactionTask thisObject, java.io.ObjectInput input, long readSerialVersionUID, boolean passThrough, boolean superDone) throws java.io.IOException, ClassNotFoundException {
-        return super.readVersion(thisObject, input, readSerialVersionUID, passThrough, superDone);
-    }
-
-    boolean readOldVersion(java.io.ObjectInput input, long readSerialVersionUID, boolean passThrough, boolean superDone) throws java.io.IOException, ClassNotFoundException {
-        throw new java.io.InvalidClassException(CLASSNAME, "Local class not compatible: stream classdesc externalizationVersionUID=" + readSerialVersionUID + " local class externalizationVersionUID=" + EXTERNALIZATION_VERSION_UID);
-    }
+   boolean readOldVersion( java.io.ObjectInput input, long readSerialVersionUID, boolean passThrough, boolean superDone ) throws java.io.IOException, java.lang.ClassNotFoundException {
+      throw new java.io.InvalidClassException(CLASSNAME, "Local class not compatible: stream classdesc externalizationVersionUID="+readSerialVersionUID+" local class externalizationVersionUID="+EXTERNALIZATION_VERSION_UID);
+   }
 }

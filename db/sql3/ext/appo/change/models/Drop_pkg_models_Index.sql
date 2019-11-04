@@ -1,1 +1,1 @@
-@ext/appo/change/models/drop_CorrelationObjectLink_Index.sql
+@ext/appo/change/models/drop_GFGO_CORRELATIONOBJECTLINK_Index.sql

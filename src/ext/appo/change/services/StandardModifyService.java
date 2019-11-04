@@ -66,16 +66,18 @@ public class StandardModifyService extends StandardManager implements ModifyServ
      * @param linkType
      * @param ecnBranchIdentifier
      * @param perBranchIdentifier
+     * @param aadDescription
      * @return
      * @throws WTException
      */
     @Override
-    public CorrelationObjectLink newCorrelationObjectLink(WTChangeOrder2 changeOrder2, Persistable persistable, String linkType, String ecnBranchIdentifier, String perBranchIdentifier) throws WTException {
+    public CorrelationObjectLink newCorrelationObjectLink(WTChangeOrder2 changeOrder2, Persistable persistable, String linkType, String ecnBranchIdentifier, String perBranchIdentifier, String aadDescription) throws WTException {
         CorrelationObjectLink link = CorrelationObjectLink.newCorrelationObjectLink(changeOrder2, persistable);
         try {
             link.setLinkType(linkType);
             link.setEcnBranchIdentifier(ecnBranchIdentifier);
             link.setPerBranchIdentifier(perBranchIdentifier);
+            link.setAadDescription(aadDescription);
             PersistenceServerHelper.manager.insert(link);
             link = (CorrelationObjectLink) PersistenceHelper.manager.refresh(link);
         } catch (Exception e) {
@@ -171,6 +173,27 @@ public class StandardModifyService extends StandardManager implements ModifyServ
         } catch (Exception e) {
             throw new WTException(e.getStackTrace());
         }
+    }
+
+    /**
+     * 更新ECN与相关对象的Link
+     * @param link
+     * @param aadDescription
+     * @param routing
+     * @return
+     * @throws WTException
+     */
+    @Override
+    public CorrelationObjectLink updateCorrelationObjectLink(CorrelationObjectLink link, String aadDescription, String routing) throws WTException {
+        try {
+            link.setAadDescription(aadDescription);
+            link.setRouting(routing);
+            PersistenceServerHelper.manager.update(link);
+            link = (CorrelationObjectLink) PersistenceHelper.manager.refresh(link);
+        } catch (Exception e) {
+            throw new WTException(e.getStackTrace());
+        }
+        return link;
     }
 
     /**

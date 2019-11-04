@@ -106,7 +106,7 @@ public class TransactionECAUtil implements ChangeConstants, ModifyConstants {
      * 校验 任务主题 是否重复
      * @throws WTException
      */
-    public void check() throws WTException {
+    public void check() {
         if (REPETITION.size() > 0) {
             MESSAGES.add("事务性任务列表中存在「任务主题」重复的的数据！");
         }

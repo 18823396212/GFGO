@@ -167,6 +167,8 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
         for (Map.Entry<Persistable, Map<String, String>> entryMap : PAGEDATAMAP.entrySet()) {
             Map<String, Object> attributesMap = new HashMap<>();
             for (Map.Entry<String, String> ibaEntryMap : entryMap.getValue().entrySet()) {
+                // 过滤「受影响对象列表备注」
+                if (ibaEntryMap.getKey().equals(AADDESCRIPTION_COMPID)) continue;
                 attributesMap.put(ibaEntryMap.getKey(), ibaEntryMap.getValue());
             }
             PIAttributeHelper.service.forceUpdateSoftAttributes(entryMap.getKey(), attributesMap);

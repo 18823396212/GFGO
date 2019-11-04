@@ -31,10 +31,11 @@ public interface ModifyService {
      * @param linkType
      * @param ecnBranchIdentifier
      * @param perBranchIdentifier
+     * @param aadDescription
      * @return
      * @throws WTException
      */
-    CorrelationObjectLink newCorrelationObjectLink(WTChangeOrder2 changeOrder2, Persistable persistable, String linkType, String ecnBranchIdentifier, String perBranchIdentifier) throws WTException;
+    CorrelationObjectLink newCorrelationObjectLink(WTChangeOrder2 changeOrder2, Persistable persistable, String linkType, String ecnBranchIdentifier, String perBranchIdentifier, String aadDescription) throws WTException;
 
     /**
      * 删除事务性任务
@@ -71,12 +72,21 @@ public interface ModifyService {
     TransactionTask updateTransactionTask(TransactionTask task, String changeTheme, String changeDescribe, String responsible, String needDate) throws WTException;
 
     /**
-     * ECN与相关对象的Link
+     * 更新ECN与相关对象的Link
      * @param ecnBranchIdentifier
      * @param perBranchIdentifier
      * @throws WTException
      */
     void updateCorrelationObjectLink(String ecnBranchIdentifier, String perBranchIdentifier, String linkType) throws WTException;
+
+    /**
+     * 更新ECN与相关对象的Link
+     * @param link
+     * @param aadDescription
+     * @param routing
+     * @throws WTException
+     */
+    CorrelationObjectLink updateCorrelationObjectLink(CorrelationObjectLink link, String aadDescription, String routing) throws WTException;
 
     /**
      * 查询ECN与相关对象的Link

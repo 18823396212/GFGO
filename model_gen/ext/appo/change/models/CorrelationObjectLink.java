@@ -1,9 +1,6 @@
 package ext.appo.change.models;
 
-import com.ptc.windchill.annotations.metadata.GenAsBinaryLink;
-import com.ptc.windchill.annotations.metadata.GeneratedProperty;
-import com.ptc.windchill.annotations.metadata.GeneratedRole;
-import com.ptc.windchill.annotations.metadata.PropertyConstraints;
+import com.ptc.windchill.annotations.metadata.*;
 import wt.change2.WTChangeOrder2;
 import wt.fc.ObjectToObjectLink;
 import wt.fc.Persistable;
@@ -37,8 +34,21 @@ import wt.workflow.engine.WfProcess;
                         name = "linkType",
                         type = String.class,
                         javaDoc = "类型"
+                ),
+                @GeneratedProperty(
+                        name = "aadDescription",
+                        type = String.class,
+                        javaDoc = "更改详细描述"
+                ),
+                @GeneratedProperty(
+                        name = "routing",
+                        type = String.class,
+                        javaDoc = "路由"
                 )
-        }
+        },
+        tableProperties = @TableProperties(
+                tableName = "GFGO_CORRELATIONOBJECTLINK"
+        )
 )
 public class CorrelationObjectLink extends _CorrelationObjectLink {
     static final long serialVersionUID = 1L;

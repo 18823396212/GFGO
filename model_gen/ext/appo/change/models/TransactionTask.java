@@ -19,8 +19,6 @@ import wt.util.WTException;
                         type = String.class,
                         javaDoc = "变更任务描述"
                 ),
-
-
                 @GeneratedProperty(
                         name = "responsible",
                         type = String.class,
