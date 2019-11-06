@@ -8,7 +8,7 @@ public abstract class _CorrelationObjectLink extends wt.fc.ObjectToObjectLink im
    static final java.lang.String CLASSNAME = CorrelationObjectLink.class.getName();
 
    /**
-    * ECA对象VID
+    * ECN对象VID
     *
     * @see ext.appo.change.models.CorrelationObjectLink
     */
@@ -16,7 +16,7 @@ public abstract class _CorrelationObjectLink extends wt.fc.ObjectToObjectLink im
    static int ECN_BRANCH_IDENTIFIER_UPPER_LIMIT = -1;
    java.lang.String ecnBranchIdentifier;
    /**
-    * ECA对象VID
+    * ECN对象VID
     *
     * @see ext.appo.change.models.CorrelationObjectLink
     */
@@ -24,7 +24,7 @@ public abstract class _CorrelationObjectLink extends wt.fc.ObjectToObjectLink im
       return ecnBranchIdentifier;
    }
    /**
-    * ECA对象VID
+    * ECN对象VID
     *
     * @see ext.appo.change.models.CorrelationObjectLink
     */
@@ -77,6 +77,42 @@ public abstract class _CorrelationObjectLink extends wt.fc.ObjectToObjectLink im
          throw new wt.util.WTPropertyVetoException("wt.introspection.introspectionResource", wt.introspection.introspectionResource.UPPER_LIMIT,
                new java.lang.Object[] { new wt.introspection.PropertyDisplayName(CLASSNAME, "perBranchIdentifier"), java.lang.String.valueOf(java.lang.Math.min(PER_BRANCH_IDENTIFIER_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE/wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR)) },
                new java.beans.PropertyChangeEvent(this, "perBranchIdentifier", this.perBranchIdentifier, perBranchIdentifier));
+   }
+
+   /**
+    * ECA对象VID
+    *
+    * @see ext.appo.change.models.CorrelationObjectLink
+    */
+   public static final java.lang.String ECA_IDENTIFIER = "ecaIdentifier";
+   static int ECA_IDENTIFIER_UPPER_LIMIT = -1;
+   java.lang.String ecaIdentifier;
+   /**
+    * ECA对象VID
+    *
+    * @see ext.appo.change.models.CorrelationObjectLink
+    */
+   public java.lang.String getEcaIdentifier() {
+      return ecaIdentifier;
+   }
+   /**
+    * ECA对象VID
+    *
+    * @see ext.appo.change.models.CorrelationObjectLink
+    */
+   public void setEcaIdentifier(java.lang.String ecaIdentifier) throws wt.util.WTPropertyVetoException {
+      ecaIdentifierValidate(ecaIdentifier);
+      this.ecaIdentifier = ecaIdentifier;
+   }
+   void ecaIdentifierValidate(java.lang.String ecaIdentifier) throws wt.util.WTPropertyVetoException {
+      if (ECA_IDENTIFIER_UPPER_LIMIT < 1) {
+         try { ECA_IDENTIFIER_UPPER_LIMIT = (java.lang.Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("ecaIdentifier").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT); }
+         catch (wt.introspection.WTIntrospectionException e) { ECA_IDENTIFIER_UPPER_LIMIT = 200; }
+      }
+      if (ecaIdentifier != null && !wt.fc.PersistenceHelper.checkStoredLength(ecaIdentifier.toString(), ECA_IDENTIFIER_UPPER_LIMIT, true))
+         throw new wt.util.WTPropertyVetoException("wt.introspection.introspectionResource", wt.introspection.introspectionResource.UPPER_LIMIT,
+               new java.lang.Object[] { new wt.introspection.PropertyDisplayName(CLASSNAME, "ecaIdentifier"), java.lang.String.valueOf(java.lang.Math.min(ECA_IDENTIFIER_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE/wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR)) },
+               new java.beans.PropertyChangeEvent(this, "ecaIdentifier", this.ecaIdentifier, ecaIdentifier));
    }
 
    /**
@@ -234,7 +270,7 @@ public abstract class _CorrelationObjectLink extends wt.fc.ObjectToObjectLink im
       catch (wt.introspection.WTIntrospectionException wte) { return wt.util.WTStringUtilities.tail(getConceptualClassname(), '.'); }
    }
 
-   public static final long EXTERNALIZATION_VERSION_UID = 8461157930752391919L;
+   public static final long EXTERNALIZATION_VERSION_UID = 6753259558184357436L;
 
    public void writeExternal(java.io.ObjectOutput output) throws java.io.IOException {
       output.writeLong( EXTERNALIZATION_VERSION_UID );
@@ -242,6 +278,7 @@ public abstract class _CorrelationObjectLink extends wt.fc.ObjectToObjectLink im
       super.writeExternal( output );
 
       output.writeObject( aadDescription );
+      output.writeObject( ecaIdentifier );
       output.writeObject( ecnBranchIdentifier );
       output.writeObject( linkType );
       output.writeObject( perBranchIdentifier );
@@ -264,6 +301,7 @@ public abstract class _CorrelationObjectLink extends wt.fc.ObjectToObjectLink im
       super.writeExternal( output );
 
       output.setString( "aadDescription", aadDescription );
+      output.setString( "ecaIdentifier", ecaIdentifier );
       output.setString( "ecnBranchIdentifier", ecnBranchIdentifier );
       output.setString( "linkType", linkType );
       output.setString( "perBranchIdentifier", perBranchIdentifier );
@@ -274,17 +312,19 @@ public abstract class _CorrelationObjectLink extends wt.fc.ObjectToObjectLink im
       super.readExternal( input );
 
       aadDescription = input.getString( "aadDescription" );
+      ecaIdentifier = input.getString( "ecaIdentifier" );
       ecnBranchIdentifier = input.getString( "ecnBranchIdentifier" );
       linkType = input.getString( "linkType" );
       perBranchIdentifier = input.getString( "perBranchIdentifier" );
       routing = input.getString( "routing" );
    }
 
-   boolean readVersion8461157930752391919L( java.io.ObjectInput input, long readSerialVersionUID, boolean superDone ) throws java.io.IOException, java.lang.ClassNotFoundException {
+   boolean readVersion6753259558184357436L( java.io.ObjectInput input, long readSerialVersionUID, boolean superDone ) throws java.io.IOException, java.lang.ClassNotFoundException {
       if ( !superDone )
          super.readExternal( input );
 
       aadDescription = (java.lang.String) input.readObject();
+      ecaIdentifier = (java.lang.String) input.readObject();
       ecnBranchIdentifier = (java.lang.String) input.readObject();
       linkType = (java.lang.String) input.readObject();
       perBranchIdentifier = (java.lang.String) input.readObject();
@@ -296,7 +336,7 @@ public abstract class _CorrelationObjectLink extends wt.fc.ObjectToObjectLink im
       boolean success = true;
 
       if ( readSerialVersionUID == EXTERNALIZATION_VERSION_UID )
-         return readVersion8461157930752391919L( input, readSerialVersionUID, superDone );
+         return readVersion6753259558184357436L( input, readSerialVersionUID, superDone );
       else
          success = readOldVersion( input, readSerialVersionUID, passThrough, superDone );
 

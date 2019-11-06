@@ -1,6 +1,8 @@
 package ext.appo.change.util;
 
+import ext.appo.change.ModifyHelper;
 import ext.appo.change.constants.ModifyConstants;
+import ext.appo.change.models.CorrelationObjectLink;
 import ext.appo.ecn.constants.ChangeConstants;
 import ext.lang.PIStringUtils;
 import ext.pi.core.PIAttributeHelper;
@@ -31,6 +33,7 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
     private Map<Persistable, Collection<Persistable>> CONSTRUCTRELATION = new HashMap<>();//ECA受影响对象集合
     private WTChangeOrder2 ORDER2;
     public Set<WTChangeActivity2> ACTIVITY2S = new HashSet<>();//创建的ECA集合
+    public Map<String, String> BRANCHIDMAP = new HashMap<>();//受影响对象branchId、ECA ID集合
 
     public ChangeActivity2Util(WTChangeOrder2 changeOrder2, Map<Persistable, Map<String, String>> pageDataMap, Map<Persistable, Collection<Persistable>> constructRelation) {
         ORDER2 = changeOrder2;
@@ -79,6 +82,14 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
             for (Map.Entry<Persistable, Collection<Persistable>> entryMap : CONSTRUCTRELATION.entrySet()) {
                 if (entryMap.getKey() instanceof Changeable2) {
                     Changeable2 changeable2 = (Changeable2) entryMap.getKey();
+                    String ecnVid = String.valueOf(PICoreHelper.service.getBranchId(ORDER2));
+                    LOGGER.info(">>>>>>>>>>createChangeActivity2.ecnVid:" + ecnVid);
+                    String branchId = String.valueOf(PICoreHelper.service.getBranchId(changeable2));
+                    LOGGER.info(">>>>>>>>>>createChangeActivity2.branchId:" + branchId);
+                    CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, branchId, LINKTYPE_1);
+                    String routing = link.getRouting();
+                    LOGGER.info(">>>>>>>>>>createChangeActivity2.routing:" + routing);
+                    if (ROUTING_1.equals(routing) || ROUTING_3.equals(routing)) continue;//子流程状态为已创建、已完成跳过以下逻辑
 
                     // 获取用户针对每一列输入的数据
                     Map<String, String> attributesMap = PAGEDATAMAP.get(entryMap.getKey());
@@ -103,11 +114,17 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
                     if (eca == null) continue;
 
                     // 收集需要添加的受影响对象
+                    String ecaVid = PersistenceHelper.getObjectIdentifier(eca).toString();
+                    LOGGER.info(">>>>>>>>>>createChangeActivity2.ecaVid:" + ecaVid);
                     Vector<Changeable2> vector = new Vector<>();
                     vector.add(changeable2);
                     for (Persistable persistable : entryMap.getValue()) {
-                        if (persistable instanceof Changeable2) vector.add((Changeable2) persistable);
+                        if (persistable instanceof Changeable2) {
+                            vector.add((Changeable2) persistable);
+                            BRANCHIDMAP.put(String.valueOf(PICoreHelper.service.getBranchId(persistable)), ecaVid);
+                        }
                     }
+                    BRANCHIDMAP.put(branchId, ecaVid);
 
                     //修订受影响对象，并添加到产生对象列表
                     WTCollection collection = ModifyUtils.revise(vector, reviseMap);

@@ -19,6 +19,10 @@ public interface ModifyConstants {
     String TYPE_5 = "com.pisx.ChangeOrder2EndItemsLink";//ECN与受影响产品链接
     String TYPE_6 = "com.pisx.ChangeOrder2TransactionLink";//ECN与事务性任务链接
 
+    //生命周期状态
+    String STATE_1 = "INWORK";//正在工作
+    String STATE_2 = "REWORK";//重新工作
+
     //属性值
     String VALUE_1 = "替换";
     String VALUE_2 = "PCB";//物料分类
@@ -42,5 +46,20 @@ public interface ModifyConstants {
      * ECN与事务性任务链接
      */
     String LINKTYPE_3 = "ChangeOrder2TransactionLink";
+
+
+
+    /**
+     * 子流程进度-已创建
+     */
+    String ROUTING_1 = "已创建";
+    /**
+     * 子流程进度-已驳回
+     */
+    String ROUTING_2 = "已驳回";
+    /**
+     * 子流程进度-已完成
+     */
+    String ROUTING_3 = "已完成";
 
 }

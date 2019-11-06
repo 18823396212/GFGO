@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import wt.change2.ChangeActivityIfc;
 import wt.change2.Changeable2;
+import wt.change2.WTChangeActivity2;
 import wt.change2.WTChangeOrder2;
 import wt.fc.Persistable;
 import wt.fc.ReferenceFactory;
@@ -60,8 +61,8 @@ public class AffectedItemsTableBuilder extends AbstractComponentBuilder implemen
                         WTChangeOrder2 changeOrder2 = (WTChangeOrder2) object;
 
                         // 获取ECN中所有受影响对象
-                        Map<ChangeActivityIfc, Collection<Changeable2>> dataMap = ModifyUtils.getChangeablesBefore(changeOrder2);
-                        for (Map.Entry<ChangeActivityIfc, Collection<Changeable2>> entry : dataMap.entrySet()) {
+                        Map<WTChangeActivity2, Collection<Changeable2>> dataMap = ModifyUtils.getChangeablesBefore(changeOrder2);
+                        for (Map.Entry<WTChangeActivity2, Collection<Changeable2>> entry : dataMap.entrySet()) {
                             collection.addAll(entry.getValue());
                         }
 

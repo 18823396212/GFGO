@@ -187,6 +187,35 @@ public class ModifyUtils implements ChangeConstants {
         return branchId;
     }
 
+    /**
+     * 获取对象状态
+     * @param persistable
+     * @return
+     */
+    public static String getState(Persistable persistable) {
+        if (persistable instanceof ObjectReference) {
+            persistable = ((ObjectReference) persistable).getObject();
+        }
+
+        String state = "";
+
+        if (persistable instanceof WTPart) {
+            state = ((WTPart) persistable).getLifeCycleState().toString();
+        } else if (persistable instanceof EPMDocument) {
+            state = ((EPMDocument) persistable).getLifeCycleState().toString();
+        } else if (persistable instanceof WTDocument) {
+            state = ((WTDocument) persistable).getLifeCycleState().toString();
+        } else if (persistable instanceof WTChangeRequest2) {
+            state = ((WTChangeRequest2) persistable).getLifeCycleState().toString();
+        } else if (persistable instanceof WTChangeOrder2) {
+            state = ((WTChangeOrder2) persistable).getLifeCycleState().toString();
+        } else if (persistable instanceof WTChangeActivity2) {
+            state = ((WTChangeActivity2) persistable).getLifeCycleState().toString();
+        }
+
+        return state;
+    }
+
     /***
      * 批量查询上层父件
      * @param collection 子件集合
@@ -390,6 +419,7 @@ public class ModifyUtils implements ChangeConstants {
      * @return
      * @throws WTException
      */
+    @SuppressWarnings("deprecation")
     public static WTChangeActivity2 createChangeTask(WTChangeOrder2 changeNotice, String name, String number, String description, String softType, String assigneeName) throws WTException {
         WTChangeActivity2 changeActivity = null;
 
@@ -686,10 +716,10 @@ public class ModifyUtils implements ChangeConstants {
             ReferenceFactory rf = new ReferenceFactory();
             qs.appendOpenParen();
             String ecaOID = rf.getReferenceString(changeActivityIfc);
-            qs.appendWhere(new SearchCondition(AffectedActivityData.class, "roleAObjectRef.key.branchId", SearchCondition.EQUAL, Long.parseLong(ecaOID.substring(ecaOID.lastIndexOf(":") + 1, ecaOID.length()))), new int[]{0});
+            qs.appendWhere(new SearchCondition(AffectedActivityData.class, "roleAObjectRef.key.branchId", SearchCondition.EQUAL, Long.parseLong(ecaOID.substring(ecaOID.lastIndexOf(":") + 1))), new int[]{0});
             qs.appendAnd();
             String ptOID = PersistenceHelper.getObjectIdentifier(changeable2).toString();
-            qs.appendWhere(new SearchCondition(AffectedActivityData.class, "roleBObjectRef.key.id", SearchCondition.EQUAL, Long.parseLong(ptOID.substring(ptOID.lastIndexOf(":") + 1, ptOID.length()))), new int[]{0});
+            qs.appendWhere(new SearchCondition(AffectedActivityData.class, "roleBObjectRef.key.id", SearchCondition.EQUAL, Long.parseLong(ptOID.substring(ptOID.lastIndexOf(":") + 1))), new int[]{0});
             qs.appendCloseParen();
             LOGGER.info(">>>>>>>>>>getAffectedActivity.qs:" + qs.toString());
 
@@ -881,16 +911,16 @@ public class ModifyUtils implements ChangeConstants {
      * @return
      * @throws WTException
      */
-    public static Map<ChangeActivityIfc, Collection<Changeable2>> getChangeablesBefore(WTChangeOrder2 changeOrder2) throws WTException {
-        Map<ChangeActivityIfc, Collection<Changeable2>> dataMap = new HashMap<>();
+    public static Map<WTChangeActivity2, Collection<Changeable2>> getChangeablesBefore(WTChangeOrder2 changeOrder2) throws WTException {
+        Map<WTChangeActivity2, Collection<Changeable2>> dataMap = new HashMap<>();
         if (changeOrder2 == null) return dataMap;
 
-        Collection<ChangeActivityIfc> collection = getChangeActivities(changeOrder2);
-        for (ChangeActivityIfc changeActivityIfc : collection) {
+        Collection<WTChangeActivity2> collection = getChangeActivities(changeOrder2);
+        for (WTChangeActivity2 activity2 : collection) {
             // 受影响对象集合
             Collection<Changeable2> changeable2s = new HashSet<>();
             // 获取ECA中所有受影响对象
-            QueryResult result = ChangeHelper2.service.getChangeablesBefore(changeActivityIfc);
+            QueryResult result = ChangeHelper2.service.getChangeablesBefore(activity2);
             while (result.hasMoreElements()) {
                 Object object = result.nextElement();
                 if (object instanceof ObjectReference) {
@@ -900,7 +930,7 @@ public class ModifyUtils implements ChangeConstants {
                     changeable2s.add((Changeable2) object);
                 }
             }
-            dataMap.put(changeActivityIfc, changeable2s);
+            dataMap.put(activity2, changeable2s);
         }
 
         return dataMap;
@@ -912,29 +942,39 @@ public class ModifyUtils implements ChangeConstants {
      * @return
      * @throws WTException
      */
-    public static Map<ChangeActivityIfc, Collection<Changeable2>> getChangeablesAfter(WTChangeOrder2 changeOrder2) throws WTException {
-        Map<ChangeActivityIfc, Collection<Changeable2>> datasMap = new HashMap<>();
+    public static Map<WTChangeActivity2, Collection<Changeable2>> getChangeablesAfter(WTChangeOrder2 changeOrder2) throws WTException {
+        Map<WTChangeActivity2, Collection<Changeable2>> datasMap = new HashMap<>();
         if (changeOrder2 == null) return datasMap;
 
-        Collection<ChangeActivityIfc> collection = getChangeActivities(changeOrder2);
-        for (ChangeActivityIfc changeActivityIfc : collection) {
-            // 产生对象集合
-            Collection<Changeable2> changeable2s = new HashSet<>();
-            // 获取ECA中所有产生对象
-            QueryResult result = ChangeHelper2.service.getChangeablesAfter(changeActivityIfc);
-            while (result.hasMoreElements()) {
-                Object object = result.nextElement();
-                if (object instanceof ObjectReference) {
-                    object = ((ObjectReference) object).getObject();
-                }
-                if (object instanceof Changeable2) {
-                    changeable2s.add((Changeable2) object);
-                }
-            }
-            datasMap.put(changeActivityIfc, changeable2s);
+        Collection<WTChangeActivity2> collection = getChangeActivities(changeOrder2);
+        for (WTChangeActivity2 activity2 : collection) {
+            datasMap.put(activity2, getChangeablesAfter(activity2));
         }
 
         return datasMap;
+    }
+
+    /**
+     * 获取ECA的产生对象
+     * @param activity2
+     * @return
+     * @throws WTException
+     */
+    public static Collection<Changeable2> getChangeablesAfter(WTChangeActivity2 activity2) throws WTException {
+        Collection<Changeable2> changeable2s = new HashSet<>();
+
+        QueryResult result = ChangeHelper2.service.getChangeablesAfter(activity2);
+        while (result.hasMoreElements()) {
+            Object object = result.nextElement();
+            if (object instanceof ObjectReference) {
+                object = ((ObjectReference) object).getObject();
+            }
+            if (object instanceof Changeable2) {
+                changeable2s.add((Changeable2) object);
+            }
+        }
+
+        return changeable2s;
     }
 
     /***
@@ -944,8 +984,8 @@ public class ModifyUtils implements ChangeConstants {
      * @return
      * @throws WTException
      */
-    public static Collection<ChangeActivityIfc> getChangeActivities(WTChangeOrder2 changeOrder2) throws WTException {
-        Collection<ChangeActivityIfc> datasArray = new HashSet<>();
+    public static Collection<WTChangeActivity2> getChangeActivities(WTChangeOrder2 changeOrder2) throws WTException {
+        Collection<WTChangeActivity2> datasArray = new HashSet<>();
         if (changeOrder2 == null) return datasArray;
 
         QueryResult result = ChangeHelper2.service.getChangeActivities(changeOrder2);

@@ -23,12 +23,17 @@ import wt.workflow.engine.WfProcess;
                 @GeneratedProperty(
                     name = "ecnBranchIdentifier",
                     type = String.class,
-                    javaDoc = "ECA对象VID"
+                    javaDoc = "ECN对象VID"
                 ),
                 @GeneratedProperty(
                         name = "perBranchIdentifier",
                         type = String.class,
                         javaDoc = "Persistable对象VID"
+                ),
+                @GeneratedProperty(
+                        name = "ecaIdentifier",
+                        type = String.class,
+                        javaDoc = "ECA对象VID"
                 ),
                 @GeneratedProperty(
                         name = "linkType",

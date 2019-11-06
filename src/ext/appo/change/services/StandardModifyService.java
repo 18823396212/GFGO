@@ -66,18 +66,47 @@ public class StandardModifyService extends StandardManager implements ModifyServ
      * @param linkType
      * @param ecnBranchIdentifier
      * @param perBranchIdentifier
-     * @param aadDescription
      * @return
      * @throws WTException
      */
     @Override
-    public CorrelationObjectLink newCorrelationObjectLink(WTChangeOrder2 changeOrder2, Persistable persistable, String linkType, String ecnBranchIdentifier, String perBranchIdentifier, String aadDescription) throws WTException {
+    public CorrelationObjectLink newCorrelationObjectLink(WTChangeOrder2 changeOrder2, Persistable persistable, String linkType, String ecnBranchIdentifier, String perBranchIdentifier) throws WTException {
         CorrelationObjectLink link = CorrelationObjectLink.newCorrelationObjectLink(changeOrder2, persistable);
         try {
             link.setLinkType(linkType);
             link.setEcnBranchIdentifier(ecnBranchIdentifier);
             link.setPerBranchIdentifier(perBranchIdentifier);
+            PersistenceServerHelper.manager.insert(link);
+            link = (CorrelationObjectLink) PersistenceHelper.manager.refresh(link);
+        } catch (Exception e) {
+            throw new WTException(e.getStackTrace());
+        }
+        return link;
+    }
+
+    /**
+     * 新建ECN与相关对象的Link
+     * @param changeOrder2
+     * @param persistable
+     * @param linkType
+     * @param ecnBranchIdentifier
+     * @param perBranchIdentifier
+     * @param ecaIdentifier
+     * @param aadDescription
+     * @param routing
+     * @return
+     * @throws WTException
+     */
+    @Override
+    public CorrelationObjectLink newCorrelationObjectLink(WTChangeOrder2 changeOrder2, Persistable persistable, String linkType, String ecnBranchIdentifier, String perBranchIdentifier, String ecaIdentifier, String aadDescription, String routing) throws WTException {
+        CorrelationObjectLink link = CorrelationObjectLink.newCorrelationObjectLink(changeOrder2, persistable);
+        try {
+            link.setLinkType(linkType);
+            link.setEcnBranchIdentifier(ecnBranchIdentifier);
+            link.setPerBranchIdentifier(perBranchIdentifier);
+            link.setEcaIdentifier(ecaIdentifier);
             link.setAadDescription(aadDescription);
+            link.setRouting(routing);
             PersistenceServerHelper.manager.insert(link);
             link = (CorrelationObjectLink) PersistenceHelper.manager.refresh(link);
         } catch (Exception e) {
@@ -338,6 +367,43 @@ public class StandardModifyService extends StandardManager implements ModifyServ
 
             qs.appendAnd();
             sc = new SearchCondition(CorrelationObjectLink.class, CorrelationObjectLink.LINK_TYPE, SearchCondition.EQUAL, linkType);
+            qs.appendWhere(sc, new int[]{0});
+
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("=====queryCorrelationObjectLinks.sql=" + qs);
+            }
+
+            QueryResult result = PersistenceHelper.manager.find(qs);
+            while (result.hasMoreElements()) {
+                links.add((CorrelationObjectLink) result.nextElement());
+            }
+        }
+        return links;
+    }
+
+    /**
+     * 查询ECN与相关对象的Link
+     * @param changeOrder2
+     * @param linkType
+     * @param routing
+     * @return
+     * @throws WTException
+     */
+    @Override
+    public Set<CorrelationObjectLink> queryCorrelationObjectLinks(WTChangeOrder2 changeOrder2, String linkType, String routing) throws WTException {
+        Set<CorrelationObjectLink> links = new HashSet<>();
+        if (changeOrder2 != null && StringUtils.isNotEmpty(linkType)) {
+            QuerySpec qs = new QuerySpec(CorrelationObjectLink.class);
+
+            SearchCondition sc = new SearchCondition(CorrelationObjectLink.class, "roleAObjectRef.key.id", SearchCondition.EQUAL, changeOrder2.getPersistInfo().getObjectIdentifier().getId());
+            qs.appendWhere(sc, new int[]{0});
+
+            qs.appendAnd();
+            sc = new SearchCondition(CorrelationObjectLink.class, CorrelationObjectLink.LINK_TYPE, SearchCondition.EQUAL, linkType);
+            qs.appendWhere(sc, new int[]{0});
+
+            qs.appendAnd();
+            sc = new SearchCondition(CorrelationObjectLink.class, CorrelationObjectLink.ROUTING, SearchCondition.EQUAL, routing);
             qs.appendWhere(sc, new int[]{0});
 
             if (LOGGER.isDebugEnabled()) {

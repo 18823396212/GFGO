@@ -139,8 +139,7 @@ public class ChangeTaskTableBuilder extends AbstractComponentBuilder implements 
         if (changeOrder2 == null) return map;
 
         // 将ECN中所有ECA对象(事务性任务)转换为ChangeTaskBean对象
-        for (ChangeActivityIfc changeActivityIfc : ModifyUtils.getChangeActivities(changeOrder2)) {
-            WTChangeActivity2 eca = (WTChangeActivity2) changeActivityIfc;
+        for (WTChangeActivity2 eca : ModifyUtils.getChangeActivities(changeOrder2)) {
             // TODO 类型判断是否为‘事务性任务’类型
             if (!PICoreHelper.service.isType(eca, ChangeConstants.TRANSACTIONAL_CHANGEACTIVITY2)) continue;
 

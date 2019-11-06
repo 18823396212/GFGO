@@ -3,6 +3,7 @@ REM Creating table GFGO_CORRELATIONOBJECTLINK for ext.appo.change.models.Correla
 set echo off
 CREATE TABLE GFGO_CORRELATIONOBJECTLINK (
    aadDescription   VARCHAR2(600),
+   ecaIdentifier   VARCHAR2(600),
    ecnBranchIdentifier   VARCHAR2(600),
    linkType   VARCHAR2(600),
    perBranchIdentifier   VARCHAR2(600),

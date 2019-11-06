@@ -31,11 +31,25 @@ public interface ModifyService {
      * @param linkType
      * @param ecnBranchIdentifier
      * @param perBranchIdentifier
-     * @param aadDescription
      * @return
      * @throws WTException
      */
-    CorrelationObjectLink newCorrelationObjectLink(WTChangeOrder2 changeOrder2, Persistable persistable, String linkType, String ecnBranchIdentifier, String perBranchIdentifier, String aadDescription) throws WTException;
+    CorrelationObjectLink newCorrelationObjectLink(WTChangeOrder2 changeOrder2, Persistable persistable, String linkType, String ecnBranchIdentifier, String perBranchIdentifier) throws WTException;
+
+    /**
+     * 新建ECN与相关对象的Link
+     * @param changeOrder2
+     * @param persistable
+     * @param linkType
+     * @param ecnBranchIdentifier
+     * @param perBranchIdentifier
+     * @param ecaIdentifier
+     * @param aadDescription
+     * @param routing
+     * @return
+     * @throws WTException
+     */
+    CorrelationObjectLink newCorrelationObjectLink(WTChangeOrder2 changeOrder2, Persistable persistable, String linkType, String ecnBranchIdentifier, String perBranchIdentifier, String ecaIdentifier, String aadDescription, String routing) throws WTException;
 
     /**
      * 删除事务性任务
@@ -123,6 +137,16 @@ public interface ModifyService {
      * @throws WTException
      */
     Set<CorrelationObjectLink> queryCorrelationObjectLinks(WTChangeOrder2 changeOrder2) throws WTException;
+
+    /**
+     * 查询ECN与相关对象的Link
+     * @param changeOrder2
+     * @param linkType
+     * @param routing
+     * @return
+     * @throws WTException
+     */
+    Set<CorrelationObjectLink> queryCorrelationObjectLinks(WTChangeOrder2 changeOrder2, String linkType, String routing) throws WTException;
 
     /**
      * 查询ECN与相关对象的Link

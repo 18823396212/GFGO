@@ -580,11 +580,10 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
      */
     private void checkRevised() throws WTException {
         LOGGER.info(">>>>>>>>>>checkRevised.NUMBERS: " + NUMBERS);
-        Map<ChangeActivityIfc, Collection<Changeable2>> map = ModifyUtils.getChangeablesAfter(ORDER2);
+        Map<WTChangeActivity2, Collection<Changeable2>> map = ModifyUtils.getChangeablesAfter(ORDER2);
         LOGGER.info(">>>>>>>>>>checkRevised.map: " + map.size());
-        for (Map.Entry<ChangeActivityIfc, Collection<Changeable2>> entry : map.entrySet()) {
-            LOGGER.info(">>>>>>>>>>checkRevised.entry.getKey(): " + entry.getKey());
-            ChangeActivity2 activity2 = (ChangeActivity2) entry.getKey();
+        for (Map.Entry<WTChangeActivity2, Collection<Changeable2>> entry : map.entrySet()) {
+            WTChangeActivity2 activity2 = entry.getKey();
             Collection<Changeable2> collection = entry.getValue();
             LOGGER.info(">>>>>>>>>>checkRevised.collection: " + collection.size());
             for (Changeable2 changeable2 : collection) {
