@@ -78,10 +78,14 @@
         var oid = "<%=request.getParameter("oid")%>";
         var params = "oid=" + oid + "&selectOid=" + JSON.stringify(oidArray);
         var url = "netmarkets/jsp/ext/appo/change/request/removeAffectedLink.jsp";
-        var removeVid = eval("(" + ajaxRequest(url, params) + ")");
-        // 移除数据
-        var table = PTC.jca.table.Utils.getTable('ext.appo.change.mvc.builder.AffectedItemsTableBuilder');
-        PTC.jca.table.Utils.removeRows(table, removeVid);
+        var result = ajaxRequest(url, params);
+        if (result.indexOf("存在以下受影响对象不允许移除：") !== -1) {
+            alert(result.trim());
+        } else {
+            // 移除数据
+            var table = PTC.jca.table.Utils.getTable('ext.appo.change.mvc.builder.AffectedItemsTableBuilder');
+            PTC.jca.table.Utils.removeRows(table, eval("(" + result + ")"));
+        }
         // 数据保存
         saveChangeTaskArray();
     }
