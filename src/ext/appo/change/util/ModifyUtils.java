@@ -16,7 +16,9 @@ import wt.fc.collections.WTArrayList;
 import wt.fc.collections.WTCollection;
 import wt.fc.collections.WTSet;
 import wt.folder.FolderHelper;
+import wt.lifecycle.LifeCycleHelper;
 import wt.lifecycle.LifeCycleManaged;
+import wt.lifecycle.State;
 import wt.log4j.LogR;
 import wt.org.WTPrincipal;
 import wt.org.WTPrincipalReference;
@@ -917,23 +919,32 @@ public class ModifyUtils implements ChangeConstants {
 
         Collection<WTChangeActivity2> collection = getChangeActivities(changeOrder2);
         for (WTChangeActivity2 activity2 : collection) {
-            // 受影响对象集合
-            Collection<Changeable2> changeable2s = new HashSet<>();
-            // 获取ECA中所有受影响对象
-            QueryResult result = ChangeHelper2.service.getChangeablesBefore(activity2);
-            while (result.hasMoreElements()) {
-                Object object = result.nextElement();
-                if (object instanceof ObjectReference) {
-                    object = ((ObjectReference) object).getObject();
-                }
-                if (object instanceof Changeable2) {
-                    changeable2s.add((Changeable2) object);
-                }
-            }
-            dataMap.put(activity2, changeable2s);
+            dataMap.put(activity2, getChangeablesBefore(activity2));
         }
 
         return dataMap;
+    }
+
+    /**
+     * 获取ECA的受影响对象
+     * @param activity2
+     * @return
+     * @throws WTException
+     */
+    public static Collection<Changeable2> getChangeablesBefore(WTChangeActivity2 activity2) throws WTException {
+        Collection<Changeable2> changeable2s = new HashSet<>();
+        // 获取ECA中所有受影响对象
+        QueryResult result = ChangeHelper2.service.getChangeablesBefore(activity2);
+        while (result.hasMoreElements()) {
+            Object object = result.nextElement();
+            if (object instanceof ObjectReference) {
+                object = ((ObjectReference) object).getObject();
+            }
+            if (object instanceof Changeable2) {
+                changeable2s.add((Changeable2) object);
+            }
+        }
+        return changeable2s;
     }
 
     /***
@@ -1070,6 +1081,17 @@ public class ModifyUtils implements ChangeConstants {
             ChangeRecord2 changeRecord = (ChangeRecord2) result.nextElement();
             ChangeHelper2.service.deleteChangeRecord(changeRecord);
         }
+    }
+
+    /**
+     * 设置生命周期状态
+     * @param managed
+     * @param lifeCycleState
+     * @throws WTException
+     */
+    public static void setLifeCycleState(LifeCycleManaged managed, String lifeCycleState) throws WTException {
+        State state = State.toState(lifeCycleState);
+        LifeCycleHelper.service.setLifeCycleState(managed, state);
     }
 
 }

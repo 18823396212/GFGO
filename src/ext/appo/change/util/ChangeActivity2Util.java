@@ -20,6 +20,7 @@ import wt.log4j.LogR;
 import wt.part.WTPart;
 import wt.util.WTException;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 /*
@@ -78,6 +79,8 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
      */
     private void createChangeActivity2() throws WTException {
         try {
+            Collection<String> attributes = new HashSet<>();
+            attributes.add(ATTRIBUTE_1);
             Map<String, Changeable2> reviseMap = new HashMap<>();//已修订对象
             for (Map.Entry<Persistable, Collection<Persistable>> entryMap : CONSTRUCTRELATION.entrySet()) {
                 if (entryMap.getKey() instanceof Changeable2) {
@@ -166,6 +169,10 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
                                 PersistenceHelper.manager.save(affectedActivityData);
                             }
                         }
+                    }
+                    //复制部件分类属性到ECA
+                    if (changeable2 instanceof WTPart) {
+                        PIAttributeHelper.service.copyAttributeValues(changeable2, eca, attributes);
                     }
                     eca = (WTChangeActivity2) PersistenceHelper.manager.refresh(eca);
                     ACTIVITY2S.add(eca);
