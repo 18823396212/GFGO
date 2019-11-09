@@ -7,6 +7,7 @@ import ext.appo.change.util.ModifyUtils;
 import ext.appo.ecn.constants.ChangeConstants;
 import ext.lang.PIStringUtils;
 import ext.pi.core.PICoreHelper;
+import ext.pi.core.PIWorkflowHelper;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import wt.change2.AffectedActivityData;
@@ -22,7 +23,12 @@ import wt.fc.collections.WTSet;
 import wt.log4j.LogR;
 import wt.part.PartDocHelper;
 import wt.part.WTPart;
+import wt.project.Role;
 import wt.util.WTException;
+import wt.workflow.engine.WfEngineHelper;
+import wt.workflow.engine.WfProcess;
+import wt.workflow.work.WfAssignedActivity;
+import wt.workflow.work.WorkItem;
 
 import java.util.*;
 
@@ -33,6 +39,14 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
 
     private static Logger LOGGER = LogR.getLogger(ECNWorkflowUtil.class.getName());
     private Set<String> MESSAGES = new HashSet<>();
+    private static Set<String> WORKITEMNAME;
+
+    static {
+        WORKITEMNAME = new HashSet<>();
+        WORKITEMNAME.add("审核");
+        WORKITEMNAME.add("会签");
+        WORKITEMNAME.add("批准");
+    }
 
     /**
      * 查询ECN与受影响对象的Link，是否存在路由为 已驳回的数据
@@ -47,6 +61,22 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
             Set<CorrelationObjectLink> links = ModifyHelper.service.queryCorrelationObjectLinks((WTChangeOrder2) pbo, LINKTYPE_1, ROUTING_2);
             LOGGER.info("=====isRejected.links: " + links);
             if (links.size() > 0) return true;
+        }
+        return false;
+    }
+
+    /**
+     * 判定是否暂存
+     * @param pbo
+     * @param self
+     * @return
+     * @throws WTException
+     */
+    public boolean isCache(WTObject pbo, ObjectReference self) throws WTException {
+        String actionName = ModifyUtils.getValue(pbo, ATTRIBUTE_6);
+        LOGGER.info("=====isCache.actionName: " + actionName);
+        if (CONSTANTS_1.equals(actionName)) {
+            return true;
         }
         return false;
     }
@@ -195,7 +225,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
      * @param collectionMap
      * @throws WTException
      */
-    private void createChangeActivity2(WTChangeOrder2 changeOrder2, Map<Persistable, Collection<Persistable>> collectionMap) throws WTException {
+    public void createChangeActivity2(WTChangeOrder2 changeOrder2, Map<Persistable, Collection<Persistable>> collectionMap) throws WTException {
         try {
             Map<String, Changeable2> reviseMap = new HashMap<>();//已修订对象
             for (Map.Entry<Persistable, Collection<Persistable>> entryMap : collectionMap.entrySet()) {
@@ -282,6 +312,51 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
             }
         } catch (Exception e) {
             throw new WTException(e.getStackTrace());
+        }
+    }
+
+    /**
+     * 收集子流程会签者、审核者、批准者到ECN流程接收者
+     * @param pbo
+     * @param self
+     * @throws WTException
+     */
+    public void collectionNoticeMember(WTObject pbo, ObjectReference self) throws WTException {
+        if (pbo instanceof WTChangeOrder2) {
+            WTChangeOrder2 changeOrder2 = (WTChangeOrder2) pbo;
+            WfProcess destProcess = PIWorkflowHelper.service.getProcess(self);
+            LOGGER.info(">>>>>>>>>>collectionNoticeMember.destProcess:" + destProcess);
+
+            Collection<WTChangeActivity2> collection = ModifyUtils.getChangeActivities(changeOrder2);
+            LOGGER.info(">>>>>>>>>>collectionNoticeMember.collection:" + collection);
+            for (WTChangeActivity2 activity2 : collection) {
+                QueryResult result = WfEngineHelper.service.getAssociatedProcesses(activity2, null, null);
+                LOGGER.info(">>>>>>>>>>collectionNoticeMember.result:" + result.size());
+                while (result.hasMoreElements()) {
+                    WfProcess sourceProcess = (WfProcess) result.nextElement();
+                    LOGGER.info(">>>>>>>>>>collectionNoticeMember.sourceProcess:" + sourceProcess);
+
+                    //检查任务节点角色是否根据Excel配置改变
+                    /*Set<Role> roles = new HashSet<>();
+                    QueryResult workItems = PIWorkflowHelper.service.findWorkItems(sourceProcess, true);
+                    while (workItems.hasMoreElements()) {
+                        WorkItem workItem = (WorkItem) workItems.nextElement();
+                        WfAssignedActivity activity = (WfAssignedActivity) workItem.getSource().getObject();
+                        String name = activity.getName();
+                        if (WORKITEMNAME.contains(name)) {
+                            roles.add(workItem.getRole());
+                        }
+                    }
+
+                    for (Role role : roles) {
+                        PIWorkflowHelper.service.copyPrincipals(sourceProcess, role, destProcess, Role.toRole(ROLE_1), false);
+                    }*/
+
+                    PIWorkflowHelper.service.copyPrincipals(sourceProcess, Role.toRole(ROLE_2), destProcess, Role.toRole(ROLE_1), false);//会签者
+                    PIWorkflowHelper.service.copyPrincipals(sourceProcess, Role.toRole(ROLE_3), destProcess, Role.toRole(ROLE_1), false);//审核者
+                    PIWorkflowHelper.service.copyPrincipals(sourceProcess, Role.toRole(ROLE_4), destProcess, Role.toRole(ROLE_1), false);//批准者
+                }
+            }
         }
     }
 

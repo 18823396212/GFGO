@@ -11,6 +11,7 @@ public interface ModifyConstants {
     String ATTRIBUTE_3 = "ssxm";//所属项目
     String ATTRIBUTE_4 = "isReject";//是否驳回
     String ATTRIBUTE_5 = "referenceDesignatorRange";//位号
+    String ATTRIBUTE_6 = "ActionName";//操作名称
 
     //类型定义
     String TYPE_1 = "com.pisx.BOMChangeActivity2";//BOM变更ECA
@@ -24,6 +25,12 @@ public interface ModifyConstants {
     String STATE_1 = "INWORK";//正在工作
     String STATE_2 = "REWORK";//重新工作
 
+    //角色
+    String ROLE_1 = "Receiver";//接收者
+    String ROLE_2 = "Signer";//会签者
+    String ROLE_3 = "Assessor";//审核者
+    String ROLE_4 = "APPROVER";//批准者
+
     //属性值
     String VALUE_1 = "替换";
     String VALUE_2 = "PCB";//物料分类
@@ -34,6 +41,9 @@ public interface ModifyConstants {
 
     //分隔符
     String SEPARATOR_1 = "_";
+
+    //常量
+    String CONSTANTS_1 = "cacheButton";//缓存按钮
 
     /**
      * ECN与受影响对象链接

@@ -34,7 +34,6 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
 
     private static final Logger LOGGER = LogR.getLogger(CreateChangeNoticeFormProcessor.class.getName());
     private static final String ROUTINGNAME = "routingName";
-    private static final String ROUTINGNAME_1 = "cacheButton";
     private Map<Persistable, Map<String, String>> PAGEDATAMAP = new HashMap<>();//页面中changeTaskArray控件值并根据规则解析为对应集合
     private Map<Persistable, Collection<Persistable>> CONSTRUCTRELATION = new HashMap<>();//根据受影响对象表单构建创建ECA时需要填充的数据关系
     private Set<Persistable> AFFECTEDOBJECT = new HashSet<>();//所有受影响对象，包括收集对象
@@ -57,7 +56,7 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
 
             Set<String> messages = new HashSet<>();
             //暂存操作
-            if (ROUTINGNAME_1.equals(routingName)) {
+            if (CONSTANTS_1.equals(routingName)) {
                 /*
                  * 9.0、至少一条受影响对象，必填项验证。
                  * 9.1、检查受影响对象是否存在未结束的ECN，有则不允许创建。
@@ -82,6 +81,7 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
                     //新增ChangeOrder2与受影响对象的关系
                     linkAffectedItems(changeOrder2, affectedObjectUtil.PAGEDATAMAP, activity2Util.BRANCHIDMAP);
                 }
+                PIAttributeHelper.service.forceUpdateSoftAttribute(changeOrder2, ATTRIBUTE_6, routingName);
             } else {
                 /*
                  * 8.0、至少一条受影响对象，必填项验证。
