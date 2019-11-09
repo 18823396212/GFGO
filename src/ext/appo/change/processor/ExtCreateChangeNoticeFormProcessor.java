@@ -166,7 +166,7 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
                 LOGGER.info(">>>>>>>>>>linkAffectedItems.routing: " + routing);
                 ModifyHelper.service.newCorrelationObjectLink(changeOrder2, persistable, LINKTYPE_1, ecnVid, branchId, ecaIdentifier, aadDescription, routing);
             } else {
-                ModifyHelper.service.updateCorrelationObjectLink(ecnVid, branchId, LINKTYPE_1);
+                //ModifyHelper.service.updateCorrelationObjectLink(ecnVid, branchId, LINKTYPE_1);
                 ModifyHelper.service.updateCorrelationObjectLink(link, aadDescription, link.getRouting());
             }
         }

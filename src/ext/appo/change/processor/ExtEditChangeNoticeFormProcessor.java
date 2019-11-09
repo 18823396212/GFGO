@@ -160,12 +160,13 @@ public class ExtEditChangeNoticeFormProcessor extends EditChangeNoticeFormProces
             CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, branchId, LINKTYPE_1);
             LOGGER.info(">>>>>>>>>>linkAffectedItems.link: " + link);
             if (link == null) {
-                String routing = "";
                 String ecaIdentifier = branchMap.get(branchId);//获取所在ECA
-                if (StringUtils.isNotEmpty(ecaIdentifier)) routing = ROUTING_1;
+                LOGGER.info(">>>>>>>>>>linkAffectedItems.ecaIdentifier: " + ecaIdentifier);
+                String routing = StringUtils.isEmpty(ecaIdentifier) ? "" : ROUTING_1;
+                LOGGER.info(">>>>>>>>>>linkAffectedItems.routing: " + routing);
                 ModifyHelper.service.newCorrelationObjectLink(changeOrder2, persistable, LINKTYPE_1, ecnVid, branchId, ecaIdentifier, aadDescription, routing);
             } else {
-                ModifyHelper.service.updateCorrelationObjectLink(ecnVid, branchId, LINKTYPE_1);
+                //ModifyHelper.service.updateCorrelationObjectLink(ecnVid, branchId, LINKTYPE_1);
                 ModifyHelper.service.updateCorrelationObjectLink(link, aadDescription, link.getRouting());
             }
         }

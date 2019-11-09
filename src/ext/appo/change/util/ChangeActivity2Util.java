@@ -79,8 +79,6 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
      */
     private void createChangeActivity2() throws WTException {
         try {
-            Collection<String> attributes = new HashSet<>();
-            attributes.add(ATTRIBUTE_1);
             Map<String, Changeable2> reviseMap = new HashMap<>();//已修订对象
             for (Map.Entry<Persistable, Collection<Persistable>> entryMap : CONSTRUCTRELATION.entrySet()) {
                 if (entryMap.getKey() instanceof Changeable2) {
@@ -129,15 +127,14 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
                     }
                     BRANCHIDMAP.put(branchId, ecaVid);
 
+                    // 添加受影响对象
+                    LOGGER.info(">>>>>>>>>>createChangeActivity2.vector:" + vector);
+                    ModifyUtils.addAffectedActivityData(eca, vector);
+
                     //修订受影响对象，并添加到产生对象列表
                     WTCollection collection = ModifyUtils.revise(vector, reviseMap);
                     LOGGER.info(">>>>>>>>>>createChangeActivity2.collection:" + collection);
                     ModifyUtils.AddChangeRecord2(eca, collection);
-
-
-                    // 添加受影响对象
-                    LOGGER.info(">>>>>>>>>>createChangeActivity2.vector:" + vector);
-                    ModifyUtils.addAffectedActivityData(eca, vector);
 
                     // 部件‘类型’选择‘替换’时ECA状态设置为‘已发布’,选择‘升级’时ECA状态设置为‘开启’
                     String attributeValue = attributesMap.get(CHANGETYPE_COMPID);
@@ -169,10 +166,6 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
                                 PersistenceHelper.manager.save(affectedActivityData);
                             }
                         }
-                    }
-                    //复制部件分类属性到ECA
-                    if (changeable2 instanceof WTPart) {
-                        PIAttributeHelper.service.copyAttributeValues(changeable2, eca, attributes);
                     }
                     eca = (WTChangeActivity2) PersistenceHelper.manager.refresh(eca);
                     ACTIVITY2S.add(eca);

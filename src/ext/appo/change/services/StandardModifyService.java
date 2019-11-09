@@ -215,10 +215,24 @@ public class StandardModifyService extends StandardManager implements ModifyServ
     @Override
     public CorrelationObjectLink updateCorrelationObjectLink(CorrelationObjectLink link, String aadDescription, String routing) throws WTException {
         try {
-            link.setAadDescription(aadDescription);
-            link.setRouting(routing);
-            PersistenceServerHelper.manager.update(link);
-            link = (CorrelationObjectLink) PersistenceHelper.manager.refresh(link);
+            if (link != null) {
+                WTChangeOrder2 changeOrder2 = link.getChangeOrder2();
+                LOGGER.info("=====updateCorrelationObjectLink.changeOrder2: " + changeOrder2);
+                changeOrder2 = (WTChangeOrder2) getLatestVersion(changeOrder2);
+                LOGGER.info("=====updateCorrelationObjectLink.changeOrder2: " + changeOrder2);
+                link.setChangeOrder2(changeOrder2);
+
+                Persistable persistable = link.getPersistable();
+                LOGGER.info("=====updateCorrelationObjectLink.persistable: " + persistable);
+                if (!(persistable instanceof TransactionTask)) persistable = getLatestVersion((Iterated) persistable);
+                LOGGER.info("=====updateCorrelationObjectLink.persistable: " + persistable);
+                link.setPersistable(persistable);
+
+                link.setAadDescription(aadDescription);
+                link.setRouting(routing);
+                PersistenceServerHelper.manager.update(link);
+                link = (CorrelationObjectLink) PersistenceHelper.manager.refresh(link);
+            }
         } catch (Exception e) {
             throw new WTException(e.getStackTrace());
         }
@@ -320,6 +334,42 @@ public class StandardModifyService extends StandardManager implements ModifyServ
             }
         }
         return null;
+    }
+
+    /**
+     * 查询ECA与相关对象的Link
+     * @param activity2
+     * @param linkType
+     * @return
+     * @throws WTException
+     */
+    @Override
+    public Set<CorrelationObjectLink> queryCorrelationObjectLinks(WTChangeActivity2 activity2, String linkType) throws WTException {
+        Set<CorrelationObjectLink> links = new HashSet<>();
+        if (activity2 != null) {
+            String ecaVid = PersistenceHelper.getObjectIdentifier(activity2).toString();
+            LOGGER.info(">>>>>>>>>>queryCorrelationObjectLink.ecaVid:" + ecaVid);
+
+            QuerySpec qs = new QuerySpec(CorrelationObjectLink.class);
+            SearchCondition sc = new SearchCondition(CorrelationObjectLink.class, CorrelationObjectLink.ECA_IDENTIFIER, SearchCondition.EQUAL, ecaVid);
+            qs.appendWhere(sc, new int[]{0});
+
+            if (StringUtils.isNotEmpty(linkType)) {
+                qs.appendAnd();
+                sc = new SearchCondition(CorrelationObjectLink.class, CorrelationObjectLink.LINK_TYPE, SearchCondition.EQUAL, linkType);
+                qs.appendWhere(sc, new int[]{0});
+            }
+
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("=====queryCorrelationObjectLink.sql=" + qs);
+            }
+
+            QueryResult result = PersistenceHelper.manager.find(qs);
+            while (result.hasMoreElements()) {
+                links.add((CorrelationObjectLink) result.nextElement());
+            }
+        }
+        return links;
     }
 
     /**

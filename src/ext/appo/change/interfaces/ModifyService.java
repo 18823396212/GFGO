@@ -131,6 +131,15 @@ public interface ModifyService {
     CorrelationObjectLink queryCorrelationObjectLink(String ecnBranchIdentifier, String perBranchIdentifier, String linkType) throws WTException;
 
     /**
+     * 查询ECA与相关对象的Link
+     * @param activity2
+     * @param linkType
+     * @return
+     * @throws WTException
+     */
+    Set<CorrelationObjectLink> queryCorrelationObjectLinks(WTChangeActivity2 activity2, String linkType) throws WTException;
+
+    /**
      * 查询ECN与相关对象的Link
      * @param changeOrder2
      * @return
