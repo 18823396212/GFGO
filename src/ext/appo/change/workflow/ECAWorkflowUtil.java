@@ -11,6 +11,11 @@ import ext.appo.part.util.MversionControlHelper;
 import ext.appo.part.workflow.PartWorkflowUtil;
 import ext.appo.util.PartUtil;
 import ext.customer.common.MBAUtil;
+import ext.generic.integration.cis.constant.CISConstant;
+import ext.generic.integration.cis.rule.CISBusinessRuleXML;
+import ext.generic.integration.cis.util.OracleUtil;
+import ext.generic.integration.cis.util.SQLServerUtil;
+import ext.generic.integration.cis.workflow.WorkflowUtil;
 import ext.generic.integration.erp.common.CommonPDMUtil;
 import ext.pi.core.PIAttributeHelper;
 import ext.pi.core.PIClassificationHelper;
@@ -19,6 +24,7 @@ import ext.pi.core.PIPartHelper;
 import org.apache.log4j.Logger;
 import wt.change2.Changeable2;
 import wt.change2.WTChangeActivity2;
+import wt.doc.WTDocument;
 import wt.fc.ObjectReference;
 import wt.fc.Persistable;
 import wt.fc.QueryResult;
@@ -35,6 +41,8 @@ import wt.vc.wip.Workable;
 import wt.workflow.engine.WfProcess;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.*;
 
@@ -479,10 +487,10 @@ public class ECAWorkflowUtil implements ChangeConstants, ModifyConstants {
      */
     public void checkSoftTypeSetRole(WTObject pbo, ObjectReference self, String processName, String username, String containerNames) throws WTException {
         PartWorkflowUtil partWorkflowUtil = new PartWorkflowUtil();
-        //pbo为ECA，获取受影响对象的随机一个部件作为pbo
+        //pbo为ECA，获取产生对象的随机一个部件作为pbo
         LOGGER.info("=====checkSoftTypeSetRole.pbo: " + pbo);
         if (pbo instanceof WTChangeActivity2) {
-            Collection<Changeable2> collection = ModifyUtils.getChangeablesBefore((WTChangeActivity2) pbo);
+            Collection<Changeable2> collection = ModifyUtils.getChangeablesAfter((WTChangeActivity2) pbo);
             LOGGER.info("=====checkSoftTypeSetRole.collection: " + collection);
             for (Changeable2 changeable2 : collection) {
                 LOGGER.info("=====checkSoftTypeSetRole.changeable2: " + changeable2);
@@ -543,6 +551,50 @@ public class ECAWorkflowUtil implements ChangeConstants, ModifyConstants {
                 }
             }
         }
+    }
+
+    /**
+     * 发布多条数据-CIS
+     *
+     * @param pbo
+     * @param self
+     * @return
+     * @throws SQLException
+     * @throws WTException
+     */
+    public String publishAllData(WTObject pbo, ObjectReference self) throws SQLException, WTException {
+        //原GenericPartWF流程返回值永远为空，也就是流程不管CIS有没有写到数据库
+        StringBuffer buffer = new StringBuffer();
+        Connection connection = null;
+        try {
+            Collection<Changeable2> collection = ModifyUtils.getChangeablesAfter((WTChangeActivity2) pbo);
+            LOGGER.info("=====publishAllData.collection: " + collection);
+            if (!collection.isEmpty()) {
+                String name = CISBusinessRuleXML.getInstance().getDataBaseName();
+                LOGGER.debug("=====publishAllData.name" + name);
+                if (name.equals(CISConstant.ORACLE)) connection = OracleUtil.getConnection();
+                else if (name.equals(CISConstant.SQLSERVER)) connection = SQLServerUtil.getConnection();
+
+                for (Changeable2 changeable2 : collection) {
+                    LOGGER.info("=====publishAllData.changeable2: " + changeable2);
+                    if (changeable2 instanceof WTPart) {
+                        WTPart part = (WTPart) changeable2;
+                        //if (WorkflowUtil.checkLibrary(part)) buffer.append(WorkflowUtil.publishData(part, connection));
+                        if (WorkflowUtil.checkLibrary(part)) WorkflowUtil.publishData(part, connection);
+                    } else if (changeable2 instanceof WTDocument) {
+                        WTDocument document = (WTDocument) changeable2;
+                        //buffer.append(WorkflowUtil.publishData(document, connection));
+                        WorkflowUtil.publishData(document, connection);
+                    }
+                }
+            }
+        } finally {
+            if (connection != null) {
+                connection.close();
+                connection = null;
+            }
+        }
+        return buffer.toString();
     }
 
     /**
