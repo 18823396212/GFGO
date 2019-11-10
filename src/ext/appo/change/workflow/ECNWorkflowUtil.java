@@ -331,7 +331,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
             LOGGER.info(">>>>>>>>>>collectionNoticeMember.collection:" + collection);
             for (WTChangeActivity2 activity2 : collection) {
                 QueryResult result = WfEngineHelper.service.getAssociatedProcesses(activity2, null, null);
-                LOGGER.info(">>>>>>>>>>collectionNoticeMember.result:" + result.size());
+                LOGGER.info(">>>>>>>>>>collectionNoticeMember.activity2:" + activity2.getNumber() + " >>>>>result: " + result.size());
                 while (result.hasMoreElements()) {
                     WfProcess sourceProcess = (WfProcess) result.nextElement();
                     LOGGER.info(">>>>>>>>>>collectionNoticeMember.sourceProcess:" + sourceProcess);

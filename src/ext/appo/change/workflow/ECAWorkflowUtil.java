@@ -1,6 +1,7 @@
 package ext.appo.change.workflow;
 
 import com.lowagie.text.DocumentException;
+import com.ptc.windchill.enterprise.team.server.TeamCCHelper;
 import ext.appo.change.ModifyHelper;
 import ext.appo.change.constants.ModifyConstants;
 import ext.appo.change.models.CorrelationObjectLink;
@@ -12,13 +13,14 @@ import ext.appo.part.util.EffecitveBaselineUtil;
 import ext.appo.part.util.MversionControlHelper;
 import ext.appo.part.workflow.PartWorkflowUtil;
 import ext.appo.util.PartUtil;
+import ext.com.workflow.WorkflowUtil;
 import ext.customer.common.MBAUtil;
 import ext.generic.integration.cis.constant.CISConstant;
 import ext.generic.integration.cis.rule.CISBusinessRuleXML;
 import ext.generic.integration.cis.util.OracleUtil;
 import ext.generic.integration.cis.util.SQLServerUtil;
-import ext.generic.integration.cis.workflow.WorkflowUtil;
 import ext.generic.integration.erp.common.CommonPDMUtil;
+import ext.pi.PIException;
 import ext.pi.core.PIAttributeHelper;
 import ext.pi.core.PIClassificationHelper;
 import ext.pi.core.PICoreHelper;
@@ -26,15 +28,27 @@ import ext.pi.core.PIPartHelper;
 import org.apache.log4j.Logger;
 import wt.change2.Changeable2;
 import wt.change2.WTChangeActivity2;
+import wt.change2.WTChangeOrder2;
 import wt.doc.WTDocument;
 import wt.fc.*;
 import wt.fc.collections.WTArrayList;
 import wt.fc.collections.WTCollection;
 import wt.fc.collections.WTHashSet;
 import wt.fc.collections.WTList;
+import wt.inf.container.WTContainer;
+import wt.inf.team.ContainerTeam;
+import wt.inf.team.ContainerTeamHelper;
+import wt.inf.team.ContainerTeamManaged;
 import wt.lifecycle.LifeCycleManaged;
 import wt.log4j.LogR;
+import wt.org.WTPrincipal;
+import wt.org.WTPrincipalReference;
+import wt.org.WTUser;
 import wt.part.*;
+import wt.project.Role;
+import wt.session.SessionServerHelper;
+import wt.team.Team;
+import wt.team.WTRoleHolder2;
 import wt.util.WTException;
 import wt.vc.config.LatestConfigSpec;
 import wt.vc.wip.Workable;
@@ -274,6 +288,318 @@ public class ECAWorkflowUtil implements ChangeConstants, ModifyConstants {
             if (PICoreHelper.service.isCheckout((Workable) after)) {
                 MESSAGES.add("产生对象「" + ModifyUtils.getNumber(after) + "」被检出！");
             }
+        }
+    }
+
+    /**
+     * 判断ECN流程中是否强制选择会签人员
+     * @param pbo
+     * @param self
+     * @return
+     * @throws WTException
+     */
+    public String checkPartType(WTObject pbo, ObjectReference self) throws WTException {
+        List<String> isRDPart = new ArrayList<>();
+        if (pbo instanceof WTChangeActivity2) {
+            Collection<Changeable2> collection = ModifyUtils.getChangeablesAfter((WTChangeActivity2) pbo);
+            LOGGER.info("=====checkPartType.collection: " + collection);
+            for (Changeable2 changeable2 : collection) {
+                if (changeable2 instanceof WTPart) {
+                    WTPart part = (WTPart) changeable2;
+                    LOGGER.info("=====checkPartType.part: " + part.getNumber());
+                    if (part.getNumber().startsWith("A") || part.getNumber().startsWith("C") || part.getNumber().startsWith("D") || part.getNumber().startsWith("E") || part.getNumber().startsWith("P") || part.getNumber().startsWith("T") || part.getNumber().startsWith("S") || part.getNumber().startsWith("K")) {
+                        return "RD";
+                    }
+                    if (part.getNumber().startsWith("B")) {
+                        String value = (String) PIAttributeHelper.service.getValue(part, "Classification");
+                        String nodeHierarchy = PIClassificationHelper.service.getNodeHierarchy(value);
+                        if (nodeHierarchy.contains("appo_bcp22")) {// 软件总成
+                            isRDPart.add("NOTRD");
+                        } else {
+                            return "RD";
+                        }
+                    }
+                    if (part.getNumber().startsWith("X")) {
+                        isRDPart.add("NOTRD");
+                    }
+                    if (part.getNumber().startsWith("N") || part.getNumber().startsWith("M")) {
+                        return "NM";
+                    }
+                }
+            }
+        }
+        LOGGER.info("=====checkPartType.isRDPart: " + isRDPart);
+        return "NOTRD";
+    }
+
+    /**
+     * 检查团队角色
+     * @param pbo
+     * @param rolename
+     * @param reviewname
+     * @throws WTException
+     */
+    public void checkTeam(WTObject pbo, String rolename, String reviewname) throws WTException {
+        boolean flag = SessionServerHelper.manager.setAccessEnforced(false);
+        Role role = Role.toRole(reviewname);
+        Role selectrole = Role.toRole(rolename);
+        Boolean isrole = false;
+
+        if (pbo instanceof WTChangeOrder2) {
+            WTChangeOrder2 ecn = (WTChangeOrder2) pbo;
+            Team processTeam = WorkflowUtil.getTeam(ecn);
+            if (processTeam != null) {
+                Enumeration enumPrin = processTeam.getPrincipalTarget(role);// 会签者
+
+                while (enumPrin.hasMoreElements()) {
+                    WTPrincipalReference tempPrinRef = (WTPrincipalReference) enumPrin.nextElement();
+                    WTPrincipal principal = tempPrinRef.getPrincipal();
+                    LOGGER.info("=====checkTeam.principal: " + principal.getName());
+                    isrole = checkRole(pbo, rolename, principal);
+                    LOGGER.info("=====checkTeam.isrole: " + isrole);
+                    if (isrole) {
+                        break;
+                    }
+                }
+                if (!isrole && reviewname.equalsIgnoreCase("Signer")) {
+                    throw new WTException("会签者/会签节点必须选择:" + selectrole.getShortDescription() + "角色");
+                }
+                if (!isrole && reviewname.equalsIgnoreCase("Receiver")) {
+                    throw new WTException("接收者/通知节点必须选择:" + selectrole.getShortDescription() + "角色");
+                }
+                if (!isrole && reviewname.equalsIgnoreCase("Approver")) {
+                    throw new WTException("批准者/批准节点必须选择:" + selectrole.getShortDescription() + "角色");
+                }
+                if (!isrole && reviewname.equalsIgnoreCase("Receiver")) {
+                    throw new WTException("审核者/审核节点必须选择:" + selectrole.getShortDescription() + "角色");
+                }
+            }
+        } else if (pbo instanceof WTChangeActivity2) {
+            WTChangeActivity2 activity2 = (WTChangeActivity2) pbo;
+            Team processTeam = WorkflowUtil.getTeam(activity2);
+            if (processTeam != null) {
+                Enumeration enumPrin = processTeam.getPrincipalTarget(role);// 会签者
+
+                while (enumPrin.hasMoreElements()) {
+                    WTPrincipalReference tempPrinRef = (WTPrincipalReference) enumPrin.nextElement();
+                    WTPrincipal principal = tempPrinRef.getPrincipal();
+                    LOGGER.info("=====checkTeam.principal: " + principal.getName());
+                    isrole = checkRole(pbo, rolename, principal);
+                    LOGGER.info("=====checkTeam.isrole: " + isrole);
+                    if (isrole) {
+                        break;
+                    }
+                }
+                if (!isrole && reviewname.equalsIgnoreCase("Signer")) {
+                    throw new WTException("会签者/会签节点必须选择:" + selectrole.getShortDescription() + "角色");
+                }
+                if (!isrole && reviewname.equalsIgnoreCase("Receiver")) {
+                    throw new WTException("接收者/通知节点必须选择:" + selectrole.getShortDescription() + "角色");
+                }
+                if (!isrole && reviewname.equalsIgnoreCase("Approver")) {
+                    throw new WTException("批准者/批准节点必须选择:" + selectrole.getShortDescription() + "角色");
+                }
+                if (!isrole && reviewname.equalsIgnoreCase("Receiver")) {
+                    throw new WTException("审核者/审核节点必须选择:" + selectrole.getShortDescription() + "角色");
+                }
+            }
+        } else if (pbo instanceof WTPart) {
+            WTPart part = (WTPart) pbo;
+            Team processTeam = WorkflowUtil.getTeam(part);
+            if (processTeam != null) {
+                Enumeration enumPrin = processTeam.getPrincipalTarget(role);// 会签者
+                while (enumPrin.hasMoreElements()) {
+                    WTPrincipalReference tempPrinRef = (WTPrincipalReference) enumPrin.nextElement();
+                    WTPrincipal principal = tempPrinRef.getPrincipal();
+                    LOGGER.info("=====checkTeam.principal: " + principal.getName());
+                    isrole = checkRole(pbo, rolename, principal);
+                    LOGGER.info("=====checkTeam.isrole: " + isrole);
+                    if (isrole) {
+                        break;
+                    }
+                }
+                if (!isrole && reviewname.equalsIgnoreCase("Signer")) {
+                    throw new WTException("会签者/会签节点必须选择:" + selectrole.getShortDescription() + "角色");
+                }
+                if (!isrole && reviewname.equalsIgnoreCase("Receiver")) {
+                    throw new WTException("接收者/通知节点必须选择:" + selectrole.getShortDescription() + "角色");
+                }
+                if (!isrole && reviewname.equalsIgnoreCase("Approver")) {
+                    throw new WTException("批准者/批准节点必须选择:" + selectrole.getShortDescription() + "角色");
+                }
+                if (!isrole && reviewname.equalsIgnoreCase("Receiver")) {
+                    throw new WTException("审核者/审核节点必须选择:" + selectrole.getShortDescription() + "角色");
+                }
+            }
+        } else if (pbo instanceof WTDocument) {
+            WTDocument doc = (WTDocument) pbo;
+            Team processTeam = WorkflowUtil.getTeam(doc);
+            if (processTeam != null) {
+                Enumeration enumPrin = processTeam.getPrincipalTarget(role);// 会签者
+                while (enumPrin.hasMoreElements()) {
+                    WTPrincipalReference tempPrinRef = (WTPrincipalReference) enumPrin.nextElement();
+                    WTPrincipal principal = tempPrinRef.getPrincipal();
+                    LOGGER.info("=====checkTeam.principal: " + principal.getName());
+                    isrole = checkRole(pbo, rolename, principal);
+                    LOGGER.info("=====checkTeam.isrole: " + isrole);
+                    if (isrole) {
+                        break;
+                    }
+                }
+                if (!isrole && reviewname.equalsIgnoreCase("Signer")) {
+                    throw new WTException("会签者/会签节点必须选择:" + selectrole.getShortDescription() + "角色");
+                }
+                if (!isrole && reviewname.equalsIgnoreCase("Receiver")) {
+                    throw new WTException("接收者/通知节点必须选择:" + selectrole.getShortDescription() + "角色");
+                }
+                if (!isrole && reviewname.equalsIgnoreCase("Approver")) {
+                    throw new WTException("批准者/批准节点必须选择:" + selectrole.getShortDescription() + "角色");
+                }
+                if (!isrole && reviewname.equalsIgnoreCase("Receiver")) {
+                    throw new WTException("审核者/审核节点必须选择:" + selectrole.getShortDescription() + "角色");
+                }
+            }
+        }
+    }
+
+    /**
+     * 检查指定角色是否在团队中
+     * @param pbo
+     * @param rolename
+     * @param principal
+     * @return
+     */
+    @SuppressWarnings("SuspiciousMethodCalls")
+    public static Boolean checkRole(WTObject pbo, String rolename, WTPrincipal principal) {
+        Boolean isrole = false;
+
+        Role role = Role.toRole(rolename);
+        System.out.println("role===" + role.getShortDescription());
+        WTContainer container = null;
+        if (pbo instanceof WTChangeOrder2) {
+            WTChangeOrder2 object = (WTChangeOrder2) pbo;
+            container = object.getContainer();
+        }
+        if (pbo instanceof WTPart) {
+            WTPart object = (WTPart) pbo;
+            container = object.getContainer();
+        }
+        if (pbo instanceof WTDocument) {
+            WTDocument object = (WTDocument) pbo;
+            container = object.getContainer();
+        }
+        if (container != null) {
+            try {
+                WTRoleHolder2 wtroleholder2 = TeamCCHelper.getTeamFromObject(container);
+                ContainerTeam containerTeam = ContainerTeamHelper.service.getContainerTeam((ContainerTeamManaged) container);
+                Enumeration enumPrin = containerTeam.getPrincipalTarget(role);
+                Set<WTUser> userSet = new HashSet<>();
+                while (enumPrin.hasMoreElements()) {
+                    WTPrincipalReference tempPrinRef = (WTPrincipalReference) enumPrin.nextElement();
+                    WTPrincipal wtPrincipal = tempPrinRef.getPrincipal();
+                    System.out.println("wtprincipal====" + wtPrincipal.getName());
+
+                    if (wtPrincipal instanceof WTUser) {
+                        userSet.add((WTUser) wtPrincipal);
+                    } else if (wtPrincipal instanceof wt.org.WTGroup) {
+                        userSet.addAll(PartWorkflowUtil.getGroupMembers((wt.org.WTGroup) wtPrincipal));
+                    }
+                }
+
+                if (userSet != null && userSet.size() > 0 && userSet.contains(principal)) {
+                    isrole = true;
+                }
+            } catch (WTException e) {
+                e.printStackTrace();
+            } // 获取容器的人
+
+        }
+
+        return isrole;
+    }
+
+    /**
+     * 根据产品类别，判断是否需要加人
+     * @param pbo
+     * @return
+     */
+    public Boolean checkContainer(WTObject pbo) {
+        Boolean isok = false;
+        if (pbo instanceof WTChangeOrder2) {
+            WTChangeOrder2 ecn = (WTChangeOrder2) pbo;
+            String productline = "";
+            try {
+                productline = (String) PIAttributeHelper.service.getValue(ecn, ATTRIBUTE_2);
+            } catch (PIException e) {
+                e.printStackTrace();
+            }
+            LOGGER.info("=====checkContainer.productline: " + productline);
+            // 微投--40 激光电视--60
+            if (productline.equalsIgnoreCase("40") || productline.equalsIgnoreCase("60")) {
+                isok = true;
+            }
+        }
+        LOGGER.info("=====checkContainer.isok: " + isok);
+        return isok;
+    }
+
+    /**
+     * 给流程节点角色添加固定人员
+     * 删除用户为空抛出异常
+     * @param pbo
+     * @param rolename
+     * @param principalname
+     * @throws WTException
+     */
+    public void addTeamRole(WTObject pbo, String rolename, String principalname) throws WTException {
+        Role role = Role.toRole(rolename);
+        WTPrincipal wtprincipal = PartWorkflowUtil.getUserFromName(principalname);
+        if (wtprincipal != null) {
+            LOGGER.info("=====addTeamRole.wtprincipal: " + wtprincipal.getName());
+            if (pbo instanceof WTChangeOrder2) {
+                WTChangeOrder2 ecn = (WTChangeOrder2) pbo;
+                Team processTeam = WorkflowUtil.getTeam(ecn);
+                if (processTeam != null) {
+                    processTeam.addPrincipal(role, wtprincipal);
+                    LOGGER.info("=====addTeamRole.end add people success: ");
+                }
+            }
+        }
+    }
+
+    /**
+     * 检查流程中的角色是否在上下文团队中
+     * @param pbo
+     * @throws WTException
+     */
+    public void checkUserPermission(WTObject pbo) throws WTException {
+        StringBuffer result = new StringBuffer();
+        if (pbo instanceof WTChangeActivity2) {
+            WTChangeActivity2 activity2 = (WTChangeActivity2) pbo;
+            WTContainer container = activity2.getContainer();
+            ContainerTeam containerTeam = ContainerTeamHelper.service.getContainerTeam((ContainerTeamManaged) container);
+            Set<WTUser> userSet = PartWorkflowUtil.getAllMembers(containerTeam);
+            Team processTeam = WorkflowUtil.getTeam(activity2);
+            // 流程实例所有角色
+            Vector processRoleVector = processTeam.getRoles();
+            a:for (Object o : processRoleVector) {
+                Role processRole = (Role) o;
+                Enumeration enumPrin = processTeam.getPrincipalTarget(processRole);// 会签者
+                while (enumPrin.hasMoreElements()) {
+                    WTPrincipalReference tempPrinRef = (WTPrincipalReference) enumPrin.nextElement();
+                    WTPrincipal principal = tempPrinRef.getPrincipal();
+                    if (principal instanceof WTUser) {
+                        WTUser user = (WTUser) principal;
+                        if (userSet != null && userSet.size() > 0 && !userSet.contains(user)) {
+                            result.append("用户").append(user.getFullName()).append("不在").append(container.getContainerName()).append("团队中，请另外选择人员或通知业务管理员设置用户权限！");
+                            break a;
+                        }
+                    }
+                }
+            }
+        }
+        if (result.length() > 0) {
+            throw new WTException(result.toString());
         }
     }
 
@@ -580,11 +906,12 @@ public class ECAWorkflowUtil implements ChangeConstants, ModifyConstants {
                     if (changeable2 instanceof WTPart) {
                         WTPart part = (WTPart) changeable2;
                         //if (WorkflowUtil.checkLibrary(part)) buffer.append(WorkflowUtil.publishData(part, connection));
-                        if (WorkflowUtil.checkLibrary(part)) WorkflowUtil.publishData(part, connection);
+                        if (ext.generic.integration.cis.workflow.WorkflowUtil.checkLibrary(part))
+                            ext.generic.integration.cis.workflow.WorkflowUtil.publishData(part, connection);
                     } else if (changeable2 instanceof WTDocument) {
                         WTDocument document = (WTDocument) changeable2;
                         //buffer.append(WorkflowUtil.publishData(document, connection));
-                        WorkflowUtil.publishData(document, connection);
+                        ext.generic.integration.cis.workflow.WorkflowUtil.publishData(document, connection);
                     }
                 }
             }

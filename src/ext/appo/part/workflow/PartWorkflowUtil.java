@@ -591,8 +591,8 @@ public class PartWorkflowUtil extends PartReleasedWorkFlow {
 			Team processTeam = WorkflowUtil.getTeam(ecn);
 			// 流程实例所有角色
 			Vector processRoleVector = processTeam.getRoles();
-			a: for (int i = 0; i < processRoleVector.size(); i++) {
-				Role processRole = (Role) processRoleVector.get(i);
+			a:for (Object o : processRoleVector) {
+				Role processRole = (Role) o;
 				Enumeration enumPrin = processTeam.getPrincipalTarget(processRole);// 会签者
 
 				while (enumPrin.hasMoreElements()) {
@@ -601,8 +601,7 @@ public class PartWorkflowUtil extends PartReleasedWorkFlow {
 					if (principal instanceof WTUser) {
 						WTUser user = (WTUser) principal;
 						if (userSet != null && userSet.size() > 0 && !userSet.contains(user)) {
-							result.append("用户" + user.getFullName() + "不在" + container.getContainerName()
-									+ "团队中，请另外选择人员或通知业务管理员设置用户权限！");
+							result.append("用户").append(user.getFullName()).append("不在").append(container.getContainerName()).append("团队中，请另外选择人员或通知业务管理员设置用户权限！");
 							break a;
 						}
 					}
