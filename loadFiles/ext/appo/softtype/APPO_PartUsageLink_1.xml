@@ -1902,7 +1902,7 @@
    <csvEndDatatypeDefView handler="com.ptc.core.lwc.server.BaseDefinitionLoader.endProcessDatatypeDefinition"/>
    <csvBeginScreenDefView handler="com.ptc.core.lwc.server.BaseDefinitionLoader.beginProcessScreenDefinition">
       <csvname>PART_STRUCTURE_EDIT_USAGE</csvname>
-      <csvcontainerDomain>com.plm</csvcontainerDomain>
+      <csvcontainerDomain>com.pisx</csvcontainerDomain>
       <csvoperationName>com.ptc.windchill.update</csvoperationName>
    </csvBeginScreenDefView>
    <csvPropertyValue handler="com.ptc.core.lwc.server.BaseDefinitionLoader.processScreenPropertyValue">
@@ -1937,7 +1937,7 @@
    <csvEndScreenDefView handler="com.ptc.core.lwc.server.BaseDefinitionLoader.endProcessScreenDefinition"/>
    <csvBeginScreenDefView handler="com.ptc.core.lwc.server.BaseDefinitionLoader.beginProcessScreenDefinition">
       <csvname>PSB_INFO</csvname>
-      <csvcontainerDomain>com.plm</csvcontainerDomain>
+      <csvcontainerDomain>com.pisx</csvcontainerDomain>
       <csvoperationName>com.ptc.windchill.view</csvoperationName>
    </csvBeginScreenDefView>
    <csvPropertyValue handler="com.ptc.core.lwc.server.BaseDefinitionLoader.processScreenPropertyValue">
@@ -1972,7 +1972,7 @@
    <csvEndScreenDefView handler="com.ptc.core.lwc.server.BaseDefinitionLoader.endProcessScreenDefinition"/>
    <csvBeginScreenDefView handler="com.ptc.core.lwc.server.BaseDefinitionLoader.beginProcessScreenDefinition">
       <csvname>CREATE</csvname>
-      <csvcontainerDomain>com.plm</csvcontainerDomain>
+      <csvcontainerDomain>com.pisx</csvcontainerDomain>
       <csvoperationName>com.ptc.windchill.create</csvoperationName>
    </csvBeginScreenDefView>
    <csvPropertyValue handler="com.ptc.core.lwc.server.BaseDefinitionLoader.processScreenPropertyValue">
@@ -2002,7 +2002,7 @@
    <csvEndScreenDefView handler="com.ptc.core.lwc.server.BaseDefinitionLoader.endProcessScreenDefinition"/>
    <csvBeginScreenDefView handler="com.ptc.core.lwc.server.BaseDefinitionLoader.beginProcessScreenDefinition">
       <csvname>PART_COMPARE_ATTRIBUTES</csvname>
-      <csvcontainerDomain>com.plm</csvcontainerDomain>
+      <csvcontainerDomain>com.pisx</csvcontainerDomain>
       <csvoperationName>com.ptc.windchill.view</csvoperationName>
    </csvBeginScreenDefView>
    <csvPropertyValue handler="com.ptc.core.lwc.server.BaseDefinitionLoader.processScreenPropertyValue">

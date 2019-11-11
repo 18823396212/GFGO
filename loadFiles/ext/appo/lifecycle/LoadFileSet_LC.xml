@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE loadFileList SYSTEM "/wt/load/windchillLoad.dtd">
+<!--
+windchill wt.load.LoadFileSet -file loadFiles/ext/appo/lifecycle/LoadFileSet_LC.xml -u wcadmin -p wcadmin -NOSERVERSTOP -UNATTENDED
+ -->
+<loadFileList containerPath="/">
+
+	<!-- load lifecycle templates -->
+	<loadFile filename="ext/appo/lifecycle/APPO_ECNLC.xml" containerPath="/wt.inf.container.OrgContainer=PISX"/>
+	<loadFile filename="ext/appo/lifecycle/APPO_BOMCHANGELC.xml" containerPath="/wt.inf.container.OrgContainer=PISX"/>
+	<loadFile filename="ext/appo/lifecycle/APPO_DRAWINGCHANGELC.xml" containerPath="/wt.inf.container.OrgContainer=PISX"/>
+
+</loadFileList>

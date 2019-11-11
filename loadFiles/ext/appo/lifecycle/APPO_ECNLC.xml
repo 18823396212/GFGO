@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE NmLoader SYSTEM "standardX26.dtd">
+<NmLoader>
+  <csvLifeCycleTemplateBegin handler="wt.lifecycle.LoadLifeCycle.createLifeCycleTemplate">
+    <csvname>APPO_ECNLC</csvname>
+    <csvdescription>Life Cycle for the Change Notice.</csvdescription>
+    <csvsupportedClass>wt.change2.WTChangeOrder2</csvsupportedClass>
+    <csvfolderLocation>/System</csvfolderLocation>
+    <csvenabled>true</csvenabled>
+    <csvrouting>false</csvrouting>
+    <csvbasic>false</csvbasic>
+  </csvLifeCycleTemplateBegin>
+  <csvPhaseTemplateBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseTemplateBegin">
+    <csvname>Open</csvname>
+    <csvphaseState>OPEN</csvphaseState>
+    <csvphaseWorkflow>APPO_ECNWF</csvphaseWorkflow>
+    <csvgateWorkflow></csvgateWorkflow>
+    <csvseriesSelector></csvseriesSelector>
+  </csvPhaseTemplateBegin>
+  <csvRoleHolder handler="wt.project.LoadProject.createRoleHolder">
+    <csvroleToAssign>SUBMITTER</csvroleToAssign>
+    <csvassignedPrincipal></csvassignedPrincipal>
+  </csvRoleHolder>
+  <csvActorRoleHolder handler="wt.project.LoadProject.createActorRoleHolder">
+    <csvroleToAssign>SUBMITTER</csvroleToAssign>
+    <csvassignedActorRole>CREATOR</csvassignedActorRole>
+  </csvActorRoleHolder>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>SUBMITTER</csvrole>
+    <csvpermission>0</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>SUBMITTER</csvrole>
+    <csvpermission>10</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>SUBMITTER</csvrole>
+    <csvpermission>1</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>SUBMITTER</csvrole>
+    <csvpermission>11</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>SUBMITTER</csvrole>
+    <csvpermission>5</csvpermission>
+  </csvWTAclEntry>
+  <csvPhaseTemplateEnd handler="wt.lifecycle.LoadLifeCycle.createPhaseTemplateEnd"></csvPhaseTemplateEnd>
+  <csvPhaseTemplateBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseTemplateBegin">
+    <csvname>Under Review</csvname>
+    <csvphaseState>UNDERREVIEW</csvphaseState>
+    <csvphaseWorkflow></csvphaseWorkflow>
+    <csvgateWorkflow></csvgateWorkflow>
+    <csvseriesSelector></csvseriesSelector>
+  </csvPhaseTemplateBegin>
+  <csvRoleHolder handler="wt.project.LoadProject.createRoleHolder">
+    <csvroleToAssign>APPROVER</csvroleToAssign>
+    <csvassignedPrincipal></csvassignedPrincipal>
+  </csvRoleHolder>
+  <csvRoleHolder handler="wt.project.LoadProject.createRoleHolder">
+    <csvroleToAssign>Normalizer</csvroleToAssign>
+    <csvassignedPrincipal></csvassignedPrincipal>
+  </csvRoleHolder>
+  <csvRoleHolder handler="wt.project.LoadProject.createRoleHolder">
+    <csvroleToAssign>SUBMITTER</csvroleToAssign>
+    <csvassignedPrincipal></csvassignedPrincipal>
+  </csvRoleHolder>
+  <csvRoleHolder handler="wt.project.LoadProject.createRoleHolder">
+    <csvroleToAssign>Assessor</csvroleToAssign>
+    <csvassignedPrincipal></csvassignedPrincipal>
+  </csvRoleHolder>
+  <csvRoleHolder handler="wt.project.LoadProject.createRoleHolder">
+    <csvroleToAssign>Signer</csvroleToAssign>
+    <csvassignedPrincipal></csvassignedPrincipal>
+  </csvRoleHolder>
+  <csvRoleHolder handler="wt.project.LoadProject.createRoleHolder">
+    <csvroleToAssign>Corrector</csvroleToAssign>
+    <csvassignedPrincipal></csvassignedPrincipal>
+  </csvRoleHolder>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>Corrector</csvrole>
+    <csvpermission>0</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>Corrector</csvrole>
+    <csvpermission>10</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>Signer</csvrole>
+    <csvpermission>0</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>Signer</csvrole>
+    <csvpermission>10</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>Normalizer</csvrole>
+    <csvpermission>0</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>Normalizer</csvrole>
+    <csvpermission>10</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>SUBMITTER</csvrole>
+    <csvpermission>0</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>SUBMITTER</csvrole>
+    <csvpermission>10</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>Assessor</csvrole>
+    <csvpermission>0</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>Assessor</csvrole>
+    <csvpermission>10</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>APPROVER</csvrole>
+    <csvpermission>0</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>APPROVER</csvrole>
+    <csvpermission>10</csvpermission>
+  </csvWTAclEntry>
+  <csvPhaseTemplateEnd handler="wt.lifecycle.LoadLifeCycle.createPhaseTemplateEnd"></csvPhaseTemplateEnd>
+  <csvPhaseTemplateBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseTemplateBegin">
+    <csvname>实施</csvname>
+    <csvphaseState>IMPLEMENTATION</csvphaseState>
+    <csvphaseWorkflow></csvphaseWorkflow>
+    <csvgateWorkflow></csvgateWorkflow>
+    <csvseriesSelector></csvseriesSelector>
+  </csvPhaseTemplateBegin>
+  <csvRoleHolder handler="wt.project.LoadProject.createRoleHolder">
+    <csvroleToAssign>APPROVER</csvroleToAssign>
+    <csvassignedPrincipal></csvassignedPrincipal>
+  </csvRoleHolder>
+  <csvRoleHolder handler="wt.project.LoadProject.createRoleHolder">
+    <csvroleToAssign>standardized_engineer</csvroleToAssign>
+    <csvassignedPrincipal></csvassignedPrincipal>
+  </csvRoleHolder>
+  <csvRoleHolder handler="wt.project.LoadProject.createRoleHolder">
+    <csvroleToAssign>SUBMITTER</csvroleToAssign>
+    <csvassignedPrincipal></csvassignedPrincipal>
+  </csvRoleHolder>
+  <csvRoleHolder handler="wt.project.LoadProject.createRoleHolder">
+    <csvroleToAssign>Assessor</csvroleToAssign>
+    <csvassignedPrincipal></csvassignedPrincipal>
+  </csvRoleHolder>
+  <csvRoleHolder handler="wt.project.LoadProject.createRoleHolder">
+    <csvroleToAssign>Receiver</csvroleToAssign>
+    <csvassignedPrincipal></csvassignedPrincipal>
+  </csvRoleHolder>
+  <csvRoleHolder handler="wt.project.LoadProject.createRoleHolder">
+    <csvroleToAssign>Signer</csvroleToAssign>
+    <csvassignedPrincipal></csvassignedPrincipal>
+  </csvRoleHolder>
+  <csvRoleHolder handler="wt.project.LoadProject.createRoleHolder">
+    <csvroleToAssign>Corrector</csvroleToAssign>
+    <csvassignedPrincipal></csvassignedPrincipal>
+  </csvRoleHolder>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>Assessor</csvrole>
+    <csvpermission>0</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>Assessor</csvrole>
+    <csvpermission>10</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>Receiver</csvrole>
+    <csvpermission>0</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>Receiver</csvrole>
+    <csvpermission>10</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>standardized_engineer</csvrole>
+    <csvpermission>0</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>standardized_engineer</csvrole>
+    <csvpermission>10</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>APPROVER</csvrole>
+    <csvpermission>0</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>APPROVER</csvrole>
+    <csvpermission>10</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>Signer</csvrole>
+    <csvpermission>0</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>Signer</csvrole>
+    <csvpermission>10</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>SUBMITTER</csvrole>
+    <csvpermission>0</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>SUBMITTER</csvrole>
+    <csvpermission>10</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>Corrector</csvrole>
+    <csvpermission>0</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>Corrector</csvrole>
+    <csvpermission>10</csvpermission>
+  </csvWTAclEntry>
+  <csvPhaseTemplateEnd handler="wt.lifecycle.LoadLifeCycle.createPhaseTemplateEnd"></csvPhaseTemplateEnd>
+  <csvPhaseTemplateBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseTemplateBegin">
+    <csvname>重新设计</csvname>
+    <csvphaseState>REWORK</csvphaseState>
+    <csvphaseWorkflow></csvphaseWorkflow>
+    <csvgateWorkflow>Review</csvgateWorkflow>
+    <csvseriesSelector></csvseriesSelector>
+  </csvPhaseTemplateBegin>
+  <csvRoleHolder handler="wt.project.LoadProject.createRoleHolder">
+    <csvroleToAssign>APPROVER</csvroleToAssign>
+    <csvassignedPrincipal></csvassignedPrincipal>
+  </csvRoleHolder>
+  <csvRoleHolder handler="wt.project.LoadProject.createRoleHolder">
+    <csvroleToAssign>Normalizer</csvroleToAssign>
+    <csvassignedPrincipal></csvassignedPrincipal>
+  </csvRoleHolder>
+  <csvRoleHolder handler="wt.project.LoadProject.createRoleHolder">
+    <csvroleToAssign>SUBMITTER</csvroleToAssign>
+    <csvassignedPrincipal></csvassignedPrincipal>
+  </csvRoleHolder>
+  <csvRoleHolder handler="wt.project.LoadProject.createRoleHolder">
+    <csvroleToAssign>Assessor</csvroleToAssign>
+    <csvassignedPrincipal></csvassignedPrincipal>
+  </csvRoleHolder>
+  <csvRoleHolder handler="wt.project.LoadProject.createRoleHolder">
+    <csvroleToAssign>Signer</csvroleToAssign>
+    <csvassignedPrincipal></csvassignedPrincipal>
+  </csvRoleHolder>
+  <csvRoleHolder handler="wt.project.LoadProject.createRoleHolder">
+    <csvroleToAssign>Corrector</csvroleToAssign>
+    <csvassignedPrincipal></csvassignedPrincipal>
+  </csvRoleHolder>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>Corrector</csvrole>
+    <csvpermission>0</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>Corrector</csvrole>
+    <csvpermission>10</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>Signer</csvrole>
+    <csvpermission>0</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>Signer</csvrole>
+    <csvpermission>10</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>Normalizer</csvrole>
+    <csvpermission>0</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>Normalizer</csvrole>
+    <csvpermission>10</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>SUBMITTER</csvrole>
+    <csvpermission>0</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>SUBMITTER</csvrole>
+    <csvpermission>10</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>SUBMITTER</csvrole>
+    <csvpermission>1</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>SUBMITTER</csvrole>
+    <csvpermission>11</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>SUBMITTER</csvrole>
+    <csvpermission>5</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>Assessor</csvrole>
+    <csvpermission>0</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>Assessor</csvrole>
+    <csvpermission>10</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>APPROVER</csvrole>
+    <csvpermission>0</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>APPROVER</csvrole>
+    <csvpermission>10</csvpermission>
+  </csvWTAclEntry>
+  <csvPhaseTemplateEnd handler="wt.lifecycle.LoadLifeCycle.createPhaseTemplateEnd"></csvPhaseTemplateEnd>
+  <csvPhaseTemplateBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseTemplateBegin">
+    <csvname>Resolved</csvname>
+    <csvphaseState>RESOLVED</csvphaseState>
+    <csvphaseWorkflow></csvphaseWorkflow>
+    <csvgateWorkflow>Review</csvgateWorkflow>
+    <csvseriesSelector></csvseriesSelector>
+  </csvPhaseTemplateBegin>
+  <csvRoleHolder handler="wt.project.LoadProject.createRoleHolder">
+    <csvroleToAssign>SUBMITTER</csvroleToAssign>
+    <csvassignedPrincipal></csvassignedPrincipal>
+  </csvRoleHolder>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>SUBMITTER</csvrole>
+    <csvpermission>0</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>SUBMITTER</csvrole>
+    <csvpermission>10</csvpermission>
+  </csvWTAclEntry>
+  <csvPhaseTemplateEnd handler="wt.lifecycle.LoadLifeCycle.createPhaseTemplateEnd"></csvPhaseTemplateEnd>
+  <csvPhaseTemplateBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseTemplateBegin">
+    <csvname>Cancelled</csvname>
+    <csvphaseState>CANCELLED</csvphaseState>
+    <csvphaseWorkflow></csvphaseWorkflow>
+    <csvgateWorkflow></csvgateWorkflow>
+    <csvseriesSelector></csvseriesSelector>
+  </csvPhaseTemplateBegin>
+  <csvRoleHolder handler="wt.project.LoadProject.createRoleHolder">
+    <csvroleToAssign>SUBMITTER</csvroleToAssign>
+    <csvassignedPrincipal></csvassignedPrincipal>
+  </csvRoleHolder>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>SUBMITTER</csvrole>
+    <csvpermission>0</csvpermission>
+  </csvWTAclEntry>
+  <csvWTAclEntry handler="wt.lifecycle.LoadLifeCycle.createWTAclEntry">
+    <csvrole>SUBMITTER</csvrole>
+    <csvpermission>10</csvpermission>
+  </csvWTAclEntry>
+  <csvPhaseTemplateEnd handler="wt.lifecycle.LoadLifeCycle.createPhaseTemplateEnd"></csvPhaseTemplateEnd>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>OPEN</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>UNDERREVIEW</csvsuccessorPhaseState>
+    <csvphaseTransition>NEXT</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>OPEN</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>OPEN</csvsuccessorPhaseState>
+    <csvphaseTransition>PROMOTE</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>OPEN</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>UNDERREVIEW</csvsuccessorPhaseState>
+    <csvphaseTransition>PROMOTE</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>OPEN</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>REWORK</csvsuccessorPhaseState>
+    <csvphaseTransition>PROMOTE</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>OPEN</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>RESOLVED</csvsuccessorPhaseState>
+    <csvphaseTransition>PROMOTE</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>OPEN</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>CANCELLED</csvsuccessorPhaseState>
+    <csvphaseTransition>PROMOTE</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>OPEN</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>OPEN</csvsuccessorPhaseState>
+    <csvphaseTransition>REVISE</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>UNDERREVIEW</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>IMPLEMENTATION</csvsuccessorPhaseState>
+    <csvphaseTransition>NEXT</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>UNDERREVIEW</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>OPEN</csvsuccessorPhaseState>
+    <csvphaseTransition>PROMOTE</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>UNDERREVIEW</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>UNDERREVIEW</csvsuccessorPhaseState>
+    <csvphaseTransition>PROMOTE</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>UNDERREVIEW</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>REWORK</csvsuccessorPhaseState>
+    <csvphaseTransition>PROMOTE</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>UNDERREVIEW</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>RESOLVED</csvsuccessorPhaseState>
+    <csvphaseTransition>PROMOTE</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>UNDERREVIEW</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>CANCELLED</csvsuccessorPhaseState>
+    <csvphaseTransition>PROMOTE</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>UNDERREVIEW</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>OPEN</csvsuccessorPhaseState>
+    <csvphaseTransition>REVISE</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>IMPLEMENTATION</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>REWORK</csvsuccessorPhaseState>
+    <csvphaseTransition>NEXT</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>REWORK</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>RESOLVED</csvsuccessorPhaseState>
+    <csvphaseTransition>NEXT</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>REWORK</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>OPEN</csvsuccessorPhaseState>
+    <csvphaseTransition>PROMOTE</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>REWORK</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>UNDERREVIEW</csvsuccessorPhaseState>
+    <csvphaseTransition>PROMOTE</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>REWORK</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>REWORK</csvsuccessorPhaseState>
+    <csvphaseTransition>PROMOTE</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>REWORK</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>RESOLVED</csvsuccessorPhaseState>
+    <csvphaseTransition>PROMOTE</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>REWORK</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>CANCELLED</csvsuccessorPhaseState>
+    <csvphaseTransition>PROMOTE</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>REWORK</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>OPEN</csvsuccessorPhaseState>
+    <csvphaseTransition>REVISE</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>RESOLVED</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>CANCELLED</csvsuccessorPhaseState>
+    <csvphaseTransition>NEXT</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>RESOLVED</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>OPEN</csvsuccessorPhaseState>
+    <csvphaseTransition>PROMOTE</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>RESOLVED</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>UNDERREVIEW</csvsuccessorPhaseState>
+    <csvphaseTransition>PROMOTE</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>RESOLVED</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>REWORK</csvsuccessorPhaseState>
+    <csvphaseTransition>PROMOTE</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>RESOLVED</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>RESOLVED</csvsuccessorPhaseState>
+    <csvphaseTransition>PROMOTE</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>RESOLVED</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>CANCELLED</csvsuccessorPhaseState>
+    <csvphaseTransition>PROMOTE</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>RESOLVED</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>OPEN</csvsuccessorPhaseState>
+    <csvphaseTransition>REVISE</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>CANCELLED</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>OPEN</csvsuccessorPhaseState>
+    <csvphaseTransition>PROMOTE</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>CANCELLED</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>UNDERREVIEW</csvsuccessorPhaseState>
+    <csvphaseTransition>PROMOTE</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>CANCELLED</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>REWORK</csvsuccessorPhaseState>
+    <csvphaseTransition>PROMOTE</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>CANCELLED</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>RESOLVED</csvsuccessorPhaseState>
+    <csvphaseTransition>PROMOTE</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>CANCELLED</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>CANCELLED</csvsuccessorPhaseState>
+    <csvphaseTransition>PROMOTE</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvPhaseSuccessionBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseSuccessionBegin">
+    <csvlifeCycleName>APPO_ECNLC</csvlifeCycleName>
+    <csvpredecessorPhaseState>CANCELLED</csvpredecessorPhaseState>
+    <csvsuccessorPhaseState>OPEN</csvsuccessorPhaseState>
+    <csvphaseTransition>REVISE</csvphaseTransition>
+  </csvPhaseSuccessionBegin>
+  <csvLifeCycleTemplateEnd handler="wt.lifecycle.LoadLifeCycle.createLifeCycleTemplateEnd"></csvLifeCycleTemplateEnd>
+</NmLoader>

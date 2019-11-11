@@ -82,6 +82,31 @@
       <csvvalue>true</csvvalue>
    </csvPropertyValue>
    <csvBeginAttributeDefView handler="com.ptc.core.lwc.server.TypeDefinitionLoader.beginProcessAttributeDefinition">
+      <csvname>ActionName</csvname>
+      <csvattDefClass>com.ptc.core.lwc.server.LWCIBAAttDefinition</csvattDefClass>
+      <csvdatatype>java.lang.String</csvdatatype>
+      <csvIBA>ActionName</csvIBA>
+      <csvQoM/>
+      <csvviewStyle/>
+      <csveditStyle/>
+      <csvdefaults>NULL</csvdefaults>
+   </csvBeginAttributeDefView>
+   <csvPropertyValue handler="com.ptc.core.lwc.server.TypeDefinitionLoader.processAttributePropertyValue">
+      <csvname>displayName</csvname>
+      <csvisDefault>false</csvisDefault>
+      <csvvalue>操作名称</csvvalue>
+   </csvPropertyValue>
+   <csvBeginConstraintDefView handler="com.ptc.core.lwc.server.TypeDefinitionLoader.beginProcessConstraintDefinition">
+      <csvloadID>CONSTRAINT=786890226883</csvloadID>
+      <csvtypeContext>wt.change2.WTChangeOrder2</csvtypeContext>
+      <csvruleClassname>com.ptc.core.meta.container.common.impl.SingleValuedConstraint</csvruleClassname>
+      <csvdefClassname>com.ptc.core.lwc.server.LWCBasicConstraint</csvdefClassname>
+      <csvruleData/>
+      <csvdefQualifier/>
+   </csvBeginConstraintDefView>
+   <csvEndConstraintDefView handler="com.ptc.core.lwc.server.TypeDefinitionLoader.endProcessConstraintDefinition"/>
+   <csvEndAttributeDefView handler="com.ptc.core.lwc.server.TypeDefinitionLoader.endProcessAttributeDefinition"/>
+   <csvBeginAttributeDefView handler="com.ptc.core.lwc.server.TypeDefinitionLoader.beginProcessAttributeDefinition">
       <csvname>ChangeCause</csvname>
       <csvattDefClass>com.ptc.core.lwc.server.LWCIBAAttDefinition</csvattDefClass>
       <csvdatatype>java.lang.String</csvdatatype>
@@ -4315,6 +4340,21 @@
    </csvPropertyValue>
    <csvBeginGroupMemberView handler="com.ptc.core.lwc.server.TypeDefinitionLoader.beginProcessGroupMembership">
       <csvtypeContext>wt.change2.WTChangeOrder2</csvtypeContext>
+      <csvname>ActionName</csvname>
+   </csvBeginGroupMemberView>
+   <csvPropertyValue handler="com.ptc.core.lwc.server.TypeDefinitionLoader.processGroupMembershipPropertyValue">
+      <csvname>col_coord</csvname>
+      <csvisDefault>false</csvisDefault>
+      <csvvalue>0</csvvalue>
+   </csvPropertyValue>
+   <csvPropertyValue handler="com.ptc.core.lwc.server.TypeDefinitionLoader.processGroupMembershipPropertyValue">
+      <csvname>row_coord</csvname>
+      <csvisDefault>false</csvisDefault>
+      <csvvalue>6</csvvalue>
+   </csvPropertyValue>
+   <csvEndGroupMemberView handler="com.ptc.core.lwc.server.TypeDefinitionLoader.endProcessGroupMembership"/>
+   <csvBeginGroupMemberView handler="com.ptc.core.lwc.server.TypeDefinitionLoader.beginProcessGroupMembership">
+      <csvtypeContext>wt.change2.WTChangeOrder2</csvtypeContext>
       <csvname>ChangeCause</csvname>
    </csvBeginGroupMemberView>
    <csvPropertyValue handler="com.ptc.core.lwc.server.TypeDefinitionLoader.processGroupMembershipPropertyValue">
@@ -4550,7 +4590,7 @@
    <csvEndGroupMemberView handler="com.ptc.core.lwc.server.TypeDefinitionLoader.endProcessGroupMembership"/>
    <csvBeginGroupMemberView handler="com.ptc.core.lwc.server.TypeDefinitionLoader.beginProcessGroupMembership">
       <csvtypeContext>wt.change2.WTChangeOrder2</csvtypeContext>
-      <csvname>SEPARATOR=com.ptc.core.lwc.server.LWCSeparator:35953789</csvname>
+      <csvname>SEPARATOR=com.ptc.core.lwc.server.LWCSeparator:273842</csvname>
    </csvBeginGroupMemberView>
    <csvPropertyValue handler="com.ptc.core.lwc.server.TypeDefinitionLoader.processGroupMembershipPropertyValue">
       <csvname>col_coord</csvname>
@@ -4775,7 +4815,7 @@
    <csvEndGroupMemberView handler="com.ptc.core.lwc.server.TypeDefinitionLoader.endProcessGroupMembership"/>
    <csvBeginGroupMemberView handler="com.ptc.core.lwc.server.TypeDefinitionLoader.beginProcessGroupMembership">
       <csvtypeContext>wt.change2.WTChangeOrder2</csvtypeContext>
-      <csvname>SEPARATOR=com.ptc.core.lwc.server.LWCSeparator:35953799</csvname>
+      <csvname>SEPARATOR=com.ptc.core.lwc.server.LWCSeparator:273893</csvname>
    </csvBeginGroupMemberView>
    <csvPropertyValue handler="com.ptc.core.lwc.server.TypeDefinitionLoader.processGroupMembershipPropertyValue">
       <csvname>col_coord</csvname>
@@ -4795,7 +4835,7 @@
    <csvEndGroupMemberView handler="com.ptc.core.lwc.server.TypeDefinitionLoader.endProcessGroupMembership"/>
    <csvBeginGroupMemberView handler="com.ptc.core.lwc.server.TypeDefinitionLoader.beginProcessGroupMembership">
       <csvtypeContext>wt.change2.WTChangeOrder2</csvtypeContext>
-      <csvname>SEPARATOR=com.ptc.core.lwc.server.LWCSeparator:35953794</csvname>
+      <csvname>SEPARATOR=com.ptc.core.lwc.server.LWCSeparator:273883</csvname>
    </csvBeginGroupMemberView>
    <csvPropertyValue handler="com.ptc.core.lwc.server.TypeDefinitionLoader.processGroupMembershipPropertyValue">
       <csvname>col_coord</csvname>
@@ -5380,6 +5420,21 @@
       <csvisDefault>false</csvisDefault>
       <csvvalue>0</csvvalue>
    </csvPropertyValue>
+   <csvBeginGroupMemberView handler="com.ptc.core.lwc.server.TypeDefinitionLoader.beginProcessGroupMembership">
+      <csvtypeContext>wt.change2.WTChangeOrder2</csvtypeContext>
+      <csvname>ActionName</csvname>
+   </csvBeginGroupMemberView>
+   <csvPropertyValue handler="com.ptc.core.lwc.server.TypeDefinitionLoader.processGroupMembershipPropertyValue">
+      <csvname>col_coord</csvname>
+      <csvisDefault>false</csvisDefault>
+      <csvvalue>0</csvvalue>
+   </csvPropertyValue>
+   <csvPropertyValue handler="com.ptc.core.lwc.server.TypeDefinitionLoader.processGroupMembershipPropertyValue">
+      <csvname>row_coord</csvname>
+      <csvisDefault>false</csvisDefault>
+      <csvvalue>8</csvvalue>
+   </csvPropertyValue>
+   <csvEndGroupMemberView handler="com.ptc.core.lwc.server.TypeDefinitionLoader.endProcessGroupMembership"/>
    <csvBeginGroupMemberView handler="com.ptc.core.lwc.server.TypeDefinitionLoader.beginProcessGroupMembership">
       <csvtypeContext>wt.change2.WTChangeOrder2</csvtypeContext>
       <csvname>ChangeCause</csvname>

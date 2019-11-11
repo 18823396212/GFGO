@@ -99,6 +99,18 @@
       <csvlogicalIdentifier>ChangeItemType</csvlogicalIdentifier>
    </csvAttrDefinizer>
    <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>ActionName</csvname>
+      <csvhierarchyDisplayName>ActionName</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>操作名称</csvdisplay_name>
+      <csvdescription>操作名称</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>ActionName</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
       <csvname>appo_opensWorkItem_Name</csvname>
       <csvhierarchyDisplayName>appo_opensWorkItem_Name</csvhierarchyDisplayName>
       <csvorganizerPaths>apponewpart</csvorganizerPaths>

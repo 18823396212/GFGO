@@ -39,6 +39,30 @@
       <csvlogicalIdentifier>lswdbb</csvlogicalIdentifier>
    </csvAttrDefinizer>
    <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>apponewpart</csvname>
+      <csvhierarchyDisplayName>appo属性</csvhierarchyDisplayName>
+      <csvorganizerPaths></csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name/>
+      <csvdescription/>
+      <csvdata_type>ORG</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier/>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>ChangeObjectType</csvname>
+      <csvhierarchyDisplayName>ChangeObjectType</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>变更对象类型</csvdisplay_name>
+      <csvdescription>变更对象类型</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>ChangeObjectType</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
       <csvname>lswdbh</csvname>
       <csvhierarchyDisplayName>lswdbh</csvhierarchyDisplayName>
       <csvorganizerPaths>appodoc</csvorganizerPaths>
@@ -61,18 +85,6 @@
       <csvQoMName/>
       <csvnameValuePairs/>
       <csvlogicalIdentifier>rjbb</csvlogicalIdentifier>
-   </csvAttrDefinizer>
-   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
-      <csvname>apponewpart</csvname>
-      <csvhierarchyDisplayName>appo属性</csvhierarchyDisplayName>
-      <csvorganizerPaths></csvorganizerPaths>
-      <csvdefinitionPaths/>
-      <csvdisplay_name/>
-      <csvdescription/>
-      <csvdata_type>ORG</csvdata_type>
-      <csvQoMName/>
-      <csvnameValuePairs/>
-      <csvlogicalIdentifier/>
    </csvAttrDefinizer>
    <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
       <csvname>ResponsiblePerson</csvname>
@@ -121,6 +133,18 @@
       <csvQoMName/>
       <csvnameValuePairs/>
       <csvlogicalIdentifier>ssxm</csvlogicalIdentifier>
+   </csvAttrDefinizer>
+   <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
+      <csvname>ChangeItemType</csvname>
+      <csvhierarchyDisplayName>ChangeItemType</csvhierarchyDisplayName>
+      <csvorganizerPaths>apponewpart</csvorganizerPaths>
+      <csvdefinitionPaths/>
+      <csvdisplay_name>变更类型</csvdisplay_name>
+      <csvdescription>ChangeItemType</csvdescription>
+      <csvdata_type>STR</csvdata_type>
+      <csvQoMName/>
+      <csvnameValuePairs/>
+      <csvlogicalIdentifier>ChangeItemType</csvlogicalIdentifier>
    </csvAttrDefinizer>
    <csvAttrDefinizer handler="wt.iba.definition.DefinitionLoaderWithCache.createAttrDefinizer">
       <csvname>ssyjly</csvname>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!DOCTYPE loadFileList SYSTEM "/wt/load/windchillLoad.dtd">
+<!--
+windchill wt.load.LoadFileSet -file loadFiles/ext/appo/oir/LoadFileSet_OIR.xml -u wcadmin -p wcadmin -NOSERVERSTOP -UNATTENDED
+ -->
+<loadFileList>
+
+	<loadFile filename="ext/appo/oir/APPO_ECNOIR.xml" containerPath="/wt.inf.container.OrgContainer=PISX"/>
+	<loadFile filename="ext/appo/oir/APPO_BOMCHANGEOIR.xml" containerPath="/wt.inf.container.OrgContainer=PISX"/>
+	<loadFile filename="ext/appo/oir/APPO_DRAWINGCHANGEOIR.xml" containerPath="/wt.inf.container.OrgContainer=PISX"/>
+
+</loadFileList>

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE loadFileList SYSTEM "/wt/load/windchillLoad.dtd">
+
+<!-- 
+windchill wt.load.LoadFileSet -file loadFiles/ext/appo/softtype/LoadFileSet_SF.xml -u wcadmin -p wcadmin -NOSERVERSTOP -UNATTENDED
+ -->
+<loadFileList>
+
+	<loadFile filename="ext/appo/softtype/APPO_Enum_0.xml" containerPath="/"/>
+	<loadFile filename="ext/appo/softtype/APPO_AppForm_0.xml" containerPath="/"/>
+	<loadFile filename="ext/appo/softtype/APPO_AppForm_1.xml" containerPath="/"/>
+	<loadFile filename="ext/appo/softtype/APPO_BaseLine_0.xml" containerPath="/"/>
+	<loadFile filename="ext/appo/softtype/APPO_BaseLine_1.xml" containerPath="/"/>
+	<loadFile filename="ext/appo/softtype/APPO_ConfigurableLink_0.xml" containerPath="/"/>
+	<loadFile filename="ext/appo/softtype/APPO_ConfigurableLink_1.xml" containerPath="/"/>
+	<loadFile filename="ext/appo/softtype/APPO_DiscreteActionItem_0.xml" containerPath="/"/>
+	<loadFile filename="ext/appo/softtype/APPO_DiscreteActionItem_1.xml" containerPath="/"/>
+	<loadFile filename="ext/appo/softtype/APPO_Doc_0.xml" containerPath="/"/>
+	<loadFile filename="ext/appo/softtype/APPO_Doc_1.xml" containerPath="/"/>
+	<loadFile filename="ext/appo/softtype/APPO_Doc_2.xml" containerPath="/"/>
+	<loadFile filename="ext/appo/softtype/APPO_ECA_0.xml" containerPath="/"/>
+	<loadFile filename="ext/appo/softtype/APPO_ECA_1.xml" containerPath="/"/>
+	<loadFile filename="ext/appo/softtype/APPO_ECA_2.xml" containerPath="/"/>
+	<loadFile filename="ext/appo/softtype/APPO_ECN_0.xml" containerPath="/"/>
+	<loadFile filename="ext/appo/softtype/APPO_ECN_1.xml" containerPath="/"/>
+	<loadFile filename="ext/appo/softtype/APPO_ECN_2.xml" containerPath="/"/>
+	<loadFile filename="ext/appo/softtype/APPO_EPM_0.xml" containerPath="/"/>
+	<loadFile filename="ext/appo/softtype/APPO_Part_0.xml" containerPath="/"/>
+	<loadFile filename="ext/appo/softtype/APPO_Part_1.xml" containerPath="/"/>
+	<loadFile filename="ext/appo/softtype/APPO_Part_2.xml" containerPath="/"/>
+	<loadFile filename="ext/appo/softtype/APPO_PartUsageLink_0.xml" containerPath="/"/>
+	<loadFile filename="ext/appo/softtype/APPO_PartUsageLink_1.xml" containerPath="/"/>
+	<loadFile filename="ext/appo/softtype/APPO_PartUsageLink_2.xml" containerPath="/"/>
+	<loadFile filename="ext/appo/softtype/APPO_PlanActivity_0.xml" containerPath="/"/>
+
+</loadFileList>

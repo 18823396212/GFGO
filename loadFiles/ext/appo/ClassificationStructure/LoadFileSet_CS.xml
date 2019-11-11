@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE loadFileList SYSTEM "/wt/load/windchillLoad.dtd">
+
+<!--
+windchill wt.load.LoadFileSet -file loadFiles/ext/appo/ClassificationStructure/LoadFileSet_CS.xml -u wcadmin -p wcadmin -NOSERVERSTOP -UNATTENDED
+ -->
+<loadFileList>
+
+   <loadFile filename="ext/appo/ClassificationStructure/Classification_0.xml" containerPath="/"/>
+   <loadFile filename="ext/appo/ClassificationStructure/Classification_1.xml" containerPath="/"/>
+   <loadFile filename="ext/appo/ClassificationStructure/Classification_2.xml" containerPath="/"/>
+
+</loadFileList>

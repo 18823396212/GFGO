@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE OrganizationConfig SYSTEM "standardX26.dtd">
+
+<OrganizationConfig>
+    <TypeBasedRule>
+        <EngineRule isDefault="false" enabled="true">
+            <ruleName>APPO_ECN_RULE</ruleName>
+            <ruleSpecification>
+                <![CDATA[
+                    <AttributeValues objType="wt.change2.WTChangeOrder2">
+
+                        <!-- set the folder -->
+                        <AttrValue id="folder.id" algorithm="com.ptc.core.foundation.folder.server.impl.FolderPathAttributeAlgorithm">
+                            <Arg>/Default</Arg>
+                        </AttrValue>
+
+                        <!-- set the lifecycle -->
+                        <AttrValue id="lifeCycle.id"
+                                   algorithm="com.ptc.core.foundation.lifecycle.server.impl.LifeCycleTemplateAttributeAlgorithm">
+                            <!-- if (template.templated) -->
+                            <Value algorithm="wt.rule.algorithm.BooleanBranch">
+                                <!-- test this value -->
+                                <Attr id="template.templated"/>
+                                <!-- if true -->
+                                <Arg>APPO_ECNLC</Arg>
+                                <!-- if false -->
+                                <Arg>APPO_ECNLC</Arg>
+                            </Value>
+                        </AttrValue>
+
+                        <!-- set the team template -->
+                        <AttrValue id="teamTemplate.id" algorithm="com.ptc.core.foundation.team.server.impl.TeamTemplateAttributeAlgorithm">
+                            <Arg>Change Notice Team</Arg>
+                        </AttrValue>
+
+                        <!-- set the number to a generated number -->
+                        <AttrValue id="number" algorithm="com.ptc.windchill.enterprise.revisionControlled.server.impl.NumberGenerator">
+                            <!-- if (template.templated) -->
+                            <Value algorithm="wt.rule.algorithm.BooleanBranch">
+                                <!-- test this value -->
+                                <Attr id="template.templated"/>
+                                <!-- if true -->
+                                <Arg>{GEN:wt.enterprise.SequenceGenerator:WTCHANGEORDERID_seq:10:0}</Arg>
+                                <!-- if false -->
+                                <Arg>{GEN:wt.enterprise.SequenceGenerator:WTCHANGEORDERID_seq:5:0}</Arg>
+                            </Value>
+                        </AttrValue>
+
+                        <!--  set the version info to a generated version info -->
+                        <AttrValue id="MBA|versionInfo" algorithm="com.ptc.core.foundation.vc.server.impl.VersionInfoGenerator">
+                            <Arg>wt.series.HarvardSeries</Arg>
+                        </AttrValue>
+
+                        <!-- specify AttrConstraint tag -->
+                        <AttrConstraint id="lifeCycle.id" algorithm="com.ptc.core.rule.server.impl.GatherAttributeConstraints">
+                            <Value algorithm="com.ptc.core.rule.server.impl.GetServerAssignedConstraint"/>
+                            <Value algorithm="com.ptc.core.rule.server.impl.GetImmutableConstraint"/>
+                        </AttrConstraint>
+                        <AttrConstraint id="lifeCycle" algorithm="com.ptc.core.rule.server.impl.GatherAttributeConstraints">
+                            <Value algorithm="com.ptc.core.rule.server.impl.GetServerAssignedConstraint"/>
+                            <Value algorithm="com.ptc.core.rule.server.impl.GetImmutableConstraint"/>
+                        </AttrConstraint>
+                        <AttrConstraint id="folder.id" algorithm="com.ptc.core.rule.server.impl.GatherAttributeConstraints">
+                            <Value algorithm="com.ptc.core.rule.server.impl.GetServerAssignedConstraint"/>
+                            <Value algorithm="com.ptc.core.rule.server.impl.GetImmutableConstraint"/>
+                        </AttrConstraint>
+                        <AttrConstraint id="number" algorithm="com.ptc.core.rule.server.impl.GatherAttributeConstraints">
+                            <Value algorithm="com.ptc.core.rule.server.impl.GetServerAssignedConstraint"/>
+                            <Value algorithm="com.ptc.core.rule.server.impl.GetImmutableConstraint"/>
+                        </AttrConstraint>
+                        <AttrConstraint id="teamTemplate.id" algorithm="com.ptc.core.rule.server.impl.GatherAttributeConstraints">
+                            <Value algorithm="com.ptc.core.rule.server.impl.GetServerAssignedConstraint"/>
+                            <Value algorithm="com.ptc.core.rule.server.impl.GetImmutableConstraint"/>
+                        </AttrConstraint>
+                        <AttrConstraint id="teamTemplate" algorithm="com.ptc.core.rule.server.impl.GatherAttributeConstraints">
+                            <Value algorithm="com.ptc.core.rule.server.impl.GetServerAssignedConstraint"/>
+                            <Value algorithm="com.ptc.core.rule.server.impl.GetImmutableConstraint"/>
+                        </AttrConstraint>
+                        <AttrConstraint id="organization.id" algorithm="com.ptc.core.rule.server.impl.GatherAttributeConstraints">
+                            <Value algorithm="com.ptc.core.rule.server.impl.GetServerPreGeneratedValue">
+                                <Value algorithm="com.ptc.windchill.enterprise.org.server.impl.OwningOrgDefaultAlgorithm"/>
+                            </Value>
+                        </AttrConstraint>
+                    </AttributeValues>
+                ]]>
+            </ruleSpecification>
+            <ruleType type="INIT"/>
+        </EngineRule>
+        <logicalId>wt.change2.WTChangeOrder2</logicalId>
+    </TypeBasedRule>
+</OrganizationConfig>
