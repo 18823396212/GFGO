@@ -36,6 +36,7 @@ windchill wt.load.LoadFileSet -file loadFiles/ext/appo/LoadDataSet_APPO.xml -u w
     <loadFile filename="ext/appo/softtype/APPO_Part_0.xml" containerPath="/"/>
     <loadFile filename="ext/appo/softtype/APPO_Part_1.xml" containerPath="/"/>
     <loadFile filename="ext/appo/softtype/APPO_Part_2.xml" containerPath="/"/>
+    <loadFile filename="ext/appo/softtype/APPO_Part_3.xml" containerPath="/"/>
     <loadFile filename="ext/appo/softtype/APPO_PartUsageLink_0.xml" containerPath="/"/>
     <loadFile filename="ext/appo/softtype/APPO_PartUsageLink_1.xml" containerPath="/"/>
     <loadFile filename="ext/appo/softtype/APPO_PartUsageLink_2.xml" containerPath="/"/>
