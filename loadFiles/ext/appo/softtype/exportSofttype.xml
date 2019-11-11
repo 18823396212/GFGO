@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE loadFileList SYSTEM "/wt/load/windchillLoad.dtd">
+
+<!-- 
+windchill wt.load.LoadFileSet -file loadFiles/ext/appo/softtype/exportSofttype.xml -u orgadmin -p 1 -NOSERVERSTOP -UNATTENDED
+ -->
+<loadFileList>
+
+	<loadFile filename="ext/appo/softtype/exportActionItem.xml" containerPath="/"></loadFile>
+	<loadFile filename="ext/appo/softtype/exportBaseLine.xml" containerPath="/"></loadFile>
+	<loadFile filename="ext/appo/softtype/exportDoc.xml" containerPath="/"></loadFile>
+	<loadFile filename="ext/appo/softtype/exportECA.xml" containerPath="/"></loadFile>
+	<loadFile filename="ext/appo/softtype/exportECN.xml" containerPath="/"></loadFile>
+	<loadFile filename="ext/appo/softtype/exportEnum.xml" containerPath="/"></loadFile>
+	<loadFile filename="ext/appo/softtype/exportEPM.xml" containerPath="/"></loadFile>
+	<loadFile filename="ext/appo/softtype/exportForm.xml" containerPath="/"></loadFile>
+	<loadFile filename="ext/appo/softtype/exportLink.xml" containerPath="/"></loadFile>
+	<loadFile filename="ext/appo/softtype/exportPart.xml" containerPath="/"></loadFile>
+	<loadFile filename="ext/appo/softtype/exportPlanActivity.xml" containerPath="/"></loadFile>
+
+</loadFileList>

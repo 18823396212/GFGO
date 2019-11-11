@@ -2,17 +2,17 @@
 <!DOCTYPE NmLoader SYSTEM "standardX20.dtd">
 
 <!-- 
-windchill wt.load.LoadFromFile -d loadFiles/ext/gfgo/softtype/exportForm.xml -u wcadmin -p wcadmin -CONT_PATH /
+windchill wt.load.LoadFromFile -d loadFiles/ext/appo/softtype/exportPlanActivity.xml -u wcadmin -p wcadmin -CONT_PATH /
 -->
 
 <NmLoader>
 
 	<csvExportDefinition
 		handler="com.ptc.core.lwc.server.TypeDefinitionExporter.beginExportDefinition">
-		<csvtoLocation>/ptc/Windchill_11.0/Windchill/loadFiles/ext/gfgo/softtype</csvtoLocation>
-		<csvtoFileName>GFGO_AppForm.xml</csvtoFileName>
+		<csvtoLocation>/ptc/Windchill_11.0/Windchill/loadFiles/ext/appo/softtype</csvtoLocation>
+		<csvtoFileName>APPO_PlanActivity.xml</csvtoFileName>
 		<csvexportDefClass>com.ptc.core.lwc.server.LWCTypeDefinition</csvexportDefClass>
-		<csvexportNames>wt.maturity.PromotionNotice</csvexportNames>
+		<csvexportNames>com.ptc.projectmanagement.plan.PlanActivity</csvexportNames>
 		<csvmode>0</csvmode>
 		<csvExportAncestorTypes>true</csvExportAncestorTypes>
 	</csvExportDefinition>
