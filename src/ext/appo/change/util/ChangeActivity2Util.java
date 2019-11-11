@@ -131,17 +131,18 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
                     LOGGER.info(">>>>>>>>>>createChangeActivity2.vector:" + vector);
                     ModifyUtils.addAffectedActivityData(eca, vector);
 
-                    //修订受影响对象，并添加到产生对象列表
-                    WTCollection collection = ModifyUtils.revise(vector, reviseMap);
-                    LOGGER.info(">>>>>>>>>>createChangeActivity2.collection:" + collection);
-                    ModifyUtils.AddChangeRecord2(eca, collection);
-
-                    // 部件‘类型’选择‘替换’时ECA状态设置为‘已发布’,选择‘升级’时ECA状态设置为‘开启’
                     String attributeValue = attributesMap.get(CHANGETYPE_COMPID);
+                    // 部件「类型」选择「替换」时ECA状态设置为「已解决」不起流程、不升版、不添加到产生对象
                     if (PIStringUtils.isNotNull(attributeValue) && attributeValue.contains(VALUE_1)) {
                         eca = (WTChangeActivity2) PICoreHelper.service.setLifeCycleState(eca, RESOLVED);
-                    } else if (PIStringUtils.isNotNull(attributeValue) && attributeValue.contains(VALUE_4)) {
+                    }
+                    //部件「类型」选择「升级」时ECA状态设置为「开启」启动子流程、修订受影响对象，并添加到产生对象列表
+                    else if (PIStringUtils.isNotNull(attributeValue) && attributeValue.contains(VALUE_4)) {
                         eca = (WTChangeActivity2) PICoreHelper.service.setLifeCycleState(eca, OPEN);
+                        //修订受影响对象，并添加到产生对象列表
+                        WTCollection collection = ModifyUtils.revise(vector, reviseMap);
+                        LOGGER.info(">>>>>>>>>>createChangeActivity2.collection:" + collection);
+                        ModifyUtils.AddChangeRecord2(eca, collection);
                     }
 
                     // 期望完成日期
