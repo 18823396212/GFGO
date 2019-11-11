@@ -169,6 +169,8 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
                     }
                     eca = (WTChangeActivity2) PersistenceHelper.manager.refresh(eca);
                     ACTIVITY2S.add(eca);
+
+                    updateAttributes(entryMap, changeObjectType);
                 }
             }
         } catch (Exception e) {
@@ -177,17 +179,52 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
     }
 
     /**
+     * 设置文档、EPM文档「变更对象类型」
+     * @param entryMap
+     * @param changeObjectType
+     * @throws WTException
+     */
+    private void updateAttributes(Map.Entry<Persistable, Collection<Persistable>> entryMap, String changeObjectType) throws WTException {
+        Persistable key = entryMap.getKey();
+        //设置部件关联文档、EPM文档的「变更对象类型」与部件相同
+        if (key instanceof WTPart) {
+            Collection<Persistable> collection = entryMap.getValue();
+            for (Persistable persistable : collection) {
+                PIAttributeHelper.service.forceUpdateSoftAttribute(persistable, ATTRIBUTE_7, changeObjectType);
+            }
+        }
+        //游离WTDocument、EPMDocument(图纸单独走变更的场景)设置「变更对象类型」为「图纸变更」
+        else {
+            PIAttributeHelper.service.forceUpdateSoftAttribute(key, ATTRIBUTE_7, VALUE_6);
+        }
+    }
+
+    /**
      * 更新受影响对象的IBA属性
      * @throws WTException
      */
     private void updateAttributes() throws WTException {
+        String changeItemType = ModifyUtils.getValue(ORDER2, ATTRIBUTE_8);//变更类型
         for (Map.Entry<Persistable, Map<String, String>> entryMap : PAGEDATAMAP.entrySet()) {
             Map<String, Object> attributesMap = new HashMap<>();
             for (Map.Entry<String, String> ibaEntryMap : entryMap.getValue().entrySet()) {
+                String key = ibaEntryMap.getKey();
+                String value = ibaEntryMap.getValue();
+                LOGGER.info(">>>>>>>>>>updateAttributes.key:" + key);
+                LOGGER.info(">>>>>>>>>>updateAttributes.value:" + value);
+
                 // 过滤「受影响对象列表备注」
-                if (ibaEntryMap.getKey().equals(AADDESCRIPTION_COMPID)) continue;
-                attributesMap.put(ibaEntryMap.getKey(), ibaEntryMap.getValue());
+                if (AADDESCRIPTION_COMPID.equals(key)) continue;
+
+                //变更对象类型
+                if (CHANGOBJECTETYPE_COMPID.equals(key))
+                    value = value.replaceFirst("BOM变更;", "").replaceFirst("图纸变更;", "");
+
+                attributesMap.put(ibaEntryMap.getKey(), value);
             }
+            attributesMap.put(ATTRIBUTE_8, changeItemType);//同步ECN属性「变更类型」到受影响对象
+            LOGGER.info(">>>>>>>>>>updateAttributes.attributesMap:" + attributesMap);
+
             PIAttributeHelper.service.forceUpdateSoftAttributes(entryMap.getKey(), attributesMap);
         }
     }

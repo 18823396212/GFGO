@@ -495,7 +495,12 @@ public class StandardModifyService extends StandardManager implements ModifyServ
             QueryResult result = PersistenceHelper.manager.find(qs);
             while (result.hasMoreElements()) {
                 CorrelationObjectLink link = (CorrelationObjectLink) result.nextElement();
-                persistables.add(link.getPersistable());
+                Persistable persistable = link.getPersistable();
+                if (persistable instanceof Iterated) {
+                    persistables.add(getLatestVersion((Iterated) persistable));
+                } else {
+                    persistables.add(persistable);
+                }
             }
         }
         return persistables;
@@ -523,7 +528,12 @@ public class StandardModifyService extends StandardManager implements ModifyServ
             QueryResult result = PersistenceHelper.manager.find(qs);
             while (result.hasMoreElements()) {
                 CorrelationObjectLink link = (CorrelationObjectLink) result.nextElement();
-                persistables.add(link.getPersistable());
+                Persistable persistable = link.getPersistable();
+                if (persistable instanceof Iterated) {
+                    persistables.add(getLatestVersion((Iterated) persistable));
+                } else {
+                    persistables.add(persistable);
+                }
             }
         }
         return persistables;

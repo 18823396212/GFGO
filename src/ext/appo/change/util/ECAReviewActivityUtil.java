@@ -367,6 +367,8 @@ public class ECAReviewActivityUtil extends ReviewActivityUtil {
                     if (changeable2 instanceof WTPart) {
                         pbo = (WTPart) changeable2;
                         break;
+                    } else {
+                        pbo = (WTObject) changeable2;
                     }
                 }
             }

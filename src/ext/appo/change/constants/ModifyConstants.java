@@ -12,6 +12,8 @@ public interface ModifyConstants {
     String ATTRIBUTE_4 = "isReject";//是否驳回
     String ATTRIBUTE_5 = "referenceDesignatorRange";//位号
     String ATTRIBUTE_6 = "ActionName";//操作名称
+    String ATTRIBUTE_7 = "ChangeObjectType";//变更对象类型
+    String ATTRIBUTE_8 = "ChangeItemType";//变更类型
 
     //类型定义
     String TYPE_1 = "com.pisx.BOMChangeActivity2";//BOM变更ECA
