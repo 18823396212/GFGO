@@ -240,6 +240,43 @@ public class StandardModifyService extends StandardManager implements ModifyServ
     }
 
     /**
+     * 更新ECN与相关对象的Link
+     * @param link
+     * @param ecaIdentifier
+     * @param aadDescription
+     * @param routing
+     * @return
+     * @throws WTException
+     */
+    @Override
+    public CorrelationObjectLink updateCorrelationObjectLink(CorrelationObjectLink link, String ecaIdentifier, String aadDescription, String routing) throws WTException {
+        try {
+            if (link != null) {
+                WTChangeOrder2 changeOrder2 = link.getChangeOrder2();
+                LOGGER.info("=====updateCorrelationObjectLink.changeOrder2: " + changeOrder2);
+                changeOrder2 = (WTChangeOrder2) getLatestVersion(changeOrder2);
+                LOGGER.info("=====updateCorrelationObjectLink.changeOrder2: " + changeOrder2);
+                link.setChangeOrder2(changeOrder2);
+
+                Persistable persistable = link.getPersistable();
+                LOGGER.info("=====updateCorrelationObjectLink.persistable: " + persistable);
+                if (!(persistable instanceof TransactionTask)) persistable = getLatestVersion((Iterated) persistable);
+                LOGGER.info("=====updateCorrelationObjectLink.persistable: " + persistable);
+                link.setPersistable(persistable);
+
+                link.setEcaIdentifier(ecaIdentifier);
+                link.setAadDescription(aadDescription);
+                link.setRouting(routing);
+                PersistenceServerHelper.manager.update(link);
+                link = (CorrelationObjectLink) PersistenceHelper.manager.refresh(link);
+            }
+        } catch (Exception e) {
+            throw new WTException(e.getStackTrace());
+        }
+        return link;
+    }
+
+    /**
      * 查询ECN与相关对象的Link
      * @param changeOrder2
      * @param persistable

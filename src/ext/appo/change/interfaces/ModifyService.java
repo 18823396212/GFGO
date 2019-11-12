@@ -103,6 +103,17 @@ public interface ModifyService {
     CorrelationObjectLink updateCorrelationObjectLink(CorrelationObjectLink link, String aadDescription, String routing) throws WTException;
 
     /**
+     * 更新ECN与相关对象的Link
+     * @param link
+     * @param ecaIdentifier
+     * @param aadDescription
+     * @param routing
+     * @return
+     * @throws WTException
+     */
+    CorrelationObjectLink updateCorrelationObjectLink(CorrelationObjectLink link, String ecaIdentifier, String aadDescription, String routing) throws WTException;
+
+    /**
      * 查询ECN与相关对象的Link
      * @param changeOrder2
      * @param persistable

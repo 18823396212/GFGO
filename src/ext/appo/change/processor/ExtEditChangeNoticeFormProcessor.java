@@ -16,17 +16,26 @@ import ext.appo.ecn.constants.ChangeConstants;
 import ext.lang.PIStringUtils;
 import ext.pi.core.PIAttributeHelper;
 import ext.pi.core.PICoreHelper;
+import ext.pi.core.PIWorkflowHelper;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import wt.change2.WTChangeOrder2;
 import wt.fc.Persistable;
+import wt.fc.QueryResult;
 import wt.fc.ReferenceFactory;
 import wt.log4j.LogR;
+import wt.org.WTPrincipalReference;
 import wt.part.WTPart;
 import wt.session.SessionContext;
 import wt.session.SessionHelper;
 import wt.util.WTException;
+import wt.workflow.engine.WfEngineHelper;
+import wt.workflow.engine.WfProcess;
+import wt.workflow.engine.WfState;
+import wt.workflow.work.WfAssignedActivity;
+import wt.workflow.work.WorkItem;
+import wt.workflow.work.WorkflowHelper;
 
 import java.util.*;
 
@@ -116,6 +125,9 @@ public class ExtEditChangeNoticeFormProcessor extends EditChangeNoticeFormProces
 
                     //新增ChangeOrder2与受影响对象的关系
                     linkAffectedItems(changeOrder2, affectedObjectUtil.PAGEDATAMAP, activity2Util.BRANCHIDMAP);
+
+                    //自动完成「修改变更申请」
+                    completeWorkItem(changeOrder2);
                 }
             }
 
@@ -166,8 +178,17 @@ public class ExtEditChangeNoticeFormProcessor extends EditChangeNoticeFormProces
                 LOGGER.info(">>>>>>>>>>linkAffectedItems.routing: " + routing);
                 ModifyHelper.service.newCorrelationObjectLink(changeOrder2, persistable, LINKTYPE_1, ecnVid, branchId, ecaIdentifier, aadDescription, routing);
             } else {
-                //ModifyHelper.service.updateCorrelationObjectLink(ecnVid, branchId, LINKTYPE_1);
-                ModifyHelper.service.updateCorrelationObjectLink(link, aadDescription, link.getRouting());
+                String ecaIdentifier = link.getEcaIdentifier();
+                String routing = link.getRouting();
+                if (StringUtils.isNotEmpty(ecaIdentifier) && StringUtils.isNotEmpty(routing)) {
+                    ModifyHelper.service.updateCorrelationObjectLink(link, aadDescription, routing);
+                } else {
+                    ecaIdentifier = StringUtils.isEmpty(ecaIdentifier) ? branchMap.get(branchId) : ecaIdentifier;//获取所在ECA
+                    LOGGER.info(">>>>>>>>>>linkAffectedItems.ecaIdentifier: " + ecaIdentifier);
+                    routing = StringUtils.isEmpty(routing) ? StringUtils.isEmpty(ecaIdentifier) ? "" : ROUTING_1 : routing;
+                    LOGGER.info(">>>>>>>>>>linkAffectedItems.routing: " + routing);
+                    ModifyHelper.service.updateCorrelationObjectLink(link, ecaIdentifier, aadDescription, routing);
+                }
             }
         }
     }
@@ -275,6 +296,36 @@ public class ExtEditChangeNoticeFormProcessor extends EditChangeNoticeFormProces
                     }
                 } else if (value != null) {
                     PIAttributeHelper.service.forceUpdateSoftAttribute(changeOrder2, ATTRIBUTE_3, value);//所属项目
+                }
+            }
+        }
+    }
+
+    /**
+     * 自动完成「修改变更申请」
+     * @param changeOrder2
+     * @throws WTException
+     */
+    private void completeWorkItem(WTChangeOrder2 changeOrder2) throws WTException {
+        WTPrincipalReference reference = SessionHelper.manager.getPrincipalReference();
+        Vector vector = new Vector();
+        vector.add("提交");
+
+        QueryResult result = WfEngineHelper.service.getAssociatedProcesses(changeOrder2, WfState.OPEN_RUNNING, null);
+        LOGGER.info(">>>>>>>>>>completeWorkItem.result: " + result.size());
+        while (result.hasMoreElements()) {
+            WfProcess process = (WfProcess) result.nextElement();
+            LOGGER.info(">>>>>>>>>>completeWorkItem.process:" + process);
+
+            QueryResult workItems = PIWorkflowHelper.service.findWorkItems(process, false);
+            LOGGER.info(">>>>>>>>>>completeWorkItem.workItems:" + workItems.size());
+            while (workItems.hasMoreElements()) {
+                WorkItem workItem = (WorkItem) workItems.nextElement();
+                WfAssignedActivity activity = (WfAssignedActivity) workItem.getSource().getObject();
+                String name = activity.getName();
+                LOGGER.info(">>>>>>>>>>completeWorkItem.name:" + name);
+                if (name.contains(CONSTANTS_2)) {
+                    WorkflowHelper.service.workComplete(workItem, reference, vector);
                 }
             }
         }

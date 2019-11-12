@@ -46,6 +46,7 @@ public interface ModifyConstants {
 
     //常量
     String CONSTANTS_1 = "cacheButton";//缓存按钮
+    String CONSTANTS_2 = "修改变更申请";//工作流节点名称
 
     /**
      * ECN与受影响对象链接

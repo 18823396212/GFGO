@@ -1020,11 +1020,15 @@ public class ModifyUtils implements ChangeConstants {
      * @return
      * @throws WTException
      */
-    public static Persistable getPersistable(String id) throws WTException {
+    public static Persistable getPersistable(String id) {
         if (StringUtils.isNotEmpty(id)) {
-            ReferenceFactory factory = new ReferenceFactory();
-            WTReference reference = factory.getReference(id);
-            if (reference != null) return reference.getObject();
+            try {
+                ReferenceFactory factory = new ReferenceFactory();
+                WTReference reference = factory.getReference(id);
+                if (reference != null) return reference.getObject();
+            } catch (WTException e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }
