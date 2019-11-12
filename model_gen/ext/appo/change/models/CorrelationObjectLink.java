@@ -52,7 +52,7 @@ import wt.workflow.engine.WfProcess;
                 )
         },
         tableProperties = @TableProperties(
-                tableName = "GFGO_CORRELATIONOBJECTLINK"
+                tableName = "APPO_CORRELATIONOBJECTLINK"
         )
 )
 public class CorrelationObjectLink extends _CorrelationObjectLink {

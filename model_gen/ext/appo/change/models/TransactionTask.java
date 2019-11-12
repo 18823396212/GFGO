@@ -36,7 +36,7 @@ import wt.util.WTException;
                 )
         },
         tableProperties = @TableProperties(
-                tableName = "GFGO_TRANSACTIONTASK"
+                tableName = "APPO_TRANSACTIONTASK"
         )
 )
 public class TransactionTask extends _TransactionTask {

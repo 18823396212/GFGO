@@ -1026,8 +1026,8 @@ public class ModifyUtils implements ChangeConstants {
                 ReferenceFactory factory = new ReferenceFactory();
                 WTReference reference = factory.getReference(id);
                 if (reference != null) return reference.getObject();
-            } catch (WTException e) {
-                e.printStackTrace();
+            } catch (WTException ignored) {
+
             }
         }
         return null;
