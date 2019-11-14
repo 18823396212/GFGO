@@ -1098,4 +1098,40 @@ public class ModifyUtils implements ChangeConstants {
         LifeCycleHelper.service.setLifeCycleState(managed, state);
     }
 
+    /**
+     * 获取需要删除修订版本的对象
+     * @param activity2
+     * @return
+     * @throws WTException
+     */
+    public static Collection<Persistable> getRollbackObject(WTChangeActivity2 activity2) throws WTException {
+        Collection<Persistable> rollbacks = new HashSet<>();
+
+        Collection<Changeable2> collection = getChangeablesAfter(activity2);
+        LOGGER.info("=====getRollbackObject.collection: " + collection);
+        for (Changeable2 changeable2 : collection) {
+            String number = getNumber(changeable2);
+            LOGGER.info("=====getRollbackObject.number: " + number);
+            if (StringUtils.isNotEmpty(number)) {
+                LOGGER.info("=====getRollbackObject.changeable2: " + changeable2);
+                if (changeable2 instanceof EPMDocument) {
+                    EPMDocument document = PIEpmHelper.service.findEPMDocument(number);
+                    LOGGER.info("=====getRollbackObject.document: " + document);
+                    if (document != null) rollbacks.add(document);
+                } else if (changeable2 instanceof WTDocument) {
+                    WTDocument document = PIDocumentHelper.service.findWTDocument(number);
+                    LOGGER.info("=====getRollbackObject.document: " + document);
+                    if (document != null) rollbacks.add(document);
+                } else if (changeable2 instanceof WTPart) {
+                    WTPart part = (WTPart) changeable2;
+                    part = PIPartHelper.service.findWTPart(number, part.getViewName());
+                    LOGGER.info("=====getRollbackObject.part: " + part);
+                    if (part != null) rollbacks.add(part);
+                }
+            }
+        }
+
+        return rollbacks;
+    }
+
 }

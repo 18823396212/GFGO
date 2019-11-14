@@ -2,7 +2,7 @@
 <!DOCTYPE loadFileList SYSTEM "/wt/load/windchillLoad.dtd">
 
 <!-- 
-windchill wt.load.LoadFileSet -file loadFiles/ext/appo/workflow/LoadDataSet_workflow.xml -u wcadmin -p wcadmin -NOSERVERSTOP -UNATTENDED
+windchill wt.load.LoadFileSet -file loadFiles/ext/appo/workflow/LoadFileSet_WF.xml -u wcadmin -p wcadmin -NOSERVERSTOP -UNATTENDED
  -->
 <loadFileList>
 	

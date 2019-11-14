@@ -1,5 +1,6 @@
 package ext.appo.change.workflow;
 
+import com.ptc.windchill.pdmlink.change.server.impl.WorkflowProcessHelper;
 import ext.appo.change.ModifyHelper;
 import ext.appo.change.constants.ModifyConstants;
 import ext.appo.change.models.CorrelationObjectLink;
@@ -27,8 +28,6 @@ import wt.project.Role;
 import wt.util.WTException;
 import wt.workflow.engine.WfEngineHelper;
 import wt.workflow.engine.WfProcess;
-import wt.workflow.work.WfAssignedActivity;
-import wt.workflow.work.WorkItem;
 
 import java.util.*;
 
@@ -46,6 +45,83 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
         WORKITEMNAME.add("审核");
         WORKITEMNAME.add("会签");
         WORKITEMNAME.add("批准");
+    }
+
+    /**
+     * 同步ECA状态-已解决表达式逻辑
+     * @param pbo
+     * @param self
+     * @return
+     * @throws WTException
+     */
+    public String syncExpression(WTObject pbo, ObjectReference self) throws WTException {
+        String routing = "OK";
+
+        if (pbo instanceof WTChangeOrder2) {
+            //所有ECA都是已解决状态
+            if (WorkflowProcessHelper.isRelatedChildrenInStates(pbo, new String[]{RESOLVED})) {
+                Set<CorrelationObjectLink> links = ModifyHelper.service.queryCorrelationObjectLinks((WTChangeOrder2) pbo, LINKTYPE_1);
+                LOGGER.info("=====syncExpression.links: " + links);
+                for (CorrelationObjectLink link : links) {
+                    //存在路由不是「已完成」继续等待
+                    if (!ROUTING_3.equals(link.getRouting())) {
+                        routing = "WAIT";
+                        break;
+                    }
+                }
+            }
+            //存在ECA不是「已解决」状态，继续等待
+            else {
+                routing = "WAIT";
+            }
+        }
+
+        return routing;
+    }
+
+    /**
+     * 2.2.1 若已经产生“修订对象”，且“修订对象”的状态为“正在工作”或“重新工作”才可以删除“受影响对象”，且受影响对象需要恢复到变更前的版本，
+     * 2.2.2 删除的“受影响对象”关联的ECA及ECN中的“受影响的对象”“产生的对象”列表需要同步处理。
+     * 2.2.3 删除的“受影响对象”的收集图纸对象需要同步处理。
+     * 2.2.4 若ECA中无受影响的对象，需要删除当前的ECA对象及流程
+     * @param pbo
+     * @param self
+     * @throws WTException
+     */
+    public void rejectChangeRequest(WTObject pbo, ObjectReference self) throws WTException {
+        if (pbo instanceof WTChangeOrder2) {
+            //获取ECN关联的ECA
+            Collection<WTChangeActivity2> activity2s = ModifyUtils.getChangeActivities((WTChangeOrder2) pbo);
+            for (WTChangeActivity2 activity2 : activity2s) {
+                //判断ECA的状态是否为「已取消」
+                if (CANCELLED.equals(activity2.getState().toString())) {
+                    //更新Link的路由为「已驳回」并清空ECA的Id
+                    Set<CorrelationObjectLink> links = ModifyHelper.service.queryCorrelationObjectLinks(activity2, LINKTYPE_1);
+                    for (CorrelationObjectLink link : links) {
+                        ModifyHelper.service.updateCorrelationObjectLink(link, "", link.getAadDescription(), ROUTING_2);
+                    }
+                    //获取所有需要回退版本的对象
+                    Collection<Persistable> collection = ModifyUtils.getRollbackObject(activity2);//获取ECA关联的产生对象
+                    LOGGER.info("=====syncExpression.activity2: " + activity2.getNumber() + " >>>>>collection: " + collection);
+                    //删除修订版本
+                    PersistenceServerHelper.manager.remove(new WTHashSet(collection));
+                    //移除受影响对象
+                    ModifyUtils.removeAffectedActivityData(activity2);
+                    //移除产生对象
+                    ModifyUtils.removeChangeRecord(activity2);
+                    //删除进程
+                    QueryResult result = WfEngineHelper.service.getAssociatedProcesses(activity2, null, null);
+                    LOGGER.info(">>>>>>>>>>syncExpression.activity2:" + activity2.getNumber() + " >>>>>result: " + result.size());
+                    while (result.hasMoreElements()) {
+                        WfProcess process = (WfProcess) result.nextElement();
+                        LOGGER.info(">>>>>>>>>>syncExpression.process:" + process);
+                        PersistenceServerHelper.manager.remove(process);
+                    }
+                    //删除ECA
+                    PersistenceServerHelper.manager.remove(activity2);
+                }
+            }
+        }
     }
 
     /**

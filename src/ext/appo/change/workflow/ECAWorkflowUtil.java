@@ -2,9 +2,7 @@ package ext.appo.change.workflow;
 
 import com.lowagie.text.DocumentException;
 import com.ptc.windchill.enterprise.team.server.TeamCCHelper;
-import ext.appo.change.ModifyHelper;
 import ext.appo.change.constants.ModifyConstants;
-import ext.appo.change.models.CorrelationObjectLink;
 import ext.appo.change.util.ModifyUtils;
 import ext.appo.ecn.common.util.ChangePartQueryUtils;
 import ext.appo.ecn.constants.ChangeConstants;
@@ -30,10 +28,12 @@ import wt.change2.Changeable2;
 import wt.change2.WTChangeActivity2;
 import wt.change2.WTChangeOrder2;
 import wt.doc.WTDocument;
-import wt.fc.*;
+import wt.fc.ObjectReference;
+import wt.fc.Persistable;
+import wt.fc.QueryResult;
+import wt.fc.WTObject;
 import wt.fc.collections.WTArrayList;
 import wt.fc.collections.WTCollection;
-import wt.fc.collections.WTHashSet;
 import wt.fc.collections.WTList;
 import wt.inf.container.WTContainer;
 import wt.inf.team.ContainerTeam;
@@ -922,37 +922,6 @@ public class ECAWorkflowUtil implements ChangeConstants, ModifyConstants {
             }
         }
         return buffer.toString();
-    }
-
-    /**
-     * 2.2.1 若已经产生“修订对象”，且“修订对象”的状态为“正在工作”或“重新工作”才可以删除“受影响对象”，且受影响对象需要恢复到变更前的版本，
-     * 2.2.2 删除的“受影响对象”关联的ECA及ECN中的“受影响的对象”“产生的对象”列表需要同步处理。
-     * 2.2.3 删除的“受影响对象”的收集图纸对象需要同步处理。
-     * 2.2.4 若ECA中无受影响的对象，需要删除当前的ECA对象及流程
-     * @param pbo
-     * @param self
-     * @throws WTException
-     */
-    public void rejectChangeRequest(WTObject pbo, ObjectReference self) throws WTException {
-        if (pbo instanceof WTChangeActivity2) {
-            WTChangeActivity2 activity2 = (WTChangeActivity2) pbo;
-            //更新Link的路由为「已驳回」
-            Set<CorrelationObjectLink> links = ModifyHelper.service.queryCorrelationObjectLinks(activity2, LINKTYPE_1);
-            for (CorrelationObjectLink link : links) {
-                ModifyHelper.service.updateCorrelationObjectLink(link, link.getAadDescription(), ROUTING_2);
-            }
-            //获取所有需要回退版本的对象
-            Collection<Changeable2> collection = ModifyUtils.getChangeablesAfter(activity2);//获取ECA关联的产生对象
-            LOGGER.info("=====rejectChangeRequest.activity2: " + activity2.getNumber() + " >>>>>collection: " + collection);
-            //移除受影响对象
-            ModifyUtils.removeAffectedActivityData(activity2);
-            //移除产生对象
-            ModifyUtils.removeChangeRecord(activity2);
-            //删除ECA-如果在流程中无法删除，则在编辑点完成或暂存时删除（考虑流程进程是否要删除）
-            PersistenceServerHelper.manager.remove(activity2);
-            //删除修订版本
-            PersistenceServerHelper.manager.remove(new WTHashSet(collection));
-        }
     }
 
     /**
