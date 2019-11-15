@@ -88,9 +88,11 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
                     String branchId = String.valueOf(PICoreHelper.service.getBranchId(changeable2));
                     LOGGER.info(">>>>>>>>>>createChangeActivity2.branchId:" + branchId);
                     CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, branchId, LINKTYPE_1);
-                    String routing = link.getRouting();
-                    LOGGER.info(">>>>>>>>>>createChangeActivity2.routing:" + routing);
-                    if (ROUTING_1.equals(routing) || ROUTING_3.equals(routing)) continue;//子流程状态为已创建、已完成跳过以下逻辑
+                    if (link != null) {
+                        String routing = link.getRouting();
+                        LOGGER.info(">>>>>>>>>>createChangeActivity2.routing:" + routing);
+                        if (ROUTING_1.equals(routing) || ROUTING_3.equals(routing)) continue;//子流程状态为已创建、已完成跳过以下逻辑
+                    }
 
                     // 获取用户针对每一列输入的数据
                     Map<String, String> attributesMap = PAGEDATAMAP.get(entryMap.getKey());

@@ -449,7 +449,7 @@ public class ModifyUtils implements ChangeConstants {
             // 设置所在库
             changeActivity.setContainerReference(changeNotice.getContainerReference());
             // 设置文件夹
-            FolderHelper.assignLocation(changeActivity, changeNotice.getFolderingInfo().getFolder());
+            FolderHelper.assignLocation(changeActivity, FolderHelper.service.getFolder(changeNotice));
             // 保存对象
             changeActivity = (WTChangeActivity2) ChangeHelper2.service.saveChangeActivity(changeNotice, changeActivity);
             // 工作负责人
