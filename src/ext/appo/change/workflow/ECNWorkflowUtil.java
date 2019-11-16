@@ -4,6 +4,7 @@ import com.ptc.windchill.pdmlink.change.server.impl.WorkflowProcessHelper;
 import ext.appo.change.ModifyHelper;
 import ext.appo.change.constants.ModifyConstants;
 import ext.appo.change.models.CorrelationObjectLink;
+import ext.appo.change.models.TransactionTask;
 import ext.appo.change.util.ModifyUtils;
 import ext.appo.ecn.constants.ChangeConstants;
 import ext.lang.PIStringUtils;
@@ -20,12 +21,13 @@ import wt.epm.EPMDocument;
 import wt.fc.*;
 import wt.fc.collections.WTCollection;
 import wt.fc.collections.WTHashSet;
-import wt.fc.collections.WTSet;
 import wt.log4j.LogR;
 import wt.part.PartDocHelper;
 import wt.part.WTPart;
+import wt.pom.Transaction;
 import wt.project.Role;
 import wt.sandbox.SandboxHelper;
+import wt.session.SessionServerHelper;
 import wt.util.WTException;
 import wt.workflow.engine.WfEngineHelper;
 import wt.workflow.engine.WfProcess;
@@ -73,7 +75,6 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
             }
             //存在ECA不是「已解决」状态，继续等待
             else {
-                rejectChangeRequest(pbo, self);
                 routing = "WAIT";
             }
         }
@@ -92,36 +93,56 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
      */
     public void rejectChangeRequest(WTObject pbo, ObjectReference self) throws Exception {
         if (pbo instanceof WTChangeOrder2) {
-            //获取ECN关联的ECA
-            Collection<WTChangeActivity2> activity2s = ModifyUtils.getChangeActivities((WTChangeOrder2) pbo);
-            for (WTChangeActivity2 activity2 : activity2s) {
-                //判断ECA的状态是否为「已取消」
-                if (CANCELLED.equals(activity2.getState().toString())) {
-                    //更新Link的路由为「已驳回」并清空ECA的Id
-                    Set<CorrelationObjectLink> links = ModifyHelper.service.queryCorrelationObjectLinks(activity2, LINKTYPE_1);
-                    for (CorrelationObjectLink link : links) {
-                        ModifyHelper.service.updateCorrelationObjectLink(link, "", link.getAadDescription(), ROUTING_2);
+            boolean flag = SessionServerHelper.manager.setAccessEnforced(false);
+            Transaction tx = null;
+            try {
+                tx = new Transaction();
+                tx.start();
+
+                //获取ECN关联的ECA
+                Collection<WTChangeActivity2> activity2s = ModifyUtils.getChangeActivities((WTChangeOrder2) pbo);
+                for (WTChangeActivity2 activity2 : activity2s) {
+                    //判断ECA的状态是否为「已取消」
+                    if (CANCELLED.equals(activity2.getState().toString())) {
+                        //更新Link的路由为「已驳回」并清空ECA的Id
+                        if (PICoreHelper.service.isTypeOrSubType(activity2, TYPE_3)) {
+                            TransactionTask task = ModifyHelper.service.queryTransactionTask((WTChangeOrder2) pbo, activity2, "");
+                            ModifyHelper.service.updateTransactionTask(task, "");
+                        } else {
+                            Set<CorrelationObjectLink> links = ModifyHelper.service.queryCorrelationObjectLinks(activity2, LINKTYPE_1);
+                            for (CorrelationObjectLink link : links) {
+                                ModifyHelper.service.updateCorrelationObjectLink(link, "", link.getAadDescription(), ROUTING_2);
+                            }
+                        }
+                        //获取所有需要回退版本的对象
+                        Collection<Persistable> collection = ModifyUtils.getRollbackObject(activity2);//获取ECA关联的产生对象
+                        LOGGER.info("=====syncExpression.activity2: " + activity2.getNumber() + " >>>>>collection: " + collection);
+                        //移除受影响对象
+                        ModifyUtils.removeAffectedActivityData(activity2);
+                        //移除产生对象
+                        ModifyUtils.removeChangeRecord(activity2);
+                        //删除进程
+                        QueryResult result = WfEngineHelper.service.getAssociatedProcesses(activity2, null, null);
+                        LOGGER.info(">>>>>>>>>>syncExpression.activity2:" + activity2.getNumber() + " >>>>>result: " + result.size());
+                        while (result.hasMoreElements()) {
+                            WfProcess process = (WfProcess) result.nextElement();
+                            LOGGER.info(">>>>>>>>>>syncExpression.process:" + process);
+                            PersistenceServerHelper.manager.remove(process);
+                        }
+                        //删除ECA
+                        PersistenceServerHelper.manager.remove(activity2);
+                        //删除修订版本
+                        SandboxHelper.service.removeObjects(new WTHashSet(collection));
                     }
-                    //获取所有需要回退版本的对象
-                    Collection<Persistable> collection = ModifyUtils.getRollbackObject(activity2);//获取ECA关联的产生对象
-                    LOGGER.info("=====syncExpression.activity2: " + activity2.getNumber() + " >>>>>collection: " + collection);
-                    //移除受影响对象
-                    ModifyUtils.removeAffectedActivityData(activity2);
-                    //移除产生对象
-                    ModifyUtils.removeChangeRecord(activity2);
-                    //删除进程
-                    QueryResult result = WfEngineHelper.service.getAssociatedProcesses(activity2, null, null);
-                    LOGGER.info(">>>>>>>>>>syncExpression.activity2:" + activity2.getNumber() + " >>>>>result: " + result.size());
-                    while (result.hasMoreElements()) {
-                        WfProcess process = (WfProcess) result.nextElement();
-                        LOGGER.info(">>>>>>>>>>syncExpression.process:" + process);
-                        PersistenceServerHelper.manager.remove(process);
-                    }
-                    //删除ECA
-                    PersistenceServerHelper.manager.remove(activity2);
-                    //删除修订版本
-                    SandboxHelper.service.removeObjects(new WTHashSet(collection));
                 }
+
+                tx.commit();
+                tx = null;
+            } finally {
+                if (tx != null) {
+                    tx.rollback();
+                }
+                SessionServerHelper.manager.setAccessEnforced(flag);
             }
         }
     }
@@ -238,7 +259,8 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
             //创建ECA并关联受影响对象、产生对象
             createChangeActivity2(changeOrder2, collectionMap);
 
-            //补充创建事务性ECA逻辑
+            //创建事务性ECA
+            createTransactionECA(changeOrder2);
         }
     }
 
@@ -377,6 +399,60 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                         if (persistable instanceof Changeable2) {
                             updateDescription(ecnVid, eca, (Changeable2) persistable);
                         }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            throw new WTException(e.getStackTrace());
+        }
+    }
+
+    /**
+     * 创建事务性任务
+     * @param changeOrder2
+     * @throws WTException
+     */
+    public void createTransactionECA(WTChangeOrder2 changeOrder2) throws WTException {
+        try {
+            Set<Persistable> links = ModifyHelper.service.queryPersistable(changeOrder2, LINKTYPE_3);
+            LOGGER.info("=====createTransactionECA.links: " + links);
+            for (Persistable persistable : links) {
+                LOGGER.info("=====createTransactionECA.persistable: " + persistable);
+                if (persistable instanceof TransactionTask) {
+                    TransactionTask task = (TransactionTask) persistable;
+
+                    String changeTheme = task.getChangeTheme();//变更主题
+                    String changeDescribe = task.getChangeDescribe();//变更任务描述
+                    String responsible = task.getResponsible();//责任人
+                    String needDate = task.getNeedDate();//期望完成日期
+                    String changeActivity2 = task.getChangeActivity2();//ECA
+                    LOGGER.info("createTransactionECA>>>>>>>>>>changeTheme: " + changeTheme + " changeDescribe: " + changeDescribe + " responsible: " + responsible + " needDate: " + needDate + " changeActivity2: " + changeActivity2);
+
+                    WTChangeActivity2 activity2 = null;
+                    if (PIStringUtils.isNotNull(changeActivity2)) {
+                        activity2 = (WTChangeActivity2) (new ReferenceFactory()).getReference(changeActivity2).getObject();
+                    }
+
+                    if (activity2 == null) {
+                        activity2 = ModifyUtils.createChangeTask(changeOrder2, changeTheme, null, changeDescribe, TYPE_3, responsible);
+                        ModifyHelper.service.updateTransactionTask(task, PersistenceHelper.getObjectIdentifier(activity2).toString());
+                    } else {
+                        // 名称修改
+                        if (!activity2.getName().equals(changeTheme)) {
+                            ModifyUtils.setChangeActivity2Name(activity2, changeTheme);
+                        }
+                        // 工作负责人修改
+                        ModifyUtils.setChangeActivity2Assignee(activity2, responsible);
+                        // 说明修改
+                        if (!changeDescribe.equals(activity2.getDescription())) {
+                            activity2.setDescription(changeDescribe);
+                            activity2 = (WTChangeActivity2) PersistenceHelper.manager.save(activity2);
+                        }
+                    }
+
+                    // 期望完成日期
+                    if (PIStringUtils.isNotNull(needDate)) {
+                        ModifyUtils.updateNeedDate(activity2, needDate);
                     }
                 }
             }

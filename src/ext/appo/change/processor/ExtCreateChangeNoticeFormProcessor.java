@@ -166,14 +166,12 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
                 LOGGER.info(">>>>>>>>>>linkAffectedItems.routing: " + routing);
                 ModifyHelper.service.newCorrelationObjectLink(changeOrder2, persistable, LINKTYPE_1, ecnVid, branchId, ecaIdentifier, aadDescription, routing);
             } else {
-                String ecaIdentifier = link.getEcaIdentifier();
                 String routing = link.getRouting();
-                if (StringUtils.isNotEmpty(ecaIdentifier) && StringUtils.isNotEmpty(routing)) {
-                    ModifyHelper.service.updateCorrelationObjectLink(link, aadDescription, routing);
-                } else {
-                    ecaIdentifier = StringUtils.isEmpty(ecaIdentifier) ? branchMap.get(branchId) : ecaIdentifier;//获取所在ECA
+                LOGGER.info(">>>>>>>>>>linkAffectedItems.routing: " + routing);
+                if (!ROUTING_1.equals(routing) && !ROUTING_3.equals(routing)) {
+                    String ecaIdentifier = branchMap.get(branchId);//获取所在ECA
                     LOGGER.info(">>>>>>>>>>linkAffectedItems.ecaIdentifier: " + ecaIdentifier);
-                    routing = StringUtils.isEmpty(routing) ? StringUtils.isEmpty(ecaIdentifier) ? "" : ROUTING_1 : routing;
+                    routing = StringUtils.isEmpty(ecaIdentifier) ? routing : ROUTING_1;
                     LOGGER.info(">>>>>>>>>>linkAffectedItems.routing: " + routing);
                     ModifyHelper.service.updateCorrelationObjectLink(link, ecaIdentifier, aadDescription, routing);
                 }

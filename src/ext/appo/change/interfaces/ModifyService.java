@@ -86,6 +86,15 @@ public interface ModifyService {
     TransactionTask updateTransactionTask(TransactionTask task, String changeTheme, String changeDescribe, String responsible, String needDate) throws WTException;
 
     /**
+     * 更事务性任务ECA Id
+     * @param task
+     * @param changeActivity2
+     * @return
+     * @throws WTException
+     */
+    TransactionTask updateTransactionTask(TransactionTask task, String changeActivity2) throws WTException;
+
+    /**
      * 更新ECN与相关对象的Link
      * @param ecnBranchIdentifier
      * @param perBranchIdentifier

@@ -32,16 +32,6 @@ public class StandardModifyService extends StandardManager implements ModifyServ
         return instance;
     }
 
-    /**
-     * 新建事务性任务
-     * @param changeTheme
-     * @param changeDescribe
-     * @param responsible
-     * @param needDate
-     * @param changeActivity2
-     * @return
-     * @throws WTException
-     */
     @Override
     public TransactionTask newTransactionTask(String changeTheme, String changeDescribe, String responsible, String needDate, WTChangeActivity2 changeActivity2) throws WTException {
         TransactionTask task = TransactionTask.newTransactionTask();
@@ -59,16 +49,6 @@ public class StandardModifyService extends StandardManager implements ModifyServ
         return task;
     }
 
-    /**
-     * 新建ECN与相关对象的Link
-     * @param changeOrder2
-     * @param persistable
-     * @param linkType
-     * @param ecnBranchIdentifier
-     * @param perBranchIdentifier
-     * @return
-     * @throws WTException
-     */
     @Override
     public CorrelationObjectLink newCorrelationObjectLink(WTChangeOrder2 changeOrder2, Persistable persistable, String linkType, String ecnBranchIdentifier, String perBranchIdentifier) throws WTException {
         CorrelationObjectLink link = CorrelationObjectLink.newCorrelationObjectLink(changeOrder2, persistable);
@@ -84,19 +64,6 @@ public class StandardModifyService extends StandardManager implements ModifyServ
         return link;
     }
 
-    /**
-     * 新建ECN与相关对象的Link
-     * @param changeOrder2
-     * @param persistable
-     * @param linkType
-     * @param ecnBranchIdentifier
-     * @param perBranchIdentifier
-     * @param ecaIdentifier
-     * @param aadDescription
-     * @param routing
-     * @return
-     * @throws WTException
-     */
     @Override
     public CorrelationObjectLink newCorrelationObjectLink(WTChangeOrder2 changeOrder2, Persistable persistable, String linkType, String ecnBranchIdentifier, String perBranchIdentifier, String ecaIdentifier, String aadDescription, String routing) throws WTException {
         CorrelationObjectLink link = CorrelationObjectLink.newCorrelationObjectLink(changeOrder2, persistable);
@@ -115,70 +82,53 @@ public class StandardModifyService extends StandardManager implements ModifyServ
         return link;
     }
 
-    /**
-     * 删除事务性任务
-     * @param task
-     * @throws WTException
-     */
     @Override
     public void deleteTransactionTask(TransactionTask task) throws WTException {
         if (task != null) PersistenceServerHelper.manager.remove(task);
     }
 
-    /**
-     * 移除ECN与相关对象的Link
-     * @param link
-     * @throws WTException
-     */
     @Override
     public void removeCorrelationObjectLink(CorrelationObjectLink link) throws WTException {
         if (link != null) PersistenceServerHelper.manager.remove(link);
     }
 
-    /**
-     * 移除ECN与相关对象的Link
-     * @param changeOrder2
-     * @param persistable
-     * @throws WTException
-     */
     @Override
     public void removeCorrelationObjectLink(WTChangeOrder2 changeOrder2, Persistable persistable) throws WTException {
         CorrelationObjectLink link = queryCorrelationObjectLink(changeOrder2, persistable);
         if (null != link) PersistenceServerHelper.manager.remove(link);
     }
 
-    /**
-     * 更事务性任务
-     * @param task
-     * @param changeTheme
-     * @param changeDescribe
-     * @param responsible
-     * @param needDate
-     * @throws WTException
-     * @return
-     */
     @Override
     public TransactionTask updateTransactionTask(TransactionTask task, String changeTheme, String changeDescribe, String responsible, String needDate) throws WTException {
-        try {
-            task.setChangeTheme(changeTheme);
-            task.setChangeDescribe(changeDescribe);
-            task.setResponsible(responsible);
-            task.setNeedDate(needDate);
-            PersistenceServerHelper.manager.update(task);
-            task = (TransactionTask) PersistenceHelper.manager.refresh(task);
-        } catch (Exception e) {
-            throw new WTException(e.getStackTrace());
+        if (task != null) {
+            try {
+                task.setChangeTheme(changeTheme);
+                task.setChangeDescribe(changeDescribe);
+                task.setResponsible(responsible);
+                task.setNeedDate(needDate);
+                PersistenceServerHelper.manager.update(task);
+                task = (TransactionTask) PersistenceHelper.manager.refresh(task);
+            } catch (Exception e) {
+                throw new WTException(e.getStackTrace());
+            }
         }
         return task;
     }
 
-    /**
-     * ECN与相关对象的Link
-     * @param ecnBranchIdentifier
-     * @param perBranchIdentifier
-     * @param linkType
-     * @throws WTException
-     */
+    @Override
+    public TransactionTask updateTransactionTask(TransactionTask task, String changeActivity2) throws WTException {
+        if (task != null) {
+            try {
+                task.setChangeActivity2(changeActivity2);
+                PersistenceServerHelper.manager.update(task);
+                task = (TransactionTask) PersistenceHelper.manager.refresh(task);
+            } catch (Exception e) {
+                throw new WTException(e.getStackTrace());
+            }
+        }
+        return task;
+    }
+
     @Override
     public void updateCorrelationObjectLink(String ecnBranchIdentifier, String perBranchIdentifier, String linkType) throws WTException {
         CorrelationObjectLink link = queryCorrelationObjectLink(ecnBranchIdentifier, perBranchIdentifier, linkType);
@@ -204,14 +154,6 @@ public class StandardModifyService extends StandardManager implements ModifyServ
         }
     }
 
-    /**
-     * 更新ECN与相关对象的Link
-     * @param link
-     * @param aadDescription
-     * @param routing
-     * @return
-     * @throws WTException
-     */
     @Override
     public CorrelationObjectLink updateCorrelationObjectLink(CorrelationObjectLink link, String aadDescription, String routing) throws WTException {
         try {
@@ -239,15 +181,6 @@ public class StandardModifyService extends StandardManager implements ModifyServ
         return link;
     }
 
-    /**
-     * 更新ECN与相关对象的Link
-     * @param link
-     * @param ecaIdentifier
-     * @param aadDescription
-     * @param routing
-     * @return
-     * @throws WTException
-     */
     @Override
     public CorrelationObjectLink updateCorrelationObjectLink(CorrelationObjectLink link, String ecaIdentifier, String aadDescription, String routing) throws WTException {
         try {
@@ -276,13 +209,6 @@ public class StandardModifyService extends StandardManager implements ModifyServ
         return link;
     }
 
-    /**
-     * 查询ECN与相关对象的Link
-     * @param changeOrder2
-     * @param persistable
-     * @return
-     * @throws Exception
-     */
     @Override
     public CorrelationObjectLink queryCorrelationObjectLink(WTChangeOrder2 changeOrder2, Persistable persistable) throws WTException {
         if (changeOrder2 != null && persistable != null) {
@@ -307,13 +233,6 @@ public class StandardModifyService extends StandardManager implements ModifyServ
         return null;
     }
 
-    /**
-     * 查询ECN与相关对象的Link
-     * @param changeOrder2
-     * @param perBranchIdentifier
-     * @return
-     * @throws WTException
-     */
     @Override
     public CorrelationObjectLink queryCorrelationObjectLink(WTChangeOrder2 changeOrder2, String perBranchIdentifier) throws WTException {
         if (changeOrder2 != null && StringUtils.isNotEmpty(perBranchIdentifier)) {
@@ -338,13 +257,6 @@ public class StandardModifyService extends StandardManager implements ModifyServ
         return null;
     }
 
-    /**
-     * 查询ECN与相关对象的Link
-     * @param ecnBranchIdentifier
-     * @param perBranchIdentifier
-     * @return
-     * @throws WTException
-     */
     @Override
     public CorrelationObjectLink queryCorrelationObjectLink(String ecnBranchIdentifier, String perBranchIdentifier, String linkType) throws WTException {
         if (StringUtils.isNotEmpty(ecnBranchIdentifier) && StringUtils.isNotEmpty(perBranchIdentifier)) {
@@ -373,13 +285,6 @@ public class StandardModifyService extends StandardManager implements ModifyServ
         return null;
     }
 
-    /**
-     * 查询ECA与相关对象的Link
-     * @param activity2
-     * @param linkType
-     * @return
-     * @throws WTException
-     */
     @Override
     public Set<CorrelationObjectLink> queryCorrelationObjectLinks(WTChangeActivity2 activity2, String linkType) throws WTException {
         Set<CorrelationObjectLink> links = new HashSet<>();
@@ -409,12 +314,6 @@ public class StandardModifyService extends StandardManager implements ModifyServ
         return links;
     }
 
-    /**
-     * 查询ECN与相关对象的Link
-     * @param changeOrder2
-     * @return
-     * @throws WTException
-     */
     @Override
     public Set<CorrelationObjectLink> queryCorrelationObjectLinks(WTChangeOrder2 changeOrder2) throws WTException {
         Set<CorrelationObjectLink> links = new HashSet<>();
@@ -436,13 +335,6 @@ public class StandardModifyService extends StandardManager implements ModifyServ
         return links;
     }
 
-    /**
-     * 查询ECN与相关对象的Link
-     * @param changeOrder2
-     * @param linkType
-     * @return
-     * @throws WTException
-     */
     @Override
     public Set<CorrelationObjectLink> queryCorrelationObjectLinks(WTChangeOrder2 changeOrder2, String linkType) throws WTException {
         Set<CorrelationObjectLink> links = new HashSet<>();
@@ -468,14 +360,6 @@ public class StandardModifyService extends StandardManager implements ModifyServ
         return links;
     }
 
-    /**
-     * 查询ECN与相关对象的Link
-     * @param changeOrder2
-     * @param linkType
-     * @param routing
-     * @return
-     * @throws WTException
-     */
     @Override
     public Set<CorrelationObjectLink> queryCorrelationObjectLinks(WTChangeOrder2 changeOrder2, String linkType, String routing) throws WTException {
         Set<CorrelationObjectLink> links = new HashSet<>();
@@ -505,13 +389,6 @@ public class StandardModifyService extends StandardManager implements ModifyServ
         return links;
     }
 
-    /**
-     * 查询ECN与相关的对象
-     * @param changeOrder2
-     * @param linkType
-     * @return
-     * @throws WTException
-     */
     @Override
     public Set<Persistable> queryPersistable(WTChangeOrder2 changeOrder2, String linkType) throws WTException {
         Set<Persistable> persistables = new HashSet<>();
@@ -543,12 +420,6 @@ public class StandardModifyService extends StandardManager implements ModifyServ
         return persistables;
     }
 
-    /**
-     * 查询ECN与相关的对象
-     * @param changeOrder2
-     * @return
-     * @throws WTException
-     */
     @Override
     public Set<Persistable> queryPersistable(WTChangeOrder2 changeOrder2) throws WTException {
         Set<Persistable> persistables = new HashSet<>();
@@ -576,17 +447,9 @@ public class StandardModifyService extends StandardManager implements ModifyServ
         return persistables;
     }
 
-    /**
-     * 查询事务性任务
-     * @param changeOrder2
-     * @param changeActivity2
-     * @param changeTheme
-     * @return
-     * @throws WTException
-     */
     @Override
     public TransactionTask queryTransactionTask(WTChangeOrder2 changeOrder2, WTChangeActivity2 changeActivity2, String changeTheme) throws WTException {
-        if (changeOrder2 != null && StringUtils.isNotEmpty(changeTheme)) {
+        if (changeOrder2 != null) {
             QuerySpec qs = new QuerySpec();
             qs.setAdvancedQueryEnabled(true);
 
@@ -601,9 +464,11 @@ public class StandardModifyService extends StandardManager implements ModifyServ
             qs.appendWhere(sc, new int[]{linkIndex, taskIndex});
 
             if (changeActivity2 == null) {
-                qs.appendAnd();
-                sc = new SearchCondition(TransactionTask.class, TransactionTask.CHANGE_THEME, SearchCondition.EQUAL, changeTheme);
-                qs.appendWhere(sc, new int[]{taskIndex});
+                if (StringUtils.isNotEmpty(changeTheme)) {
+                    qs.appendAnd();
+                    sc = new SearchCondition(TransactionTask.class, TransactionTask.CHANGE_THEME, SearchCondition.EQUAL, changeTheme);
+                    qs.appendWhere(sc, new int[]{taskIndex});
+                }
             } else {
                 qs.appendAnd();
                 String activity2 = PersistenceHelper.getObjectIdentifier(changeActivity2).toString();
@@ -624,13 +489,6 @@ public class StandardModifyService extends StandardManager implements ModifyServ
         return null;
     }
 
-    /**
-     * 查询对象关联的ECN
-     * @param perBranchIdentifier
-     * @param linkType
-     * @return
-     * @throws WTException
-     */
     @Override
     public Set<WTChangeOrder2> queryWTChangeOrder2(String perBranchIdentifier, String linkType) throws WTException {
         Set<WTChangeOrder2> order2s = new HashSet<>();
@@ -657,12 +515,6 @@ public class StandardModifyService extends StandardManager implements ModifyServ
         return order2s;
     }
 
-    /**
-     * 获取对象的最新版本(最新大版本最新小版本)
-     * @param iterated
-     * @return
-     * @throws WTException
-     */
     @Override
     public Iterated getLatestIterated(Iterated iterated) throws WTException {
         QueryResult result = VersionControlHelper.service.allIterationsFrom(iterated);
@@ -672,12 +524,6 @@ public class StandardModifyService extends StandardManager implements ModifyServ
         return iterated;
     }
 
-    /**
-     * 获取对象传入大版本的最新版本(传入大版本最新小版本)
-     * @param iterated
-     * @return
-     * @throws WTException
-     */
     @Override
     public Iterated getLatestVersion(Iterated iterated) throws WTException {
         QueryResult result = VersionControlHelper.service.iterationsOf(iterated);
