@@ -2,7 +2,9 @@ package ext.appo.change.workflow;
 
 import com.lowagie.text.DocumentException;
 import com.ptc.windchill.enterprise.team.server.TeamCCHelper;
+import ext.appo.change.ModifyHelper;
 import ext.appo.change.constants.ModifyConstants;
+import ext.appo.change.models.CorrelationObjectLink;
 import ext.appo.change.util.ModifyUtils;
 import ext.appo.ecn.common.util.ChangePartQueryUtils;
 import ext.appo.ecn.constants.ChangeConstants;
@@ -922,6 +924,22 @@ public class ECAWorkflowUtil implements ChangeConstants, ModifyConstants {
             }
         }
         return buffer.toString();
+    }
+
+    /**
+     * 更新受影响对象Link的路由为「已完成」
+     * @param pbo
+     * @param self
+     * @throws WTException
+     */
+    public void updateCorrelationObjectLink(WTObject pbo, ObjectReference self) throws WTException {
+        if (pbo instanceof WTChangeActivity2) {
+            WTChangeActivity2 activity2 = (WTChangeActivity2) pbo;
+            Set<CorrelationObjectLink> links = ModifyHelper.service.queryCorrelationObjectLinks(activity2, LINKTYPE_1);
+            for (CorrelationObjectLink link : links) {
+                ModifyHelper.service.updateCorrelationObjectLink(link, link.getEcaIdentifier(), link.getAadDescription(), ROUTING_3);
+            }
+        }
     }
 
     /**

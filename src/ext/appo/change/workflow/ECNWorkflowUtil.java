@@ -108,6 +108,10 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                         if (PICoreHelper.service.isTypeOrSubType(activity2, TYPE_3)) {
                             TransactionTask task = ModifyHelper.service.queryTransactionTask((WTChangeOrder2) pbo, activity2, "");
                             ModifyHelper.service.updateTransactionTask(task, "");
+                            CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink((WTChangeOrder2) pbo, task);
+                            if (link != null) {
+                                ModifyHelper.service.updateCorrelationObjectLink(link, link.getEcaIdentifier(), link.getAadDescription(), ROUTING_2);
+                            }
                         } else {
                             Set<CorrelationObjectLink> links = ModifyHelper.service.queryCorrelationObjectLinks(activity2, LINKTYPE_1);
                             for (CorrelationObjectLink link : links) {
@@ -158,7 +162,10 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
     public boolean isRejected(WTObject pbo, ObjectReference self) throws WTException {
         if (pbo instanceof WTChangeOrder2) {
             Set<CorrelationObjectLink> links = ModifyHelper.service.queryCorrelationObjectLinks((WTChangeOrder2) pbo, LINKTYPE_1, ROUTING_2);
-            LOGGER.info("=====isRejected.links: " + links);
+            LOGGER.info("=====isRejected.links1: " + links);
+            if (links.size() > 0) return true;
+            links = ModifyHelper.service.queryCorrelationObjectLinks((WTChangeOrder2) pbo, LINKTYPE_3, ROUTING_2);
+            LOGGER.info("=====isRejected.links2: " + links);
             if (links.size() > 0) return true;
         }
         return false;

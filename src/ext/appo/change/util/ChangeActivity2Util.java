@@ -191,6 +191,7 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
         Persistable key = entryMap.getKey();
         //设置部件关联文档、EPM文档的「变更对象类型」与部件相同
         if (key instanceof WTPart) {
+            changeObjectType = changeObjectType.replaceFirst("BOM变更;", "").replaceFirst("图纸变更;", "");
             Collection<Persistable> collection = entryMap.getValue();
             for (Persistable persistable : collection) {
                 PIAttributeHelper.service.forceUpdateSoftAttribute(persistable, ATTRIBUTE_7, changeObjectType);
