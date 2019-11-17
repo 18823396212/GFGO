@@ -76,7 +76,6 @@ public class ExtWorkflowStepGuidePanelBuilder extends AbstractComponentBuilder {
             nmcommandbeanMap = new HashMap();
             nmcommandbean.setMap(nmcommandbeanMap);
         }
-
         nmcommandbeanMap.put("activeStr", activeStr);
     }
 
@@ -130,7 +129,7 @@ public class ExtWorkflowStepGuidePanelBuilder extends AbstractComponentBuilder {
         ObjectReference self = new ObjectReference();
         String sheetName = ECAReviewActivityUtil.getSheetName((WTObject) pbo);
         RowBean rowBean = ECAReviewActivityUtil.getRowBean(self, wfprocess, (WTObject) pbo, sheetName);
-        StringBuilder activeStr = new StringBuilder("编制;;;qqq修改");
+        StringBuilder activeStr = new StringBuilder("数据更改");
         if (rowBean != null) {
             List<CellBean> cellBeans = rowBean.getCellList();
             for (CellBean bean : cellBeans) {
@@ -198,7 +197,7 @@ public class ExtWorkflowStepGuidePanelBuilder extends AbstractComponentBuilder {
                 LOGGER.debug("...activeRole=" + activeRole);
                 TeamReference processTeamReference = wfprocess.getTeamId();
                 if (wfprocess.getTeamId() != null) {
-                    WfAssignedActivity currentActivity = (WfAssignedActivity) activityMap.get(activeName);
+                    WfAssignedActivity currentActivity = activityMap.get(activeName);
                     Team processTeam = (Team) processTeamReference.getObject();
                     Enumeration<?> participants = processTeam.getPrincipalTarget(activeRole);
                     workflowStepMap = this.collectRoleInfo(workflowStepMap, i, activeRole, participants, currentActivity);
@@ -211,7 +210,7 @@ public class ExtWorkflowStepGuidePanelBuilder extends AbstractComponentBuilder {
     private HashMap<String, String> collectRoleInfo(HashMap<String, String> workflowStepMap, int i, Role activeRole, Enumeration<?> participants, WfAssignedActivity currentActivity) throws WTException {
         StringBuffer roleInfoBuffer = new StringBuffer();
         HashMap<WTPrincipal, String> taskCommentMap = this.getActivityComments(currentActivity);
-        if (currentActivity != null && (currentActivity.getName().equals("编制") || currentActivity.getName().equals("修改"))) {
+        if (currentActivity != null && currentActivity.getName().equals("数据更改")) {
             this.getActivityInfo(roleInfoBuffer, taskCommentMap, currentActivity.getParentProcess().getCreator().getPrincipal());
         } else {
             while (participants != null && participants.hasMoreElements()) {
