@@ -47,7 +47,7 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.*;
 
-public class ECAReviewActivityUtil extends ReviewActivityUtil {
+public class ECAReviewActivityUtil {
 
     private static Logger LOGGER = LogR.getLogger(ECNWorkflowUtil.class.getName());
     private static String DEFAULTSHEET;

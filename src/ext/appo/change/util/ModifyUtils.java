@@ -4,6 +4,7 @@ import ext.appo.change.constants.ModifyConstants;
 import ext.appo.ecn.constants.ChangeConstants;
 import ext.lang.PIStringUtils;
 import ext.pi.core.*;
+import ext.pi.core.impl.server.config.WfProcessConfig;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import wt.access.AccessPermission;
@@ -16,6 +17,7 @@ import wt.fc.collections.WTArrayList;
 import wt.fc.collections.WTCollection;
 import wt.fc.collections.WTSet;
 import wt.folder.FolderHelper;
+import wt.inf.container.WTContainer;
 import wt.lifecycle.LifeCycleHelper;
 import wt.lifecycle.LifeCycleManaged;
 import wt.lifecycle.State;
@@ -45,6 +47,7 @@ import wt.vc.Versioned;
 import wt.vc.config.*;
 import wt.vc.sessioniteration.SessionEditedIteration;
 import wt.vc.wip.Workable;
+import wt.workflow.engine.WfProcess;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -1132,6 +1135,26 @@ public class ModifyUtils implements ChangeConstants {
         }
 
         return rollbacks;
+    }
+
+    /**
+     * 启动ECA进程
+     * @param activity2
+     * @param flowName
+     * @param description
+     * @throws WTException
+     */
+    public static void startWorkflow(WTChangeActivity2 activity2, String flowName, String description) throws WTException {
+        WTContainer container = activity2.getContainer();
+        LOGGER.info("=====startWorkflow.container: " + container);
+
+        WfProcessConfig processConfig = new WfProcessConfig();
+        processConfig.setName(flowName + "_" + activity2.getDisplayIdentifier());
+        processConfig.setDescription(description);
+        LOGGER.info("=====startWorkflow.processConfig: " + processConfig);
+
+        WfProcess process = PIWorkflowHelper.service.startWorkflow(flowName, activity2, processConfig, new HashMap());
+        LOGGER.info("=====startWorkflow.process: " + process);
     }
 
 }

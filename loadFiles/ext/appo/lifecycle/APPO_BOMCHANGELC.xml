@@ -13,7 +13,7 @@
   <csvPhaseTemplateBegin handler="wt.lifecycle.LoadLifeCycle.createPhaseTemplateBegin">
     <csvname>Open</csvname>
     <csvphaseState>OPEN</csvphaseState>
-    <csvphaseWorkflow>APPO_BOMCHANGEWF</csvphaseWorkflow>
+    <csvphaseWorkflow></csvphaseWorkflow>
     <csvgateWorkflow></csvgateWorkflow>
     <csvseriesSelector></csvseriesSelector>
   </csvPhaseTemplateBegin>
@@ -126,11 +126,11 @@
     <csvseriesSelector></csvseriesSelector>
   </csvPhaseTemplateBegin>
   <csvRoleHolder handler="wt.project.LoadProject.createRoleHolder">
-    <csvroleToAssign>APPROVER</csvroleToAssign>
+    <csvroleToAssign>ASSIGNEE</csvroleToAssign>
     <csvassignedPrincipal></csvassignedPrincipal>
   </csvRoleHolder>
   <csvRoleHolder handler="wt.project.LoadProject.createRoleHolder">
-    <csvroleToAssign>ASSIGNEE</csvroleToAssign>
+    <csvroleToAssign>APPROVER</csvroleToAssign>
     <csvassignedPrincipal></csvassignedPrincipal>
   </csvRoleHolder>
   <csvRoleHolder handler="wt.project.LoadProject.createRoleHolder">
@@ -222,11 +222,11 @@
     <csvseriesSelector></csvseriesSelector>
   </csvPhaseTemplateBegin>
   <csvRoleHolder handler="wt.project.LoadProject.createRoleHolder">
-    <csvroleToAssign>APPROVER</csvroleToAssign>
+    <csvroleToAssign>ASSIGNEE</csvroleToAssign>
     <csvassignedPrincipal></csvassignedPrincipal>
   </csvRoleHolder>
   <csvRoleHolder handler="wt.project.LoadProject.createRoleHolder">
-    <csvroleToAssign>ASSIGNEE</csvroleToAssign>
+    <csvroleToAssign>APPROVER</csvroleToAssign>
     <csvassignedPrincipal></csvassignedPrincipal>
   </csvRoleHolder>
   <csvRoleHolder handler="wt.project.LoadProject.createRoleHolder">
@@ -234,11 +234,11 @@
     <csvassignedPrincipal></csvassignedPrincipal>
   </csvRoleHolder>
   <csvRoleHolder handler="wt.project.LoadProject.createRoleHolder">
-    <csvroleToAssign>SUBMITTER</csvroleToAssign>
+    <csvroleToAssign>Validator</csvroleToAssign>
     <csvassignedPrincipal></csvassignedPrincipal>
   </csvRoleHolder>
   <csvRoleHolder handler="wt.project.LoadProject.createRoleHolder">
-    <csvroleToAssign>Validator</csvroleToAssign>
+    <csvroleToAssign>SUBMITTER</csvroleToAssign>
     <csvassignedPrincipal></csvassignedPrincipal>
   </csvRoleHolder>
   <csvRoleHolder handler="wt.project.LoadProject.createRoleHolder">

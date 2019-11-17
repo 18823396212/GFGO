@@ -351,13 +351,26 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
 
                     // ECA类型
                     String type = "";
+                    String flowName = "";
+                    String description = "";
                     String changeObjectType = ModifyUtils.getValue(changeable2, CHANGOBJECTETYPE_COMPID);//变更对象类型
-                    if (changeObjectType.contains(VALUE_5)) type = TYPE_1;
-                    else if (changeObjectType.contains(VALUE_6)) type = TYPE_2;
+                    if (changeObjectType.contains(VALUE_5)) {
+                        type = TYPE_1;
+                        flowName = FLOWNAME_1;
+                        description = FLOWNAME_3;
+                    } else if (changeObjectType.contains(VALUE_6)) {
+                        type = TYPE_2;
+                        flowName = FLOWNAME_2;
+                        description = FLOWNAME_4;
+                    }
                     //游离WTDocument、EPMDocument(图纸单独走变更的场景)，创建图纸变更ECA
-                    if (StringUtils.isEmpty(type) && !(changeable2 instanceof WTPart)) type = TYPE_2;
-                    LOGGER.info(">>>>>>>>>>createChangeActivity2.type:" + type);
-                    if (StringUtils.isEmpty(type)) continue;
+                    if (StringUtils.isEmpty(type) && !(changeable2 instanceof WTPart)) {
+                        type = TYPE_2;
+                        flowName = FLOWNAME_2;
+                        description = FLOWNAME_4;
+                    }
+                    LOGGER.info(">>>>>>>>>>createChangeActivity2.type:" + type + " >>>>>flowName: " + flowName + " >>>>>description: " + description);
+                    if (StringUtils.isEmpty(type) || StringUtils.isEmpty(flowName)) continue;
 
                     // 责任人
                     String assigneeName = ModifyUtils.getValue(changeable2, RESPONSIBLEPERSON_COMPID);
@@ -407,6 +420,9 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                             updateDescription(ecnVid, eca, (Changeable2) persistable);
                         }
                     }
+
+                    //启动ECA流程
+                    ModifyUtils.startWorkflow(eca, flowName, description);
                 }
             }
         } catch (Exception e) {

@@ -41,6 +41,12 @@ public interface ModifyConstants {
     String VALUE_5 = "BOM变更";
     String VALUE_6 = "图纸变更";
 
+    //流程模版名
+    String FLOWNAME_1 = "APPO_BOMCHANGEWF";//BOM变更流程
+    String FLOWNAME_2 = "APPO_DRAWINGCHANGEWF";//图纸变更流程
+    String FLOWNAME_3 = "BOM变更流程";
+    String FLOWNAME_4 = "图纸变更流程";
+
     //分隔符
     String SEPARATOR_1 = "_";
 
