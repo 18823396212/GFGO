@@ -13,5 +13,7 @@
     D，执行 @ext/appo/change/Make_pkg_change_Index.sql
     E，执行 exit
 
-
 4. 启动Windchill 服务
+    xconfmanager -i $WT_HOME/codebase/ext/xconf/modify.properties.xconf -p
+
+5. 启动Windchill 服务

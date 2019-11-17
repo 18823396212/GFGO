@@ -45,7 +45,7 @@ public class ExtReviewPrincipalTableBuilder extends AbstractComponentBuilder {
                 WorkItem workitem = (WorkItem) persistable;
                 WfAssignmentState status = workitem.getStatus();
                 if (!status.equals(WfAssignmentState.COMPLETED)) {
-                    treeconfig.setActionModel("generic_partcipants_table_actions");
+                    treeconfig.setActionModel("modify_principal_table_actions");
                     this.initProcessNode(workitem);
                 }
             }
@@ -72,7 +72,7 @@ public class ExtReviewPrincipalTableBuilder extends AbstractComponentBuilder {
         columnconfig = componentconfigfactory.newColumnConfig("processSignInfo", this.messageSource.getMessage("SignInfoDetail"), true);
         columnconfig.setWidth(100);
         columnconfig.setSortable(false);
-        columnconfig.setDataUtilityId("genericRoleParticipantsName");
+        columnconfig.setDataUtilityId("ExtReviewPrincipalDataUtility");
         treeconfig.addComponent(columnconfig);
         columnconfig = componentconfigfactory.newColumnConfig("blankInfo", "", true);
         columnconfig.setWidth(100);

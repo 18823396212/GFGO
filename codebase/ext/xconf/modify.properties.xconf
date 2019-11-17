@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE Configuration SYSTEM "xconf.dtd">
+
+<Configuration targetFile="codebase/ext/xconf/modify.properties">
+    <Service context="default" name="com.ptc.core.components.descriptor.DataUtility">
+        <Option serviceClass="ext.appo.change.datautility.ExtReviewPrincipalDataUtility" requestor="java.lang.Object" selector="ExtReviewPrincipalDataUtility" cardinality="duplicate"/>
+    </Service>
+</Configuration>

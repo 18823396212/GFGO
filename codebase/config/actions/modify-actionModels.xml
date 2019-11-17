@@ -10,4 +10,12 @@
         <action name="cancelButton" type="object"/>
     </model>
 
+    <model name="modify_principal_table_actions">
+        <action name="setReviewPrincipal" type="modify" shortcut="true"/>
+        <action name="removePrincipal" type="generic" shortcut="true"/>
+        <action name="createTeamTeamplate" type="modify" shortcut="true"/>
+        <action name="deleteTeamTeamplate" type="wfteam" shortcut="true"/>
+        <action name="applyTeamTeamplate" type="modify" shortcut="true"/>
+    </model>
+
 </actionmodels>

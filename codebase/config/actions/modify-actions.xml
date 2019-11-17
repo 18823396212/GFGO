@@ -16,6 +16,26 @@
         <action name="editChangeOrderStep" id="editChangeOrderStep" preloadWizardPage="false" required="false">
             <command url="/netmarkets/jsp/ext/appo/change/request/editChangeOrderStep.jsp" class="" windowType="wizard_step"/>
         </action>
+
+        <action name="setReviewPrincipal">
+            <command class="ext.generic.reviewprincipal.processor.SetReviewPrincipalProcessor" url="/netmarkets/jsp/ext/appo/change/reviewprincipal/setReviewPrincipal.jsp?objectType=wt.org.WTUser&amp;showUserType=ActiveOnly" windowType="popup"/>
+        </action>
+
+        <action name="createTeamTeamplate" ajax="component">
+            <command class="ext.appo.change.processor.ExtCreateTeamTemplateProcessor" method="execute" url="netmarkets/jsp/ext/generic/reviewprincipal/createTeamTeamplate.jsp" windowType="popup"/>
+        </action>
+
+        <action name="createTeamTeamplate_step">
+            <command windowType="wizard_step" url="netmarkets/jsp/ext/generic/reviewprincipal/createTeamTeamplate_step.jsp"/>
+        </action>
+
+        <action name="applyTeamTeamplate" ajax="component">
+            <command class="ext.appo.change.processor.ExtApplyTeamTemplateProcessor" method="execute" url="netmarkets/jsp/ext/generic/reviewprincipal/teamTeamplate.jsp?type=apply" windowType="popup"/>
+        </action>
+
+        <action name="teamTeamplate_step">
+            <command windowType="wizard_step" url="netmarkets/jsp/ext/generic/reviewprincipal/teamTeamplate_step.jsp"/>
+        </action>
     </objecttype>
 
 </listofactions>
