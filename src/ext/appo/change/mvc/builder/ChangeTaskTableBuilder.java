@@ -20,10 +20,8 @@ import ext.appo.ecn.constants.ChangeConstants;
 import ext.lang.PIStringUtils;
 import ext.pi.core.PIAttributeHelper;
 import ext.pi.core.PICoreHelper;
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
-import wt.change2.ChangeActivityIfc;
 import wt.change2.WTChangeActivity2;
 import wt.change2.WTChangeOrder2;
 import wt.fc.ObjectReference;
@@ -91,7 +89,7 @@ public class ChangeTaskTableBuilder extends AbstractComponentBuilder implements 
         columnconfig.setLabel(this.messageChange2ClientResource.getMessage("COLUMNNAME_CHANGETHEME"));
         columnconfig.setAutoSize(true);
         columnconfig.setWidth(40);
-        columnconfig.setDataUtilityId("ChangeTaskDataUtility");
+        columnconfig.setDataUtilityId("ModifyChangeTaskDataUtility");
         tableConfig.addComponent(columnconfig);
 
         //变更任务描述
@@ -99,7 +97,7 @@ public class ChangeTaskTableBuilder extends AbstractComponentBuilder implements 
         columnconfig.setLabel(this.messageChange2ClientResource.getMessage("COLUMNNAME_CHANGEDESCRIBE"));
         columnconfig.setAutoSize(true);
         columnconfig.setWidth(100);
-        columnconfig.setDataUtilityId("ChangeTaskDataUtility");
+        columnconfig.setDataUtilityId("ModifyChangeTaskDataUtility");
         tableConfig.addComponent(columnconfig);
 
         //期望完成日期
@@ -107,7 +105,7 @@ public class ChangeTaskTableBuilder extends AbstractComponentBuilder implements 
         columnconfig.setLabel(this.messageChange2ClientResource.getMessage("COLUMNNAME_NEEDDATE"));
         columnconfig.setAutoSize(true);
         columnconfig.setWidth(20);
-        columnconfig.setDataUtilityId("ChangeTaskDataUtility");
+        columnconfig.setDataUtilityId("ModifyChangeTaskDataUtility");
         tableConfig.addComponent(columnconfig);
 
         //责任人
@@ -115,7 +113,7 @@ public class ChangeTaskTableBuilder extends AbstractComponentBuilder implements 
         columnconfig.setLabel(this.messageChange2ClientResource.getMessage("COLUMNNAME_RESPONSIBLE"));
         columnconfig.setAutoSize(true);
         columnconfig.setWidth(20);
-        columnconfig.setDataUtilityId("ChangeTaskDataUtility");
+        columnconfig.setDataUtilityId("ModifyChangeTaskDataUtility");
         tableConfig.addComponent(columnconfig);
 
         //ECA对象

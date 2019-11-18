@@ -1,3 +1,44 @@
+1.软类型处理：
+    全局枚举:
+    A.新增全局枚举「ChangeObjectType」「*变更对象类型」{BOM变更、图纸变更}
+
+    部件：
+    A.新增全局属性「ChangeObjectType」「*变更对象类型」「字符串」创建、编辑、查看视图均不可见
+    B.新增全局属性「ChangeItemType」「ECN变更类型」「字符串」创建、编辑、查看视图均不可见
+
+    文档：
+    A.新增全局属性「ChangeObjectType」「*变更对象类型」「字符串」创建、编辑、查看视图均不可见
+    B.新增全局属性「ChangeItemType」「ECN变更类型」「字符串」创建、编辑、查看视图均不可见
+
+    变更申请：
+    A.新增全局属性「ActionName」「操作名称」「字符串」创建、编辑、查看视图均不可见
+        B.修改全局属性「ChangeItemType」「变更类型」可见性(编辑)为只读
+
+    更改任务：
+    A.新增子类型「图纸变更ECA」 「DrawingsChangeActivity2」
+    B.新增子类型「BOM变更ECA」 「BOMChangeActivity2」
+
+    初始化规则：
+    A.禁用初始化规则「Generic_ECN_rule」
+
+
+2.涉及历史文件合并：
+    ext.appo.ecn.resource.changeNoticeActionsRB.java
+    ext.appo.ecn.resource.changeNoticeActionsRB_zh_CN
+    ext.appo.ecn.constants.ChangeConstants
+    ext.appo.ecn.filter.EditECNFilter
+    复制以上文件含以下标签的内容到服务器对应文件对应位置上（正常情况可以直接覆盖，覆盖之前对比一下两个文件出标签外的其他内容是否一致）
+    //add by tongwang 20191023 start
+    //add by tongwang 20191023 end
+
+    codebase/config/actions/custom-actionModels.xml
+    codebase/config/actions/custom-actions.xml
+    codebase/config/actions/changeECN-actionmodels.xml
+    复制以上文件含以下标签的内容到服务器对应文件对应位置上（正常情况可以直接覆盖，覆盖之前对比一下两个文件出标签外的其他内容是否一致）
+    <!--modify by wangtong at 20191024 start-->
+    <!--modify by wangtong at 20191024 end-->
+
+
 1. 停止Windchill 服务
    
 

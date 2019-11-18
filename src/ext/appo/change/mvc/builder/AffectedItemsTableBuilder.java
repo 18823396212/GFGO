@@ -15,7 +15,6 @@ import ext.appo.ecn.constants.ChangeConstants;
 import ext.lang.PIStringUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
-import wt.change2.ChangeActivityIfc;
 import wt.change2.Changeable2;
 import wt.change2.WTChangeActivity2;
 import wt.change2.WTChangeOrder2;
@@ -126,81 +125,79 @@ public class AffectedItemsTableBuilder extends AbstractComponentBuilder implemen
 
         columnconfig = componentconfigfactory.newColumnConfig("ArticleInventory", true);
         columnconfig.setLabel(this.messageChange2ClientResource.getMessage("ARTICLEINVENTORY"));
-        columnconfig.setDataUtilityId("customizationDataUtility");
+        columnconfig.setDataUtilityId("ModifyAffectedItemsDataUtility");
         columnconfig.setAutoSize(true);
         tableConfig.addComponent(columnconfig);
 
         columnconfig = componentconfigfactory.newColumnConfig("ArticleDispose", true);
         columnconfig.setLabel(this.messageChange2ClientResource.getMessage("ARTICLEDISPOSE"));
-        columnconfig.setDataUtilityId("customizationDataUtility");
+        columnconfig.setDataUtilityId("ModifyAffectedItemsDataUtility");
         columnconfig.setAutoSize(true);
         tableConfig.addComponent(columnconfig);
 
         columnconfig = componentconfigfactory.newColumnConfig("PassageInventory", true);
         columnconfig.setLabel(this.messageChange2ClientResource.getMessage("PASSAGEINVENTORY"));
-        columnconfig.setDataUtilityId("customizationDataUtility");
+        columnconfig.setDataUtilityId("ModifyAffectedItemsDataUtility");
         columnconfig.setAutoSize(true);
         tableConfig.addComponent(columnconfig);
 
         columnconfig = componentconfigfactory.newColumnConfig("PassageDispose", true);
         columnconfig.setLabel(this.messageChange2ClientResource.getMessage("PASSAGEDISPOSE"));
-        columnconfig.setDataUtilityId("customizationDataUtility");
+        columnconfig.setDataUtilityId("ModifyAffectedItemsDataUtility");
         columnconfig.setAutoSize(true);
         tableConfig.addComponent(columnconfig);
 
         columnconfig = componentconfigfactory.newColumnConfig("CentralWarehouseInventory", true);
         columnconfig.setLabel(this.messageChange2ClientResource.getMessage("CENTRALWAREHOUSEINVENTORY"));
-        columnconfig.setDataUtilityId("customizationDataUtility");
+        columnconfig.setDataUtilityId("ModifyAffectedItemsDataUtility");
         columnconfig.setAutoSize(true);
         tableConfig.addComponent(columnconfig);
 
         columnconfig = componentconfigfactory.newColumnConfig("InventoryDispose", true);
         columnconfig.setLabel(this.messageChange2ClientResource.getMessage("INVENTORYDISPOSE"));
-        columnconfig.setDataUtilityId("customizationDataUtility");
+        columnconfig.setDataUtilityId("ModifyAffectedItemsDataUtility");
         columnconfig.setAutoSize(true);
         tableConfig.addComponent(columnconfig);
 
         columnconfig = componentconfigfactory.newColumnConfig("ProductDispose", true);
         columnconfig.setLabel(this.messageChange2ClientResource.getMessage("PRODUCTDISPOSE"));
-        columnconfig.setDataUtilityId("customizationDataUtility");
+        columnconfig.setDataUtilityId("ModifyAffectedItemsDataUtility");
         columnconfig.setAutoSize(true);
         tableConfig.addComponent(columnconfig);
 
-        //add by tongwang 20191023 start
         columnconfig = componentconfigfactory.newColumnConfig("ChangeObjectType", true);
         columnconfig.setLabel(this.messageChange2ClientResource.getMessage("CHANGEOBJECTTYPE"));
-        columnconfig.setDataUtilityId("customizationDataUtility");
+        columnconfig.setDataUtilityId("ModifyAffectedItemsDataUtility");
         columnconfig.setAutoSize(true);
         tableConfig.addComponent(columnconfig);//变更对象类型
-        //add by tongwang 20191023 end
 
         columnconfig = componentconfigfactory.newColumnConfig("ChangeType", true);
         columnconfig.setLabel(this.messageChange2ClientResource.getMessage("CHANGETYPE"));
-        columnconfig.setDataUtilityId("customizationDataUtility");
+        columnconfig.setDataUtilityId("ModifyAffectedItemsDataUtility");
         columnconfig.setAutoSize(true);
         tableConfig.addComponent(columnconfig);
 
         columnconfig = componentconfigfactory.newColumnConfig("CompletionTime", true);
         columnconfig.setLabel(this.messageChange2ClientResource.getMessage("COMPLETIONTIME"));
-        columnconfig.setDataUtilityId("customizationDataUtility");
+        columnconfig.setDataUtilityId("ModifyAffectedItemsDataUtility");
         columnconfig.setAutoSize(true);
         tableConfig.addComponent(columnconfig);
 
         columnconfig = componentconfigfactory.newColumnConfig("ResponsiblePerson", true);
         columnconfig.setLabel(this.messageChange2ClientResource.getMessage("RESPONSIBLEPERSON"));
-        columnconfig.setDataUtilityId("IBA|ResponsiblePerson");
+        columnconfig.setDataUtilityId("ModifyUserPickerDataUtility");
         columnconfig.setAutoSize(true);
         tableConfig.addComponent(columnconfig);
 
         columnconfig = componentconfigfactory.newColumnConfig("aadDescription", true);
         columnconfig.setLabel(this.messageChange2ClientResource.getMessage("AADDESCRIPTION"));
-        columnconfig.setDataUtilityId("customizationDataUtility");
+        columnconfig.setDataUtilityId("ModifyAffectedItemsDataUtility");
         columnconfig.setAutoSize(true);
         tableConfig.addComponent(columnconfig);
 
         columnconfig = componentconfigfactory.newColumnConfig("CollectionNumber", true);
         columnconfig.setLabel("收集对象");
-        columnconfig.setDataUtilityId("customizationDataUtility");
+        columnconfig.setDataUtilityId("ModifyAffectedItemsDataUtility");
         columnconfig.setAutoSize(true);
         tableConfig.addComponent(columnconfig);
 

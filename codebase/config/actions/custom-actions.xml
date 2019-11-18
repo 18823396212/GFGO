@@ -208,12 +208,10 @@
             <command onClick="additionAffectedEndItems()" windowType="no_content" />
         </action-->
 
-        <!--modify by wangtong at 20191024 start-->
         <!-- 移除受影响对象 -->
         <action name="removeAffectedEndItems" renderType="GENERAL" selectRequired="true">
             <command onClick="removeAffectedEndItems(event)" windowType="no_content"/>
         </action>
-        <!--modify by wangtong at 20191024 end-->
 
         <!-- 受影响对象表单：弹出收集对象列表 -->
         <action name="collectItems">
