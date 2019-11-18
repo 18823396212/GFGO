@@ -30,6 +30,7 @@ import wt.sandbox.SandboxHelper;
 import wt.session.SessionServerHelper;
 import wt.util.WTException;
 import wt.workflow.engine.WfEngineHelper;
+import wt.workflow.engine.WfEngineServerHelper;
 import wt.workflow.engine.WfProcess;
 
 import java.util.*;
@@ -99,16 +100,18 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                 tx = new Transaction();
                 tx.start();
 
+                boolean flog = false;
+                WTChangeOrder2 changeOrder2 = (WTChangeOrder2) pbo;
                 //获取ECN关联的ECA
-                Collection<WTChangeActivity2> activity2s = ModifyUtils.getChangeActivities((WTChangeOrder2) pbo);
+                Collection<WTChangeActivity2> activity2s = ModifyUtils.getChangeActivities(changeOrder2);
                 for (WTChangeActivity2 activity2 : activity2s) {
                     //判断ECA的状态是否为「已取消」
                     if (CANCELLED.equals(activity2.getState().toString())) {
                         //更新Link的路由为「已驳回」并清空ECA的Id
                         if (PICoreHelper.service.isTypeOrSubType(activity2, TYPE_3)) {
-                            TransactionTask task = ModifyHelper.service.queryTransactionTask((WTChangeOrder2) pbo, activity2, "");
+                            TransactionTask task = ModifyHelper.service.queryTransactionTask(changeOrder2, activity2, "");
                             ModifyHelper.service.updateTransactionTask(task, "");
-                            CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink((WTChangeOrder2) pbo, task);
+                            CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(changeOrder2, task);
                             if (link != null) {
                                 ModifyHelper.service.updateCorrelationObjectLink(link, link.getEcaIdentifier(), link.getAadDescription(), ROUTING_2);
                             }
@@ -137,7 +140,11 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                         PersistenceServerHelper.manager.remove(activity2);
                         //删除修订版本
                         SandboxHelper.service.removeObjects(new WTHashSet(collection));
+                        flog = true;
                     }
+                }
+                if (flog) {
+                    WfEngineServerHelper.service.emitCustomObjectEvent(CONSTANTS_3, changeOrder2, new Hashtable());
                 }
 
                 tx.commit();

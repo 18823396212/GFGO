@@ -50,6 +50,7 @@ public interface ModifyConstants {
     //常量
     String CONSTANTS_1 = "cacheButton";//缓存按钮
     String CONSTANTS_2 = "修改变更申请";//工作流节点名称
+    String CONSTANTS_3 = "CORRELATION_LINK_CHANGE";
 
     /**
      * ECN与受影响对象链接
@@ -63,8 +64,6 @@ public interface ModifyConstants {
      * ECN与事务性任务链接
      */
     String LINKTYPE_3 = "ChangeOrder2TransactionLink";
-
-
 
     /**
      * 子流程进度-已创建
