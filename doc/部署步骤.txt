@@ -9,6 +9,7 @@
     codebase/descendentRegistry.properties.addition
     codebase/ext/generic/cfg/APPO_ECNWF.xlsx
     codebase/ext/generic/cfg/APPO_BOMCHANGEWF.xlsx
+    codebase/ext/generic/cfg/APPO_DRAWINGCHANGEWF.xlsx
     codebase/ext/generic/cfg/WFTemplate.addition.xlsx
     codebase/WEB-INF/lib/APPO-Model.jar
     codebase/netmarkets/jsp/ext/appo/change/*
