@@ -482,6 +482,19 @@ public class ECAReviewActivityUtil {
 
                                         samllTypeflag = false;
                                         break;
+                                    } else if ("view".equals(key)) {
+                                        if (pbo instanceof WTPart) {
+                                            WTPart part = (WTPart) pbo;
+                                            if (value.equals(part.getViewName())) {
+                                                continue;
+                                            }
+
+                                            samllTypeflag = false;
+                                            break;
+                                        }
+
+                                        samllTypeflag = false;
+                                        break;
                                     } else {
                                         realValue = "";
 
