@@ -19,9 +19,6 @@ public interface ModifyConstants {
     String TYPE_1 = "com.pisx.BOMChangeActivity2";//BOM变更ECA
     String TYPE_2 = "com.pisx.DrawingsChangeActivity2";//图纸变更ECA
     String TYPE_3 = "com.pisx.TransactionalChangeActivity2";//事务性任务
-    String TYPE_4 = "com.pisx.ChangeOrder2AffectedLink";//ECN与受影响对象链接
-    String TYPE_5 = "com.pisx.ChangeOrder2EndItemsLink";//ECN与受影响产品链接
-    String TYPE_6 = "com.pisx.ChangeOrder2TransactionLink";//ECN与事务性任务链接
 
     //生命周期状态
     String STATE_1 = "INWORK";//正在工作

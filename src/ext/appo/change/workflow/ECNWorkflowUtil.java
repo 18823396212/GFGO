@@ -353,7 +353,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                     String type = "";
                     String flowName = "";
                     String description = "";
-                    String changeObjectType = ModifyUtils.getValue(changeable2, CHANGOBJECTETYPE_COMPID);//变更对象类型
+                    String changeObjectType = ModifyUtils.getValue(changeable2, ATTRIBUTE_7);//变更对象类型
                     if (changeObjectType.contains(VALUE_5)) {
                         type = TYPE_1;
                         flowName = FLOWNAME_1;

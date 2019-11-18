@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="GBK"?>
+<project name="holitech" basedir="." default="all">
+    <description>Customization Build System</description>
+
+    <property environment="env"/>
+    <property name="base" location="."/>
+    <property name="wthome" location="${env.WT_HOME}"/>
+    <property name="bin" location="${wthome}/bin"/>
+    <property name="classpath" location="${env.CLASSPATH}"/>
+    <property name="wtcodebase" location="${wthome}/codebase"/>
+    <property name="tomcatinstances" location="${wthome}/tomcat/instances"/>
+    <target name="all" depends="check_path, i_backup, i_filecopy, i_resourcebuild, jg, jc, xc"/>
+
+    <!--====================================================================-->
+    <!--====================================================================-->
+    <!--                                                                    -->
+    <!-- Initialization                                                     -->
+    <!--                                                                    -->
+    <!--====================================================================-->
+    <!--====================================================================-->
+    <target name="init_os">
+        <condition property="is_win32">
+            <os family="windows"/>
+        </condition>
+        <condition property="is_unix">
+            <os family="unix"/>
+        </condition>
+    </target>
+    <target name="init_win32" depends="init_os" if="is_win32">
+        <echo message="initializing win32 commands"/>
+        <property name="shell" value="cmd.exe"/>
+        <property name="shopt" value="/c"/>
+        <property name="ResourceBuild" value="${wthome}\bin\ResourceBuild.bat"/>
+        <property name="modelInstall" value="${wthome}\bin\modelInstall.bat"/>
+        <property name="xconfmanager" value="${wthome}\bin\xconfmanager.bat"/>
+        <property name="JavaGen" value="${wthome}\bin\JavaGen.bat"/>
+    </target>
+    <target name="init_unix" depends="init_os" if="is_unix">
+        <echo message="initializing unix commands"/>
+        <property name="shell" value="/bin/sh"/>
+        <property name="shopt" value=""/>
+        <property name="ResourceBuild" value="${wthome}/bin/ResourceBuild.sh"/>
+        <property name="modelInstall" value="${wthome}/bin/modelInstall.sh"/>
+        <property name="xconfmanager" value="${wthome}/bin/xconfmanager"/>
+        <property name="JavaGen" value="${wthome}/bin/JavaGen.sh"/>
+    </target>
+
+    <target name="check_path" depends="init_win32,init_unix">
+        <condition property="path_correct">
+            <and>
+                <available file="${wthome}/site.xconf"/>
+                <available file="${wthome}/codebase/wt.properties.xconf"/>
+                <available file="${wthome}/codebase/WEB-INF/ie.properties"/>
+            </and>
+        </condition>
+        <fail message="WT_HOME not correct, should work in windchill shell." unless="path_correct"/>
+    </target>
+
+    <!--====================================================================-->
+    <!-- Copy Non Java and Non Model Files                                  -->
+    <!--====================================================================-->
+    <target name="fc" depends="check_path, i_filecopy"/>
+    <target name="i_filecopy" depends="i_backup">
+        <copy todir="${wthome}/codebase" verbose="true" overwrite="true">
+            <fileset dir="${base}/src">
+
+                <include name="ext/**/*.properties"/>
+                <include name="ext/**/*.xml"/>
+                <include name="ext/**/*.ini"/>
+                <include name="index.html"/>
+                <include name="ext/**/*.xls"/>
+                <include name="wtcore/**/*"/>
+                <include name="ext/**/*"/>
+                <include name="**/*.xlsx"/>
+
+                <exclude name="ext/**/*.java"/>
+                <exclude name="ext/**/*.rbInfo"/>
+                <exclude name="ext/**/*.cat"/>
+                <exclude name="ext/**/*.mData"/>
+                <exclude name="ext/**/*.bak"/>
+                <exclude name="ext/**/Thumbs.db"/>
+                <exclude name="**/.svn/*.*"/>
+                <exclude name="**/*.class"/>
+
+                <include name="config/**/*.xml"/>
+
+                <include name="WEB-INF/lib/**/*.jar"/>
+                <include name="WEB-INF/tags/**/*.tag"/>
+                <include name="WEB-INF/tlds/**/*.tld"/>
+
+                <include name="netmarkets/**/*.jsp"/>
+                <include name="netmarkets/jsp/**/*.js"/>
+                <include name="netmarkets/javascript/**/*.js"/>
+                <include name="netmarkets/**/*.gif"/>
+                <include name="wtcore/**/*.gif"/>
+                <include name="netmarkets/**/*.jspf"/>
+                <include name="netmarkets/**/*.exe"/>
+                <include name="netmarkets/**/*.pdf"/>
+                <include name="netmarkets/**/*.rar"/>
+                <include name="netmarkets/**/*.zip"/>
+
+            </fileset>
+        </copy>
+    </target>
+
+    <!--====================================================================-->
+    <!-- JavaGen introspect and modelInstall                                -->
+    <!--====================================================================-->
+    <target name="jg" depends="check_path, i_javagen"/>
+    <target name="i_javagen" depends="i_filecopy">
+    </target>
+
+    <!--====================================================================-->
+    <!-- Compiling Java Source                                              -->
+    <!--====================================================================-->
+    <target name="jc" depends="check_path, i_javac"/>
+    <target name="i_javac">
+        <javac srcdir="${base}/src/ext/appo" destdir="${wthome}/codebase" debug="on" encoding="UTF-8">
+            <classpath>
+                <pathelement location="${wthome}/srclib/servlet.jar"/>
+                <fileset dir="${wthome}/codebase/WEB-INF/lib" includes="*.jar"/>
+                <fileset dir="${wthome}/lib" includes="*.jar"/>
+                <fileset dir="${wthome}/srclib" includes="**/*.jar"/>
+                <fileset dir="${wthome}/installer" includes="*.jar"/>
+            </classpath>
+            <include name="change/**/*.java"/>
+            <include name="ecn/resource/changeNoticeActionsRB.java"/>
+            <include name="ecn/resource/changeNoticeActionsRB_zh_CN.java"/>
+            <include name="ecn/filter/EditECNFilter.java"/>
+        </javac>
+    </target>
+
+    <!--====================================================================-->
+    <!-- Build rbInfo Resource Files                                        -->
+    <!--====================================================================-->
+    <target name="rb" depends="check_path, i_filecopy, i_resourcebuild"/>
+    <target name="i_resourcebuild">
+        <exec executable="${shell}">
+            <arg line="${shopt} ${ResourceBuild} wt.lifecycle.StateRB true -Dbundle.forceCompile=true"/>
+        </exec>
+        <exec executable="${shell}">
+            <arg line="${shopt} ${ResourceBuild} wt.project.RoleRB true -Dbundle.forceCompile=true"/>
+        </exec>
+        <!--<exec executable="${shell}">
+            <arg line="${shopt} ${ResourceBuild} ext.generic.wfaugment.processors.processorsResource true -Dbundle.forceCompile=true"/>
+        </exec>
+        <exec executable="${shell}">
+            <arg line="${shopt} ${ResourceBuild} ext.generic.doc.docResource true -Dbundle.forceCompile=true"/>
+        </exec>
+        <exec executable="${shell}">
+            <arg line="${shopt} ${ResourceBuild} ext.generic.esignature.esignatureResource true -Dbundle.forceCompile=true"/>
+        </exec>
+        <exec executable="${shell}">
+            <arg line="${shopt} ${ResourceBuild} ext.generic.util.utilResource true -Dbundle.forceCompile=true"/>
+        </exec>
+        <exec executable="${shell}">
+            <arg line="${shopt} ${ResourceBuild} ext.generic.print.printResource true -Dbundle.forceCompile=true"/>
+        </exec>
+        <exec executable="${shell}">
+            <arg line="${shopt} ${ResourceBuild} ext.generic.part.partResource true -Dbundle.forceCompile=true"/>
+        </exec>-->
+        <exec executable="${shell}">
+            <arg line="${shopt} ${ResourceBuild} wt.part.PartTypeRB true -Dbundle.forceCompile=true"/>
+        </exec>
+        <exec executable="${shell}">
+            <arg line="${shopt} ${ResourceBuild} wt.part.QuantityUnitRB true -Dbundle.forceCompile=true"/>
+        </exec>
+        <exec executable="${shell}">
+            <arg line="${shopt} ${ResourceBuild} wt.part.SourceRB true -Dbundle.forceCompile=true"/>
+        </exec>
+    </target>
+
+    <!--====================================================================-->
+    <!-- Backup Original Classes / Jsp                                      -->
+    <!--====================================================================-->
+    <target name="backup" depends="check_path, i_backup"/>
+    <target name="i_backup">
+
+    </target>
+
+    <!--====================================================================-->
+    <!-- Clean                                                              -->
+    <!--====================================================================-->
+    <!--���Tomact����-->
+    <target name="clean" depends="check_path">
+        <echo>�����������</echo>
+        <delete includeemptydirs="true">
+            <fileset dir="${wthome}/tomcat/instances" includes="**/*"/>
+            <fileset dir="${wthome}/tasks/codebase/com" includes="**/*"/>
+        </delete>
+    </target>
+
+    <!--makejar����-->
+    <target name="jar" depends="check_path">
+        <echo>���ڽ���makejar</echo>
+        <exec executable="${shell}" dir="${wthome}/codebase">
+            <arg value="${shopt}"/>
+            <arg value="ant -f makejar.xml"/>
+        </exec>
+    </target>
+
+    <target name="xc" depends="check_path,i_xconfmanager"/>
+    <target name="i_xconfmanager">
+        <exec executable="${shell}">
+            <arg line="${shopt} ${xconfmanager} -p"/>
+        </exec>
+    </target>
+
+</project>

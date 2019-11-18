@@ -101,7 +101,7 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
                     String type = "";
                     String flowName = "";
                     String description = "";
-                    String changeObjectType = attributesMap.get(CHANGOBJECTETYPE_COMPID);//变更对象类型
+                    String changeObjectType = attributesMap.get(ATTRIBUTE_7);//变更对象类型
                     if (changeObjectType.contains(VALUE_5)) {
                         type = TYPE_1;
                         flowName = FLOWNAME_1;
@@ -236,7 +236,7 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
                 if (AADDESCRIPTION_COMPID.equals(key)) continue;
 
                 //变更对象类型
-                if (CHANGOBJECTETYPE_COMPID.equals(key))
+                if (ATTRIBUTE_7.equals(key))
                     value = value.replaceFirst("BOM变更;", "").replaceFirst("图纸变更;", "");
 
                 attributesMap.put(ibaEntryMap.getKey(), value);

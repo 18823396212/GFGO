@@ -1,3 +1,26 @@
+此次部署涉及文件(复制以下文件到服务器对应目录)：
+    ext.appo.change.*
+
+    codebase/config/actions/modify-actionModels.xml
+    codebase/config/actions/modify-actions.xml
+    codebase/ext/xconf/modify.properties.xconf
+    codebase/config/mvc/appo-custom-configs.xml
+    codebase/modelRegistry.properties.addition
+    codebase/descendentRegistry.properties.addition
+    codebase/ext/generic/cfg/APPO_ECNWF.xlsx
+    codebase/ext/generic/cfg/APPO_BOMCHANGEWF.xlsx
+    codebase/ext/generic/cfg/WFTemplate.addition.xlsx
+    codebase/WEB-INF/lib/APPO-Model.jar
+    codebase/netmarkets/jsp/ext/appo/change/*
+    codebase/ext/appo/change/models/*
+
+    db/sql3/ext/appo/change/*
+    loadFiles/ext/appo/lifecycle/*
+    loadFiles/ext/appo/oir/*
+    loadFiles/ext/appo/workflow/*
+    /appo.xml   -   此文件放到服务器的Windchill目录下
+
+
 1.软类型处理：
     全局枚举:
     A.新增全局枚举「ChangeObjectType」「*变更对象类型」{BOM变更、图纸变更}
@@ -12,7 +35,7 @@
 
     变更申请：
     A.新增全局属性「ActionName」「操作名称」「字符串」创建、编辑、查看视图均不可见
-        B.修改全局属性「ChangeItemType」「变更类型」可见性(编辑)为只读
+    B.修改全局属性「ChangeItemType」「变更类型」可见性(编辑)为只读
 
     更改任务：
     A.新增子类型「图纸变更ECA」 「DrawingsChangeActivity2」
@@ -24,9 +47,8 @@
 
 2.涉及历史文件合并：
     ext.appo.ecn.resource.changeNoticeActionsRB.java
-    ext.appo.ecn.resource.changeNoticeActionsRB_zh_CN
-    ext.appo.ecn.constants.ChangeConstants
-    ext.appo.ecn.filter.EditECNFilter
+    ext.appo.ecn.resource.changeNoticeActionsRB_zh_CN.java
+    ext.appo.ecn.filter.EditECNFilter.java
     复制以上文件含以下标签的内容到服务器对应文件对应位置上（正常情况可以直接覆盖，覆盖之前对比一下两个文件出标签外的其他内容是否一致）
     //add by tongwang 20191023 start
     //add by tongwang 20191023 end
@@ -39,22 +61,53 @@
     <!--modify by wangtong at 20191024 end-->
 
 
-1. 停止Windchill 服务
-   
+3. 修改批量导入文件组织：
+    loadFiles/ext/appo/lifecycle/LoadFileSet_LC.xml
+    loadFiles/ext/appo/oir/LoadFileSet_OIR.xml
+    loadFiles/ext/appo/workflow/LoadFileSet_WF.xml
+    示例：<loadFile filename="ext/appo/lifecycle/APPO_ECNLC.xml" containerPath="/wt.inf.container.OrgContainer=PISX"/>将「PISX」改成对应组织名
 
-2. 注册服务:
+
+4.修改常量类：
+    修改以下常量为系统中的软类型内部值：
+    ext.appo.change.constants.ModifyConstants.TYPE_1    BOM变更ECA
+    ext.appo.change.constants.ModifyConstants.TYPE_2    图纸变更ECA
+    ext.appo.change.constants.ModifyConstants.TYPE_3    事务性任务
+
+
+5. 停止Windchill服务
+
+
+6.更新配置文件：
+    复制codebase/ext/generic/cfg/WFTemplate.addition.xlsx的内容到服务器复制Windchill/codebase/ext/generic/cfg/WFTemplate.xlsx的尾部(「请不要删除此行」前)
+
+
+7. 注册服务：
     复制codebase/descendentRegistry.properties.addition文件内容到Windchill/codebase/descendentRegistry.properties文件尾部。
     复制codebase/modelRegistry.properties.addition文件内容到Windchill/codebase/modelRegistry.properties文件尾部。
 
-3. 创建模型自定义表
-    oracle 用户 进入  代码目录/db\sql3 目录
+8. 创建模型自定义表：
+    oracle 用户 进入  代码目录Windchill/db/sql3 目录
     A，执行sqlplus /nolog
     B，conn <dbUser>/<dbPass>    例如：conn username/password
     C，执行 @ext/appo/change/Make_pkg_change_Table.sql
     D，执行 @ext/appo/change/Make_pkg_change_Index.sql
     E，执行 exit
 
-4. 启动Windchill 服务
+9. 注册xconf文件：
     xconfmanager -i $WT_HOME/codebase/ext/xconf/modify.properties.xconf -p
 
-5. 启动Windchill 服务
+
+10. 编译代码：
+    windchill shell下执行：
+    cd Windchill
+    ant -f appo.xml jc
+
+
+11. 启动Windchill服务(编译成功后)
+
+
+12. 执行导入命令：
+    windchill wt.load.LoadFileSet -file loadFiles/ext/appo/lifecycle/LoadFileSet_LC.xml -u wcadmin -p wcadmin -NOSERVERSTOP -UNATTENDED
+    windchill wt.load.LoadFileSet -file loadFiles/ext/appo/oir/LoadFileSet_OIR.xml -u wcadmin -p wcadmin -NOSERVERSTOP -UNATTENDED
+    windchill wt.load.LoadFileSet -file loadFiles/ext/appo/workflow/LoadFileSet_WF.xml -u wcadmin -p wcadmin -NOSERVERSTOP -UNATTENDED

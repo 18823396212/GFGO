@@ -83,7 +83,7 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
                         //add by tongwang 20191023 end	占时注释
                         return gui_array;
                     }
-                } else if (paramString.contains(ChangeConstants.ARTICLEDISPOSE_COMPID) || paramString.contains(ChangeConstants.INVENTORYDISPOSE_COMPID) || paramString.contains(ChangeConstants.PASSAGEDISPOSE_COMPID) || paramString.contains(ChangeConstants.PRODUCTDISPOSE_COMPID) || paramString.contains(ChangeConstants.CHANGETYPE_COMPID) || paramString.contains(ChangeConstants.CHANGOBJECTETYPE_COMPID)) {
+                } else if (paramString.contains(ChangeConstants.ARTICLEDISPOSE_COMPID) || paramString.contains(ChangeConstants.INVENTORYDISPOSE_COMPID) || paramString.contains(ChangeConstants.PASSAGEDISPOSE_COMPID) || paramString.contains(ChangeConstants.PRODUCTDISPOSE_COMPID) || paramString.contains(ChangeConstants.CHANGETYPE_COMPID) || paramString.contains(ATTRIBUTE_7)) {
                     if (paramObject instanceof WTPart) {
                         GUIComponentArray gui_array = new GUIComponentArray();
                         ComboBox comboBox = generateComboBox(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString));
@@ -189,8 +189,8 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
             enumMap = getEnumeratedMap(ChangeConstants.PRODUCTDISPOSE_COMPID);
         }
         //add by tongwang 20191023 start
-        else if (keyStr.contains(ChangeConstants.CHANGOBJECTETYPE_COMPID)) {
-            enumMap = getEnumeratedMap(ChangeConstants.CHANGOBJECTETYPE_COMPID);
+        else if (keyStr.contains(ATTRIBUTE_7)) {
+            enumMap = getEnumeratedMap(ATTRIBUTE_7);
         }
         //add by tongwang 20191023 end
         else {
