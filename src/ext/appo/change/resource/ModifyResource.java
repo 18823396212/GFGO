@@ -50,4 +50,16 @@ public class ModifyResource extends WTListResourceBundle {
     @RBEntry("pass_16.gif")
     public static final String MY_CUSTOM_19 = "modify.applyTeamTeamplate.icon";
 
+    @RBEntry("Cancel Change Apply")
+    public static final String MY_CUSTOM_20 = "modify.cancelChangeApply.description";
+    @RBEntry("Cancel Change Apply")
+    public static final String MY_CUSTOM_21 = "modify.cancelChangeApply.title";
+    @RBEntry("Cancel Change Apply")
+    public static final String MY_CUSTOM_22 = "modify.cancelChangeApply.tooltip";
+    @RBEntry("reset.gif")
+    public static final String MY_CUSTOM_23 = "modify.cancelChangeApply.icon";
+
+    @RBEntry("即将撤销所有子流程，是否继续！")
+    public static final String MY_CUSTOM_24 = "MY_CUSTOM_24";
+
 }

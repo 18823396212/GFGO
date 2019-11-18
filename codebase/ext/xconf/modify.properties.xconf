@@ -6,4 +6,8 @@
     <Service context="default" name="com.ptc.core.components.descriptor.DataUtility">
         <Option serviceClass="ext.appo.change.datautility.ExtReviewPrincipalDataUtility" requestor="java.lang.Object" selector="ExtReviewPrincipalDataUtility" cardinality="duplicate"/>
     </Service>
+
+    <Service context="default" name="com.ptc.core.ui.validation.SimpleValidationFilter">
+       	<Option serviceClass="ext.appo.change.validator.CancelChangeApplyFilter" selector="CancelChangeApplyFilter" requestor="null" />
+    </Service>
 </Configuration>

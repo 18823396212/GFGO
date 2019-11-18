@@ -36,6 +36,11 @@
         <action name="teamTeamplate_step">
             <command windowType="wizard_step" url="netmarkets/jsp/ext/generic/reviewprincipal/teamTeamplate_step.jsp"/>
         </action>
+
+        <action name="cancelChangeApply" ajax="row">
+            <command class="ext.appo.change.processor.CancelChangeApplyProcessor" method="execute" onClick="JCAConfirm(event,'ext.appo.change.resource.ModifyResource.MY_CUSTOM_24')"/>
+            <includeFilter name="CancelChangeApplyFilter"/>
+        </action>
     </objecttype>
 
 </listofactions>

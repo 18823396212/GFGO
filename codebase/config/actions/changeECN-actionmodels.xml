@@ -7,6 +7,7 @@
         <action name="editEngineeringChangeOrder" type="changeNotice"/>     <!-- add by kwang : 工程ECN编辑按钮 -->
         <!--modify by wangtong at 20191024 start-->
         <action name="editChangeOrder" type="modify"/>     <!-- 变更申请编辑按钮 -->
+        <action name="cancelChangeApply" type="modify"/>     <!-- 取消变更申请按钮 -->
         <!--modify by wangtong at 20191024 end-->
         <action name="separator" type="separator"/>
         <action name="view" type="object"/>
