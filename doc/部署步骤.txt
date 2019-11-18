@@ -1,5 +1,6 @@
 此次部署涉及文件(复制以下文件到服务器对应目录)：
     ext.appo.change.*
+    wt.workflow.*
 
     codebase/config/actions/modify-actionModels.xml
     codebase/config/actions/modify-actions.xml
@@ -101,6 +102,9 @@
 
 9. 注册xconf文件：
     xconfmanager -i $WT_HOME/codebase/ext/xconf/modify.properties.xconf -p
+    ant -f $WT_HOME/bin/tools.xml class -Dclass.includes=wt/workflow/robots/synchEventResource.java
+    ant -f $WT_HOME/bin/tools.xml class -Dclass.includes=wt/workflow/engine/WfCustomEventTypeResource.java
+    ant -f $WT_HOME/codebase/MakeJar.xml custUpdate
 
 
 10. 编译代码：
