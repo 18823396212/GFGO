@@ -109,8 +109,7 @@
         </action>
 
         <action name="editPartCommonAttrsWizard" ajax="row">
-            <command class="com.ptc.windchill.enterprise.part.forms.EditPartCommonAttrsFormProcessor" method="execute"
-                     windowType="popup"/>
+            <command class="com.ptc.windchill.enterprise.part.forms.EditPartCommonAttrsFormProcessor" method="execute" windowType="popup"/>
             <includeFilter name="sandboxSharingValidationSimple"/>
             <includeFilter name="hideSBHiddenFilter"/>
             <includeFilter name="EditPartCommonAttrsWizardFilter"/>
@@ -121,34 +120,34 @@
     </objecttype>
 
     <objecttype name="changeNotice" resourceBundle="ext.appo.ecn.resource.changeNoticeActionsRB">
-        <!-- 创建变更申请ECN对象 -->
+		<!-- 创建工程ECN对象 -->
         <action name="createEngineeringChangeOrder" ajax="component" uicomponent="CREATE_CHANGENOTICE">
-            <command url="/netmarkets/jsp/ext/appo/change/request/createEngineeringECN.jsp" windowType="popup" class="ext.appo.change.processor.ExtCreateChangeNoticeFormProcessor" method="excute"/>
+           <command url="/netmarkets/jsp/ext/appo/changeNotice/createEngineeringECN.jsp" windowType="popup" class="ext.appo.ecn.processor.ExtCreateChangeNoticeFormProcessor" method="excute" />
         </action>
 
         <action name="createEngineeringChangeOrderStep" id="createEngineeringChangeOrderStep" preloadWizardPage="false" required="false">
-            <command url="/netmarkets/jsp/ext/appo/change/request/createEngineeringECNStep.jsp" class="" windowType="wizard_step"/>
-        </action>
-
-        <!-- 编辑变更申请ECN对象 -->
-        <action name="editEngineeringChangeOrder" ajax="row">
-            <command url="/netmarkets/jsp/ext/appo/changeNotice/editEngineeringECN.jsp" windowType="popup" class="ext.appo.ecn.processor.ExtEditChangeNoticeFormProcessor" method="excute"/>
-            <includeFilter name="editECNFilter"/>
-        </action>
-
-        <action name="editEngineeringChangeOrderStep" id="editEngineeringChangeOrderStep" preloadWizardPage="false" required="false">
-            <command url="netmarkets/jsp/ext/appo/changeNotice/editEngineeringECNStep.jsp" class="" windowType="wizard_step"/>
+           <command  url="netmarkets/jsp/ext/appo/changeNotice/createEngineeringECNStep.jsp" class="" windowType="wizard_step"/>
         </action>
 
         <!-- 受影响上层物料表 -->
         <action name="affectedUpperMaterialsTableBuilder">
             <component name="ext.appo.ecn.mvc.builder.AffectedUpperMaterialsTableBuilder" windowType="page"/>
-            <includeFilter name="AffectedMaterialsFilter"/>
+         <includeFilter name="AffectedMaterialsFilter"></includeFilter>
         </action>
         <!-- 受影响下层物料表 -->
         <action name="affectedDownMaterialsTableBuilder">
             <component name="ext.appo.ecn.mvc.builder.AffectedDownMaterialsTableBuilder" windowType="page"/>
-            <includeFilter name="AffectedMaterialsFilter"/>
+         <includeFilter name="AffectedMaterialsFilter"></includeFilter>
+         </action>
+
+		<!-- 编辑工程ECN对象 -->
+		<action name="editEngineeringChangeOrder" ajax="row">
+           <command url="/netmarkets/jsp/ext/appo/changeNotice/editEngineeringECN.jsp" windowType="popup" class="ext.appo.ecn.processor.ExtEditChangeNoticeFormProcessor" method="excute" />
+		   <includeFilter name="editECNFilter"/>
+        </action>
+
+		<action name="editEngineeringChangeOrderStep" id="editEngineeringChangeOrderStep" preloadWizardPage="false" required="false">
+           <command  url="netmarkets/jsp/ext/appo/changeNotice/editEngineeringECNStep.jsp" class="" windowType="wizard_step"/>
         </action>
 
         <!-- 受影响对象表单 -->
@@ -247,8 +246,7 @@
     <!-- 产品模型导入 -->
     <objecttype name="partStruct" resourceBundle="ext.appo.part.resource.PartResourceRB">
         <action name="buildStruct">
-            <command class="ext.appo.part.processor.GenerateProductStructureProcessor" method="execute"
-                     url="netmarkets/jsp/ext/appo/part/BuildStruct.jsp" windowType="popup"/>
+            <command class="ext.appo.part.processor.GenerateProductStructureProcessor" method="execute" url="netmarkets/jsp/ext/appo/part/BuildStruct.jsp" windowType="popup"/>
             <includeFilter name="buildStructFilter"/>
         </action>
         <action name="buildStructWizardStep">
@@ -259,8 +257,7 @@
     <!-- BOM结构导入 -->
     <objecttype name="importData" resourceBundle="ext.appo.bom.resource.bomResourceRB">
         <action name="importPartStruct">
-            <command class="ext.appo.bom.processor.ImportProductStructureProcessor" method="execute"
-                     url="netmarkets/jsp/ext/appo/bom/ImportPartStruct.jsp" windowType="popup"/>
+            <command class="ext.appo.bom.processor.ImportProductStructureProcessor" method="execute" url="netmarkets/jsp/ext/appo/bom/ImportPartStruct.jsp" windowType="popup"/>
         </action>
         <action name="importPartStructWizardStep">
             <command url="netmarkets/jsp/ext/appo/bom/ImportPartStructWizardStep.jsp" windowType="wizard_step"/>
@@ -279,8 +276,7 @@
     <!-- 文档归档按钮 -->
     <objecttype name="cusAppoDoc" resourceBundle="ext.appo.doc.resource.DocWorkflowRB">
         <action name="appoDocArchived">
-            <command class="ext.appo.doc.processor.DocArchivedWorkflowProcessor" method="execute"
-                     onClick="JCAConfirm(event,'ext.appo.doc.resource.DocWorkflowRB.confirmToDocSign')"/>
+            <command class="ext.appo.doc.processor.DocArchivedWorkflowProcessor" method="execute" onClick="JCAConfirm(event,'ext.appo.doc.resource.DocWorkflowRB.confirmToDocSign')"/>
             <includeFilter name="docArchivedWorkflowFilter"/>
             <supportedTypes>
                 <type value="wt.doc.WTDocument|com.ptc.ReferenceDocument"/>
@@ -291,36 +287,29 @@
 
     <objecttype resourceBundle="ext.appo.part.resource.PartResourceRB" name="partProductNamingNotice">
         <action name="productNamingNotice">
-            <command url="netmarkets/jsp/ext/appo/part/partProductNamingNotice/productNamingNotice.jsp"
-                     windowType="popup"/>
+            <command url="netmarkets/jsp/ext/appo/part/partProductNamingNotice/productNamingNotice.jsp" windowType="popup"/>
         </action>
     </objecttype>
 
     <!-- 创建部件按钮 -->
     <objecttype name="part" class="wt.part.WTPart" resourceBundle="com.ptc.windchill.enterprise.part.partResource">
         <action name="createPartWizard" uicomponent="CREATE_PART" ajax="row">
-            <command class="ext.appo.part.processor.CusCreatePartAndCADDocFormProcessor" method="execute"
-                     url="/netmarkets/jsp/part/createPartWizard.jsp?revisionMode=create&amp;showNewCADDocStep=true&amp;hideAssociatePart=true"
-                     onClick="validateCreateLocation(event)" windowType="popup"/>
+            <command class="ext.appo.part.processor.CusCreatePartAndCADDocFormProcessor" method="execute" url="/netmarkets/jsp/part/createPartWizard.jsp?revisionMode=create&amp;showNewCADDocStep=true&amp;hideAssociatePart=true" onClick="validateCreateLocation(event)" windowType="popup"/>
             <includeFilter name="showNewActionPreValidation"/>
         </action>
         <action name="createMultiPart" uicomponent="CREATE_PART" ajax="row">
-            <command class="ext.appo.part.processor.CusCreateMultiPartFormProcessor" method="execute"
-                     onClick="validateCreateLocation(event)" windowType="popup"
-                     url="/netmarkets/jsp/part/createPartWizard.jsp?wizardType=multiPart"/>
+            <command class="ext.appo.part.processor.CusCreateMultiPartFormProcessor" method="execute" onClick="validateCreateLocation(event)" windowType="popup" url="/netmarkets/jsp/part/createPartWizard.jsp?wizardType=multiPart"/>
             <includeFilter name="showNewActionPreValidation"/>
         </action>
     </objecttype>
 
     <objecttype name="engineerPart" resourceBundle="ext.appo.part.resource.PartResourceRB">
         <action name="engineerPartPublish">
-            <command class="ext.appo.part.processor.EngineerPartStartProcessor" method="execute"
-                     onClick="JCAConfirm(event,'ext.appo.part.resource.PartResourceRB.confirmToEngineerPartSign')"/>
+            <command class="ext.appo.part.processor.EngineerPartStartProcessor" method="execute" onClick="JCAConfirm(event,'ext.appo.part.resource.PartResourceRB.confirmToEngineerPartSign')"/>
             <includeFilter name="engineerPartPublishFilter"/>
         </action>
         <action name="designPartPublish">
-            <command class="ext.appo.part.processor.DesignPartStartProcessor" method="execute"
-                     onClick="JCAConfirm(event,'ext.appo.part.resource.PartResourceRB.confirmToDesignPartSign')"/>
+            <command class="ext.appo.part.processor.DesignPartStartProcessor" method="execute" onClick="JCAConfirm(event,'ext.appo.part.resource.PartResourceRB.confirmToDesignPartSign')"/>
             <includeFilter name="designPartPublishFilter"/>
         </action>
     </objecttype>
@@ -335,8 +324,7 @@
     <!-- CIS库发布按钮 -->
     <objecttype name="cis" resourceBundle="ext.generic.integration.cis.resource.CisActionsRB">
         <action name="sendToCis" ajax="page">
-            <command class="ext.generic.integration.cis.processors.PublishDocToCISProcessor" method="execute"
-                     checkaccess="true" url="netmarkets/jsp/ext/appo/part/cis/sendToCis.jsp" windowType="popup"/>
+            <command class="ext.generic.integration.cis.processors.PublishDocToCISProcessor" method="execute" checkaccess="true" url="netmarkets/jsp/ext/appo/part/cis/sendToCis.jsp" windowType="popup"/>
             <includeFilter name="cisFilter"/>
         </action>
         <action name="sendToCis_step" ajax="page">
