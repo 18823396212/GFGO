@@ -34,8 +34,7 @@
             <component name="ext.appo.part.builder.BaseLineTreeBuilder"/>
         </action>
         <action name="exportBaselineMaterials">
-            <command url="netmarkets/jsp/ext/appo/part/baseline/ExportEffecitveBaseline.jsp"
-                     windowType="popup"></command>
+            <command url="netmarkets/jsp/ext/appo/part/baseline/ExportEffecitveBaseline.jsp" windowType="popup"></command>
         </action>
     </objecttype>
 
@@ -122,7 +121,6 @@
     </objecttype>
 
     <objecttype name="changeNotice" resourceBundle="ext.appo.ecn.resource.changeNoticeActionsRB">
-        <!--modify by wangtong at 20191024 start-->
         <!-- 创建变更申请ECN对象 -->
         <action name="createEngineeringChangeOrder" ajax="component" uicomponent="CREATE_CHANGENOTICE">
             <command url="/netmarkets/jsp/ext/appo/change/request/createEngineeringECN.jsp" windowType="popup" class="ext.appo.change.processor.ExtCreateChangeNoticeFormProcessor" method="excute"/>
@@ -141,7 +139,6 @@
         <action name="editEngineeringChangeOrderStep" id="editEngineeringChangeOrderStep" preloadWizardPage="false" required="false">
             <command url="netmarkets/jsp/ext/appo/changeNotice/editEngineeringECNStep.jsp" class="" windowType="wizard_step"/>
         </action>
-        <!--modify by wangtong at 20191024 end-->
 
         <!-- 受影响上层物料表 -->
         <action name="affectedUpperMaterialsTableBuilder">

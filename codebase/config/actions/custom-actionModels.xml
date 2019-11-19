@@ -592,7 +592,12 @@
         <action name="createUDI" type="udi"/>                                                     <!-- New UDI Submission -->
         <!--action   name="createDCNChangeOrder"                       type="changeNotice" shortcut="true"/-->                            <!-- add Kwang : 创建DCN-ECN -->
         <!--action   name="createDesignChangeOrder"                    type="changeNotice" shortcut="true"/-->                            <!-- add Kwang : 创建设计ECN -->
-        <action name="createEngineeringChangeOrder" type="changeNotice" shortcut="true"/>                            <!-- add Kwang : 创建工程ECN -->
+
+        <!--modify by wangtong at 20191024 start-->
+        <!--action name="createEngineeringChangeOrder" type="changeNotice" shortcut="true"/-->           <!-- add Kwang : 创建工程ECN -->
+        <action name="createChangeOrder" type="modify" shortcut="true"/>                                 <!-- add Twang : 创建工程ECN -->
+        <!--modify by wangtong at 20191024 end-->
+
     </model>
 
     <model name="Product_Naming_Notic">

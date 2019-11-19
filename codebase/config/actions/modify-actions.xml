@@ -7,6 +7,15 @@
             <command class="" method="" windowType="page" url="javascript:ChangeManagementSubmitHandler.submitChangeWizard();"/>
         </action>
 
+        <!-- 创建变更申请ECN对象 -->
+        <action name="createChangeOrder" ajax="component" uicomponent="CREATE_CHANGENOTICE">
+            <command url="/netmarkets/jsp/ext/appo/change/request/createEngineeringECN.jsp" windowType="popup" class="ext.appo.change.processor.ExtCreateChangeNoticeFormProcessor" method="excute"/>
+        </action>
+
+        <action name="createChangeOrderStep" id="createChangeOrderStep" preloadWizardPage="false" required="false">
+            <command url="/netmarkets/jsp/ext/appo/change/request/createEngineeringECNStep.jsp" class="" windowType="wizard_step"/>
+        </action>
+
         <!-- 编辑变更申请ECN对象 -->
         <action name="editChangeOrder" ajax="row">
             <command url="/netmarkets/jsp/ext/appo/change/request/editChangeOrder.jsp" windowType="popup" class="ext.appo.change.processor.ExtEditChangeNoticeFormProcessor" method="excute"/>
