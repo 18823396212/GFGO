@@ -101,7 +101,7 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
                     String type = "";
                     String flowName = "";
                     String description = "";
-                    String changeObjectType = attributesMap.get(ATTRIBUTE_7);//变更对象类型
+                    String changeObjectType = attributesMap.get(ATTRIBUTE_7) == null ? "" : attributesMap.get(ATTRIBUTE_7);//变更对象类型
                     if (changeObjectType.contains(VALUE_5)) {
                         type = TYPE_1;
                         flowName = FLOWNAME_1;
