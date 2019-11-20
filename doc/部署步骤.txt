@@ -63,8 +63,8 @@
     <!--modify by wangtong at 20191024 end-->
 
     codebase/ext/generic/config/ReviewprincipalRule.xml
-    确认以下标签的值为：ClassNodeInternalName
-    <classfication name="Classfication">ClassNodeInternalName</classfication>
+    确认以下标签的值为：ClassNodeName
+    <classfication name="Classfication">ClassNodeName</classfication>
 
 
 3. 修改批量导入文件组织：

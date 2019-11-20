@@ -50,6 +50,10 @@
             <command class="ext.appo.change.processor.CancelChangeApplyProcessor" method="execute" onClick="JCAConfirm(event,'ext.appo.change.resource.ModifyResource.MY_CUSTOM_24')"/>
             <includeFilter name="CancelChangeApplyFilter"/>
         </action>
+
+        <action name="changeHistory">
+            <component name="ext.appo.change.mvc.builder.ChangeHistoryTableBuilder"/>
+        </action>
     </objecttype>
 
 </listofactions>
