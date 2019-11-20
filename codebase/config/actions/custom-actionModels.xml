@@ -524,6 +524,9 @@
         <action name="sysnavTab" type="sysnav"/>
         <!--<action   name="wtObjectBaselinelink" type="querylink"/> --><!-- Add Kwang : 文档相关基线 -->
         <action name="docRelationPart" type="partProductNamingNotice"/>
+        <!--modify by wangtong at 20191024 start-->
+        <action name="changeHistory" type="modify"/>    <!-- Add Twang : 变更履历 -->
+        <!--modify by wangtong at 20191024 end-->
     </model>
 
     <model name="cadInfoPageTabSet">
