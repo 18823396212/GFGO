@@ -5,30 +5,31 @@
 <Configuration targetFile="codebase/ext/xconf/appo.properties">
 	<Service name="com.ptc.core.components.descriptor.DataUtility">
 	    <Option serviceClass="ext.appo.ecn.datautiliy.AffectedItemsDataUtility" requestor="java.lang.Object" selector="customizationDataUtility" cardinality="duplicate"/>
+		<Option serviceClass="ext.appo.part.dataUtilities.NewReviewObjectDataUtility" requestor="java.lang.Object" selector="newReviewObjectDataUtility" cardinality="duplicate"/>
 		<Option serviceClass="ext.appo.ecn.datautiliy.AffectedItemsDataUtility" requestor="java.lang.Object" selector="IBA|ArticleInventory" cardinality="duplicate"/>
 	    <Option serviceClass="ext.appo.ecn.datautiliy.AffectedItemsDataUtility" requestor="java.lang.Object" selector="IBA|PassageInventory" cardinality="duplicate"/>
-	    <Option serviceClass="ext.appo.ecn.datautiliy.AffectedItemsDataUtility" requestor="java.lang.Object" selector="IBA|CentralWarehouseInventory" cardinality="duplicate"/>
-		<Option serviceClass="ext.appo.ecn.datautiliy.AffectedItemsDataUtility" requestor="java.lang.Object" selector="IBA|ArticleDispose" cardinality="duplicate"/>
-		<Option serviceClass="ext.appo.ecn.datautiliy.AffectedItemsDataUtility" requestor="java.lang.Object" selector="IBA|PassageDispose" cardinality="duplicate"/>
-		<Option serviceClass="ext.appo.ecn.datautiliy.AffectedItemsDataUtility" requestor="java.lang.Object" selector="IBA|InventoryDispose" cardinality="duplicate"/>
-		<Option serviceClass="ext.appo.ecn.datautiliy.AffectedItemsDataUtility" requestor="java.lang.Object" selector="IBA|ProductDispose" cardinality="duplicate"/>
-		<Option serviceClass="ext.appo.ecn.datautiliy.AffectedItemsDataUtility" requestor="java.lang.Object" selector="IBA|ChangeType" cardinality="duplicate"/>
-		<Option serviceClass="ext.appo.ecn.datautiliy.AffectedItemsDataUtility" requestor="java.lang.Object" selector="IBA|CompletionTime" cardinality="duplicate"/>
-		<Option serviceClass="ext.appo.ecn.datautiliy.AffectedItemsDataUtility" requestor="java.lang.Object" selector="aadDescription" cardinality="duplicate"/>
-		<Option serviceClass="ext.appo.ecn.datautiliy.AffectedItemsDataUtility" requestor="java.lang.Object" selector="crDescription" cardinality="duplicate"/>
 	    <Option serviceClass="ext.appo.ecn.datautiliy.UserPickerDataUtility" requestor="java.lang.Object" selector="IBA|ResponsiblePerson" cardinality="duplicate"/>
+	    <Option serviceClass="ext.appo.ecn.datautiliy.AffectedItemsDataUtility" requestor="java.lang.Object" selector="IBA|CentralWarehouseInventory" cardinality="duplicate"/>   
+		<Option serviceClass="ext.appo.ecn.datautiliy.AffectedItemsDataUtility" requestor="java.lang.Object" selector="IBA|ArticleDispose" cardinality="duplicate"/>   
+		<Option serviceClass="ext.appo.ecn.datautiliy.AffectedItemsDataUtility" requestor="java.lang.Object" selector="IBA|PassageDispose" cardinality="duplicate"/>   
+		<Option serviceClass="ext.appo.ecn.datautiliy.AffectedItemsDataUtility" requestor="java.lang.Object" selector="IBA|InventoryDispose" cardinality="duplicate"/>   
+		<Option serviceClass="ext.appo.ecn.datautiliy.AffectedItemsDataUtility" requestor="java.lang.Object" selector="IBA|ProductDispose" cardinality="duplicate"/>   
+		<Option serviceClass="ext.appo.ecn.datautiliy.AffectedItemsDataUtility" requestor="java.lang.Object" selector="IBA|ChangeType" cardinality="duplicate"/>   
+		<Option serviceClass="ext.appo.ecn.datautiliy.AffectedItemsDataUtility" requestor="java.lang.Object" selector="IBA|CompletionTime" cardinality="duplicate"/> 
 		<Option serviceClass="ext.appo.part.dataUtilities.BaseLineDataUtility" requestor="java.lang.Object" selector="baseLineDataUtility" cardinality="duplicate"/>
 
+		<Option serviceClass="ext.appo.ecn.datautiliy.AffectedItemsDataUtility" requestor="java.lang.Object" selector="aadDescription" cardinality="duplicate"/>   
+		<Option serviceClass="ext.appo.ecn.datautiliy.AffectedItemsDataUtility" requestor="java.lang.Object" selector="crDescription" cardinality="duplicate"/>   
 		<Option serviceClass="ext.appo.part.dataUtilities.CISAttributeDataUtility" requestor="java.lang.Object" selector="cisAttributeDataUtility" cardinality="duplicate"/>
 		<Option serviceClass="ext.appo.part.dataUtilities.CISReviewObjectTableAttributeDataUtility" requestor="java.lang.Object" selector="cisReviewObjectTableAttributeDataUtility" cardinality="duplicate"/>
 		<Option serviceClass="ext.appo.part.dataUtilities.ItemStageControlDataUtility" requestor="java.lang.Object" selector="itemStageControlDataUtility" cardinality="duplicate"/>
     	<Option serviceClass="ext.appo.part.dataUtilities.ProductNamingNoticDataUtility" requestor="java.lang.Object" selector="productNamingNoticDataUtility" cardinality="duplicate"/>
 		<Option serviceClass="ext.appo.part.dataUtilities.ShowProductNamingNoticDataUtility" requestor="java.lang.Object" selector="showProductNamingNoticDataUtility" cardinality="duplicate"/>
 		<Option serviceClass="ext.appo.work.dataUtilities.AppoWorkItemDataUtitly" requestor="java.lang.Object" selector="IBA|appo_opensWorkItem_Owner" cardinality="duplicate"/>   
-		<Option serviceClass="ext.appo.work.dataUtilities.AppoWorkItemDataUtitly" requestor="java.lang.Object" selector="IBA|appo_opensWorkItem_Name" cardinality="duplicate"/>
+		<Option serviceClass="ext.appo.work.dataUtilities.AppoWorkItemDataUtitly" requestor="java.lang.Object" selector="IBA|appo_opensWorkItem_Name" cardinality="duplicate"/>   
+		<Option serviceClass="ext.appo.part.dataUtilities.AppoAttributeDataUtitly" requestor="java.lang.Object" selector="appoAttributeDataUtitly" cardinality="duplicate"/>  
 		<Option serviceClass="ext.appo.ecn.datautiliy.ChangeTaskDataUtility" requestor="java.lang.Object" selector="ChangeTaskDataUtility" cardinality="duplicate"/> 			
-		<Option serviceClass="ext.appo.util.dataUtitlies.AppoAttributeDataUtitly" requestor="java.lang.Object" selector="appoAttributeDataUtitly" cardinality="duplicate"/> 
-		<Option serviceClass="ext.appo.part.dataUtilities.NewReviewObjectDataUtility" requestor="java.lang.Object" selector="newReviewObjectDataUtility" cardinality="duplicate"/>		
+		<Option serviceClass="ext.appo.util.dataUtitlies.AppoAttributeDataUtitly" requestor="java.lang.Object" selector="appoAttributeDataUtitly" cardinality="duplicate"/> 			
     </Service>
 
    <Service context="default" name="com.ptc.core.ui.validation.SimpleValidationFilter">
@@ -45,12 +46,17 @@
 		<Option serviceClass="ext.appo.ecn.filter.AffectedMaterialsFilter" selector="AffectedMaterialsFilter" requestor="null" />
 		<Option serviceClass="ext.appo.part.filter.StandardPartsReviseFilter" selector="StandardPartsReviseFilter" requestor="null" />
 		<Option serviceClass="ext.appo.part.filter.PartDocRelationValidator" selector="PartDocRelationValidator" requestor="null" />		
-		<Option serviceClass="ext.appo.part.filter.PartReplacementFilter" selector="PartReplacementFilter" requestor="null" />
-		<Option serviceClass="ext.appo.doc.uploadDoc.validator.ManualSendDCCValidator" selector="ManualSendDCCValidator" requestor="null" />
-		<Option serviceClass="ext.appo.part.filter.EditPartCommonAttrsWizardFilter" selector="EditPartCommonAttrsWizardFilter" requestor="null" />
-		<Option serviceClass="ext.appo.part.filter.queryInventoryPriceFilter" selector="queryInventoryPriceFilter" requestor="null" />	
-		<Option serviceClass="ext.appo.part.filter.IsAdministratorFilter" selector="IsAdministratorFilter" requestor="null" />
-		<Option serviceClass="ext.appo.part.filter.StandardPartAttrChangeFilter" selector="standardPartAttrChangeFilter" requestor="null" />	  
+   <Option serviceClass="ext.appo.part.filter.PartReplacementFilter" selector="PartReplacementFilter" requestor="null" />
+   <Option serviceClass="ext.appo.doc.uploadDoc.validator.ManualSendDCCValidator" selector="ManualSendDCCValidator" requestor="null" />
+   <Option serviceClass="ext.appo.part.filter.EditPartCommonAttrsWizardFilter" selector="EditPartCommonAttrsWizardFilter" requestor="null" />
+   <Option serviceClass="ext.appo.part.filter.queryInventoryPriceFilter" selector="queryInventoryPriceFilter" requestor="null" />	
+   <Option serviceClass="ext.appo.part.filter.StandardPartAttrChangeFilter" selector="standardPartAttrChangeFilter" requestor="null" />
+   <Option serviceClass="ext.appo.part.filter.DisableForPartTotheRawMaterials" selector="disableForPartTotheRawMaterials" requestor="null" />
+
+   <!--modify by lzy at 20191024 start-->
+   <Option serviceClass="ext.appo.change.filter.BomChangeReportFilter" selector="bomChangeReportFilter" requestor="null" />
+   <!--modify by lzy at 20191024 end-->
+
    </Service>
    
    <Service context="default" name="com.ptc.core.ui.validation.UIComponentValidator">

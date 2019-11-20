@@ -1,0 +1,2192 @@
+<?xml version="1.0"?>
+<!DOCTYPE actionmodels SYSTEM 'actionmodels.dtd'>
+<!-- define the actions on the UI components -->
+<actionmodels>
+
+<model name="product structure toolbar">
+  <action name="list_delete" type="part"/>
+  <action name="list_paste" type="part"/>
+  <action name="separator" type="separator"/>
+  <action name="viewParent" type="part"/>
+  <action name="explode" type="folder"/>
+  <action name="implode" type="folder"/>
+</model>
+
+<model name="info page table actions">
+  <action name="copy" type="object"/>
+</model>
+
+<model name="read only BOM">
+  <action name="viewParent" type="part"/>
+  <action name="explode" type="folder"/>
+  <action name="implode" type="folder"/>
+</model>
+
+<model name="reference docs toolbar">
+  <action name="copy" type="object"/>
+  <action name="list_delete_references" type="part"/>
+  <action name="list_paste_references" type="part"/>
+</model>
+
+<model name="part struc search row model">
+  <action name="addPartUses" type="part"/>
+</model>
+
+<model name="project list">
+  <action name="createProject" type="project" shortcut="true"/>
+  <action name="createProplProject" type="project" shortcut="true"/>
+  <action name="addToFavorites" type="object" shortcut="true"/>
+</model>
+
+<model name="project list favorites">
+  <action name="createProject" type="project" shortcut="true"/>
+  <action name="createProplProject" type="project" shortcut="true"/>
+  <action name="removeFromFavorites" type="object" shortcut="true"/>
+</model>
+<model name="program list">
+  <action name="createProplProgram" type="project" shortcut="true"/>
+  <action name="create_program" type="project" shortcut="true"/>
+  <action name="addToFavorites" type="object" shortcut="true"/>
+</model>
+
+<model name="program list favorites">
+  <action name="create_program" type="project" shortcut="true"/>
+  <action name="createProplProgram" type="project" shortcut="true"/>
+  <action name="removeFromFavorites" type="object" shortcut="true"/>
+</model>
+
+<model name="project list for delete">
+  <action name="removeContent" type="project"/>
+  <action name="createProject" type="project"/>
+</model>
+
+<model name="pdm docs attachments actions">
+  <action name="list_delete" type="object"/>
+  <action name="add_attachment" type="document"/>
+  <action name="add_url_attachment" type="document"/>
+  <action name="AddSCMActionComponent" type="object"/>
+</model>
+
+
+<!-- list used for parts on the Projectlink folders page -->
+<model name="parts row actions">
+  <action name="download" type="part"/>
+  <action name="view" type="part"/>
+  <action name="viewProductStructure" type="part"/>
+  <action name="reference" type="notebook"/>
+  <action name="route" type="workflow"/>
+  <action name="setState" type="lifecycle"/>
+  <action name="discussTable" type="forum"/>
+  <action name="createSubscription" type="subscription"/>
+  <action name="checkout" type="object"/>
+  <action name="checkin" type="wip"/>
+  <action name="undocheckout" type="object"/>
+  <action name="WFDOWNLOAD" type="epmdocument"/>
+  <action name="MULTIRENAME" type="pdmObject"/>
+  <action name="WFSAVEAS" type="pdmObject"/>
+  <action name="edit" type="part"/>
+  <action name="checkoutAndEdit" type="part"/>
+  <action name="MULTI_OBJ_DELETE" type="pdmObject"/>
+  <action name="bookmarkIt" type="bookmark"/>
+  <action name="cut" type="object"/>
+  <action name="copy" type="object"/>
+  <action name="export" type="object"/>
+  <action name="SBSendToPdm" type="sandbox"/>
+  <action name="removeShare" type="object"/>
+  <action name="updateAttachments" type="part"/>
+  <action name="erpInfo" type="esi"/>
+  <action name="ManageSecurity" type="accessPermission"/>
+  <action name="securityLabelsSingleObjJCA" type="securityLabels"/>
+</model>
+
+<!-- list used for CAD documents in Projectlink -->
+
+<!-- action model used for Project info page actions as well as Project table row level actions -->
+<model name="project row actions toolbar" menufor="wt.projmgmt.admin.Project2">
+  <action name="view" type="object"/>
+  <action name="separator" type="separator"/>
+  <action name="start" type="project"/>
+  <action name="startProgram" type="project"/>
+  <action name="cancel" type="project"/>
+  <action name="cancelProgram" type="project"/>
+  <action name="suspend" type="project"/>
+  <action name="suspendProgram" type="project"/>
+  <action name="complete" type="project"/>
+  <action name="completeProgram" type="project"/>
+  <action name="updateProject" type="project"/>
+  <action name="updateProjectPROPL" type="project"/>
+  <action name="updateProgram" type="project"/>
+  <action name="updateProgramPROPL" type="project"/>
+
+  <action name="separator" type="separator"/>
+  <action name="createPartWizard" type="part"/>
+  <action name="createMultiPart" type="part"/>
+  <action name="createBaseline" type="baseline"/> <!-- New Baseline -->
+  <action name="create_plan" type="plan"/>
+  <action name="importProject" type="project"/>
+  <action name="separator" type="separator"/>
+  <action name="save_project_as_project" type="project"/>
+  <action name="save_program_as_program" type="project"/>
+  <action name="save_project_as_template" type="project"/>
+  <action name="export_project_as_template" type="project"/>
+  <action name="export_project_objects" type="project"/>
+  <action name="deleteProject" type="project"/>
+  <action name="deleteProgram" type="project"/>
+  <action name="restore" type="project"/>
+  <action name="removeContent" type="project"/>
+  <action name="separator" type="separator"/>
+  <action name="registerInCAD" type="project"/>
+  <action name="registerInUWGM" type="project"/>
+  <action name="separator" type="separator"/>
+  <action name="addToFavorites" type="object"/>
+  <action name="removeFromFavorites" type="object"/>
+  <action name="convert_toepp_project" type="project"/>
+  <submodel name="wsl_submenu" />
+  <action name="ManageSecurity" type="accessPermission"/>
+  <action name="createSubscription" type="subscription"/>
+</model>
+
+<model name="ProjectSharingFilter" >
+  <action name="viewFilter" type="sharingFilter"/>
+</model>
+
+<!-- remove this action model since its no more used -->
+<model name="GeneralModelProject2" resourceBundle="com.ptc.netmarkets.projmgmt.projmgmtActionsRB">
+  <action name="attributes" type="project"/>
+  <action name="primaryAttributes" type="object"/>
+  <action name="reference" type="notebook"/>
+</model>
+<model name="third_level_nav_project">
+  <submodel name="general"/>              <!-- General -->
+  <submodel name="relatedItems"/>         <!-- Related Objects -->
+  <submodel name="collaboration"/>                      <!-- Collaboration -->
+</model>
+
+<model name="posting actions">
+  <action name="create" type="forumPosting"/>
+  <action name="subscribe" type="forumPosting"/>
+</model>
+
+<model name="attachment search row model">
+  <action name="attachToPosting" type="forumPosting"/>
+</model>
+
+<model name="subscribed forum actions">
+  <action name="list_delete" type="forum"/>
+  <action name="separator" type="separator"/>
+  <action name="explode" type="folder"/>
+  <action name="implode" type="folder"/>
+  <action name="separator" type="separator"/>
+  <action name="create" type="forumTopic"/>
+  <action name="unsubscribe" type="forum"/>
+  <action name="exportTablePDF" type="object" /> <!-- Export List to PDF -->
+  <action name="exportTableXLS" type="object"/> <!-- Export List to XLS -->
+</model>
+
+<model name="unsubscribed forum actions">
+  <action name="list_delete" type="forum"/>
+  <action name="separator" type="separator"/>
+  <action name="explode" type="folder"/>
+  <action name="implode" type="folder"/>
+  <action name="separator" type="separator"/>
+  <action name="create" type="forumTopic"/>
+  <action name="subscribe" type="forum"/>
+  <action name="exportTablePDF" type="object" /> <!-- Export List to PDF -->
+  <action name="exportTableXLS" type="object"/> <!-- Export List to XLS -->
+</model>
+
+<model name="subscribed forum with delete actions">
+  <action name="list_delete" type="forum" shortcut="true"/>
+  <action name="separator" type="separator"/>
+  <action name="explode" type="folder" shortcut="true"/>
+  <action name="implode" type="folder" shortcut="true"/>
+  <action name="separator" type="separator"/>
+  <action name="create" type="forumTopic" shortcut="true"/>
+  <action name="unsubscribe" type="forum" shortcut="true"/>
+  <action name="exportTablePDF" type="object" /> <!-- Export List to PDF -->
+  <action name="exportTableXLS" type="object"/> <!-- Export List to XLS -->
+</model>
+
+<model name="unsubscribed forum with delete actions">
+   <action name="list_delete" type="forum" shortcut="true"/>
+   <action name="separator" type="separator"/>
+   <action name="explode" type="folder" shortcut="true"/>
+   <action name="implode" type="folder" shortcut="true"/>
+   <action name="separator" type="separator"/>
+   <action name="create" type="forumTopic" shortcut="true"/>
+   <action name="subscribe" type="forum" shortcut="true"/>
+   <action name="separator" type="separator"/>
+   <action name="exportTablePDF" type="object" /> <!-- Export List to PDF -->
+   <action name="exportTableXLS" type="object"/> <!-- Export List to XLS -->
+</model>
+
+<model name="subscribed forum with out delete actions">
+   <action name="separator" type="separator"/>
+   <action name="explode" type="folder" shortcut="true"/>
+   <action name="implode" type="folder" shortcut="true"/>
+   <action name="separator" type="separator"/>
+   <action name="create" type="forumTopic" shortcut="true"/>
+   <action name="unsubscribe" type="forum" shortcut="true"/>
+   <action name="exportTablePDF" type="object" /> <!-- Export List to PDF -->
+   <action name="exportTableXLS" type="object"/> <!-- Export List to XLS -->
+</model>
+
+<model name="unsubscribed forum with out delete actions">
+   <action name="separator" type="separator"/>
+   <action name="explode" type="folder" shortcut="true"/>
+   <action name="implode" type="folder" shortcut="true"/>
+   <action name="separator" type="separator"/>
+   <action name="create" type="forumTopic" shortcut="true"/>
+   <action name="subscribe" type="forum" shortcut="true"/>
+   <action name="exportTablePDF" type="object" /> <!-- Export List to PDF -->
+   <action name="exportTableXLS" type="object"/> <!-- Export List to XLS -->
+</model>
+
+<model name="subscribed forum table actions">
+  <action name="list_delete" type="forum"/>
+  <action name="create" type="forumTopic"/>
+  <action name="create" type="forumPosting"/>
+  <action name="unsubscribe" type="forum"/>
+   <action name="exportTablePDF" type="object" /> <!-- Export List to PDF -->
+   <action name="exportTableXLS" type="object"/> <!-- Export List to XLS -->
+</model>
+
+<model name="unsubscribed forum table actions">
+  <action name="list_delete" type="forum"/>
+  <action name="create" type="forumTopic"/>
+  <action name="create" type="forumPosting"/>
+  <action name="subscribe" type="forum"/>
+  <action name="exportTablePDF" type="object" /> <!-- Export List to PDF -->
+  <action name="exportTableXLS" type="object"/> <!-- Export List to XLS -->
+</model>
+
+<model name="unsubscribed topic actions">
+  <action name="create" type="forumPosting"/>
+  <action name="subscribe" type="forumTopic"/>
+  <action name="close"		type="forumTopic"/>
+  <action name="delete"		type="forumTopic"/>
+  <action name="viewPage"	type="forumTopic"/>
+</model>
+
+<model name="topic actions">
+  <action name="create" type="forumPosting"/>
+  <action name="subscribe" type="forumTopic"/>
+  <action name="close"         type="forumTopic"/>
+  <action name="delete"     type="forumTopic"/>
+</model>
+
+<model name="subscribed topic actions">
+  <action name="create" type="forumPosting"/>
+  <action name="unsubscribe" type="forumTopic"/>
+  <action name="close"		type="forumTopic"/>
+  <action name="delete"		type="forumTopic"/>
+  <action name="viewPage"	type="forumTopic"/>
+</model>
+
+<model name="single topic posting actions">
+  <action name="create"      type="forumPosting"  shortcut="true"/>
+  <action name="delete" type="forumPosting"  shortcut="true"/>
+  <action name="exportTablePDF"  type="object"  shortcut="true"/>
+  <action name="exportTableXLS" type="object" shortcut="true"/>
+</model>
+
+<model name="unsubscribed posting actions">
+  <action name="reply" type="forumPosting"/>
+  <action name="subscribe" type="forumPosting"/>
+  <action name="delete"     type="forumPosting"/>
+</model>
+
+<model name="subscribed posting actions">
+  <action name="reply" type="forumPosting"/>
+  <action name="unsubscribe" type="forumPosting"/>
+  <action name="delete"     type="forumPosting"/>
+</model>
+
+<model name="notebook actions">
+  <action name="list_cut" type="object"/>
+  <action name="list_copy" type="object"/>
+  <action name="notebook_list_paste" type="notebookfolder"/>
+  <action name="list_delete" type="object"/>
+  <action name="separator" type="separator"/>
+  <action name="explode" type="folder" shortcut="true"/>
+  <action name="implode" type="folder" shortcut="true"/>
+  <action name="separator" type="separator"/>
+  <action name="import_bk" type="bookmark" shortcut="true"/>
+  <action name="create" type="notebookfolder" shortcut="true"/>
+  <action name="create" type="bookmark" shortcut="true"/>
+</model>
+
+<model name="notebook readonly actions">
+  <action name="list_copy" type="object"/>
+  <action name="separator" type="separator"/>
+  <action name="explode" type="folder"/>
+  <action name="implode" type="folder"/>
+  <action name="import_bk" type="bookmark"/>
+</model>
+
+<model name="notebookfolder actions" menufor="wt.workflow.notebook.NotebookFolder">
+  <action name="create" type="notebookfolder"/>
+  <action name="delete" type="notebookfolder"/>
+  <action name="rename" type="notebookfolder"/>
+  <action name="create" type="bookmark"/>
+  <action name="import_bk" type="bookmark"/>
+</model>
+
+<model name="notebookfolder readonly actions">
+  <action name="create" type="notebookfolder"/>
+  <action name="create" type="bookmark"/>
+  <action name="import_bk" type="bookmark"/>
+</model>
+
+<model name="bookmark actions" menufor="wt.workflow.notebook.Bookmark">
+  <action name="edit_bk" type="bookmark"/>
+  <action name="view" type="object"/>
+  <action name="delete" type="object"/>
+</model>
+
+<model name="bookmark info page actions">
+	<action name="edit_bk" type="bookmark"/>
+</model>
+
+<model name="bookmark_info_page">
+	<action name="attributes" type="object"/>
+</model>
+
+<model name="third_level_nav_bookmark" defaultActionName="attributes" defaultActionType="object">
+	<submodel name="general"/>
+</model>
+
+<model name="bookmarkInfoPageTabSet">
+	<submodel name="bookmarkInfo_detailstab" />
+</model>
+
+<model name="bookmarkInfo_detailstab" resourceBundle="com.ptc.netmarkets.bookmark.bookmarkResource">
+	<action name="primaryAttributes" type="object" />
+	<action name="attributes" type="object" />
+</model>
+
+<model name="folder link toolbar actions" menufor="wt.workflow.notebook.Bookmark">
+  <action name="edit_bk" type="bookmark"/>
+  <action name="view" type="object"/>
+  <action name="delete" type="bookmark"/>
+</model>
+
+<model name="folder link readonly actions">
+  <action name="view" type="bookmark"/>
+</model>
+
+<model name="bk_search row model">
+  <action name="addWCObject" type="bookmark"/>
+</model>
+
+<model name="report_search row model">
+  <action name="objectForAudit" type="report"/>
+</model>
+
+<model name="paste menu">
+  <action name="createPartWizard" type="part"/>
+  <action name="addReferences" type="part"/>
+  <action name="addUses" type="part"/>
+</model>
+
+<model name="projectPlan_admin_toolbar">
+  <action name="list_delete" type="projectPlan"/>
+  <action name="multiupdate" type="projmgmt"/>
+  <action name="removeContainedObjects" type="summaryActivity"/>
+  <action name="addContainedObjects" type="summaryActivity"/>
+  <action name="add_to_timeline" type="milestone"/>
+  <action name="separator" type="separator"/>
+  <action name="explode" type="folder"/>
+  <action name="implode" type="folder"/>
+  <action name="separator" type="separator"/>
+  <action name="create" type="projectActivity"/>
+  <action name="create" type="summaryActivity"/>
+  <action name="create" type="projectProxy"/>
+  <action name="create" type="milestone"/>
+  <action name="separator" type="separator"/>
+  <action name="requestImportProjectPlan2" type="msproject"/>
+  <action name="editProjectPlan2" type="msproject"/>
+  <action name="exportProjectPlan2" type="msproject"/>
+</model>
+
+<model name="projectPlan_admin_toolbar_with_statechange">
+  <action name="list_delete" type="projectPlan"/>
+  <action name="multiupdate" type="projmgmt"/>
+  <action name="removeContainedObjects" type="summaryActivity"/>
+  <action name="addContainedObjects" type="summaryActivity"/>
+  <action name="add_to_timeline" type="milestone"/>
+  <action name="separator" type="separator"/>
+  <action name="explode" type="folder"/>
+  <action name="implode" type="folder"/>
+  <action name="separator" type="separator"/>
+  <action name="create" type="projectActivity"/>
+  <action name="create" type="summaryActivity"/>
+  <action name="create" type="projectProxy"/>
+  <action name="create" type="milestone"/>
+  <action name="separator" type="separator"/>
+  <action name="exportProjectPlan2" type="msproject"/>
+  <action name="separator" type="separator"/>
+  <action name="startPlan" type="projectPlan"/>
+  <action name="suspendPlan" type="projectPlan"/>
+  <action name="resumePlan" type="projectPlan"/>
+  <action name="completePlan" type="projectPlan"/>
+</model>
+
+<model name="projectPlan_admin_toolbar_with_statechange_and_import">
+  <action name="list_delete" type="projectPlan"/>
+  <action name="multiupdate" type="projmgmt"/>
+  <action name="removeContainedObjects" type="summaryActivity"/>
+  <action name="addContainedObjects" type="summaryActivity"/>
+  <action name="add_to_timeline" type="milestone"/>
+  <action name="separator" type="separator"/>
+  <action name="explode" type="folder"/>
+  <action name="implode" type="folder"/>
+  <action name="separator" type="separator"/>
+  <action name="create" type="projectActivity"/>
+  <action name="create" type="summaryActivity"/>
+  <action name="create" type="projectProxy"/>
+  <action name="create" type="milestone"/>
+  <action name="separator" type="separator"/>
+  <action name="requestImportProjectPlan2" type="msproject"/>
+  <action name="exportProjectPlan2" type="msproject"/>
+  <action name="separator" type="separator"/>
+  <action name="startPlan" type="projectPlan"/>
+  <action name="suspendPlan" type="projectPlan"/>
+  <action name="resumePlan" type="projectPlan"/>
+  <action name="completePlan" type="projectPlan"/>
+</model>
+
+<model name="projectPlan_admin_toolbar_with_statechange_and_import_edit">
+  <action name="list_delete" type="projectPlan"/>
+  <action name="multiupdate" type="projmgmt"/>
+  <action name="removeContainedObjects" type="summaryActivity"/>
+  <action name="addContainedObjects" type="summaryActivity"/>
+  <action name="add_to_timeline" type="milestone"/>
+  <action name="separator" type="separator"/>
+  <action name="explode" type="folder"/>
+  <action name="implode" type="folder"/>
+  <action name="separator" type="separator"/>
+  <action name="create" type="projectActivity"/>
+  <action name="create" type="summaryActivity"/>
+  <action name="create" type="projectProxy"/>
+  <action name="create" type="milestone"/>
+  <action name="separator" type="separator"/>
+  <action name="requestImportProjectPlan2" type="msproject"/>
+  <action name="editProjectPlan2" type="msproject"/>
+  <action name="exportProjectPlan2" type="msproject"/>
+  <action name="separator" type="separator"/>
+  <action name="startPlan" type="projectPlan"/>
+  <action name="suspendPlan" type="projectPlan"/>
+  <action name="resumePlan" type="projectPlan"/>
+  <action name="completePlan" type="projectPlan"/>
+</model>
+
+<model name="projectPlan_inactive_admin_toolbar">
+  <action name="add_to_timeline" type="milestone"/>
+  <action name="separator" type="separator"/>
+  <action name="explode" type="folder"/>
+  <action name="implode" type="folder"/>
+  <action name="separator" type="separator"/>
+  <action name="exportProjectPlan2" type="msproject"/>
+</model>
+
+<model name="projectPlan_simple_toolbar">
+  <action name="explode" type="folder"/>
+  <action name="implode" type="folder"/>
+  <action name="separator" type="separator"/>
+  <action name="exportProjectPlan2" type="msproject"/>
+</model>
+
+<model name="popup_for_milestones">
+  <action name="list_copy" type="object"/>
+  <action name="paste" type="milestone"/>
+  <action name="delete" type="milestone"/>
+  <action name="create" type="milestone"/>
+</model>
+
+<model name="my nodes"/>
+
+<model name="milestone row actions" menufor="wt.projmgmt.execution.Milestone">
+  <action name="view" type="object"/>
+  <action name="updateMilestone" type="milestone"/>
+  <action name="start" type="milestone"/>
+  <action name="move_to" type="milestone"/>
+  <action name="insert" type="projectActivity"/>
+  <action name="insert" type="milestone"/>
+  <action name="insert" type="summaryActivity"/>
+  <action name="insert" type="projectProxy"/>
+  <action name="discussTable" type="forum"/>
+  <action name="subscribe" type="milestone"/>
+  <action name="add_deliverable" type="milestone"/>
+  <action name="reference" type="notebook"/>
+  <action name="deleteFromSearch" type="projectPlan"/>
+  <action name="deleteMilestone" type="milestone"/>
+</model>
+
+<model name="milestone row actions non manager">
+  <action name="view" type="object"/>
+  <action name="updateMilestone" type="milestone"/>
+  <action name="discussTable" type="forum"/>
+  <action name="subscribe" type="milestone"/>
+  <action name="reference" type="notebook"/>
+</model>
+
+<model name="milestone view page actions">
+  <action name="updateMilestone" type="milestone"/>
+  <action name="start" type="milestone"/>
+  <action name="subscribe" type="milestone"/>
+  <action name="add_deliverable" type="milestone"/>
+  <action name="move_to" type="milestone"/>
+  <action name="insert" type="projectActivity"/>
+  <action name="insert" type="milestone"/>
+  <action name="insert" type="summaryActivity"/>
+  <action name="insert" type="projectProxy"/>
+</model>
+
+<model name="popup_for_activities">
+  <action name="list_copy" type="object"/>
+  <action name="paste" type="projectActivity"/>
+  <action name="deleteProjectActivity" type="projectActivity"/>
+  <action name="create" type="projectActivity"/>
+</model>
+
+<model name="activity row actions" menufor="wt.projmgmt.execution.ProjectActivity">
+  <action name="view" type="object"/>
+  <action name="updateProjectActivity" type="projectActivity"/>
+  <action name="start" type="projectActivity"/>
+  <action name="suspend" type="projectActivity"/>
+  <action name="move_to" type="projectActivity"/>
+  <action name="insert" type="projectActivity"/>
+  <action name="insert" type="milestone"/>
+  <action name="insert" type="summaryActivity"/>
+  <action name="insert" type="projectProxy"/>
+  <action name="create" type="deliverable"/>
+  <action name="discussTable" type="forum"/>
+  <action name="subscribe" type="projectActivity"/>
+  <action name="reference" type="notebook"/>
+  <action name="deleteFromSearch" type="projectPlan"/>
+  <action name="deleteProjectActivity" type="projectActivity"/>
+  <action name="roll_up" type="projectActivity"/>
+</model>
+
+<model name="activity row actions non manager">
+  <action name="view" type="object"/>
+  <action name="updateProjectActivity" type="projectActivity"/>
+  <action name="discussTable" type="forum"/>
+  <action name="subscribe" type="projectActivity"/>
+  <action name="reference" type="notebook"/>
+</model>
+
+<model name="activity view page actions">
+  <action name="updateProjectActivity" type="projectActivity"/>
+  <action name="start" type="projectActivity"/>
+  <action name="suspend" type="projectActivity"/>
+  <action name="subscribe" type="projectActivity"/>
+  <action name="move_to" type="projectActivity"/>
+  <action name="insert" type="projectActivity"/>
+  <action name="insert" type="milestone"/>
+  <action name="insert" type="summaryActivity"/>
+  <action name="insert" type="projectProxy"/>
+  <action name="roll_up" type="projectActivity"/>
+</model>
+
+<model name="popup_for_proxies">
+  <action name="list_copy" type="object"/>
+  <action name="paste" type="projectProxy"/>
+  <action name="deleteProjectProxy" type="projectProxy"/>
+  <action name="create" type="projectProxy"/>
+</model>
+
+<model name="proxy row actions" menufor="wt.projmgmt.execution.ProjectProxy">
+  <action name="view" type="projectProxy"/>
+  <action name="updateProjectProxy" type="projectProxy"/>
+  <action name="start" type="projectProxy"/>
+  <action name="suspend" type="projectProxy"/>
+  <action name="move_to" type="projectProxy"/>
+  <action name="insert" type="projectActivity"/>
+  <action name="insert" type="milestone"/>
+  <action name="insert" type="summaryActivity"/>
+  <action name="insert" type="projectProxy"/>
+  <action name="subscribe" type="projectProxy"/>
+  <action name="deleteFromSearch" type="projectPlanprojectPlan"/>
+  <action name="deleteProjectProxy" type="projectProxy"/>
+</model>
+
+<model name="proxy row actions non manager">
+  <action name="view" type="projectProxy"/>
+  <action name="subscribe" type="projectProxy"/>
+</model>
+
+<model name="proxy view page actions">
+  <action name="updateProjectProxy" type="projectProxy"/>
+  <action name="start" type="projectProxy"/>
+  <action name="suspend" type="projectProxy"/>
+  <action name="subscribe" type="projectProxy"/>
+  <action name="move_to" type="projectProxy"/>
+  <action name="insert" type="projectActivity"/>
+  <action name="insert" type="milestone"/>
+  <action name="insert" type="summaryActivity"/>
+  <action name="insert" type="projectProxy"/>
+</model>
+
+<model name="popup_for_summary_activities">
+  <action name="list_copy" type="object"/>
+  <action name="paste" type="summaryActivity"/>
+  <action name="deleteSummaryActivity" type="summaryActivity"/>
+  <action name="create" type="summaryActivity"/>
+</model>
+
+<model name="summary activity row actions" menufor="wt.projmgmt.execution.SummaryActivity">
+  <action name="view" type="object"/>
+  <action name="updateSummaryActivity" type="summaryActivity"/>
+  <action name="start" type="summaryActivity"/>
+  <action name="suspend" type="summaryActivity"/>
+  <action name="move_to" type="summaryActivity"/>
+  <action name="insert" type="projectActivity"/>
+  <action name="insert" type="milestone"/>
+  <action name="insert" type="summaryActivity"/>
+  <action name="insert" type="projectProxy"/>
+  <action name="child" type="projectActivity"/>
+  <action name="child" type="milestone"/>
+  <action name="child" type="summaryActivity"/>
+  <action name="child" type="projectProxy"/>
+  <action name="discussTable" type="forum"/>
+  <action name="subscribe" type="summaryActivity"/>
+  <action name="requestImportProjectPlan" type="msproject"/>
+  <action name="editProjectPlan" type="msproject"/>
+  <action name="exportProjectPlan" type="msproject"/>
+  <action name="deleteFromSearch" type="projectPlan"/>
+  <action name="deleteSummaryActivity" type="summaryActivity"/>
+</model>
+
+<model name="summary activity row actions non manager">
+  <action name="view" type="object"/>
+  <action name="updateSummaryActivity" type="summaryActivity"/>
+  <action name="discussTable" type="forum"/>
+  <action name="subscribe" type="summaryActivity"/>
+  <action name="exportProjectPlan" type="msproject"/>
+</model>
+
+<model name="summary activity page view actions">
+  <action name="updateSummaryActivity" type="summaryActivity"/>
+  <action name="start" type="summaryActivity"/>
+  <action name="suspend" type="summaryActivity"/>
+  <action name="subscribe" type="summaryActivity"/>
+  <action name="requestImportProjectPlan" type="msproject"/>
+  <action name="editProjectPlan" type="msproject"/>
+  <action name="exportProjectPlan" type="msproject"/>
+  <action name="move_to" type="summaryActivity"/>
+  <action name="insert" type="projectActivity"/>
+  <action name="insert" type="milestone"/>
+  <action name="insert" type="summaryActivity"/>
+  <action name="insert" type="projectProxy"/>
+  <action name="child" type="projectActivity"/>
+  <action name="child" type="milestone"/>
+  <action name="child" type="summaryActivity"/>
+  <action name="child" type="projectProxy"/>
+</model>
+
+<model name="popup_for_deliverables">
+  <action name="list_copy" type="object"/>
+  <action name="paste" type="deliverable"/>
+  <action name="deleteDeliverable" type="deliverable"/>
+  <action name="create" type="deliverable"/>
+</model>
+
+<model name="my deliverables"/>
+
+<model name="deliverable list table actions">
+   <action name="create" type="deliverable"/>
+</model>
+
+<model name="deliverable row actions" menufor="wt.projmgmt.resource.Deliverable">
+  <action name="view" type="object"/>
+  <action name="updateDeliverable" type="deliverable"/>
+  <action name="deleteDeliverable" type="deliverable"/>
+  <action name="discussTable" type="forum"/>
+  <action name="subscribe" type="deliverable"/>
+  <action name="reference" type="notebook"/>
+</model>
+
+<model name="deliverable details actions">
+  <action name="updateDeliverable" type="deliverable"/>
+  <action name="subscribe" type="deliverable"/>
+  <action name="reference" type="notebook"/>
+</model>
+
+<model name="popup_for_resources">
+  <action name="delete" type="projectResource"/>
+  <action name="create" type="projectResource"/>
+</model>
+
+<model name="resource row actions" menufor="wt.projmgmt.resource.ProjectResource">
+  <action name="view" type="object"/>
+  <action name="update" type="projectResource"/>
+</model>
+
+<model name="activity deliverables actions">
+  <action name="list_delete" type="projectPlan"/>
+  <action name="create" type="deliverable"/>
+</model>
+
+<model name="activity deliverables no create actions">
+  <action name="list_delete" type="projectPlan"/>
+</model>
+
+<model name="milestone deliverables actions">
+  <action name="add_deliverable" type="milestone"/>
+  <action name="remove_deliverable" type="milestone"/>
+</model>
+
+<model name="meeting actions">
+  <action name="cancel" type="meeting" shortcut="true"/>
+  <action name="create" type="meeting" shortcut="true"/>
+  <action name="separator" type="separator" />
+  <action name="exportTablePDF" type="object"/> <!-- Export List to PDF -->
+  <action name="exportTableXLS" type="object"/> <!-- Export List to XLS -->
+</model>
+
+<model name="meeting toolbar row actions">
+  <action name="view" type="object"/>
+  <action name="host" type="meeting"/>
+  <action name="join" type="meeting"/>
+  <action name="add_minutes" type="meeting"/>
+  <action name="list" type="actionitem"/>
+  <action name="update" type="meeting"/>
+  <action name="reference" type="notebook"/>
+  <action name="separator" type="separator"/>
+  <action name="generateMinutesReport" type="meeting" />
+  <action name="generateAgendaReport" type="meeting" />
+  <action name="ManageSecurity" type="accessPermission"/>
+  <action name="securityLabelsSingleObjJCA" type="securityLabels"/>
+</model>
+
+<model name="meeting participant page actions">
+	 <action name="remove" type="object" shortcut="true"/>
+	 <action name="separator" type="separator"/>
+	 <action name="addParticipant" type="meeting" shortcut="true"/>
+</model>
+
+<model name="meeting object page actions">
+	<action name="remove" type="object" shortcut="true"/>
+	<action name="separator" type="separator"/>
+	<action name="addMeetingObject" type="meeting" shortcut="true"/>
+</model>
+
+<model name="meeting info page actions" menufor="wt.meeting.TraditionalMeeting,wt.meeting.MeetingCenterMeeting">
+  <action name="host" type="meeting"/>
+  <action name="join" type="meeting"/>
+  <action name="add_minutes" type="meeting"/>
+  <action name="update" type="meeting"/>
+  <action name="separator" type="separator"/>
+  <action name="generateMinutesReport" type="meeting" />
+  <action name="generateAgendaReport" type="meeting" />
+  <action name="ManageSecurity" type="accessPermission"/>
+  <action name="securityLabelsSingleObjJCA" type="securityLabels"/>
+</model>
+
+<model name="more meeting actions">
+  <action name="view" type="object"/>
+  <action name="host" type="meeting"/>
+  <action name="join" type="meeting"/>
+  <action name="add_minutes" type="meeting"/>
+  <action name="list" type="actionitem"/>
+  <action name="update" type="meeting"/>
+  <action name="reference" type="notebook"/>
+</model>
+
+<model name="third_level_nav_meeting" defaultActionName="attributes" defaultActionType="object">
+<submodel name="general"/>                                          <!-- General -->
+ <submodel name="meetingInfo_relatedObjects"/>                      <!-- Related Objects -->
+</model>
+<model name="meetingInfo_relatedObjects" resourceBundle="com.ptc.netmarkets.meeting.meetingResource">
+<action name="list" type="actionitem"/>
+   	 <action name="relatedMeetingAgendas" type="meeting"/>              <!-- Meeting Agendas Table -->
+     <action name="relatedMeetingMinutes" type="meeting"/>              <!-- Meeting Minutes Table -->
+     <action name="relatedMeetingParticipants" type="meeting"/>         <!-- Meeting Participants Table -->
+     <action name="relatedMeetingSubjects" type="meeting"/>             <!-- Meeting Subject Objects Table -->
+</model>
+
+<model name="actionitem actions">
+  <action name="list_copy" type="object" shortcut="true"/>
+  <action name="paste" type="actionitem" shortcut="true"/>
+  <action name="delete" type="actionitem" shortcut="true"/>
+  <action name="removeAssociation" type="actionitem"/>
+  <action name="editInExcel" type="actionitem" shortcut="true"/>
+  <action name="exportToExcelXML" type="actionitem"/>
+  <action name="separator" type="separator"/>
+  <action name="create" type="actionitem" shortcut="true"/>
+  <action name="importFromExcelXML" type="actionitem"/>
+  <action name="downloadExcelTemplate" type="actionitem"/>
+</model>
+
+<model name="actionitem row actions toolbar" menufor="wt.meeting.actionitem.DiscreteActionItem">
+  <action name="view" type="object"/>
+  <action name="separator" type="separator"/>
+
+  <action name="update" type="actionitem"/>
+  <action name="separator" type="separator"/>
+
+  <action name="delete_row" type="actionitem"/>
+   <action name="separator" type="separator"/>
+
+  <action name="discussTable" type="forum"/>
+  <action name="reference" type="notebook"/>
+  <action name="separator" type="separator"/>
+
+  <action name="subscribe" type="actionitem"/>
+  <action name="unsubscribe" type="actionitem"/>
+</model>
+
+<model name="actionitem view actions">
+  <action name="update" type="actionitem"/>
+  <action name="subscribe" type="actionitem"/>
+  <action name="unsubscribe" type="actionitem"/>
+</model>
+
+<model name="actionIteminfopageTabSet">
+<submodel name="actionItemInfo_detailstab" />
+</model>
+
+<model name="actionItemInfo_detailstab" resourceBundle="com.ptc.netmarkets.actionitem.actionitemResource">
+<action name="primaryAttributes" type="object" />
+<action name="attributes" type="object" />
+</model>
+
+<model name="complete workitem">
+  <action name="complete" type="work"/>
+</model>
+
+<model name="save workitem">
+  <action name="save" type="work"/>
+</model>
+
+<model name="more Activities">
+  <action name="moreActivities" type="work"/>
+</model>
+
+<model name="update workitem">
+  <action name="update" type="work"/>
+</model>
+<model name="start Activities">
+  <action name="startAct" type="work"/>
+</model>
+<model name="discuss workitem">
+  <action name="discussTable" type="forum"/>
+</model>
+
+<model name="work_list">
+  <action name="reassign" type="work"/>
+  <action name="accept" type="work"/>
+  <action name="unaccept" type="work"/>
+</model>
+
+<model name="reassign search action">
+  <action name="reassignSearchUser" type="work"/>
+</model>
+
+<model name="reassignTaskButtons">
+  <action name="okButton" type="object"/>
+  <action name="cancelButton" type="object"/>
+</model>
+
+<model name="org user row actions">
+  <action name="removeUser" type="group"/>
+</model>
+
+<model name="org group org row actions">
+  <action name="removeOrg" type="group"/>
+</model>
+<model name="global group row actions">
+  <action name="removeGroup" type="group"/>
+</model>
+
+<model name="search toolbar">
+  <action name="list_copy" type="object"/>
+  <action name="list_delete" type="object"/>
+</model>
+
+<model name="modify workflow team toolbar">
+  <action name="showFullTeam" type="workflow"/>
+</model>
+
+<model name="viewProjectPlan">
+  <action name="view_plan" type="project"/>
+</model>
+
+<model name="create workflow team toolbar">
+  <action name="showAdHocTeam" type="workflow"/>
+</model>
+
+<model name="process history row actions">
+  <action name="terminate" type="workflow"/>
+  <action name="terminateProcess" type="workflow"/>
+  <action name="updateRoute" type="workflow"/>
+  <action name="openProcessManager" type="workflow"/>
+  <action name="openProcessMonitor" type="workflow"/>
+</model>
+
+<model name="updatelist_actions">
+  <action name="list_copy" type="object" shortcut="true"/>
+  <action name="add_to_hotlist" type="bookmark" shortcut="true"/>
+</model>
+
+<model name="checkoutlist_simple_actions">
+  <action name="list_copy" type="object"/>
+  <action name="add_to_hotlist" type="bookmark"/>
+</model>
+
+<model name="checkoutlist_actions">
+  <action name="add_to_hotlist" type="bookmark" shortcut="true"/>
+  <action name="list_undocheckout" type="object" shortcut="true"/>
+</model>
+
+<model name="project assignments toolbar">
+  <action name="list_copy" type="object"/>
+  <action name="list_delete" type="object"/>
+  <action name="multiupdate" type="projmgmt" shortcut="true"/>
+  <action name="multireassign" type="work" shortcut="true"/>
+  <action name="multiaccept" type="work" shortcut="true"/>
+  <action name="multiunaccept" type="work"/>
+  <action name="editInExcel" type="actionitem" shortcut="true"/>
+  <action name="exportToExcelXML" type="actionitem"/>
+  <action name="separator" type="separator"/>
+  <action name="create" type="actionitem"/>
+  <action name="importFromExcelXML" type="actionitem"/>
+  <action name="downloadExcelTemplate" type="actionitem"/>
+  <action name="searchWorkItems" type="work" shortcut="true"/>
+</model>
+
+<model name="project assignments admin toolbar">
+  <action name="list_copy" type="object"/>
+  <action name="list_delete" type="object"/>
+  <action name="multiupdate" type="projmgmt" shortcut="true"/>
+  <action name="multireassign" type="work" shortcut="true"/>
+  <action name="multiaccept" type="work" shortcut="true"/>
+  <action name="multiunaccept" type="work"/>
+  <action name="editInExcel" type="actionitem" shortcut="true"/>
+  <action name="exportToExcelXML" type="actionitem"/>
+  <action name="separator" type="separator"/>
+  <action name="create" type="deliverable"/>
+  <action name="create" type="actionitem"/>
+  <action name="importFromExcelXML" type="actionitem"/>
+  <action name="downloadExcelTemplate" type="actionitem"/>
+  <action name="searchWorkItems" type="work" shortcut="true"/>
+</model>
+
+<model name="project assignments plan objects toolbar">
+  <action name="list_delete" type="projectPlan"/>
+  <action name="multiupdate" type="projmgmt"/>
+</model>
+
+<model name="project assignments deliverables admin toolbar">
+  <action name="list_delete" type="projectPlan"/>
+  <action name="multiupdate" type="projmgmt"/>
+  <action name="separator" type="separator"/>
+  <action name="create" type="deliverable"/>
+</model>
+
+<model name="project assignments actionitem toolbar">
+  <action name="list_copy" type="object"/>
+  <action name="list_delete" type="projectPlan"/>
+  <action name="editInExcel" type="actionitem"/>
+  <action name="exportToExcelXML" type="actionitem"/>
+  <action name="separator" type="separator"/>
+  <action name="create" type="actionitem"/>
+  <action name="importFromExcelXML" type="actionitem"/>
+  <action name="downloadExcelTemplate" type="actionitem"/>
+</model>
+
+<model name="project assignments tasks toolbar">
+  <action name="list_delete" type="projectPlan"/>
+  <action name="multireassign" type="work" shortcut="true"/>
+  <action name="multiaccept" type="work" shortcut="true"/>
+  <action name="multiunaccept" type="work"/>
+  <action name="searchWorkItems" type="work" shortcut="true"/>
+</model>
+
+
+<model name="product_library assignments toolbar">
+  <action name="multireassign" type="work" shortcut="true"/>
+  <action name="multiaccept" type="work" shortcut="true"/>
+  <action name="multiunaccept" type="work"/>
+  <action name="searchWorkItems" type="work" shortcut="true"/>
+</model>
+
+<model name="product_library assignments admin toolbar">
+  <action name="multireassign" type="work" shortcut="true"/>
+  <action name="multiaccept" type="work" shortcut="true"/>
+  <action name="multiunaccept" type="work"/>
+  <action name="searchWorkItems" type="work" shortcut="true"/>
+</model>
+
+<model name="assignments toolbar">
+  <action name="multiupdate" type="projmgmt" shortcut="true"/>
+  <action name="editInExcel" type="actionitem" shortcut="true"/>
+  <action name="exportToExcelXML" type="actionitem"/>
+  <action name="multiaccept" type="work" shortcut="true"/>
+  <action name="multiunaccept" type="work"/>
+  <action name="separator" type="separator"/>
+  <action name="importFromExcelXML" type="actionitem"/>
+  <action name="searchWorkItems" type="work" shortcut="true"/>
+</model>
+
+<model name="assignments plan objects toolbar">
+  <action name="multiupdate" type="projmgmt" shortcut="true"/>
+</model>
+
+<model name="assignments actionitem toolbar">
+  <action name="editInExcel" type="actionitem"/>
+  <action name="exportToExcelXML" type="actionitem"/>
+  <action name="separator" type="separator"/>
+  <action name="importFromExcelXML" type="actionitem"/>
+</model>
+
+<model name="user assignments toolbar">
+  <action name="multiaccept" type="work" shortcut="true"/>
+  <action name="multiunaccept" type="work"/>
+  <action name="searchWorkItems" type="work" shortcut="true"/>
+</model>
+
+<model name="workitem actions">
+  <action name="view" type="object"/>
+  <action name="reassign" type="work"/>
+  <action name="accept" type="work"/>
+  <action name="unaccept" type="work"/>
+</model>
+
+<model name="workitem simple actions">
+  <action name="view" type="object"/>
+</model>
+
+<model name="workitem admin actions" menufor="wt.workflow.work.WorkItem">
+  <action name="view" type="object"/>
+  <action name="reassign" type="work"/>
+  <action name="accept" type="work"/>
+  <action name="unaccept" type="work"/>
+  <action name="updateDeadline" type="work"/>
+</model>
+
+<model name="taskDetailsPageTabSet" resourceBundle="wt.workflow.worklist.worklistResource">
+<submodel name="taskDetailsDetails"/>
+<submodel name="taskDetailsOthers"/>
+<submodel name="taskDetailsSetupParticipant"/>
+<submodel name="taskDetailsAdhoc"/>
+</model>
+
+<model name="taskDetailsPageTaskFormTemplateTabSet" resourceBundle="wt.workflow.worklist.worklistResource">
+  <submodel name="taskFormTemplateDetails"/>
+  <!--modify by lzy at 20191120 start-->
+  <action name="bomChangeReport" type="workitem"/>
+  <!--modify by lzy at 20191120 end-->
+</model>
+
+<model name="taskFormTemplateDetails" resourceBundle="wt.workflow.worklist.worklistResource">
+<action name="taskFormTemplate" type="workitem"/>
+</model>
+
+<model name="taskDetailsDetails" resourceBundle="wt.workflow.worklist.worklistResource">
+<action name="attributes" type="workitem"/>
+</model>
+<model name="taskDetailsOthers" resourceBundle="wt.workflow.worklist.worklistResource">
+<action name="routingStatus" type="workitem"/>
+<action name="assignmentHistory" type="workitem"/>
+<action name="notebook" type="workitem"/>
+<action name="discussions" type="workitem"/>
+</model>
+
+<model name="taskDetailsAdhoc" resourceBundle="wt.workflow.worklist.worklistResource">
+  <action name="adhocActivities" type="workitem"/>
+</model>
+<model name="taskDetailsSetupParticipant" resourceBundle="wt.workflow.worklist.worklistResource">
+  <action name="setupParticipant" type="workitem"/>
+</model>
+<model name="adhoc activities actionmodel">
+<action name="addMultipleObjects" type="workitem" shortcut="true"/>
+<action name="separator" type="separator"/>
+<action name="startAct" type="work" shortcut="true"/>
+
+</model>
+<model name="workitem third nav">
+  <action name="attributes" type="workitem"/>
+  <action name="routingStatus" type="workitem"/>
+  <action name="notebook" type="workitem"/>
+  <action name="discussions" type="workitem"/>
+  <action name="setupParticipant" type="workitem"/>
+  <action name="adhocActivities" type="workitem"/>
+</model>
+<model name="workitem third nav template view">
+  <action name="taskFormTemplate" type="workitem"/>
+</model>
+<model name="templates visibility toolbar action">
+  <action name="list_hide_template" type="object" shortcut="true"/>
+  <action name="list_show_template" type="object" shortcut="true"/>
+  <action name="separator" type="separator"/>
+</model>
+
+<model name="templates toolbar actions">
+  <action name="list_hide_template" type="object" shortcut="true"/>
+  <action name="list_show_template" type="object" shortcut="true"/>
+  <action name="separator" type="separator"/>
+  <action name="create" type="templates" shortcut="true"/>
+  <action name="import" type="object" shortcut="true"/>
+</model>
+
+<model name="prod templates toolbar actions">
+  <action name="list_hide_template" type="object" shortcut="true"/>
+  <action name="list_show_template" type="object" shortcut="true"/>
+  <action name="separator" type="separator"/>
+  <action name="createProductTemplate" type="product" shortcut="true"/>
+  <action name="importProductTemplate" type="product" shortcut="true"/>
+</model>
+
+<model name="proj templates toolbar actions">
+  <action name="list_hide_template" type="object" shortcut="true"/>
+  <action name="list_show_template" type="object" shortcut="true"/>
+  <action name="createProjectTemplate" type="project" shortcut="true"/>
+  <action name="importProjectTemplate" type="project" shortcut="true"/>
+</model>
+
+<model name="prog templates toolbar actions">
+  <action name="list_hide_template" type="object" shortcut="true"/>
+  <action name="list_show_template" type="object" shortcut="true"/>
+  <action name="createProgramTemplate" type="project" shortcut="true"/>
+  <action name="importProgramTemplate" type="project" shortcut="true"/>
+</model>
+
+<model name="lib templates toolbar actions">
+  <action name="list_hide_template" type="object" shortcut="true"/>
+  <action name="list_show_template" type="object" shortcut="true"/>
+  <action name="createLibraryTemplate" type="library" shortcut="true"/>
+  <action name="importLibraryTemplate" type="library" shortcut="true"/>
+</model>
+
+
+<model name="task form templates toolbar actions">
+  <action name="list_hide_template" type="object" shortcut="true"/>
+  <action name="list_show_template" type="object" shortcut="true"/>
+  <action name="separator" type="separator"/>
+  <action name="create" type="taskformtemplates" shortcut="true"/>
+  <action name="exportTaskFormTemplate" type="taskformtemplates" shortcut="true"/>
+   <action name="importTaskFormTemplate" type="taskformtemplates" shortcut="true"/>
+</model>
+
+<model name="doc templates toolbar actions">
+  <action name="list_hide_template" type="object" shortcut="true"/>
+  <action name="list_show_template" type="object" shortcut="true"/>
+  <action name="separator" type="separator"/>
+  <action name="createDocTemplate" type="document" shortcut="true"/>
+</model>
+
+<model name="pdm doc templates toolbar actions">
+  <action name="list_hide_template" type="object" shortcut="true"/>
+  <action name="list_show_template" type="object" shortcut="true"/>
+  <action name="separator" type="separator"/>
+  <action name="createDocTemplate" type="document" shortcut="true"/>
+</model>
+
+<model name="pdm cad doc templates toolbar actions">
+  <action name="list_hide_template" type="object" shortcut="true"/>
+  <action name="list_show_template" type="object" shortcut="true"/>
+  <action name="separator" type="separator"/>
+  <action name="createCADDocTemplate" type="pdmObject" shortcut="true"/>
+</model>
+
+<model name="prodplan templates toolbar actions">
+  <action name="list_hide_template" type="object" shortcut="true"/>
+  <action name="list_show_template" type="object" shortcut="true"/>
+  <action name="createProductPlanTemplate" type="product" shortcut="true"/>
+  <action name="importProductPlanTemplate" type="product" shortcut="true"/>
+</model>
+
+<model name="template row actions" menufor="wt.inf.template.DefaultWTContainerTemplate">
+  <action name="view" type="object"/>
+  <action name="update" type="templates"/>
+  <action name="download_template" type="templates"/>
+  <action name="enable" type="templates"/>
+  <action name="disable" type="templates"/>
+  <action name="saveas" type="templates"/>
+  <action name="checkout" type="object"/>
+  <action name="checkin" type="object"/>
+  <action name="MULTI_OBJ_DELETE" type="pdmObject"/> 
+  <action name="undocheckout" type="object"/>
+  <action name="show_template" type="object"/>
+  <action name="hide_template" type="object"/>
+</model>
+
+<model name="templateInfoPageTabSet" resourceBundle="com.ptc.netmarkets.templates.templatesResource">
+   <description>Tab set for container template info page</description>
+   <submodel name="ContainerTemplateInfoDetails"/>
+</model>
+<model name="productplantemplateInfoPageTabSet" resourceBundle="com.ptc.netmarkets.templates.templatesResource">
+   <description>Tab set for container template info page</description>
+   <submodel name="ContainerTemplateInfoDetails"/>
+</model>
+<model name="productplantemplateThirdLevelNavModel">
+   <description>Third Level Nav is needed to provide actions the user can select to appear on different tabs</description>
+   <action name="attributePanel" type="templates"/>
+</model>
+<model name="templateThirdLevelNavModel">
+   <description>Third Level Nav is needed to provide actions the user can select to appear on different tabs</description>
+
+   <action name="attributePanel" type="templates"/><action name="iterationHistory" type="history"/>
+</model>
+
+<model name="ContainerTemplateInfoDetails" resourceBundle="com.ptc.netmarkets.templates.templatesResource">
+   <description>The items that will appear on the info tab</description>
+
+   <action name="attributePanel" type="templates"/><action name="iterationHistory" type="history"/>
+</model>
+
+<model name="task form template row actions" replace="true">
+  <action name="download" type="taskformtemplates"/>
+  <action name="enable" type="taskformtemplates"/>
+  <action name="disable" type="taskformtemplates"/>
+  <action name="delete" type="taskformtemplates"/>
+  <action name="checkout" type="object"/>
+  <action name="checkoutAndEdit" type="taskformtemplates"/>
+   <action name="undocheckout" type="object"/>
+  <action name="checkin" type="wip"/>
+ <action name="edit" type="taskformtemplates"/>
+ <action name="saveas" type="taskformtemplates"/>
+  <action name="show_template" type="object"/>
+  <action name="hide_template" type="object"/>
+   <action name="exportTaskFormTemplate" type="taskformtemplates"/>
+   <action name="deleteLatestIterationOfTaskFormTemplate" type="taskformtemplates"/>
+</model>
+
+<model name="productplan template row actions">
+  <action name="view" type="object" />
+  <action name="updatePlanTemplate" type="productplantemplates"/>
+  <action name="download_template" type="productplantemplates"/>
+  <action name="enable" type="productplantemplates" />
+  <action name="disable" type="productplantemplates" />
+  <action name="deletePlanTemplate" type="productplantemplates" />
+</model>
+
+<model name="productplan template details actions">
+  <action name="updatePlanTemplate" type="productplantemplates"/>
+  <action name="download_template" type="productplantemplates"/>
+  <action name="enable" type="productplantemplates"/>
+  <action name="disable" type="productplantemplates"/>
+</model>
+
+<model name="template details actions">
+  <action name="update" type="templates"/>
+  <action name="download_template" type="templates"/>
+  <action name="enable" type="templates"/>
+  <action name="disable" type="templates"/>
+  <action name="saveas" type="templates"/>
+   <action name="MULTI_OBJ_DELETE_DETAILS" type="pdmObject"/>
+   <action name="deleteIterations" type="object"/>
+  <action name="checkout" type="object"/>
+  <action name="checkin" type="object"/>
+  <action name="undocheckout" type="object"/>
+</model>
+
+<model name="task form template details actions">
+  <action name="download" type="taskformtemplates"/>
+	<action name="separator" type="separator"/>
+	<action name="checkout" type="object"/>
+	<action name="checkoutAndEdit" type="taskformtemplates"/>
+	<action name="undocheckout" type="object"/>
+	<action name="checkin" type="wip"/>
+    <action name="edit" type="taskformtemplates"/>
+	<action name="separator" type="separator"/>
+	<action name="saveas" type="taskformtemplates"/>
+	<action name="delete" type="taskformtemplates"/>
+	<action name="deleteLatestIterationOfTaskFormTemplate" type="taskformtemplates"/>
+	<action name="enable" type="taskformtemplates"/>
+	<action name="disable" type="taskformtemplates"/>
+</model>
+
+
+<model name="doc template row actions" replace="true">
+  <action name="view" type="object"/>
+  <action name="separator" type="separator"/>
+  <action name="download_primary_attachment" type="attachments"/>
+  <action name="redirect_primary_attachment" type="attachments"/>
+  <action name="separator" type="separator"/>
+  <action name="enable" type="document"/>
+  <action name="disable" type="document"/>
+  <action name="show_template" type="object"/>
+  <action name="hide_template" type="object"/>
+  <action name="separator" type="separator"/>
+  <action name="checkout" type="object"/>
+  <action name="checkout_and_download" type="wip"/>
+  <action name="checkoutAndEdit" type="document"/>
+  <action name="replace_content" type="wip"/>
+  <action name="checkin" type="wip"/>
+  <action name="undocheckout" type="object"/>
+  <action name="edit" type="document"/>
+  <action name="renameDocumentWizard" type="document"/>
+  <action name="REVISEITEMS" type="pdmObject"/>
+  <action name="MULTI_OBJ_DELETE" type="pdmObject"/>
+  <action name="CONTAINERMOVE" type="pdmObject"/>
+  <action name="separator" type="separator"/>
+  <action name="createSubscription" type="subscription"/>
+  <action name="discussTable" type="forum"/>
+</model>
+
+<model name="pdm cad doc template row actions">
+  <action name="view" type="object"/>
+  <action name="show_template" type="object"/>
+  <action name="hide_template" type="object"/>
+</model>
+
+<model name="sandbox get actions">
+  <action name="pdmPasteSetShare" type="object"/>
+  <action name="sandboxSetCheckout" type="object"/>
+  <action name="pdmPasteSetCopy" type="object"/>
+  <action name="sandboxSetExclude" type="object"/>
+</model>
+
+<model name="sandbox put actions">
+  <action name="pdmCheckInLeaveShared" type="object"/>
+  <action name="pdmCheckInSetExclude" type="object"/>
+  <action name="pdmCheckInSetUndoCheckOut" type="object"/>
+  <action name="pdmCheckInGetContext" type="object"/>
+  <action name="pdmCheckInGetLocation" type="object"/>
+  <action name="pdmCheckInGetPartView" type="object"/>
+</model>
+
+<model name="sandbox refresh actions">
+  <action name="sandboxSetRefresh" type="object"/>
+  <action name="sandboxSetRefreshExclude" type="object"/>
+</model>
+
+<model name="PDM parts recent upd row actions">
+  <action name="view" type="object"/>
+</model>
+
+<model name="parts overview chkout row actions">
+  <action name="view" type="part"/>
+  <action name="checkin" type="wip"/>
+  <action name="undocheckout" type="object"/>
+</model>
+
+<model name="docs overview chkout row actions">
+  <action name="view" type="object"/>
+  <action name="checkin" type="document"/>
+  <action name="undocheckout" type="object"/>
+</model>
+
+<model name="epmdocument overview chkout row actions">
+		<action name="view" type="epmdocument"/>
+		<action name="CHECKEDOUTTOWORKSPACE" type="pdmObject"/>
+</model>
+
+<model name="project objects overview chkout row actions">
+  <action name="view" type="object"/>
+  <action name="pdmCheckInApply" type="object"/>
+  <action name="SBSendToPdm" type="sandbox"/>
+</model>
+
+<model name="pdm parts overview chkout row actions">
+  <action name="view" type="object"/>
+  <action name="CHECKINPART" type="pdmObject"/>
+  <action name="undocheckout" type="object"/>
+</model>
+
+<model name="pdm docs overview chkout row actions">
+  <action name="view" type="object"/>
+  <action name="edit" type="document"/>
+  <action name="CHECKINDOCUMENT_PLM" type="pdmObject"/>
+  <action name="undocheckout" type="object"/>
+</model>
+
+<model name="pdm epmdocument overview chkout row actions">
+  <action name="view" type="object"/>
+  <action name="CHECKEDOUTTOWORKSPACE" type="pdmObject"/>
+</model>
+
+<model name="deliverable overview row actions">
+  <action name="view" type="deliverable"/>
+  <action name="update" type="deliverable"/>
+  <action name="subscribe" type="deliverable"/>
+  <action name="reference" type="notebook"/>
+</model>
+
+<model name="milestone overview row actions">
+  <action name="view" type="milestone"/>
+  <action name="update" type="milestone"/>
+  <action name="subscribe" type="milestone"/>
+  <action name="reference" type="notebook"/>
+</model>
+
+<model name="actionitem overview row actions">
+  <action name="view" type="actionitem"/>
+  <action name="update" type="actionitem"/>
+  <action name="subscribe" type="actionitem"/>
+  <action name="reference" type="notebook"/>
+</model>
+
+<model name="activity overview row actions">
+  <action name="view" type="projectActivity"/>
+  <action name="update" type="projectActivity"/>
+  <action name="subscribe" type="projectActivity"/>
+  <action name="reference" type="notebook"/>
+</model>
+
+<model name="project overview row actions">
+  <action name="details" type="project"/>
+  <action name="update" type="project"/>
+</model>
+<model name="pdm variant spec recent upd row actions">
+  <action name="view" type="object"/>
+</model>
+<model name="proxy overview row actions">
+  <action name="view" type="projectProxy"/>
+  <action name="update" type="projectProxy"/>
+</model>
+
+<model name="pdm row actions">
+  <action name="view" type="object"/>
+</model>
+<model name="pjl part recent upd row actions">
+  <action name="view" type="part"/>
+ <action name="checkout" type="object"/>
+ <action name="discussTable" type="forum"/>
+ <action name="createSubscription" type="subscription"/>
+</model>
+<model name="pjl document recent upd row actions">
+  <action name="view" type="object"/>
+  <action name="download" type="document"/>
+  <action name="edit" type="document"/>
+  <action name="checkout" type="object"/>
+  <action name="oldedit" type="document"/>
+  <action name="discussTable" type="forum"/>
+  <action name="createSubscription" type="subscription"/>
+</model>
+<model name="pjl caddocument recent upd row actions">
+ <action name="view" type="epmdocument"/>
+ <action name="WFCHECKOUT" type="epmdocument"/>
+ <action name="discussTable" type="forum"/>
+ <action name="createSubscription" type="subscription"/>
+</model>
+<model name="pdm part recent upd row actions">
+  <action name="view" type="object"/>
+  <action name="CHECKOUTPART" type="pdmObject"/>
+  <action name="discuss" type="forum"/>
+  <action name="erpInfo" type="esi"/>
+  <action name="sendToDistributionTarget" type="tgt"/>
+  <action name="createSubscription" type="subscription"/>
+</model>
+<model name="pdm document recent upd row actions">
+  <action name="view" type="object"/>
+  <action name="download" type="document"/>
+  <action name="CHECKOUTDOCUMENT" type="pdmObject"/>
+  <action name="discuss" type="forum"/>
+  <action name="createSubscription" type="subscription"/>
+</model>
+<model name="pdm caddocument recent upd row actions">
+  <action name="view" type="object"/>
+  <action name="WFCHECKOUT" type="epmdocument"/>
+  <action name="discuss" type="forum"/>
+  <action name="createSubscription" type="subscription"/>
+</model>
+<model name="project context info bar actions">
+  <action name="update" type="project"/>
+  <action name="createProject" type="project"/>
+</model>
+<model name="product context info bar actions">
+  <action name="editProductWizard" type="product"/>
+  <action name="createProductWizard" type="product"/>
+  <action name="launchPSE" type="explorer"/>
+  <action name="launchABE" type="explorer"/>
+</model>
+
+<model name="library context info bar actions">
+  <action name="editLibraryWizard" type="library"/>
+  <action name="createLibraryWizard" type="library"/>
+  <action name="launchPSE" type="explorer"/>
+  <action name="launchABE" type="explorer"/>
+</model>
+
+<!-- Action models for Change Objects have been moved to codebase\config\actions\ChangeManagement-actionModel.xml
+-->
+
+<model name="product instance row actions">
+  <action name="view" type="object"/>
+  <action name="removeShare" type="object"/>
+</model>
+
+<model name="rule toolbar">
+  <action name="list_delete" type="object"/>
+  <action name="separator" type="separator"/>
+  <action name="create" type="rule"/>
+  <action name="requestDownloadComposite" type="rule"/>
+  <action name="downloadDTD" type="rule"/>
+</model>
+<model name="rule row actions" menufor="wt.rule.TypeBasedRule">
+  <action name="update" type="rule"/>
+  <action name="download" type="rule"/>
+  <action name="enable_rule" type="rule"/>
+  <action name="disable_rule" type="rule"/>
+  <action name="delete" type="object"/>
+</model>
+<model name="rule info actions">
+  <action name="update" type="rule"/>
+  <action name="download" type="rule"/>
+  <action name="enable_rule" type="rule"/>
+  <action name="disable_rule" type="rule"/>
+  <action name="deleteRuleInfo" type="rule"/>
+</model>
+
+<model name="context container bar">
+	<action name="launchEmptyPSE" type="explorer"/>
+	<action name="launchEmptyABE" type="explorer"/>
+</model>
+
+<model name="profile page actions">
+	   <action name="changePassword" type="user"/>
+	   <action name="updatePhoto" type="user"/>
+</model>
+
+<model name="profile page photo action">
+	   <action name="updatePhoto" type="user"/>
+</model>
+
+<model name="profile page password action">
+	   <action name="changePassword" type="user"/>
+</model>
+
+<model name="ccs actions">
+	<action name="registerCCSWizard" type="ccsManager" shortcut="true"/>
+	<action name="delete" type="ccsManager" shortcut="true"/>
+</model>
+
+<model name="rootFolder actions">
+	<action name="addRootFolderWizard" type="ccsManager" shortcut="true"/>
+	<action name="deleteRootFolders" type="ccsManager" shortcut="true"/>
+</model>
+
+<model name="rootFolder row actions">
+	<action name="toggleReadOnly" type="ccsManager" shortcut="true"/>
+	<action name="deleteRootFolder" type="ccsManager" shortcut="true"/>
+</model>
+
+<model name="ccs row actions">
+	<action name="takeOffline" type="ccsManager" shortcut="true"/>
+	<action name="takeOnline" type="ccsManager" shortcut="true"/>
+	<action name="toggleReadOnly" type="ccsManager" shortcut="true"/>
+	<action name="editCCSWizard" type="ccsManager" shortcut="true"/>
+	<action name="editRootFoldersWizard" type="ccsManager" shortcut="true"/>
+	<action name="deleteCCS" type="ccsManager" shortcut="true"/>
+</model>
+
+<!-- Related Baselines for WTObject -->
+<model name="related Baselines">
+   <action name="wtObjCompareMultiple" type="ocmp" shortcut="true"/>
+</model>
+
+<model name="project_assignments_actions_toolbar">
+  <action name="list_copy" type="object"/>
+  <action name="list_delete" type="projectPlan"/>
+  <action name="multiupdate" type="projmgmt" shortcut="true"/>
+  <action name="multireassign" type="work" shortcut="true"/>
+  <action name="multiaccept" type="work" shortcut="true"/>
+  <action name="multiunaccept" type="work"/>
+  <action name="editInExcel" type="actionitem" shortcut="true"/>
+  <action name="exportToExcelXML" type="actionitem"/>
+  <action name="separator" type="separator"/>
+  <action name="create" type="deliverable"/>
+  <action name="create" type="actionitem"/>
+  <action name="importFromExcelXML" type="actionitem"/>
+  <action name="downloadExcelTemplate" type="actionitem"/>
+  <action name="searchWorkItems" type="work" shortcut="true"/>
+</model>
+
+<model name="product_lib_assignments_actions_toolbar">
+  <action name="list_copy" type="object"/>
+  <action name="epptask_list_delete" type="plan"/>
+  <action name="edit_multi_assignments" type="resourceAssignment"/>
+  <action name="labeled_edit_multiple_activities" type="planActivity"/>
+  <action name="multireassign" type="work" shortcut="true"/>
+  <action name="multiaccept" type="work" shortcut="true"/>
+  <action name="multiunaccept" type="work" shortcut="true"/>
+  <action name="editInExcel" type="actionitem" shortcut="true"/>
+  <action name="exportToExcelXML" type="actionitem"/>
+  <action name="separator" type="separator"/>
+  <action name="create" type="actionitem"/>
+  <action name="importFromExcelXML" type="actionitem"/>
+  <action name="downloadExcelTemplate" type="actionitem"/>
+  <action name="searchWorkItems" type="work" shortcut="true"/>
+  <action name="create_deliverable" type="planActivity"/>
+  <action name="separator" type="separator" />
+  <submodel name="nm_exportlisttofile_submenu" />
+</model>
+
+<model name="change_assignments_actions_toolbar">
+   <action name="multiaccept" type="work" shortcut="true"/>
+   <action name="multireassign" type="work" shortcut="true"/>
+   <action name="multiunaccept" type="work" shortcut="true"/>
+   <action name="explode" type="folder" shortcut="true"/>
+   <action name="implode" type="folder" shortcut="true"/>
+</model>
+
+<model name="home_assignments_actions_toolbar">
+  <action name="multiupdate" type="projmgmt" shortcut="true"/>
+  <action name="multiaccept" type="work" shortcut="true"/>
+  <action name="multireassign" type="work" shortcut="true"/>
+  <action name="multiunaccept" type="work" shortcut="true"/>
+  <action name="editInExcel" type="actionitem" shortcut="true"/>
+  <action name="exportToExcelXML" type="actionitem"/>
+  <action name="separator" type="separator"/>
+  <action name="importFromExcelXML" type="actionitem"/>
+  <action name="searchWorkItems" type="work" shortcut="true"/>
+</model>
+
+<model name="externalRecipient">
+  <action name="addExternalRecipient" type="workflow"/>
+</model>
+<!-- Edit Properties -->
+<model name="SetDefaultValue">
+   <action name="SetDefaultButton" type="object"/>
+</model>
+<model name="Edit Multiple">
+   <action name="OkButton" type="object"/>
+   <action name="ApplyButton" type="object"/>
+   <action name="CancelButton" type="object"/>
+</model>
+
+  <model name="row_actions_open">
+       <action name="openInMobileApp" type="object"/>     <!-- Open in Mobile App -->
+  </model>
+
+  <model name="workitem details admin actions" menufor="wt.workflow.work.WorkItem">
+    <submodel name="row_actions_open"/>
+	<action name="separator" type="separator"/>
+	<action name="reassign" type="work"/>
+	<action name="accept" type="work"/>
+	<action name="unaccept" type="work"/>
+	<action name="updateDeadline" type="work"/>
+	<action name="trackTask" type="workitem"/>
+	<action name="promptTaskbarOption" type="workitem"/>
+	<action name="edit_capaChangeRequest" type="capaChangeRequest"/>
+	<action name="capaReview_Task" type="capaReview"/>
+	<action name="capaInvestigation_Task" type="capaInvestigation"/>
+	<action name="edit_capaInvestigation_Task" type="capaInvestigation"/>
+	<action name="createPlan" type="capaPlan"/>
+	<action name="editPlan" type="capaPlan"/>
+	<action name="capaImplementation_Task" type="capaPlan"/>
+	<action name="capaConfirmation_Task" type="capaPlan"/>
+	<action name="planEffectiveness_Task" type="capaPlan"/>
+	<action name="capaEffectiveness_Task" type="capaEffectiveness"/>
+	<action name="viewCAPAStructure" type="capa"/>
+	<action name="edit_ncRequest" type="nc"/>
+	<action name="ncReview_Task" type="ncReview"/>
+	<action name="create_ncDispositionTask_wizard" type="dispositionPlan"/>
+	<action name="editDispositionPlanTask" type="dispositionPlan"/>
+	<action name="performDisposition" type="dispositionRecord"/>
+	<action name="performReDisposition" type="dispositionRecord"/>
+	<action name="create_ncInvestigation_Task" type="ncInvestigation"/>
+	<action name="edit_ncInvestigation_Task" type="ncInvestigation"/>
+	<action name="createEditCEEvaluation" type="ceEvaluation"/>
+	<action name="edit_complaint" type="cem"/>     <!-- CE 'Update Complaint' task action -->
+	<action name="createEditCEReview" type="ceReview"/>     <!-- CE 'Complaint Review' task action -->
+	<action name="createEditGAActivity" type="ceGeneralActivity"/>     <!-- CEGeneralActivity's - 'Activity Request' task action -->
+	<action name="createEditGAResponse" type="ceGeneralActivity"/>     <!-- CEGeneralActivity's - 'Activity Response' task action -->
+	<action name="createEditGAReview" type="ceGeneralActivity"/>     <!-- CEGeneralActivity's - 'Activity Review' task action -->
+	<action name="createEditProductGARequest" type="ceProductGeneralActivity"/>     <!-- CEProductGeneralActivity's - 'Activity Request' task action -->
+	<action name="createEditProductGAResponse" type="ceProductGeneralActivity"/>     <!-- CEProductGeneralActivity's - 'Activity Response' task action -->
+	<action name="createEditProductGAReview" type="ceProductGeneralActivity"/>     <!-- CEProductGeneralActivity's - 'Activity Review' task action -->
+	<action name="createEditProductInvestigationActivity" type="ceProductInvestigationActivity"/>     <!-- CEProductInvestigationActivity's - 'Activity Request' task action -->
+	<action name="createEditCEDecontamination" type="ceDecontamination"/>     <!-- CEProductInvestigationActivity's - 'Decontamination' task action -->
+    <action name="createEditProductInvestigation" type="ceProductInvestigation"/>	<!-- CEProductInvestigation's - 'CEProductInvestigation' task action -->
+	<action name="createEditPIAProductInvestigation" type="ceProductInvestigationActivity"/>     <!-- CEProductInvestigationActivity's - 'Product Investigation' task action -->
+	<action name="createEditRegulatoryReportDecision" type="ceRegulatoryReportDecision"/>     <!-- CERegulatoryReportDecision's - 'Activity Request' task action -->
+	<action name="createEditRRDDecision" type="ceRegulatoryReportDecision"/>     <!-- CERegulatoryReportDecision's - 'Decision' task action for Request State -->
+	<action name="editRRDecision" type="ceRegulatoryReportDecision"/>     <!-- CERegulatoryReportDecision's - 'Decision' task action  for Decision State -->
+	<action name="viewRRDReport" type="ceRegulatoryReportDecision"/>     <!-- CERegulatoryReportDecision's - 'Approval' task action -->
+	<action name="createEditRRDSubmission" type="ceRegulatoryReportDecision"/>     <!-- CERegulatoryReportDecision's - 'Submission' task action -->
+	<action name="createEditCERegulatoryReportExternal" type="ceRegulatoryReportDecision"/>     <!-- CERegulatoryReportDecision's - 'External' task action -->
+	<action name="emdrSubmissionDelayed" type="ceRegulatoryReportDecision"/> <!-- CERegulatoryReportDecision's - Delayed task action -->
+	<action name="edit_udiSubmission" type="udi"/> <!-- UDISubmissions's - Edit task action -->
+	<action name="udiSubmissionDelayed" type="udi"/> <!-- UDISubmissions's - Delayed task action -->
+	<action name="udiSubmissionFailed" type="udi"/> <!-- UDISubmissions's - Failed task action -->
+</model>
+
+<model name="Table_Actions_for_Workflow_Process_DashBoard">
+<action name="multiDeleteProcess" type="workflow" shortcut="true"/>
+<action name="multiTerminateProc" type="workflow" shortcut="true"/>
+<action name="multiSubscribeProcess" type="workflow" shortcut="true"/>
+</model>
+
+<model name="Table_Row_Actions_for_Workflow_Process_DashBoard">
+<action name="deleteProcess" type="workflow"/>
+<action name="terminateProc" type="workflow"/>
+<action name="subscribeProcess" type="workflow"/>
+<!--<action name="checkoutAndEditWfProcessTemplate" type="wfTemplateAdmin"/>-->
+<action name="viewWorkFlowProcessTemplate" type="wfTemplateAdmin"/>
+</model>
+
+<model name="process_component_admin_actions">
+<!--<action name="viewError"                          type="wfExecObject"/>-->
+<action name="restartComponent" type="wfExecObject"/>
+<action name="completeComponent" type="wfExecObject"/>
+<action name="deleteComponent" type="wfExecObject"/>
+</model>
+
+<model name="process_component_admin_table_actions">
+<action name="deleteMultipleComponent" type="wfExecObject" shortcut="true"/>
+<action name="explode" type="folder" shortcut="true"/>
+<action name="implode" type="folder" shortcut="true"/>
+</model>
+
+<!-- Favorites Actions -->
+<model name="favorites toolbar"> <!--  To enable an icon for the action in right-click-actions menu -->
+  <action name="addToFavorites" type="object"/>
+  <action name="removeFromFavorites" type="object"/>
+</model>
+
+<model name="task_wizard buttons">
+	<action name="wiz_save" type="workitem"/>
+	<action name="wiz_complete" type="workitem"/>
+	<action name="cancelButton" type="object"/>
+</model>
+
+<model name="taskbar buttons">
+	<action name="taskbarWizard" type="workitem"/>
+	<action name="wiz_save" type="workitem"/>
+	<action name="wiz_complete" type="workitem"/>
+	<action name="wiz_close" type="workitem"/>
+</model>
+
+<model name="promptTaskbarOption buttons">
+	<action name="promptTaskbarOption_yes" type="workitem"/>
+	<action name="promptTaskbarOption_no" type="workitem"/>
+	<action name="cancelButton" type="object"/>
+</model>
+
+<model name="workflow template admin toolbar actions">
+  <action name="newWfProcessTemplate" type="wfTemplateAdmin" shortcut="true"/>
+  <action name="checkoutWfProcessTemplate" type="wfTemplateAdmin" shortcut="true"/>
+  <action name="checkinWfProcessTemplate" type="wfTemplateAdmin" shortcut="true"/>
+  <action name="undoCheckoutWfProcessTemplate" type="wfTemplateAdmin" shortcut="true"/>
+  <action name="deleteWfProcessTemplate" type="wfTemplateAdmin" shortcut="true"/>
+  <action name="importWfProcessTemplate" type="wfTemplateAdmin"/>
+  <action name="exportWfProcessTemplate" type="wfTemplateAdmin"/>
+  <action name="list_hide_template" type="object"/>
+  <action name="list_show_template" type="object"/>
+  <action name="separator" type="separator"/>
+</model>
+
+<model name="workflow template admin row actions" menufor="wt.workflow.definer.WfProcessTemplate">
+  <action name="initiateWfProcessTemplate" type="wfTemplateAdmin"/>
+  <!-- Added action to open new initiate workflow AngularJS applet -->
+  <action name="initiateWfProcessTemplateNew" type="wfTemplateAdmin"/>
+  <action name="editWfProcessTemplate" type="wfTemplateAdmin"/>
+  <action name="viewWfProcessTemplate" type="wfTemplateAdmin"/>
+  <action name="deleteWfProcessTemplate" type="wfTemplateAdmin"/>
+  <action name="renameWfProcessTemplate" type="wfTemplateAdmin"/>
+  <action name="moveWfProcessTemplate" type="wfTemplateAdmin"/>
+  <action name="saveasWfProcessTemplate" type="wfTemplateAdmin"/>
+  <action name="checkoutWfProcessTemplate" type="wfTemplateAdmin"/>
+  <action name="checkinWfProcessTemplate" type="wfTemplateAdmin"/>
+  <action name="undoCheckoutWfProcessTemplate" type="wfTemplateAdmin"/>
+  <action name="iterationHistoryOfWfProcessTemplate" type="wfTemplateAdmin"/>
+  <action name="deleteLatestIterationOfWfProcessTemplate" type="wfTemplateAdmin"/>
+  <action name="exportWfProcessTemplate" type="wfTemplateAdmin"/>
+  <action name="externalizeExprOfWfProcessTemplate" type="wfTemplateAdmin"/>
+  <action name="hide_template" type="object"/>
+  <action name="show_template" type="object"/>
+  <action name="separator" type="separator"/>
+</model>
+
+<!-- LifeCycle Template Listing, action model for toolbar in template table -->
+<model name="lifecycle template admin toolbar actions">
+  <action name="newLifeCycleTemplate" type="lifecycleTemplateAdmin" shortcut="true"/>
+  <action name="deleteLifeCycleTemplate" type="lifecycleTemplateAdmin" shortcut="true"/>
+  <action name="checkoutLifeCycleTemplate" type="lifecycleTemplateAdmin" shortcut="true"/>
+  <action name="undoCheckoutLifeCycleTemplate" type="lifecycleTemplateAdmin" shortcut="true"/>
+  <action name="checkinLifeCycleTemplate" type="lifecycleTemplateAdmin" shortcut="true"/>
+  <action name="importLifeCycleTemplate" type="lifecycleTemplateAdmin"/>
+  <action name="exportLifeCycleTemplate" type="lifecycleTemplateAdmin"/>
+  <action name="deleteLatestIterationOfLifeCycleTemplate" type="lifecycleTemplateAdmin"/>
+  <action name="list_hide_template" type="object"/>
+  <action name="list_show_template" type="object"/>
+  <action name="separator" type="separator"/>
+</model>
+
+<!-- LifeCycle Template Listing, action model for context menu in template table -->
+<model name="lifecycle template admin row actions" menufor="wt.lifecycle.LifeCycleTemplate" resourceBundle="com.ptc.netmarkets.templates.LifeCycleTemplateActionsRB">
+  <action name="viewLifeCycleTemplate" type="lifecycleTemplateAdmin"/>
+  <action name="editLifeCycleTemplate" type="lifecycleTemplateAdmin"/>
+  <action name="renameLifeCycleTemplate" type="lifecycleTemplateAdmin"/>
+  <action name="moveLifeCycleTemplate" type="lifecycleTemplateAdmin"/>
+  <action name="deleteLifeCycleTemplate" type="lifecycleTemplateAdmin"/>
+  <action name="saveasLifeCycleTemplate" type="lifecycleTemplateAdmin"/>
+  <action name="checkoutLifeCycleTemplate" type="lifecycleTemplateAdmin"/>
+  <action name="undoCheckoutLifeCycleTemplate" type="lifecycleTemplateAdmin"/>
+  <action name="checkinLifeCycleTemplate" type="lifecycleTemplateAdmin"/>
+  <action name="deleteLatestIterationOfLifeCycleTemplate" type="lifecycleTemplateAdmin"/>
+  <action name="iterationHistoryLifeCycleTemplate" type="lifecycleTemplateAdmin"/>
+  <action name="exportLifeCycleTemplate" type="lifecycleTemplateAdmin"/>
+  <action name="separator" type="separator"/>
+</model>
+
+<!-- LifeCycle Template Listing, action model for toolbar in iteration history template -->
+<model name="lifecycle template iteration history toolbar actions">
+  <action name="deleteSelectedLifeCycleTemplateIteration" type="lifecycleTemplateAdminIterationHistory" shortcut="true"/>
+  <action name="separator" type="separator"/>
+</model>
+
+<!--  LifeCycle Template Listing, action model for buttons in check in wizard -->
+<model name="lifecycleTemplateButtons">
+	<action name="okButton" type="object"/>
+	<action name="cancelButton" type="object"/>
+</model>
+
+<!--  LifeCycle Template Listing, action model for buttons in iteration history table -->
+<model name="lifecycleTemplateIterationHistoryWizardButtons">
+	<action name="okButton" type="object"/>
+</model>
+
+<model name="wfTemplateButtons">
+
+<action name="okButton" type="object"/><action name="cancelButton" type="object"/>
+</model>
+
+<model name="setup_partcipants_table_actions">
+<action name="removeUserFromRole" type="work" shortcut="true"/>
+<action name="addUsersToRole" type="work" shortcut="true"/><action name="explode" type="folder" shortcut="true"/>
+
+<action name="implode" type="folder" shortcut="true"/>
+</model>
+
+<model name="third_level_nav_ai">               <!-- ActionItem Info page -->
+		<submodel name="general_ai"/>                           <!-- General -->
+		<submodel name="relatedItems"/>                      <!-- General -->
+		<submodel name="collaboration"/>                     <!-- Collaboration -->
+</model>
+
+<model name="general_ai" resourceBundle="com.ptc.netmarkets.actionitem.actionitemResource">
+	<action name="primaryAttributes" type="object" />
+	<action name="attributes" type="object" />
+	<action name="reference" type="notebook"/>
+</model>
+<!-- Meeting Info Page -->
+<model name="meetingInfoPageTabSet">
+   <submodel name="meetingInfo_defaultDetails"/>
+       <submodel name="meetingInfo_relatedObjects_tab"/>
+</model>
+<model name="meetingInfo_defaultDetails" resourceBundle="com.ptc.netmarkets.meeting.meetingResource">
+   <action name="primaryAttributes" type="object"/>
+ <action name="attributes" type="object"/>
+  </model>
+  <model name="meetingInfo_relatedObjects_tab" resourceBundle="com.ptc.netmarkets.meeting.meetingResource">
+     <action name="relatedMeetingSubjects" type="meeting"/>
+     <action name="relatedMeetingParticipants" type="meeting"/>
+     <action name="relatedMeetingAgendas" type="meeting"/>
+     <action name="relatedMeetingMinutes" type="meeting"/>
+</model>
+
+<model name="projectinfopageTabSet">
+		<submodel name="projectInfo_detailstab"/>
+</model>
+
+<model name="projectInfo_detailstab" resourceBundle="com.ptc.netmarkets.project.projectResource">
+
+<action name="primaryAttributes" type="object"/><action name="attributes" type="object"/>
+</model>
+<model name="routeExternalparticipants_actions">
+<action name="addObject" type="workflow" shortcut="true"/>
+<action name="addMultipleObjects" type="workflow" shortcut="true"/>
+<action name="remove" type="workflow" shortcut="true"/>
+</model>
+<!-- Classic ProjectActivity Info Pages -->
+<model name="projectActivityInfoPageTabSet">
+
+	   <submodel name="projectActivity_defaultDetails"/><submodel name="projectActivity_relatedObjects"/>
+</model>
+<model name="projectActivity_defaultDetails" resourceBundle="com.ptc.netmarkets.projmgmt.projmgmtResource">
+<action name="primaryAttributes" type="object"/>
+</model>
+<model name="projectActivity_relatedObjects" resourceBundle="com.ptc.netmarkets.projmgmt.projmgmtResource">
+<action name="list_deliverables_projectActivity" type="projectActivity"/>
+	<action name="list" type="actionitem"/>
+	<action name="list_tasks" type="projectActivity"/>
+</model>
+<model name="third_level_nav_projectActivity" defaultActionName="attributes" defaultActionType="object">
+<action name="list_deliverables_projectActivity" type="projectActivity"/>
+<action name="list" type="actionitem"/>
+<action name="list_tasks" type="projectActivity"/>
+<submodel name="general"/>
+<submodel name="collaboration"/>
+</model>
+<!-- Classic SummaryActivity Info Pages -->
+<model name="summaryActivityInfoPageTabSet">
+
+	   <submodel name="summaryActivity_defaultDetails"/><submodel name="summaryActivity_relatedObjects"/>
+</model>
+<model name="summaryActivity_defaultDetails" resourceBundle="com.ptc.netmarkets.projmgmt.projmgmtResource">
+<action name="primaryAttributes" type="object"/>
+</model>
+<model name="summaryActivity_relatedObjects" resourceBundle="com.ptc.netmarkets.projmgmt.projmgmtResource">
+  <action name="list_deliverables_summaryActivity" type="summaryActivity"/>
+</model>
+<model name="third_level_nav_summaryActivity" defaultActionName="attributes" defaultActionType="object">
+<action name="list_deliverables_summaryActivity" type="summaryActivity"/>
+<submodel name="general"/>
+<submodel name="collaboration"/>
+</model>
+
+<!-- Classic Milestone Info Pages -->
+<model name="milestoneInfoPageTabSet">
+
+	   <submodel name="milestone_defaultDetails"/><submodel name="milestone_relatedObjects"/>
+</model>
+<model name="milestone_defaultDetails" resourceBundle="com.ptc.netmarkets.projmgmt.projmgmtResource">
+   <action name="primaryAttributes" type="object"/>
+</model>
+<model name="milestone_relatedObjects" resourceBundle="com.ptc.netmarkets.projmgmt.projmgmtResource">
+	<action name="list_deliverables_milestone" type="milestone"/>
+	<action name="list" type="actionitem"/>
+</model>
+<model name="third_level_nav_milestone" defaultActionName="attributes" defaultActionType="object">
+	<action name="list_deliverables_milestone" type="milestone"/>
+<action name="list" type="actionitem"/>
+<submodel name="general"/>
+<submodel name="collaboration"/>
+</model>
+<!-- Classic ProjectResource Info Pages -->
+<model name="projectResourceInfoPageTabSet">
+  <submodel name="projectResource_defaultDetails"/>
+</model>
+<model name="projectResource_defaultDetails" resourceBundle="com.ptc.netmarkets.projmgmt.projmgmtResource">
+   <action name="primaryAttributes" type="object"/>
+</model>
+
+<!-- Classic Deliverable Info Pages -->
+<model name="classicDeliverableInfoPageTabSet">
+  <submodel name="classicDeliverable_defaultDetails"/>
+  <submodel name="classicDeliverable_relatedObjects"/>
+</model>
+<model name="classicDeliverable_defaultDetails" resourceBundle="com.ptc.netmarkets.projmgmt.projmgmtResource">
+<action name="primaryAttributes" type="object"/>
+</model>
+<model name="classicDeliverable_relatedObjects" resourceBundle="com.ptc.netmarkets.projmgmt.projmgmtResource">
+<action name="list" type="actionitem"/>
+</model>
+
+<model name="third_level_nav_classicDeliverable" defaultActionName="attributes" defaultActionType="object">
+
+<action name="list" type="actionitem"/><action name="primaryAttributes" type="object"/>
+</model>
+
+<model name="orgContainerCreateButtons">
+ <action name="okButton" type="object"/>
+ <action name="orgContainerApplyButton" type="orgcontainer"/>
+ <action name="cancelButton" type="object"/>
+</model>
+
+<model name="search wfprocess row actions" menufor="wt.workflow.engine.WfProcess">
+  <action name="openProcessManager" type="workflow"/>
+  <action name="openProcessMonitor" type="workflow"/>
+  <action name="terminateProc" type="workflow"/>
+</model>
+
+<model name="editEppClassicobjectsErrorButtons">
+ <action name="OkButton" type="projmgmt"/>
+</model>
+<model name="ForumWizardButtons">
+	<action name="prevButton"    type="object"/>
+	<action name="nextButton"    type="object"/>
+	<action name="saveDraftButton" type="forumPosting"/>
+	<action name="okButton"      type="object"/>
+	<action name="applyButton"   type="object"/>
+	<action name="cancelButton"  type="object"/>
+</model>
+<model name="topic participants page actions" >
+	<action name="remove"    type="object" shortcut="true"/>
+	<action name="addParticipants"  type="forumTopic" shortcut="true"/>
+</model>
+<model name="topic row actions" menufor="wt.workflow.forum.DiscussionTopic" >
+	<action name="view" type="object" />
+	<action name="create" type="forumPosting"/>
+	<action name="close" type="forumTopic"/>
+	<action name="addMeAsRecipient"	 type="forumTopic" />
+	<action name="removeMeFromRecipient"	 type="forumTopic" />
+	<action name="editTopic" type="forumTopic"/>
+	<action name="subscribe" type="forumTopic"/>
+	<action name="unsubscribe" type="forumTopic"/>
+	<action name="delete" type="forumTopic"/>
+</model>
+<model name="posting row actions" menufor="wt.workflow.forum.DiscussionPosting">
+	<action name="reply" type="forumPosting"/>
+	<action name="editDraft" type="forumPosting"/>
+	<action name="subscribe" type="forumPosting"/>
+	<action name="unsubscribe" type="forumPosting"/>
+	<action name="delete" type="forumPosting"/>
+</model>
+<model name="topic_info_page_tabset" >
+	<submodel name="topic_info_details"/>
+</model>
+<model name="topic_info_details"  resourceBundle="com.ptc.netmarkets.forumTopic.forumTopicResource">
+	<action name="primaryAttributes" type="object"/>
+	<action name="commentsTable"  type="forumTopic"/>
+</model>
+<model name="my_discussions_toolbar_actions" >
+	<action name="delete"  type="forumTopic" shortcut="true"/>
+	<action name="separator" type="separator" />
+	<action name="exportTablePDF" type="object"/> <!-- Export List to PDF -->
+    <action name="exportTableXLS" type="object"/> <!-- Export List to XLS -->
+</model>
+<model name="my_discussions_row_level_actions" >
+	<action name="create"  type="forumPosting"/>
+	<action name="removeMeFromRecipient"  type="forumTopic"/>
+</model>
+<!-- dummy model to ensure the icon for create posting action.reference : Client_CC_Menu_Best_Practice.html -->
+<model name="toolbarModelNotUsedAnywhere">
+   <action name="create" type="forumPosting"/>
+   <action name="saveasLifeCycleTemplate" type="lifecycleTemplateAdmin" />
+   <action name="renameLifeCycleTemplate" type="lifecycleTemplateAdmin" />
+</model>
+
+    <!-- Meeting Agenda objects table actions in Related Objects tab -->
+	<model name="meeting agenda actions">
+		<action name="addAgenda" type="meeting" shortcut="true"/>
+		<action name="removeAgenda" type="meeting" shortcut="true"/>
+		<action name="list_copy" type="object" shortcut="true" />
+		<action name="pasteAgenda" type="meeting" shortcut="true"/>
+		<action name="pasteSelectedAgenda" type="meeting" shortcut="true"/>
+	</model>
+
+	<!--  Right-Menu actions in Meeting Agenda objects table -->
+	<model name="meeting agenda menu actions">
+		<action name="view" type="object"/>
+		<action name="separator" type="separator"/>
+   		<action name="addAgenda" type="meeting"/>
+		<action name="removeAgenda" type="meeting"/>
+		<action name="copy" type="object"/>
+	</model>
+
+	<model name="meeting participants actions">
+		<action name="addParticipantToTable" type="meeting" shortcut="true"/>
+		<action name="removeParticipantFromTable" type="meeting" shortcut="true"/>
+	</model>
+
+    <!-- Related Object table actions in Related Objects tab -->
+	<model name="meeting subjects actions">
+   		<action name="addSubject" type="meeting" shortcut="true"/>
+		<action name="removeSubject" type="meeting" shortcut="true"/>
+		<action name="list_copy" type="object" shortcut="true" />
+		<action name="pasteSubject" type="meeting" shortcut="true"/>
+		<action name="pasteSelectedSubject" type="meeting" shortcut="true"/>
+	</model>
+
+	<!--  Right-Menu actions in Related Objects table -->
+	<model name="meeting subjects menu actions">
+		<action name="view" type="object"/>
+		<action name="separator" type="separator"/>
+   		<action name="addSubject" type="meeting"/>
+		<action name="removeSubject" type="meeting"/>
+		<action name="copy" type="object"/>
+	</model>
+
+	<!-- Meeting Minutes table actions in Related Objects tab -->
+	<model name="meeting minutes actions" >
+		<action name="addMinutes" type="meeting" shortcut="true" />
+		<action name="removeMinutes" type="meeting" shortcut="true" />
+		<action name="list_copy" type="object" shortcut="true" />
+		<action name="pasteMinutes" type="meeting" shortcut="true" />
+		<action name="pasteSelectedMinutes" type="meeting" shortcut="true" />
+	</model>
+
+	<!--  Right-Menu actions in Meeting Minutes table -->
+	<model name="meeting minutes menu actions">
+		<action name="view" type="object"/>
+		<action name="separator" type="separator"/>
+   		<action name="addMinutes" type="meeting"/>
+		<action name="removeMinutes" type="meeting"/>
+		<action name="copy" type="object"/>
+	</model>
+
+	<model name="workitem third nav configurable">
+		<action name="attributes" type="workitem"/>
+		<action name="routingStatus" type="workitem"/>
+		<action name="notebook" type="workitem"/>
+		<action name="discussions" type="workitem"/>
+		<action name="setupParticipant" type="workitem"/>
+		<action name="adhocActivities" type="workitem"/>
+		<action name="workflowTaskPboAttributes" type="object"/>
+		<action name="workItemActivityVariables" type="workitem"/>
+		<action name="workItemSignOffComponent" type="workitem"/>
+		<action name="saveComplete" type="workitem"/>
+		<action name="workflowTaskPboAction" type="workitem"/>
+		<action name="reviewTask_ResultingDataTable" type="changeTask"/>
+		<action name="reviewApproveTask_PromotionObjectsTable" type="promotionRequest"/>
+		<action name="completeTask_ResultingDataTable" type="changeTask"/>
+		<action name="workItem_ChangeSummary" type="changeNotice"/>
+		<action name="auditTask_changeSummary" type="changeNotice"/>
+		<action name="workItem_attachments" type="attachments"/>
+		<action name="workItem_AffectedDataTable" type="changeRequest"/>
+		<action name="workItem_AssociatedChangeIssues" type="changeRequest"/>
+		<action name="workItem_RelatedChangeNoticesTable" type="changeRequest"/>
+		<action name="workItem_AffectedDataTable" type="changeTask"/>
+		<action name="workItem_ResultingDataTable" type="changeTask"/>
+		<action name="workItem_implementationPlanTable" type="changeNotice"/>
+		<action name="workItem_RelatedChangeRequestsTable" type="change"/>
+		<action name="workItem_associatedChangeItemTable" type="change"/>
+		<action name="workItem_associatedReferenceItemTable" type="change"/>
+		<action name="workItem_changeWorkItemsTable" type="change"/>
+        <action name="workItem_AffectedDataTable" type="changeReview"/>
+        <action name="workItem_ActionItemsTable" type="changeReview"/>
+ 	</model>
+
+	<model name="configurableTaskDetailsPageTabSet">
+	</model>
+
+	<model name="taskFormTemplateInfoNavModel">
+		<action name="attributes" type="taskformtemplates"/>
+		<action name="iterationHistory" type="taskformtemplates"/>
+		<action name="workflowTaskTabInfo" type="taskformtemplates"/>
+	</model>
+
+	<model name="taskFormTemplateInfoDetails" resourceBundle="com.ptc.netmarkets.workflow.taskformtemplates.taskformtemplatesResource">
+		<action name="attributes" type="taskformtemplates"/>
+		<action name="iterationHistory" type="taskformtemplates"/>
+		<action name="workflowTaskTabInfo" type="taskformtemplates"/>
+	</model>
+
+	<model name="taskFormTemplateInfoPageTabSet" resourceBundle="com.ptc.netmarkets.workflow.taskformtemplates.taskformtemplatesResource">
+		<submodel name="taskFormTemplateInfoDetails"/>
+	</model>
+
+	<model name="TaskFormTemplateWizardButtons" resourceBundle="com.ptc.netmarkets.workflow.taskformtemplates.taskformtemplatesResource">
+		<action name="editButton" type="taskformtemplates"/>
+		<action name="checkinButton" type="taskformtemplates"/>
+		<action name="cancelButton" type="object"/>
+	</model>
+	<model name="third_level_nav_discussionForum" defaultActionName="attributes" defaultActionType="object">
+		<action name="attributes" type="object" />
+	</model>
+	<model name="nm_exportlisttofile_submenu" resourceBundle="com.ptc.netmarkets.project.projectResource">
+		<description>'Export List to File' submenu for toolbar actions menu to display different formats to which file can be exported.</description>
+		<action   name="exportTableCSV"    type="object" />           <!-- Export List to CSV -->
+		<action   name="exportTableHTML"   type="object" />           <!-- Export List to HTML -->
+		<action   name="exportTablePDF"    type="object" />           <!-- Export List to PDF -->
+		<action   name="exportTableXLS"    type="object"/>            <!-- Export List to XLS -->
+		<action   name="exportTableXLSX"   type="object"/>            <!-- Export List to XLSX -->
+    </model>
+
+	<model name="team template admin toolbar actions">
+	  <action name="newTeamTemplate" type="teamTemplate" shortcut="true"/>
+	  <action name="deleteTeamTemplate" type="teamTemplate" shortcut="true"/>
+	  
+	</model>
+
+	<model name="team template admin row actions" menufor="wt.team.TeamTemplate">
+	  <action name="editTeamTemplate" type="teamTemplate"/>
+	  <action name="view" type="object"/>
+	  <action name="deleteTeamTemplate" type="teamTemplate"/>
+	  <action name="renameTeamTemplate" type="teamTemplate"/>
+	  <action name="saveasTeamTemplate" type="teamTemplate"/>
+	 </model>
+
+	<model name="teamTemplateButtons">
+	<action name="okButton" type="object"/><action name="cancelButton" type="object"/>
+	</model>
+
+</actionmodels>
