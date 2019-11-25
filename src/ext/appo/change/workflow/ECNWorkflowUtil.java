@@ -270,6 +270,9 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
             //收集需要创建ECA的部件、文档、CAD文档
             Map<Persistable, Collection<Persistable>> collectionMap = collectionObjectsAffected(changeOrder2);
 
+            //检查是否存在独立进行变更的说明文档
+            if (MESSAGES.size() > 0) compoundMessage();
+
             //创建ECA并关联受影响对象、产生对象
             createChangeActivity2(changeOrder2, collectionMap);
 
@@ -337,6 +340,12 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
         }
         //游离的图纸（WTDocument、EPMDocument）单独走「图纸变更」ECA
         for (Persistable persistable : docMap.values()) {
+            if (persistable instanceof WTDocument) {
+                WTDocument document = (WTDocument) persistable;
+                if (!PartDocHelper.isReferenceDocument(document)) {
+                    MESSAGES.add(document.getDisplayIdentity() + " 说明文档不能独立进行变更！");
+                }
+            }
             collectionMap.put(persistable, new HashSet<>());
         }
         LOGGER.info("=====collectionObjectsAffected.collectionMap: " + collectionMap);
