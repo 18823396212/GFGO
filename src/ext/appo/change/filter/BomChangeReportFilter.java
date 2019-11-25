@@ -4,18 +4,12 @@ import com.ptc.core.ui.validation.DefaultSimpleValidationFilter;
 import com.ptc.core.ui.validation.UIValidationCriteria;
 import com.ptc.core.ui.validation.UIValidationKey;
 import com.ptc.core.ui.validation.UIValidationStatus;
-import org.apache.log4j.Logger;
-import wt.change2.WTChangeOrder2;
 import wt.fc.Persistable;
 import wt.fc.WTReference;
-import wt.log4j.LogR;
 import wt.workflow.definer.WfProcessTemplate;
 import wt.workflow.engine.WfProcess;
 import wt.workflow.work.WfAssignedActivity;
 import wt.workflow.work.WorkItem;
-
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 
 public class BomChangeReportFilter extends DefaultSimpleValidationFilter {
 
@@ -33,12 +27,19 @@ public class BomChangeReportFilter extends DefaultSimpleValidationFilter {
                     WfProcess wfprocess  = wfassignedactivity.getParentProcess();
                     WfProcessTemplate wfprocesstemplate = (WfProcessTemplate) wfprocess.getTemplate().getObject();
                     String templateName = wfprocesstemplate.getName();
-                    System.out.println("流程名称templateName====="+templateName);
-                    // 判断是否是ECN流程
-                    if(templateName!=null&&templateName.equals("GenericECNWF")){
+                    // 判断是否是ECN主流程，BOM变更流程，图纸变更流程
+                    if(templateName!=null&&templateName.equals("APPO_ECNWF")){
                         uivalidationstatus=UIValidationStatus.ENABLED;
                     }
-
+                    if(templateName!=null&&templateName.equals("APPO_BOMCHANGEWF")){
+                        uivalidationstatus=UIValidationStatus.ENABLED;
+                    }
+                    if(templateName!=null&&templateName.equals("APPO_DRAWINGCHANGEWF")){
+                        uivalidationstatus=UIValidationStatus.ENABLED;
+                    }
+//                    if(templateName!=null&&templateName.equals("GenericECNWF")){
+//                        uivalidationstatus=UIValidationStatus.ENABLED;
+//                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -46,4 +47,6 @@ public class BomChangeReportFilter extends DefaultSimpleValidationFilter {
         }
         return uivalidationstatus;
     }
+
+
 }

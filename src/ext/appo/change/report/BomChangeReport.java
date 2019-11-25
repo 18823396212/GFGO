@@ -3,18 +3,15 @@ package ext.appo.change.report;
 import com.ptc.core.lwc.server.LWCNormalizedObject;
 import ext.appo.change.ModifyHelper;
 import ext.appo.change.beans.AffectedParentPartsBean;
+import ext.appo.change.beans.BOMChangeInfoBean;
 import ext.appo.change.beans.ECNInfoBean;
 import ext.appo.change.constants.ModifyConstants;
 import ext.appo.change.models.CorrelationObjectLink;
-import ext.generic.reviewObject.model.ProcessReviewObjectLinkHelper;
+import ext.appo.ecn.common.util.ChangeUtils;
 import ext.pi.PIException;
 import ext.pi.core.PIAttributeHelper;
 import ext.pi.core.PICoreHelper;
-import ext.pi.core.PIWorkflowHelper;
-import wt.change2.ChangeHelper2;
-import wt.change2.ChangeOrder2;
-import wt.change2.WTChangeActivity2;
-import wt.change2.WTChangeOrder2;
+import wt.change2.*;
 import wt.fc.*;
 import wt.part.WTPart;
 import wt.query.QuerySpec;
@@ -22,9 +19,6 @@ import wt.query.SearchCondition;
 import wt.session.SessionHelper;
 import wt.session.SessionServerHelper;
 import wt.util.WTException;
-import wt.workflow.engine.WfProcess;
-import wt.workflow.work.WfAssignedActivity;
-import wt.workflow.work.WorkItem;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -35,7 +29,7 @@ public class BomChangeReport {
     public static Persistable getObjectByOid(String oid) throws WTException {
         Persistable p = null;
 
-        boolean flag = SessionServerHelper.manager.setAccessEnforced(false);
+        boolean flag = SessionServerHelper.manager.setAccessEnforced(false);// 忽略权限
         try {
             ReferenceFactory referencefactory = new ReferenceFactory();
             WTReference wtreference = referencefactory.getReference(oid);
@@ -43,32 +37,41 @@ public class BomChangeReport {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            SessionServerHelper.manager.setAccessEnforced(flag);
+            SessionServerHelper.manager.setAccessEnforced(flag);// 添加权限
         }
         return p;
     }
 
-    public static ECNInfoBean getECNInfo(WTChangeOrder2 ecn) throws Exception {
+    public static ECNInfoBean getECNInfo(WTChangeOrder2 ecn){
+        boolean flag = SessionServerHelper.manager.setAccessEnforced(false);// 忽略权限
         ECNInfoBean ecnInfoBean=new ECNInfoBean();
-        String ecnCreator=getSendPersion(ecn);
-        String ecnStartTime=getSendDate(ecn);
-        String productType=getChangeAtt(ecn,"sscpx");
-        String projectName=getChangeAtt(ecn,"ssxm");
-        String changeType=getChangeAtt(ecn,"ChangeItemType");
-        String changeReason=getChangeAtt(ecn,"ChangeCause");
-        String changePhase=getChangeAtt(ecn,"bgjd");
-        String isChangeDrawing=getChangeAtt(ecn,"change_dwg_ornot");
-        String changeDescription=ecn.getDescription();
+        try {
+            if (ecn!=null){
+                String ecnCreator=getSendPersion(ecn);
+                String ecnStartTime=addDate(ecn.getCreateTimestamp().toLocaleString(),8);
+                String productType=getChangeAtt(ecn,"sscpx");
+                String projectName=getChangeAtt(ecn,"ssxm");
+                String changeType=getChangeAtt(ecn,"ChangeItemType");
+                String changeReason=getChangeAtt(ecn,"ChangeCause");
+                String changePhase=getChangeAtt(ecn,"bgjd");
+                String isChangeDrawing=getChangeAtt(ecn,"change_dwg_ornot");
+                String changeDescription=ecn.getDescription();
 
-        ecnInfoBean.setEcnCreator(ecnCreator);
-        ecnInfoBean.setEcnStartTime(ecnStartTime);
-        ecnInfoBean.setProductType(productType);
-        ecnInfoBean.setProjectName(projectName);
-        ecnInfoBean.setChangeType(changeType);
-        ecnInfoBean.setChangeReason(changeReason);
-        ecnInfoBean.setChangePhase(changePhase);
-        ecnInfoBean.setIsChangeDrawing(isChangeDrawing);
-        ecnInfoBean.setChangeDescription(changeDescription);
+                ecnInfoBean.setEcnCreator(ecnCreator);
+                ecnInfoBean.setEcnStartTime(ecnStartTime);
+                ecnInfoBean.setProductType(productType);
+                ecnInfoBean.setProjectName(projectName);
+                ecnInfoBean.setChangeType(changeType);
+                ecnInfoBean.setChangeReason(changeReason);
+                ecnInfoBean.setChangePhase(changePhase);
+                ecnInfoBean.setIsChangeDrawing(isChangeDrawing);
+                ecnInfoBean.setChangeDescription(changeDescription);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            SessionServerHelper.manager.setAccessEnforced(flag);// 添加权限
+        }
 
         return ecnInfoBean;
     }
@@ -131,7 +134,8 @@ public class BomChangeReport {
     //发出日期
     public static String getSendDate(WTChangeOrder2 ecn) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        return sdf.format(ecn.getCreateTimestamp());
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+0"));//TimeZone时区
+        return sdf.format(ecn.getCreateTimestamp())==null?"":sdf.format(ecn.getCreateTimestamp());
     }
 
     // 返回对应的流程ecn
@@ -157,31 +161,49 @@ public class BomChangeReport {
     //受影响母件信息
     public static List<AffectedParentPartsBean> getAffectedInfo(WTChangeOrder2 ecn) throws WTException {
         List<AffectedParentPartsBean> resultList=new ArrayList<>();
-        List<WTPart> parts=getAffectedParts(ecn);
-        if (parts!=null&&parts.size()>0){
-            for (int i = 0; i < parts.size(); i++) {
-                AffectedParentPartsBean affectedInfo=new AffectedParentPartsBean();
-                WTPart part=parts.get(i);
-                String number=part.getNumber();
-                String name=part.getName();
-                String version=part.getVersionInfo().getIdentifier().getValue() + "." + part.getIterationInfo().getIdentifier().getValue();
-                String state=part.getLifeCycleState().getDisplay(SessionHelper.getLocale());
-                String changeDetailedDescription= getIBAvalue(part,"aadDescription");
+        boolean flag = SessionServerHelper.manager.setAccessEnforced(false);// 忽略权限
 
-                affectedInfo.setEffectObjectNumber(number);
-                affectedInfo.setEffectObjectName(name);
-                affectedInfo.setEffectObjectVersion(version);
-                affectedInfo.setEffectObjectState(state);
-                affectedInfo.setChangeDetailedDescription(changeDetailedDescription);
-                resultList.add(affectedInfo);
+        try {
+            if (ecn!=null){
+                List<WTPart> parts=getAffectedParts(ecn);
+                if (parts!=null&&parts.size()>0){
+                    for (int i = 0; i < parts.size(); i++) {
+                        String changeDetailedDescription="";
+                        // 获取备注
+                        Collection<ChangeActivityIfc> changeActivities = ChangeUtils.getChangeActivities(ecn);
+                        for (ChangeActivityIfc changeActivityIfc : changeActivities) {
+                            AffectedActivityData affectedActivityData = ChangeUtils.getAffectedActivity(changeActivityIfc, (Changeable2) parts.get(i));
+                            if (affectedActivityData != null) {
+                                changeDetailedDescription=affectedActivityData.getDescription()==null?"":affectedActivityData.getDescription();
+                            }
+                        }
+                        AffectedParentPartsBean affectedInfo=new AffectedParentPartsBean();
+                        WTPart part=parts.get(i);
+                        String number=part.getNumber();
+                        String name=part.getName();
+                        String version=part.getVersionInfo().getIdentifier().getValue() + "." + part.getIterationInfo().getIdentifier().getValue();
+                        String state=part.getLifeCycleState().getDisplay(SessionHelper.getLocale());
+
+                        affectedInfo.setEffectObjectNumber(number);
+                        affectedInfo.setEffectObjectName(name);
+                        affectedInfo.setEffectObjectVersion(version);
+                        affectedInfo.setEffectObjectState(state);
+                        affectedInfo.setChangeDetailedDescription(changeDetailedDescription);
+                        resultList.add(affectedInfo);
+                    }
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            SessionServerHelper.manager.setAccessEnforced(flag);// 添加权限
         }
 
         return resultList;
     }
 
 
-    //获取更改通告中所有的受影响对象
+    //获取ECN中所有的受影响对象
     public static List<WTPart> getAffectedParts(WTChangeOrder2 ecn) throws WTException {
         List<WTPart> parts=new ArrayList<>();
         QueryResult ecaqr = ChangeHelper2.service.getChangeActivities(ecn);
@@ -192,6 +214,29 @@ public class BomChangeReport {
                 WTChangeActivity2 eca = ((WTChangeActivity2) ecaobject);
                 // 查询ECA中所有受影响对象
                 QueryResult qr = ChangeHelper2.service.getChangeablesBefore(eca);
+                while (qr.hasMoreElements()) {
+                    Object object = qr.nextElement();
+                    if (object instanceof WTPart) {
+                        WTPart part = (WTPart) object;
+                        parts.add(part);
+                    }
+                }
+            }
+        }
+        return parts;
+    }
+
+    //获取ECN中所有的产生对象
+    public static List<WTPart> getProduceParts(WTChangeOrder2 ecn) throws WTException {
+        List<WTPart> parts=new ArrayList<>();
+        QueryResult ecaqr = ChangeHelper2.service.getChangeActivities(ecn);
+
+        while (ecaqr.hasMoreElements()) {
+            Object ecaobject = ecaqr.nextElement();
+            if (ecaobject instanceof WTChangeActivity2) {
+                WTChangeActivity2 eca = ((WTChangeActivity2) ecaobject);
+                // 查询ECA中所有受影响对象
+                QueryResult qr = ChangeHelper2.service.getChangeablesAfter(eca);
                 while (qr.hasMoreElements()) {
                     Object object = qr.nextElement();
 
@@ -205,9 +250,9 @@ public class BomChangeReport {
         return parts;
     }
 
+    //获取IBA属性
     public static String getIBAvalue(Persistable p, String key) throws PIException {
         Object object = PIAttributeHelper.service.getValue(p, key);
-         System.out.println(key+" object物料属性===="+object);
         String comment = "";
         if (object == null) {
             return comment;
@@ -233,5 +278,98 @@ public class BomChangeReport {
         }
         // System.out.println(key+" commnet物料属性输出 ========="+comment);
         return comment;
+    }
+
+    //通过cea获取ecn
+    public static WTChangeOrder2 getECNbyECA(WTChangeActivity2 wtChangeActivity2) throws WTException {
+        WTChangeOrder2 ecn=new WTChangeOrder2();
+        QueryResult ecaqr=ChangeHelper2.service.getChangeOrder(wtChangeActivity2);
+        while (ecaqr.hasMoreElements()) {
+            Object object = ecaqr.nextElement() ;
+            if(object instanceof WTChangeOrder2){
+                ecn= (WTChangeOrder2) object;
+            }
+        }
+
+        return  ecn;
+    }
+
+    //获取ecn所有受影响对象和产生对象的BOM差异<物料编码，...>
+    public static Map<String,List<BOMChangeInfoBean>> getBomChangeInfos(WTChangeOrder2 ecn){
+        Map<String,List<BOMChangeInfoBean>> bomChangeInfos=new HashMap<>();
+        boolean flag = SessionServerHelper.manager.setAccessEnforced(false);// 忽略权限
+        try {
+            List<WTPart> affectedParts=getAffectedParts(ecn);
+            List<WTPart> produceParts=getProduceParts(ecn);
+            System.out.println("affectedParts=="+affectedParts+"==produceParts=="+produceParts);
+            if (affectedParts!=null&&affectedParts.size()>0&&produceParts!=null&&affectedParts.size()>0){
+                for (int i = 0; i < affectedParts.size(); i++) {
+                    for (int j = 0; j < produceParts.size(); j++) {
+                        WTPart affectedPart=affectedParts.get(i);
+                        WTPart producePart=produceParts.get(j);
+                        String affectedNumber=affectedPart.getNumber();
+                        String produceNumber=producePart.getNumber();
+                        //同一物料名称，比较BOM差异
+                        if (affectedNumber.equals(produceNumber)){
+                            List<BOMChangeInfoBean> bomChangeInfo=CompareBom.getBomChangeInfo(affectedPart,producePart);
+                            if (bomChangeInfo!=null){
+                                bomChangeInfos.put(affectedNumber,bomChangeInfo);
+                            }
+                        }
+
+                    }
+
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            SessionServerHelper.manager.setAccessEnforced(flag);// 添加权限
+        }
+
+        return bomChangeInfos;
+    }
+
+
+    /**
+     * 获取ECA的受影响对象
+     * @param activity2
+     * @return
+     * @throws WTException
+     */
+    public static Collection<Changeable2> getChangeablesBefore(WTChangeActivity2 activity2) throws WTException {
+        Collection<Changeable2> changeable2s = new HashSet<>();
+        // 获取ECA中所有受影响对象
+        QueryResult result = ChangeHelper2.service.getChangeablesBefore(activity2);
+        while (result.hasMoreElements()) {
+            Object object = result.nextElement();
+            if (object instanceof ObjectReference) {
+                object = ((ObjectReference) object).getObject();
+            }
+            if (object instanceof Changeable2) {
+                changeable2s.add((Changeable2) object);
+            }
+        }
+        return changeable2s;
+    }
+    //增加时间（小时）
+    public static String addDate(String day, int hour){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = null;
+        try {
+            date = format.parse(day);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        if (date == null)
+            return "";
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.HOUR, hour);// 24小时制
+        date = cal.getTime();
+        cal = null;
+        return format.format(date);
+
     }
 }

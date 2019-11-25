@@ -1,27 +1,27 @@
 package ext.appo.change.beans;
 
 import java.io.Serializable;
+import java.util.*;
 
 public class BOMChangeInfoBean implements Serializable {
 
     //变更类型
-    private String changeType="";
+    private Set changeType=new HashSet();
+
     //物料编码
     private String number="";
     // 名称
     private String name = "";
     //规格描述
     private String specification="";
-    //位号
-    private String placeNumber="";
-    //数量
-    private String quantit="";
-    //替代料
-    private String replacePart="";
+    //位号(key：before 变更前;after 变更后)
+    private Map<String,String> placeNumber=new HashMap<>();
+    //数量(key：before 变更前;after 变更后)
+    private Map<String,String> quantit=new HashMap<>();
+    //替代料(key：delete 删除的替代料;add 新增的替代料)
+    private Map<String,List<String>> replacePartNumbers=new HashMap<>();
 
-    public String getChangeType() {
-        return changeType;
-    }
+    public Set getChangeType() { return changeType; }
 
     public String getNumber() {
         return number;
@@ -35,25 +35,21 @@ public class BOMChangeInfoBean implements Serializable {
         return specification;
     }
 
-    public String getPlaceNumber() {
+    public Map<String,String> getPlaceNumber() {
         return placeNumber;
     }
 
-    public String getQuantit() {
+    public Map<String,String> getQuantit() {
         return quantit;
     }
 
-    public String getReplacePart() {
-        return replacePart;
-    }
+    public Map<String,List<String>> getReplacePartNumbers() { return replacePartNumbers; }
 
-    public void setChangeType(String changeType) {
+    public void setChangeType(Set changeType) {
         this.changeType = changeType;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
-    }
+    public void setNumber(String number) { this.number = number; }
 
     public void setName(String name) {
         this.name = name;
@@ -63,15 +59,26 @@ public class BOMChangeInfoBean implements Serializable {
         this.specification = specification;
     }
 
-    public void setPlaceNumber(String placeNumber) {
+    public void setPlaceNumber(Map<String,String> placeNumber) {
         this.placeNumber = placeNumber;
     }
 
-    public void setQuantit(String quantit) {
+    public void setQuantit(Map<String,String> quantit) {
         this.quantit = quantit;
     }
 
-    public void setReplacePart(String replacePart) {
-        this.replacePart = replacePart;
+    public void setReplacePartNumbers(Map<String,List<String>> replacePartNumbers) {this.replacePartNumbers = replacePartNumbers;}
+
+    @Override
+    public String toString() {
+        return "BOMChangeInfoBean{" +
+                "changeType=" + changeType +
+                ", number='" + number + '\'' +
+                ", name='" + name + '\'' +
+                ", specification='" + specification + '\'' +
+                ", placeNumber=" + placeNumber +
+                ", quantit=" + quantit +
+                ", replacePartNumbers=" + replacePartNumbers +
+                '}';
     }
 }
