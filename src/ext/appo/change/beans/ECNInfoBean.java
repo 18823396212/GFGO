@@ -94,4 +94,19 @@ public class ECNInfoBean implements Serializable {
     public void setChangeDescription(String changeDescription) {
         this.changeDescription = changeDescription;
     }
+
+    @Override
+    public String toString() {
+        return "ECNInfoBean{" +
+                "ecnCreator='" + ecnCreator + '\'' +
+                ", ecnStartTime='" + ecnStartTime + '\'' +
+                ", productType='" + productType + '\'' +
+                ", projectName='" + projectName + '\'' +
+                ", changeType='" + changeType + '\'' +
+                ", changeReason='" + changeReason + '\'' +
+                ", changePhase='" + changePhase + '\'' +
+                ", isChangeDrawing='" + isChangeDrawing + '\'' +
+                ", changeDescription='" + changeDescription + '\'' +
+                '}';
+    }
 }

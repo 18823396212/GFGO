@@ -54,4 +54,15 @@ public class AffectedParentPartsBean implements Serializable {
     public void setChangeDetailedDescription(String changeDetailedDescription) {
         this.changeDetailedDescription = changeDetailedDescription;
     }
+
+    @Override
+    public String toString() {
+        return "AffectedParentPartsBean{" +
+                "effectObjectNumber='" + effectObjectNumber + '\'' +
+                ", effectObjectName='" + effectObjectName + '\'' +
+                ", effectObjectVersion='" + effectObjectVersion + '\'' +
+                ", effectObjectState='" + effectObjectState + '\'' +
+                ", changeDetailedDescription='" + changeDetailedDescription + '\'' +
+                '}';
+    }
 }
