@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
 	<!-- 定义编码前缀,可以取值" ClassNodeNameBefore_:分类名称中的_之前的部分  ClassNodeName：分类名称  ClassNodeInternalName：分类内部名称-->
-<!--    <classfication name="Classfication"></classfication>-->
-    <!--	<classfication name="Classfication">ClassNodeName</classfication>-->
 	<classfication name="Classfication">ClassNodeInternalName</classfication>
-
 </config>	
