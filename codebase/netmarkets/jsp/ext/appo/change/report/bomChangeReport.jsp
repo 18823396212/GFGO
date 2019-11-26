@@ -10,9 +10,7 @@
 <%@ page import="ext.pi.core.PIWorkflowHelper" %>
 <%@ page import="ext.appo.change.beans.AffectedParentPartsBean" %>
 <%@ page import="wt.change2.WTChangeActivity2" %>
-<%@ page import="wt.session.SessionServerHelper" %>
 <%@ page import="ext.appo.change.beans.BOMChangeInfoBean" %>
-<%@ page import="ext.appo.change.constants.BomChangeConstants" %>
 
 <style type="text/css">
     .tb{
@@ -40,6 +38,11 @@
     p{
         word-wrap:break-word;
     }
+    img:hover{
+        color: red;
+        cursor: pointer;
+    }
+
 </style>
 
 <head>
@@ -48,6 +51,12 @@
 </head>
 
 <%
+    //取路径
+    wt.httpgw.URLFactory urlFactory = new wt.httpgw.URLFactory();
+    String baseUrl = urlFactory.getBaseHREF();
+
+    String expandImageUrl = baseUrl + "netmarkets/images/column_expand.gif";
+    String collapseImageUrl = baseUrl + "netmarkets/images/column_collapse.gif";
     //通过oid获取流程项->流程
     String oid=request.getParameter("oid");
     Persistable persistable= BomChangeReport.getObjectByOid(oid);
@@ -79,15 +88,17 @@
             }
         }
     }
-
 %>
 
 <body width="100%">
+<input type="hidden" id="expandImageUrl" value="<%=expandImageUrl%>">
+<input type="hidden" id="collapseImageUrl" value="<%=collapseImageUrl%>">
     <br />
-    <div style="background: #D2E1FD;height: 20px;"><h4>BOM变更报表</h4></div>
-
-    <span>基本属性</span>
-    <table class="tb" border="1">
+    <div style="background: #D2E1FD;height: 20px;line-height: 20px;"><h4>BOM变更报表</h4></div>
+    <br />
+    <div style="float: left;line-height: normal; " ><img id="baseInfo"src="<%=expandImageUrl%>" onclick="showInfo(this)" /></div><span>基本属性</span>
+    <div id="tb_baseInfo">
+    <table  class="tb" border="1">
         <tr>
             <td class="td_title" colspan="1">变更申请人</td>
             <td colspan="3">  <%=ecnInfo.getEcnCreator()==null?"":ecnInfo.getEcnCreator()%></td>
@@ -119,8 +130,11 @@
             </td>
         </tr>
     </table>
+    </div>
     <br />
-    <span>受影响的母件</span>
+    <br />
+    <div style="float: left;line-height: normal; " ><img id="affectedObject"src="<%=expandImageUrl%>" onclick="showInfo(this)" /></div><span class="affectedObject">受影响的母件</span>
+    <div id="tb_affectedObject">
     <table class="tb" border="1">
         <tr>
             <th class="th_datalist" scope="col" colspan="1">
@@ -163,6 +177,7 @@
             }
         %>
     </table>
+    </div>
         <%
             if(bomChangeInfos != null && bomChangeInfos.size() > 0)
             {
@@ -174,8 +189,9 @@
                         %>
     <br />
     <br />
-    <span>BOM <%=key%>变更明细</span>
-    <table class="tb" border="1">
+    <div style="float: left;line-height: normal; " ><img id="<%=key%>"src="<%=expandImageUrl%>" onclick="showInfo(this)" /></div><span class="<%=key%>">BOM <%=key%>变更明细</span>
+    <div id="tb_<%=key%>">
+    <table  class="tb" border="1">
         <tr>
             <th class="th_datalist" scope="col" colspan="1">
                 <span class="tablecolumnheaderfont">序号</span>
@@ -239,7 +255,7 @@
             <td colspan="2"><%=typeName%></td>
             <td colspan="2"><%=bean.getNumber()%></td>
             <td colspan="2"><%=bean.getName()%></td>
-            <td colspan="2"><%=bean.getSpecification()%></td>
+            <td colspan="2"><p><%=bean.getSpecification()%></p></td>
             <%
                 if (placeNumber!=null&&placeNumber.size()>0){
                     if(typeName.contains("新增物料")){
@@ -375,6 +391,7 @@
            }
         %>
     </table>
+    </div>
 
     <%
                 }
@@ -385,7 +402,18 @@
 </body>
 
 <script type="text/javascript">
-
+    function showInfo(e) {
+        var expandImageUrl=document.getElementById("expandImageUrl").value;
+        var collapseImageUrl=document.getElementById("collapseImageUrl").value;
+        var display=document.getElementById("tb_"+e.id).style.display;
+        if (display.trim()==""||display=="block") {
+            e.src=collapseImageUrl;
+            document.getElementById("tb_"+e.id).style.display="none";
+        }else {
+            e.src= expandImageUrl;
+            document.getElementById("tb_"+e.id).style.display="block";
+        }
+    }
 </script>
 
 
