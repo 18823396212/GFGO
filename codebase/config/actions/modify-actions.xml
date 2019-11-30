@@ -54,6 +54,10 @@
         <action name="changeHistory">
             <component name="ext.appo.change.mvc.builder.ChangeHistoryTableBuilder"/>
         </action>
+
+        <action name="user" resourceBundle="ext.appo.change.resource.ModifyResource">
+            <command url="netmarkets/jsp/ext/appo/change/reviewprincipal/chooseUser.jsp"  windowType="page"/>
+        </action>
     </objecttype>
 
 </listofactions>

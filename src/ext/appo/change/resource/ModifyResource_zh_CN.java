@@ -75,7 +75,14 @@ public class ModifyResource_zh_CN extends WTListResourceBundle {
     @RBEntry("变更履历")
     public static final String MY_CUSTOM_30 = "modify.changeHistory.tooltip";
 
+    @RBEntry("用户")
+    public static final String MY_CUSTOM_31 = "modify.user.description";
+    @RBEntry("用户")
+    public static final String MY_CUSTOM_32 = "modify.user.title";
+    @RBEntry("用户")
+    public static final String MY_CUSTOM_33 = "modify.user.tooltip";
+
     @RBEntry("即将撤销所有子流程，是否继续！")
-    public static final String MY_CUSTOM_31 = "MY_CUSTOM_24";
+    public static final String MY_CUSTOM_34 = "MY_CUSTOM_24";
 
 }

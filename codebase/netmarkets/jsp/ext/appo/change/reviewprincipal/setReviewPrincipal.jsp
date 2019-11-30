@@ -19,7 +19,7 @@
 </div>
 
 <wca:wizard type="clerk" title="" buttonList="DefaultClerkButtonsApply"><%-- DefaultClerkButtonsApply --%>
-    <wca:wizardStep action="user" type="generic"/>
+    <wca:wizardStep action="user" type="modify"/>
     <wca:wizardStep action="organization" type="generic"/>
     <wca:wizardStep action="other" type="generic"/>
 </wca:wizard>
@@ -54,8 +54,7 @@
         PTC.jca.table.Utils.reload("ChooseOrganizationTable", null, true);
         PTC.jca.table.Utils.reload("ChooseWTUserTable", null, true);
 
-        if (exist == true) {
-
+        if (exist === true) {
             alert("${message}");
         }
     });

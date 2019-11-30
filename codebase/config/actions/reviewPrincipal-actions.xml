@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE listofactions SYSTEM "actions.dtd">
+<listofactions>
+	<objecttype  name="organization" class="java.lang.Object" resourceBundle="ext.generic.organization.resources.OrganizationRB" >
+    
+    <action name="orgManagement" > 		           
+        <command url="netmarkets/jsp/ext/generic/organization/management/orgManagement.jsp"  windowType="page"/>	
+        <includeFilter name="setOrgArchitectureFilter"/>         		               
+    </action>	
+    
+    <action name="createOrg" ajax="component">
+   			<command class="ext.generic.organization.processor.CreateOrgMgtFormProcessor" method="execute" windowType="popup" url="/netmarkets/jsp/ext/generic/organization/createorg/createMgtArchitecture.jsp" />
+    </action>
+    
+    <action name="createWizardStep">
+				<command windowType="wizard_step" url="/netmarkets/jsp/ext/generic/organization/createorg/createMgtArchitectureWizardStep.jsp"/>
+		</action>
+		
+		<action name="editPage" ajax="page">
+        <command class="ext.generic.organization.processor.EditOrgMgtFormProcessor" method="execute" windowType="popup"  url="/netmarkets/jsp/ext/generic/organization/editorg/editMgtArchitecture.jsp"/>								
+    </action>
+
+	  <action name="editWizardStep">
+	   	<command windowType="wizard_step" url="/netmarkets/jsp/ext/generic/organization/editorg/editMgtArchitectureWizardStep.jsp"/>
+	  </action>
+	 				          
+    <action ajax="component" name="deleteOrg" selectRequired="true" >
+      <command class="ext.generic.organization.processor.DeleteOrgMgtFormProcessor" method="execute" onClick="PTC.team.utils.selectRequiredAndConfirmation(event,target,table)"/>
+		</action>
+
+	 	<action name="infoPageTable">	      		
+  			 <component name="enterpriseUI.team.commonTeam"  windowType="page"/>														
+   </action>
+		
+</objecttype>
+
+
+<objecttype name="generic" class="wt.fc.Persistable" resourceBundle="ext.generic.reviewprincipal.resource.ReviewPrincipalRB" >
+  
+  <action name="setReviewPrincipal" resourceBundle="ext.generic.reviewprincipal.resource.ReviewPrincipalRB">
+    <command class ="ext.generic.reviewprincipal.processor.SetReviewPrincipalProcessor"  url="/netmarkets/jsp/ext/generic/reviewprincipal/setReviewPrincipal.jsp?objectType=wt.org.WTUser&amp;showUserType=ActiveOnly"	windowType="popup"/>
+  </action>
+	
+	<action name="removePrincipal"  ajax="component"  multiselect="true" selectRequired="true" resourceBundle="ext.generic.reviewprincipal.resource.ReviewPrincipalRB">
+     <command class="ext.generic.reviewprincipal.processor.RemovePrincipalProcessor" method="execute" onClick="JCAConfirm(event,'ext.generic.reviewprincipal.resource.ReviewPrincipalRB.CONFIRMREMOVE')"/>
+  </action>
+  
+  <action name="user" resourceBundle="ext.generic.reviewprincipal.resource.ReviewPrincipalRB">
+      <command url="netmarkets/jsp/ext/generic/reviewprincipal/chooseUser/chooseUser.jsp"  windowType="page"/>	
+  </action>
+  
+  <action name="organization" resourceBundle="ext.generic.reviewprincipal.resource.ReviewPrincipalRB">
+    <command url="netmarkets/jsp/ext/generic/reviewprincipal/chooseUser/chooseOrganization.jsp"  windowType="page"/>	
+    <includeFilter name="setOrgArchitectureFilter"/>  
+  </action>
+  
+  <action name="other" resourceBundle="ext.generic.reviewprincipal.resource.ReviewPrincipalRB">
+    <command  url="netmarkets/jsp/ext/generic/reviewprincipal/chooseUser/chooseOther.jsp"	windowType="page"/>
+    <includeFilter name="setOtherPrincipalFilter"/>
+  </action>
+  
+</objecttype>
+
+<objecttype name="wfteam" resourceBundle="ext.generic.reviewprincipal.resource.WFTeamTemplateRB" >
+  
+  <action name="createTeamTeamplate" ajax="component" >
+    <command class ="ext.generic.reviewprincipal.processor.CreateTeamTemplateProcessor"  method="execute" url="netmarkets/jsp/ext/generic/reviewprincipal/createTeamTeamplate.jsp"	windowType="popup"/>
+  </action>
+  
+   <action name="createTeamTeamplate_step" >
+		      <command  windowType="wizard_step" url="netmarkets/jsp/ext/generic/reviewprincipal/createTeamTeamplate_step.jsp"/>
+	     </action>
+	
+	<action name="deleteTeamTeamplate"  ajax="component" >
+     <command class="ext.generic.reviewprincipal.processor.DeleteTeamTemplateProcessor" method="execute" url="netmarkets/jsp/ext/generic/reviewprincipal/teamTeamplate.jsp?type=delete"	windowType="popup"/>
+  </action>
+  
+  <action name="applyTeamTeamplate" ajax="component">
+      <command class="ext.generic.reviewprincipal.processor.ApplyTeamTemplateProcessor" method="execute" url="netmarkets/jsp/ext/generic/reviewprincipal/teamTeamplate.jsp?type=apply"	windowType="popup"/>
+  </action>
+  
+  <action name="teamTeamplate_step" >
+		      <command  windowType="wizard_step" url="netmarkets/jsp/ext/generic/reviewprincipal/teamTeamplate_step.jsp"/>
+	     </action>
+  
+</objecttype>
+</listofactions>
+	 
+
+
+
+
+
