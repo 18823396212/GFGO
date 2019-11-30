@@ -152,21 +152,20 @@ public class ECAReviewActivityUtil {
         try {
             SessionServerHelper.manager.setAccessEnforced(false);
 
-            //pbo为ECA，获取受影响对象的随机一个部件作为pbo；没有部件则取任意一个对象
+            WTContainer container = ((WTContained) pbo).getContainer();
             if (pbo instanceof WTChangeActivity2) {
                 Collection<Changeable2> collection = ModifyUtils.getChangeablesBefore((WTChangeActivity2) pbo);
                 LOGGER.info("=====getInitialUsers.collection: " + collection);
                 for (Changeable2 changeable2 : collection) {
                     LOGGER.info("=====getInitialUsers.changeable2: " + changeable2);
                     if (changeable2 instanceof WTPart) {
-                        pbo = (WTPart) changeable2;
+                        container = ((WTPart) changeable2).getContainer();
                         break;
-                    } else {
-                        pbo = (WTObject) changeable2;
+                    } else if (changeable2 instanceof WTContained) {
+                        container = ((WTContained) changeable2).getContainer();
                     }
                 }
             }
-            WTContainer container = ((WTContained) pbo).getContainer();
 
             WfProcess process = WorkflowUtil.getProcess(self);
             String sheetName = getSheetName(pbo);
