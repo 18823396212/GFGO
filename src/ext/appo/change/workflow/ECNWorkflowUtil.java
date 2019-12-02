@@ -429,7 +429,6 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                     } else if (PIStringUtils.isNotNull(attributeValue) && attributeValue.contains(VALUE_4)) {
                         eca = (WTChangeActivity2) PICoreHelper.service.setLifeCycleState(eca, OPEN);
 
-
                         // 期望完成日期
                         eca = ModifyUtils.updateNeedDate(eca, ModifyUtils.getValue(changeable2, ChangeConstants.COMPLETIONTIME_COMPID));
 
