@@ -747,8 +747,8 @@
         </action>
     </objecttype>
 
-    <include href="config/actions/BorrowOrder-actions.xml"/>
-    <include href="config/actions/ERP-actions.xml"/>
+<!--    <include href="config/actions/BorrowOrder-actions.xml"/>-->
+<!--    <include href="config/actions/ERP-actions.xml"/>-->
     <!--modify by wangtong at 20191024 start-->
     <include href="config/actions/modify-actions.xml"/>
     <!--modify by wangtong at 20191024 end-->
