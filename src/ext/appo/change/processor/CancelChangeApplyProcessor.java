@@ -17,6 +17,8 @@ import wt.fc.Persistable;
 import wt.fc.PersistenceServerHelper;
 import wt.fc.QueryResult;
 import wt.fc.collections.WTHashSet;
+import wt.lifecycle.LifeCycleHelper;
+import wt.lifecycle.State;
 import wt.log4j.LogR;
 import wt.sandbox.SandboxHelper;
 import wt.session.SessionServerHelper;
@@ -83,6 +85,11 @@ public class CancelChangeApplyProcessor extends DefaultObjectFormProcessor imple
                     //删除修订版本
                     SandboxHelper.service.removeObjects(new WTHashSet(collection));
                 }
+                //add by lzy at 20191130 start
+                //设置ECN状态为-已取消
+                State state = State.toState("CANCELLED");
+                LifeCycleHelper.service.setLifeCycleState(changeOrder2,state);
+                //add by lzy at 20191130 end
             }
         } catch (Exception e) {
             throw new WTException(e.getStackTrace());
