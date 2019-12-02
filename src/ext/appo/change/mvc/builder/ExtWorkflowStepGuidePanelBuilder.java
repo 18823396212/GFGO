@@ -90,7 +90,6 @@ public class ExtWorkflowStepGuidePanelBuilder extends AbstractComponentBuilder {
         Object object = nmcommandbean.getActionOid().getRefObject();
         int cul = 0;
         int activeSum = this.getActiveSum(nmcommandbean, object);
-
         for (int i = 0; i < activeSum; ++i) {
             String dtid = "step_" + cul;
             AttributeConfig attributeconfig1 = componentconfigfactory.newAttributeConfig(dtid + "_Name", "", 1, cul);
@@ -272,12 +271,21 @@ public class ExtWorkflowStepGuidePanelBuilder extends AbstractComponentBuilder {
     }
 
     private void collectStepInfo(ArrayList<String> activeInprocess, ArrayList<String> activeComplete, HashMap<String, String> workflowStepMap, int i, String activeName) {
+//        if (activeInprocess.contains(activeName)) {
+//            workflowStepMap.put("step_" + i + "_Name", activeName + "_Open");
+//        } else if (activeComplete.contains(activeName)) {
+//            workflowStepMap.put("step_" + i + "_Name", activeName + "_Close");
+//        } else {
+//            workflowStepMap.put("step_" + i + "_Name", activeName + "_Waitting");
+//        }
+        //add by lzy at 20191130 start
         if (activeInprocess.contains(activeName)) {
-            workflowStepMap.put("step_" + i + "_Name", activeName + "_Open");
+            workflowStepMap.put("step_" + i + "_Name", activeName + "_;_;_;Open");
         } else if (activeComplete.contains(activeName)) {
-            workflowStepMap.put("step_" + i + "_Name", activeName + "_Close");
+            workflowStepMap.put("step_" + i + "_Name", activeName + "_;_;_;Close");
         } else {
-            workflowStepMap.put("step_" + i + "_Name", activeName + "_Waitting");
+            workflowStepMap.put("step_" + i + "_Name", activeName + "_;_;_;Waitting");
         }
+        //add by lzy at 20191130 end
     }
 }
