@@ -371,14 +371,8 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
 //                                break;
 //                            }
 //
-//                            //判断关联的ECN是否非「已取消」「已解决」状态
-//                            if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))) {
-//                                MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
-//                                flag = true;
-//                                flog = false;
-//                                break;
-//                            }
-                            //add by lzy at 20191128 start
+//
+                            //add by lzy at 20191130 start
                             //判断关联的ECN是否非「已取消」「已解决」状态，用户所选"类型"为「替换」的部件则无需判断
                             if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))&&LVERSIONPART.contains(part)) {
                                 MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
@@ -386,7 +380,7 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
                                 flog = false;
                                 break;
                             }
-                            //add by lzy at 20191128 end
+                            //add by lzy at 20191130 end
 
                         }
                     }
@@ -413,14 +407,14 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
 //                                    flag = true;
 //                                    break;
 //                                }
-                                //add by lzy at 20191128 start
+                                //add by lzy at 20191130 start
                                 //判断关联的ECN是否非「已取消」「已解决」状态,用户所选"类型"为「替换」的部件则无需判断
                                 if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))&&LVERSIONPART.contains(part)) {
                                     MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
                                     flag = true;
                                     break;
                                 }
-                                //add by lzy at 20191128 end
+                                //add by lzy at 20191130 end
                             }
                         }
                         if (flag) break;
@@ -538,7 +532,7 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
 //                                flog = false;
 //                                break;
 //                            }
-                            //add by lzy at 20191128 start
+                            //add by lzy at 20191130 start
                             //判断关联的ECN是否非「已取消」「已解决」状态,用户所选"类型"为「替换」的部件则无需判断
                             if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))&&LVERSIONPART.contains(part)) {
                                 MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
@@ -546,7 +540,7 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
                                 flog = false;
                                 break;
                             }
-                            //add by lzy at 20191128 end
+                            //add by lzy at 20191130 end
                         }
                     }
                     if (flag) break;
@@ -572,14 +566,14 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
 //                                    flag = true;
 //                                    break;
 //                                }
-                                //add by lzy at 20191128 start
+                                //add by lzy at 20191130 start
                                 //判断关联的ECN是否非「已取消」「已解决」状态,用户所选"类型"为「替换」的部件则无需判断
                                 if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))&&LVERSIONPART.contains(part)) {
                                     MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
                                     flag = true;
                                     break;
                                 }
-                                //add by lzy at 20191128 end
+                                //add by lzy at 20191130 end
 
 
                             }
