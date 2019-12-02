@@ -6,6 +6,7 @@ import ext.appo.change.constants.ModifyConstants;
 import ext.appo.change.models.CorrelationObjectLink;
 import ext.appo.ecn.common.util.ChangeUtils;
 import ext.appo.ecn.constants.ChangeConstants;
+import ext.appo.ecn.pdf.PdfUtil;
 import ext.appo.part.filter.StandardPartsRevise;
 import ext.lang.PICollectionUtils;
 import ext.lang.PIStringUtils;
@@ -98,11 +99,14 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
             //收集ECA受影响对象集合
             collectionThree();
 
+            checkEnvProtection(ORDER2);
+
             //校验需要收集上层对象的部件是否满足收集条件
             checkOne();
             /*
              * 8.0、至少一条受影响对象，必填项验证。
-             * 8.1、检查受影响对象是否存在未结束的ECN（包含的ECA非取消状态），有则不允许创建。
+             * 8.1、检查受影响对象是否存在未结束的ECN（包含的ECA非取消状态），有则不允许创建。(已取消)
+             * 8.1、检查受影响对象是否存在未结束的ECN（无需判断ECA状态），有则不允许创建。
              * 8.2、检查受影响对象的状态必须是已归档及已发布。
              * 8.3、检查受影响对象不能为标准件。
              * 8.4、A“ECN和完成功能” ，提交的时候校验图纸是否收集，如果没有收集，要给提交人提示“xx部件未收集图纸，请收集图纸！”
@@ -321,7 +325,8 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
 
     /**
      * 8.0、至少一条受影响对象，必填项验证。
-     * 8.1、检查受影响对象是否存在未结束的ECN（包含的ECA非取消状态），有则不允许创建。
+     * 8.1、检查受影响对象是否存在未结束的ECN（包含的ECA非取消状态），有则不允许创建。（已取消）
+     * 8.1、检查受影响对象是否存在未结束的ECN（无需判断ECA状态），有则不允许创建。
      * 8.2、检查受影响对象的状态必须是已归档及已发布。
      * 8.3、检查受影响对象不能为标准件。
      * 8.4、A“ECN和完成功能” ，提交的时候校验图纸是否收集，如果没有收集，要给提交人提示“xx部件未收集图纸，请收集图纸！”
@@ -333,7 +338,8 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
             MESSAGES.add("受影响对象列表不能为空！");
         }
 
-        //8.1、检查受影响对象是否存在未结束的ECN（包含的ECA非取消状态、以及暂存状态的ECN），有则不允许创建。
+        //8.1、检查受影响对象是否存在未结束的ECN（包含的ECA非取消状态、以及暂存状态的ECN），有则不允许创建。（已取消）
+        //8.1、检查受影响对象是否存在未结束的ECN（无需判断ECA状态、以及暂存状态的ECN），有则不允许创建。
         for (Persistable persistable : PAGEDATAMAP.keySet()) {
             if (persistable instanceof WTPart) {
                 WTPart part = (WTPart) persistable;
@@ -357,21 +363,31 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
                         WTChangeOrder2 changeOrder2 = ChangeUtils.getEcnByEca(changeActivity2);
                         LOGGER.info(">>>>>>>>>>changeOrder2:" + changeOrder2.getNumber());
                         if (!ORDER2.getNumber().startsWith(changeOrder2.getNumber())) {
-                            //判断关联的ECA是否非「已取消」「已解决」状态
-                            if ((!ChangeUtils.checkState(changeActivity2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeActivity2, ChangeConstants.RESOLVED))) {
-                                MESSAGES.add("物料: " + number + " 存在未解决的ECA: " + changeActivity2.getNumber() + " 不能同时提交两个ECA！");
-                                flag = true;
-                                flog = false;
-                                break;
-                            }
-
-                            //判断关联的ECN是否非「已取消」「已解决」状态
-                            if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))) {
+//                            //判断关联的ECA是否非「已取消」「已解决」状态
+//                            if ((!ChangeUtils.checkState(changeActivity2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeActivity2, ChangeConstants.RESOLVED))) {
+//                                MESSAGES.add("物料: " + number + " 存在未解决的ECA: " + changeActivity2.getNumber() + " 不能同时提交两个ECA！");
+//                                flag = true;
+//                                flog = false;
+//                                break;
+//                            }
+//
+//                            //判断关联的ECN是否非「已取消」「已解决」状态
+//                            if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))) {
+//                                MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
+//                                flag = true;
+//                                flog = false;
+//                                break;
+//                            }
+                            //add by lzy at 20191128 start
+                            //判断关联的ECN是否非「已取消」「已解决」状态，用户所选"类型"为「替换」的部件则无需判断
+                            if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))&&LVERSIONPART.contains(part)) {
                                 MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
                                 flag = true;
                                 flog = false;
                                 break;
                             }
+                            //add by lzy at 20191128 end
+
                         }
                     }
                     if (flag) break;
@@ -391,12 +407,20 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
                         for (WTChangeOrder2 changeOrder2 : order2s) {
                             LOGGER.info(">>>>>>>>>>checkTwo.changeOrder2:" + changeOrder2.getNumber());
                             if (!ORDER2.getNumber().startsWith(changeOrder2.getNumber())) {
-                                //判断关联的ECN是否非「已取消」「已解决」状态
-                                if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))) {
+//                                //判断关联的ECN是否非「已取消」「已解决」状态
+//                                if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))) {
+//                                    MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
+//                                    flag = true;
+//                                    break;
+//                                }
+                                //add by lzy at 20191128 start
+                                //判断关联的ECN是否非「已取消」「已解决」状态,用户所选"类型"为「替换」的部件则无需判断
+                                if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))&&LVERSIONPART.contains(part)) {
                                     MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
                                     flag = true;
                                     break;
                                 }
+                                //add by lzy at 20191128 end
                             }
                         }
                         if (flag) break;
@@ -474,7 +498,8 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
             MESSAGES.add("受影响对象列表不能为空！");
         }
 
-        //9.1、检查受影响对象是否存在未结束的ECN（包含的ECA非取消状态、以及暂存状态的ECN），有则不允许创建。
+        //9.1、检查受影响对象是否存在未结束的ECN（包含的ECA非取消状态、以及暂存状态的ECN），有则不允许创建。(已取消)
+        //9.1、检查受影响对象是否存在未结束的ECN（无需判断ECA状态、以及暂存状态的ECN），有则不允许创建。
         for (Persistable persistable : PAGEDATAMAP.keySet()) {
             if (persistable instanceof WTPart) {
                 WTPart part = (WTPart) persistable;
@@ -498,21 +523,30 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
                         WTChangeOrder2 changeOrder2 = ChangeUtils.getEcnByEca(changeActivity2);
                         LOGGER.info(">>>>>>>>>>changeOrder2:" + changeOrder2.getNumber());
                         if (!ORDER2.getNumber().startsWith(changeOrder2.getNumber())) {
-                            //判断关联的ECA是否非「已取消」「已解决」状态
-                            if ((!ChangeUtils.checkState(changeActivity2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeActivity2, ChangeConstants.RESOLVED))) {
-                                MESSAGES.add("物料: " + number + " 存在未解决的ECA: " + changeActivity2.getNumber() + " 不能同时提交两个ECA！");
-                                flag = true;
-                                flog = false;
-                                break;
-                            }
-
-                            //判断关联的ECN是否非「已取消」「已解决」状态
-                            if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))) {
+//                            //判断关联的ECA是否非「已取消」「已解决」状态
+//                            if ((!ChangeUtils.checkState(changeActivity2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeActivity2, ChangeConstants.RESOLVED))) {
+//                                MESSAGES.add("物料: " + number + " 存在未解决的ECA: " + changeActivity2.getNumber() + " 不能同时提交两个ECA！");
+//                                flag = true;
+//                                flog = false;
+//                                break;
+//                            }
+//
+//                            //判断关联的ECN是否非「已取消」「已解决」状态
+//                            if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))) {
+//                                MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
+//                                flag = true;
+//                                flog = false;
+//                                break;
+//                            }
+                            //add by lzy at 20191128 start
+                            //判断关联的ECN是否非「已取消」「已解决」状态,用户所选"类型"为「替换」的部件则无需判断
+                            if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))&&LVERSIONPART.contains(part)) {
                                 MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
                                 flag = true;
                                 flog = false;
                                 break;
                             }
+                            //add by lzy at 20191128 end
                         }
                     }
                     if (flag) break;
@@ -533,11 +567,21 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
                             LOGGER.info(">>>>>>>>>>checkTwo.changeOrder2:" + changeOrder2.getNumber());
                             if (!ORDER2.getNumber().startsWith(changeOrder2.getNumber())) {
                                 //判断关联的ECN是否非「已取消」「已解决」状态
-                                if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))) {
+//                                if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))) {
+//                                    MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
+//                                    flag = true;
+//                                    break;
+//                                }
+                                //add by lzy at 20191128 start
+                                //判断关联的ECN是否非「已取消」「已解决」状态,用户所选"类型"为「替换」的部件则无需判断
+                                if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))&&LVERSIONPART.contains(part)) {
                                     MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
                                     flag = true;
                                     break;
                                 }
+                                //add by lzy at 20191128 end
+
+
                             }
                         }
                         if (flag) break;
@@ -592,6 +636,27 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
                 if (SEPARATOR_1.equals(number)) continue;
                 if (NUMBERS.contains(number)) {
                     MESSAGES.add("受影响对象「" + number + "」已存在当前变更申请关联的变更任务「" + activity2.getNumber() + "」的产生对象中！");
+                }
+            }
+        }
+    }
+
+
+    /**
+     * 若是否经过环保评审为否，环保说明必填
+     *
+     * @param order
+     * @throws WTException
+     */
+    public void checkEnvProtection(ChangeOrder2 ecn) throws WTException {
+        if (PdfUtil.getIBAObjectValue(ecn, "ISEnvProtectionReview") != null
+                && PdfUtil.getIBAObjectValue(ecn, "ISEnvProtectionReview") instanceof String) {
+            String ISEnvProtectionReview = (String) PdfUtil.getIBAObjectValue(ecn, "ISEnvProtectionReview");
+            if ("否".equals(ISEnvProtectionReview)) {
+                if (PdfUtil.getIBAObjectValue(ecn, "EnvProtectionDesc") == null
+                        || (PdfUtil.getIBAObjectValue(ecn, "EnvProtectionDesc") instanceof String
+                        && "".equals((String) PdfUtil.getIBAObjectValue(ecn, "EnvProtectionDesc")))) {
+                    throw new WTException(" 未经过环保评审，请您必须填写'环保说明'的属性字段.");
                 }
             }
         }
