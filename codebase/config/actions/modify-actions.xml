@@ -47,7 +47,10 @@
         </action>
 
         <action name="cancelChangeApply" ajax="row">
-            <command class="ext.appo.change.processor.CancelChangeApplyProcessor" method="execute" onClick="JCAConfirm(event,'ext.appo.change.resource.ModifyResource.MY_CUSTOM_24')"/>
+<!--            add by lzy at 20191130 start-->
+<!--            <command class="ext.appo.change.processor.CancelChangeApplyProcessor" method="execute" onClick="JCAConfirm(event,'ext.appo.change.resource.ModifyResource.MY_CUSTOM_24')"/>-->
+            <command class="ext.appo.change.processor.CancelChangeApplyProcessor" method="execute" onClick="JCAConfirm(event,'ext.appo.change.resource.ModifyResource.MY_CUSTOM_20')"/>
+<!--            add by lzy at 20191130 end-->
             <includeFilter name="CancelChangeApplyFilter"/>
         </action>
 
