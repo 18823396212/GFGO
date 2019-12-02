@@ -15,7 +15,9 @@
 <jsp:include page="${mvc:getComponentURL('ext.appo.change.mvc.builder.AffectedItemsTableBuilder')}" flush="true"/>
 
 <jsp:include page="${mvc:getComponentURL('ext.appo.change.mvc.builder.AffectedEndItemsTableBuilder')}" flush="true"/>
-
+<%--add by lzy at 20191130 start--%>
+<jsp:include page="${mvc:getComponentURL('wt.change2.ChangeActivity2.changeTask.resultingItemsTable')}" flush="true"/>
+<%--add by lzy at 20191130 end--%>
 <jsp:include page="${mvc:getComponentURL('ext.appo.change.mvc.builder.ChangeTaskTableBuilder')}" flush="true"/>
 
 <input type="hidden" name="datasArray" id="datasArray"/>
