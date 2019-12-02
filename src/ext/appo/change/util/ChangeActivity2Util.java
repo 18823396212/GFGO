@@ -157,38 +157,39 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
                         WTCollection collection = ModifyUtils.revise(vector, reviseMap);
                         LOGGER.info(">>>>>>>>>>createChangeActivity2.collection:" + collection);
                         ModifyUtils.AddChangeRecord2(eca, collection);
-                    }
 
-                    // 期望完成日期
-                    if (attributesMap.containsKey(ChangeConstants.COMPLETIONTIME_COMPID)) {
-                        eca = ModifyUtils.updateNeedDate(eca, attributesMap.get(ChangeConstants.COMPLETIONTIME_COMPID));
-                    }
-                    // 更新备注
-                    if (attributesMap.containsKey(AADDESCRIPTION_COMPID)) {
-                        AffectedActivityData affectedActivityData = ModifyUtils.getAffectedActivity(eca, changeable2);
-                        if (affectedActivityData != null) {
-                            affectedActivityData.setDescription(attributesMap.get(AADDESCRIPTION_COMPID));
-                            PersistenceHelper.manager.save(affectedActivityData);
+
+                        // 期望完成日期
+                        if (attributesMap.containsKey(ChangeConstants.COMPLETIONTIME_COMPID)) {
+                            eca = ModifyUtils.updateNeedDate(eca, attributesMap.get(ChangeConstants.COMPLETIONTIME_COMPID));
                         }
-                    }
-                    // 更新部件关联的说明文档及图纸备注
-                    for (Persistable persistable : entryMap.getValue()) {
-                        attributesMap = PAGEDATAMAP.get(persistable);
+                        // 更新备注
                         if (attributesMap.containsKey(AADDESCRIPTION_COMPID)) {
-                            AffectedActivityData affectedActivityData = ModifyUtils.getAffectedActivity(eca, (Changeable2) persistable);
+                            AffectedActivityData affectedActivityData = ModifyUtils.getAffectedActivity(eca, changeable2);
                             if (affectedActivityData != null) {
                                 affectedActivityData.setDescription(attributesMap.get(AADDESCRIPTION_COMPID));
                                 PersistenceHelper.manager.save(affectedActivityData);
                             }
                         }
+                        // 更新部件关联的说明文档及图纸备注
+                        for (Persistable persistable : entryMap.getValue()) {
+                            attributesMap = PAGEDATAMAP.get(persistable);
+                            if (attributesMap.containsKey(AADDESCRIPTION_COMPID)) {
+                                AffectedActivityData affectedActivityData = ModifyUtils.getAffectedActivity(eca, (Changeable2) persistable);
+                                if (affectedActivityData != null) {
+                                    affectedActivityData.setDescription(attributesMap.get(AADDESCRIPTION_COMPID));
+                                    PersistenceHelper.manager.save(affectedActivityData);
+                                }
+                            }
+                        }
+                        eca = (WTChangeActivity2) PersistenceHelper.manager.refresh(eca);
+                        ACTIVITY2S.add(eca);
+
+                        updateAttributes(entryMap, changeObjectType);
+
+                        //启动ECA流程
+                        ModifyUtils.startWorkflow(eca, flowName, description);
                     }
-                    eca = (WTChangeActivity2) PersistenceHelper.manager.refresh(eca);
-                    ACTIVITY2S.add(eca);
-
-                    updateAttributes(entryMap, changeObjectType);
-
-                    //启动ECA流程
-                    ModifyUtils.startWorkflow(eca, flowName, description);
                 }
             }
         } catch (Exception e) {
