@@ -414,31 +414,40 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                     LOGGER.info(">>>>>>>>>>createChangeActivity2.collection:" + collection);
                     ModifyUtils.AddChangeRecord2(eca, collection);
 
-                    // 部件‘类型’选择‘替换’时ECA状态设置为‘已发布’,选择‘升级’时ECA状态设置为‘开启’
+//                    // 部件‘类型’选择‘替换’时ECA状态设置为‘已发布’,选择‘升级’时ECA状态设置为‘开启’
+//                    String attributeValue = ModifyUtils.getValue(changeable2, CHANGETYPE_COMPID);
+//                    if (PIStringUtils.isNotNull(attributeValue) && attributeValue.contains(VALUE_1)) {
+//                        eca = (WTChangeActivity2) PICoreHelper.service.setLifeCycleState(eca, RESOLVED);
+//                    } else if (PIStringUtils.isNotNull(attributeValue) && attributeValue.contains(VALUE_4)) {
+//                        eca = (WTChangeActivity2) PICoreHelper.service.setLifeCycleState(eca, OPEN);
+//                    }
+
+                    // 部件‘类型’选择‘替换’时ECA状态设置为‘已解决’,不启动ECA,选择‘升级’时ECA状态设置为‘开启’
                     String attributeValue = ModifyUtils.getValue(changeable2, CHANGETYPE_COMPID);
                     if (PIStringUtils.isNotNull(attributeValue) && attributeValue.contains(VALUE_1)) {
                         eca = (WTChangeActivity2) PICoreHelper.service.setLifeCycleState(eca, RESOLVED);
                     } else if (PIStringUtils.isNotNull(attributeValue) && attributeValue.contains(VALUE_4)) {
                         eca = (WTChangeActivity2) PICoreHelper.service.setLifeCycleState(eca, OPEN);
-                    }
 
-                    // 期望完成日期
-                    eca = ModifyUtils.updateNeedDate(eca, ModifyUtils.getValue(changeable2, ChangeConstants.COMPLETIONTIME_COMPID));
 
-                    String ecnVid = String.valueOf(PICoreHelper.service.getBranchId(changeOrder2));
-                    LOGGER.info(">>>>>>>>>>createChangeActivity2.ecnVid:" + ecnVid);
+                        // 期望完成日期
+                        eca = ModifyUtils.updateNeedDate(eca, ModifyUtils.getValue(changeable2, ChangeConstants.COMPLETIONTIME_COMPID));
 
-                    //更新受影响对象描述，受影响对象Link路由、ECA ID
-                    updateDescription(ecnVid, eca, changeable2);
-                    //更新部件关联的说明文档及图纸受影响对象描述，受影响对象Link路由、ECA ID
-                    for (Persistable persistable : entryMap.getValue()) {
-                        if (persistable instanceof Changeable2) {
-                            updateDescription(ecnVid, eca, (Changeable2) persistable);
+                        String ecnVid = String.valueOf(PICoreHelper.service.getBranchId(changeOrder2));
+                        LOGGER.info(">>>>>>>>>>createChangeActivity2.ecnVid:" + ecnVid);
+
+                        //更新受影响对象描述，受影响对象Link路由、ECA ID
+                        updateDescription(ecnVid, eca, changeable2);
+                        //更新部件关联的说明文档及图纸受影响对象描述，受影响对象Link路由、ECA ID
+                        for (Persistable persistable : entryMap.getValue()) {
+                            if (persistable instanceof Changeable2) {
+                                updateDescription(ecnVid, eca, (Changeable2) persistable);
+                            }
                         }
-                    }
 
-                    //启动ECA流程
-                    ModifyUtils.startWorkflow(eca, flowName, description);
+                        //启动ECA流程
+                        ModifyUtils.startWorkflow(eca, flowName, description);
+                    }
                 }
             }
         } catch (Exception e) {
