@@ -1110,6 +1110,12 @@ public class ModifyUtils implements ChangeConstants {
     public static Collection<Persistable> getRollbackObject(WTChangeActivity2 activity2) throws WTException {
         Collection<Persistable> rollbacks = new HashSet<>();
 
+        Set<Long> branchIds = new HashSet<>();
+        Collection<Changeable2> before = getChangeablesBefore(activity2);
+        for (Changeable2 changeable2 : before) {
+            branchIds.add(changeable2.getBranchIdentifier());
+        }
+
         Collection<Changeable2> collection = getChangeablesAfter(activity2);
         LOGGER.info("=====getRollbackObject.collection: " + collection);
         for (Changeable2 changeable2 : collection) {
@@ -1120,16 +1126,16 @@ public class ModifyUtils implements ChangeConstants {
                 if (changeable2 instanceof EPMDocument) {
                     EPMDocument document = PIEpmHelper.service.findEPMDocument(number);
                     LOGGER.info("=====getRollbackObject.document: " + document);
-                    if (document != null) rollbacks.add(document);
+                    if (document != null && !branchIds.contains(document.getBranchIdentifier())) rollbacks.add(document);
                 } else if (changeable2 instanceof WTDocument) {
                     WTDocument document = PIDocumentHelper.service.findWTDocument(number);
                     LOGGER.info("=====getRollbackObject.document: " + document);
-                    if (document != null) rollbacks.add(document);
+                    if (document != null && !branchIds.contains(document.getBranchIdentifier())) rollbacks.add(document);
                 } else if (changeable2 instanceof WTPart) {
                     WTPart part = (WTPart) changeable2;
                     part = PIPartHelper.service.findWTPart(number, part.getViewName());
                     LOGGER.info("=====getRollbackObject.part: " + part);
-                    if (part != null) rollbacks.add(part);
+                    if (part != null && !branchIds.contains(part.getBranchIdentifier())) rollbacks.add(part);
                 }
             }
         }
