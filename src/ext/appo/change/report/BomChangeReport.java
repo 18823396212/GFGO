@@ -1,16 +1,12 @@
 package ext.appo.change.report;
 
 import com.ptc.core.lwc.server.LWCNormalizedObject;
-import ext.appo.change.ModifyHelper;
 import ext.appo.change.beans.AffectedParentPartsBean;
 import ext.appo.change.beans.BOMChangeInfoBean;
 import ext.appo.change.beans.ECNInfoBean;
-import ext.appo.change.constants.ModifyConstants;
-import ext.appo.change.models.CorrelationObjectLink;
 import ext.appo.ecn.common.util.ChangeUtils;
 import ext.pi.PIException;
 import ext.pi.core.PIAttributeHelper;
-import ext.pi.core.PICoreHelper;
 import wt.change2.*;
 import wt.fc.*;
 import wt.part.WTPart;
@@ -169,10 +165,10 @@ public class BomChangeReport {
                 if (parts!=null&&parts.size()>0){
                     for (int i = 0; i < parts.size(); i++) {
                         String changeDetailedDescription="";
-                        // 获取备注
+                        //获取备注
                         Collection<ChangeActivityIfc> changeActivities = ChangeUtils.getChangeActivities(ecn);
                         for (ChangeActivityIfc changeActivityIfc : changeActivities) {
-                            AffectedActivityData affectedActivityData = ChangeUtils.getAffectedActivity(changeActivityIfc, (Changeable2) parts.get(i));
+                            AffectedActivityData affectedActivityData = ChangeUtils.getAffectedActivity(changeActivityIfc,  parts.get(i));
                             if (affectedActivityData != null) {
                                 changeDetailedDescription=affectedActivityData.getDescription()==null?"":affectedActivityData.getDescription();
                             }
@@ -183,12 +179,76 @@ public class BomChangeReport {
                         String name=part.getName();
                         String version=part.getVersionInfo().getIdentifier().getValue() + "." + part.getIterationInfo().getIdentifier().getValue();
                         String state=part.getLifeCycleState().getDisplay(SessionHelper.getLocale());
+                        // 在制数量
+                        String inProcessQuantities = "";
+                        Object inProcessQuantitiesObj=getIBAObjectValue(part,"ArticleInventory");
+                        if (inProcessQuantitiesObj!=null){
+                            inProcessQuantities= (String) inProcessQuantitiesObj;
+                        }
+                        // 在制处理措施
+                        String processingMeasures = "";
+                        Object processingMeasuresObj =getIBAObjectValue(part,"ArticleDispose");
+                        if (processingMeasuresObj!=null){
+                            processingMeasures= getMeasure(String.valueOf(processingMeasuresObj));
+                        }
+                        // 在途数量
+                        String onthewayQuantity = "";
+                        Object onthewayQuantityObj =getIBAObjectValue(part,"PassageInventory");
+                        if (onthewayQuantityObj!=null){
+                            onthewayQuantity=(String)onthewayQuantityObj;
+                        }
+                        // 在途处理措施
+                        String onthewayTreatmentMeasure = "";
+                        Object onthewayTreatmentMeasureObj =getIBAObjectValue(part,"PassageDispose");
+                        if (onthewayTreatmentMeasureObj!=null){
+                            onthewayTreatmentMeasure=getMeasure(String.valueOf(onthewayTreatmentMeasureObj));
+                        }
+                        // 库存数量
+                        String stockQuantity = "";
+                        Object stockQuantityObj =getIBAObjectValue(part,"CentralWarehouseInventory");
+                        if (stockQuantityObj!=null){
+                            stockQuantity=(String)stockQuantityObj;
+                        }
+                        // 库存处理措施
+                        String stockTreatmentMeasure = "";
+                        Object stockTreatmentMeasureObj =getIBAObjectValue(part,"InventoryDispose");
+                        if (stockTreatmentMeasureObj!=null){
+                            stockTreatmentMeasure=getMeasure(String.valueOf(stockTreatmentMeasureObj));
+                        }
+                        // 已出货成品处理措施
+                        String finishedHandleMeasures = "";
+                        Object finishedHandleMeasuresObj =getIBAObjectValue(part,"ProductDispose");
+                        if (finishedHandleMeasuresObj!=null){
+                            finishedHandleMeasures=getMeasure(String.valueOf(finishedHandleMeasuresObj));
+                        }
+                        //变更类型
+                        String changeType="";
+                        Object changeTypeObj =getIBAObjectValue(part,"ChangeType");
+                        if (changeTypeObj!=null){
+                            changeType=getMeasure(String.valueOf(changeTypeObj));
+                        }
+                        //完成时间
+                        String expectDate="";
+                        Object expectDateObj =getIBAObjectValue(part,"CompletionTime");
+                        if (expectDateObj!=null){
+                            expectDate=(String)expectDateObj;
+                        }
 
                         affectedInfo.setEffectObjectNumber(number);
                         affectedInfo.setEffectObjectName(name);
                         affectedInfo.setEffectObjectVersion(version);
                         affectedInfo.setEffectObjectState(state);
                         affectedInfo.setChangeDetailedDescription(changeDetailedDescription);
+                        affectedInfo.setInProcessQuantities(inProcessQuantities);
+                        affectedInfo.setProcessingMeasures(processingMeasures);
+                        affectedInfo.setOnthewayQuantity(onthewayQuantity);
+                        affectedInfo.setOnthewayTreatmentMeasure(onthewayTreatmentMeasure);
+                        affectedInfo.setStockQuantity(stockQuantity);
+                        affectedInfo.setStockTreatmentMeasure(stockTreatmentMeasure);
+                        affectedInfo.setFinishedHandleMeasures(finishedHandleMeasures);
+                        affectedInfo.setChangeType(changeType);
+                        affectedInfo.setExpectDate(expectDate);
+
                         resultList.add(affectedInfo);
                     }
                 }
@@ -370,6 +430,17 @@ public class BomChangeReport {
         date = cal.getTime();
         cal = null;
         return format.format(date);
-
     }
+    //获取处理措施选项值
+    public static String getMeasure(String str){
+        String result="";
+        String[] arr = str.split(";");
+        if (arr.length > 1){
+            result = arr[1];
+        } else{
+            result = arr[0];
+        }
+        return  result;
+    }
+
 }

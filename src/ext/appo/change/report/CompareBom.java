@@ -52,6 +52,24 @@ public class CompareBom {
                 bomChangeInfoBean.setName(name);
                 bomChangeInfoBean.setSpecification(ggms);
 
+//                //获取删除子项的所有特定替代料
+//                WTPartUsageLink oldLink = getUsageLink(childPart, wm);
+//                if (oldLink != null) {
+//                    List<String> replacePartNumber=new ArrayList<>();
+//                    Map<String, List<String>> replacePartNumbers = new HashMap<>();
+//                    //当前子项特定替代
+//                    List<WTPartSubstituteLink> substituteLinks = getSubstituteLinks(oldLink);
+//                    if (substituteLinks != null && substituteLinks.size() > 0) {
+//                        for (WTPartSubstituteLink substitutelink : substituteLinks) {
+//                            String substituteNumber = substitutelink.getSubstitutes().getNumber();//特定替代料编码
+//                            replacePartNumber.add(substituteNumber);
+//                        }
+//                        replacePartNumbers.put("delete",replacePartNumber);
+//                    }
+//                    bomChangeInfoBean.setReplacePartNumbers(replacePartNumbers);
+//                }
+
+
                 bomChangeInfoBeans.add(bomChangeInfoBean);
             }
 

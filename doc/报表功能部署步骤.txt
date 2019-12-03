@@ -10,15 +10,16 @@
     wt.workflow.worklist.resource.worklistResource_zh_CN.java
     wt.workflow.worklist.resource.worklistResource_zh_TW.java
     复制以上文件含以下标签的内容到服务器对应文件对应位置上（正常情况可以直接覆盖，覆盖之前对比一下两个文件出标签外的其他内容是否一致）
-    //add by lzy 20191024 start
-    //add by lzy 20191024 end
+    //add by lzy at 20191120 start
+    //add by lzy at 20191120 end
+
 
     codebase/config/actions/NetMarkets-actionModels.xml
     codebase/config/actions/NetMarkets-actions.xml
     codebase/ext/xconf/appo.properties.xconf
     复制以上文件含以下标签的内容到服务器对应文件对应位置上（正常情况可以直接覆盖，覆盖之前对比一下两个文件出标签外的其他内容是否一致）
-    <!--modify by lzy at 20191024 start-->
-    <!--modify by lzy at 20191024 end-->
+    <!--modify by lzy at 20191120 start-->
+    <!--modify by lzy at 20191120 end-->
 
 3.注册xconf文件
     执行xconfmanager -p

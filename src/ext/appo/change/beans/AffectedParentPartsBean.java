@@ -14,6 +14,24 @@ public class AffectedParentPartsBean implements Serializable {
     private String effectObjectState = "";
     //更改详细描述
     private String changeDetailedDescription="";
+    // 在制数量
+    private String inProcessQuantities = "";
+    // 在制处理措施
+    private String processingMeasures = "";
+    // 在途数量
+    private String onthewayQuantity = "";
+    // 在途处理措施
+    private String onthewayTreatmentMeasure = "";
+    // 库存数量
+    private String stockQuantity = "";
+    // 库存处理措施
+    private String stockTreatmentMeasure = "";
+    // 已出货成品处理措施
+    private String finishedHandleMeasures = "";
+    //变更类型
+    private String changeType="";
+    //完成时间
+    private String expectDate="";
 
     public String getEffectObjectNumber() {
         return effectObjectNumber;
@@ -33,6 +51,42 @@ public class AffectedParentPartsBean implements Serializable {
 
     public String getChangeDetailedDescription() {
         return changeDetailedDescription;
+    }
+
+    public String getInProcessQuantities() {
+        return inProcessQuantities;
+    }
+
+    public String getProcessingMeasures() {
+        return processingMeasures;
+    }
+
+    public String getOnthewayQuantity() {
+        return onthewayQuantity;
+    }
+
+    public String getOnthewayTreatmentMeasure() {
+        return onthewayTreatmentMeasure;
+    }
+
+    public String getStockQuantity() {
+        return stockQuantity;
+    }
+
+    public String getStockTreatmentMeasure() {
+        return stockTreatmentMeasure;
+    }
+
+    public String getFinishedHandleMeasures() {
+        return finishedHandleMeasures;
+    }
+
+    public String getChangeType() {
+        return changeType;
+    }
+
+    public String getExpectDate() {
+        return expectDate;
     }
 
     public void setEffectObjectNumber(String effectObjectNumber) {
@@ -55,6 +109,42 @@ public class AffectedParentPartsBean implements Serializable {
         this.changeDetailedDescription = changeDetailedDescription;
     }
 
+    public void setInProcessQuantities(String inProcessQuantities) {
+        this.inProcessQuantities = inProcessQuantities;
+    }
+
+    public void setProcessingMeasures(String processingMeasures) {
+        this.processingMeasures = processingMeasures;
+    }
+
+    public void setOnthewayQuantity(String onthewayQuantity) {
+        this.onthewayQuantity = onthewayQuantity;
+    }
+
+    public void setOnthewayTreatmentMeasure(String onthewayTreatmentMeasure) {
+        this.onthewayTreatmentMeasure = onthewayTreatmentMeasure;
+    }
+
+    public void setStockQuantity(String stockQuantity) {
+        this.stockQuantity = stockQuantity;
+    }
+
+    public void setStockTreatmentMeasure(String stockTreatmentMeasure) {
+        this.stockTreatmentMeasure = stockTreatmentMeasure;
+    }
+
+    public void setFinishedHandleMeasures(String finishedHandleMeasures) {
+        this.finishedHandleMeasures = finishedHandleMeasures;
+    }
+
+    public void setChangeType(String changeType) {
+        this.changeType = changeType;
+    }
+
+    public void setExpectDate(String expectDate) {
+        this.expectDate = expectDate;
+    }
+
     @Override
     public String toString() {
         return "AffectedParentPartsBean{" +
@@ -63,6 +153,15 @@ public class AffectedParentPartsBean implements Serializable {
                 ", effectObjectVersion='" + effectObjectVersion + '\'' +
                 ", effectObjectState='" + effectObjectState + '\'' +
                 ", changeDetailedDescription='" + changeDetailedDescription + '\'' +
+                ", inProcessQuantities='" + inProcessQuantities + '\'' +
+                ", processingMeasures='" + processingMeasures + '\'' +
+                ", onthewayQuantity='" + onthewayQuantity + '\'' +
+                ", onthewayTreatmentMeasure='" + onthewayTreatmentMeasure + '\'' +
+                ", stockQuantity='" + stockQuantity + '\'' +
+                ", stockTreatmentMeasure='" + stockTreatmentMeasure + '\'' +
+                ", finishedHandleMeasures='" + finishedHandleMeasures + '\'' +
+                ", changeType='" + changeType + '\'' +
+                ", expectDate='" + expectDate + '\'' +
                 '}';
     }
 }

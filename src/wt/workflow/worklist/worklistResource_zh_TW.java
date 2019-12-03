@@ -948,8 +948,8 @@ public final class worklistResource_zh_TW extends WTListResourceBundle {
 	@RBEntry("任務完成")
 	public static final String TASK_SIGN_OFF_PANEL = "TASK_SIGN_OFF_PANEL";
 
-    //add by lzy 20191024 start
+    //add by lzy 20191120 start
     @RBEntry("BOM變更報表")
     public static final String workitem_bomChangeReport_description = "workitem.bomChangeReport.description";
-    //add by lzy 20191024 end
+    //add by lzy 20191120 end
 }

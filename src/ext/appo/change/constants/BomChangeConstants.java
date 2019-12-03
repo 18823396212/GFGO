@@ -8,5 +8,7 @@ public interface BomChangeConstants {
     String TYPE_4 = "删除替代料";
     String TYPE_5 = "位号变更";
     String TYPE_6 = "数量变更";
+    String TYPE_7 = "新增物料及替代料";
+    String TYPE_8 = "删除物料及替代料";
 
 }

@@ -53,9 +53,9 @@
    <Option serviceClass="ext.appo.part.filter.StandardPartAttrChangeFilter" selector="standardPartAttrChangeFilter" requestor="null" />
    <Option serviceClass="ext.appo.part.filter.DisableForPartTotheRawMaterials" selector="disableForPartTotheRawMaterials" requestor="null" />
 
-   <!--modify by lzy at 20191024 start-->
+   <!--modify by lzy at 20191120 start-->
    <Option serviceClass="ext.appo.change.filter.BomChangeReportFilter" selector="bomChangeReportFilter" requestor="null" />
-   <!--modify by lzy at 20191024 end-->
+   <!--modify by lzy at 20191120 end-->
 
    </Service>
    
