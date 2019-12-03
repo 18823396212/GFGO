@@ -39,11 +39,9 @@ import wt.team.TeamManaged;
 import wt.type.ClientTypedUtility;
 import wt.type.TypeDefinitionReference;
 import wt.type.TypedUtilityServiceHelper;
+import wt.util.WTAttributeNameIfc;
 import wt.util.WTException;
-import wt.vc.AdHocStringVersioned;
-import wt.vc.Iterated;
-import wt.vc.OneOffVersioned;
-import wt.vc.Versioned;
+import wt.vc.*;
 import wt.vc.config.*;
 import wt.vc.sessioniteration.SessionEditedIteration;
 import wt.vc.wip.Workable;
@@ -1126,16 +1124,19 @@ public class ModifyUtils implements ChangeConstants {
                 if (changeable2 instanceof EPMDocument) {
                     EPMDocument document = PIEpmHelper.service.findEPMDocument(number);
                     LOGGER.info("=====getRollbackObject.document: " + document);
-                    if (document != null && !branchIds.contains(document.getBranchIdentifier())) rollbacks.add(document);
+                    if (document != null && !branchIds.contains(document.getBranchIdentifier()) && getChangeActivity2(document).size() < 2)
+                        rollbacks.add(document);
                 } else if (changeable2 instanceof WTDocument) {
                     WTDocument document = PIDocumentHelper.service.findWTDocument(number);
                     LOGGER.info("=====getRollbackObject.document: " + document);
-                    if (document != null && !branchIds.contains(document.getBranchIdentifier())) rollbacks.add(document);
+                    if (document != null && !branchIds.contains(document.getBranchIdentifier()) && getChangeActivity2(document).size() < 2)
+                        rollbacks.add(document);
                 } else if (changeable2 instanceof WTPart) {
                     WTPart part = (WTPart) changeable2;
                     part = PIPartHelper.service.findWTPart(number, part.getViewName());
                     LOGGER.info("=====getRollbackObject.part: " + part);
-                    if (part != null && !branchIds.contains(part.getBranchIdentifier())) rollbacks.add(part);
+                    if (part != null && !branchIds.contains(part.getBranchIdentifier()) && getChangeActivity2(part).size() < 2)
+                        rollbacks.add(part);
                 }
             }
         }
@@ -1161,6 +1162,33 @@ public class ModifyUtils implements ChangeConstants {
 
         WfProcess process = PIWorkflowHelper.service.startWorkflow(flowName, activity2, processConfig, new HashMap());
         LOGGER.info("=====startWorkflow.process: " + process);
+    }
+
+    /**
+     * 获取对象关联的ECA
+     * 产生对象列表
+     * @param persistable
+     * @return
+     * @throws WTException
+     */
+    public static Set<ChangeActivity2> getChangeActivity2(Persistable persistable) throws WTException {
+        Set<ChangeActivity2> activity2s = new HashSet<>();
+
+        QuerySpec qs = new QuerySpec(ChangeRecord2.class);
+        SearchCondition sc = new SearchCondition(ChangeRecord2.class, VersionToObjectLink.ROLE_BOBJECT_REF + "." + WTAttributeNameIfc.REF_OBJECT_ID, SearchCondition.EQUAL, persistable.getPersistInfo().getObjectIdentifier().getId());
+        qs.appendWhere(sc, new int[]{0});
+        LOGGER.info("=====getChangeActivity2.qs: " + qs.toString());
+        QueryResult result = PersistenceHelper.manager.find((StatementSpec) qs);
+        LOGGER.info("=====getChangeActivity2.result: " + result.size());
+
+        while (result.hasMoreElements()) {
+            ChangeRecord2 changeRecord2 = (ChangeRecord2) result.nextElement();
+            ChangeActivity2 activity2 = changeRecord2.getChangeActivity2();
+            activity2s.add(activity2);
+        }
+
+        LOGGER.info("=====getChangeActivity2.activity2s: " + activity2s);
+        return activity2s;
     }
 
 }
