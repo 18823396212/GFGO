@@ -10,6 +10,7 @@ import ext.appo.ecn.pdf.PdfUtil;
 import ext.appo.part.filter.StandardPartsRevise;
 import ext.lang.PICollectionUtils;
 import ext.lang.PIStringUtils;
+import ext.pi.core.PIAttributeHelper;
 import ext.pi.core.PICoreHelper;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -175,11 +176,7 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
                                         //根据用户所选"类型"为「替换」必须收集上层部件
                                         if (changeType.contains(VALUE_1)) CHILDPART.add(part);
                                         //用户所选"类型"为「升版」的部件
-//                                        add by lzy at 20191209 start
-                                            //用户所选"类型"为「BOM变更升版」或「图纸变更升版」的部件
                                         else if (changeType.contains(VALUE_4)) LVERSIONPART.add(part);
-//                                        else if (changeType.contains(VALUE_7)||changeType.contains(VALUE_8)) LVERSIONPART.add(part);
-//                                        add by lzy at 20191209 end
 
                                     }
                                 }
@@ -485,7 +482,11 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
             //替换类型部件无需判断是否收集图纸,升版才需判断
 //            if (numbers.size() > 0 && result.size() < 1) MESSAGES.add("部件: " + part.getNumber() + "未收集图纸，请收集图纸！");
             if (LVERSIONPART.contains(part)){
-                if (numbers.size() > 0 && result.size() < 1) MESSAGES.add("部件: " + part.getNumber() + "未收集说明方文档，请至少收集一份说明方文档！！");
+                //PCBA不需要加入判断
+                String classification = (String) PIAttributeHelper.service.getValue(part, "Classification");
+                if (!classification.contains("appo_bcp01")){
+                    if (numbers.size() > 0 && result.size() < 1) MESSAGES.add("部件: " + part.getNumber() + "未收集说明方文档，请至少收集一份说明方文档！！");
+                }
             }
             //            add by lzy at 20191205 end
         }
