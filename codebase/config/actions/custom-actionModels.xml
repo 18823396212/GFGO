@@ -489,6 +489,10 @@
         <submodel name="simplifiedImplementationPlanTab"/>
         <submodel name="changeNoticeProcessTab"/>
         <submodel name="changeObjectsHistoryTab"/>
+<!--        add by lzy at 20191205 start-->
+        <!--ECN BOM变更报表页签-->
+        <action name="bomChangeReport" type="workitem"/>
+<!--        add by lzy at 20191205 end-->
         <action name="sysnavTab" type="sysnav"/>
         <!--<action   name="wtObjectBaselinelink" type="querylink"/>--> <!-- Add Kwang : 变更相关基线 -->
     </model>

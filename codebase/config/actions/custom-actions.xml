@@ -152,11 +152,17 @@
 
         <!-- 受影响对象表单 -->
         <action name="affectedItemsTable">
-            <component name="ext.appo.ecn.mvc.builder.AffectedItemsTableBuilder" windowType="page"/>
+            <!--            add by lzy at 20191205 satart-->
+<!--            <component name="ext.appo.ecn.mvc.builder.AffectedItemsTableBuilder" windowType="page"/>-->
+            <component name="ext.appo.change.mvc.builder.AffectedItemsTableBuilder" windowType="page"/>
+            <!--            add by lzy at 20191205 end-->
         </action>
         <!-- 受影响产品表单 -->
         <action name="affectedEndItemsTableBuilder">
-            <component name="ext.appo.ecn.mvc.builder.AffectedEndItemsTableBuilder" windowType="page"/>
+            <!--            add by lzy at 20191209 satart-->
+<!--            <component name="ext.appo.ecn.mvc.builder.AffectedEndItemsTableBuilder" windowType="page"/>-->
+            <component name="ext.appo.change.mvc.builder.AffectedEndItemsTableBuilder" windowType="page"/>
+            <!--            add by lzy at 20191209 end-->
         </action>
         <!-- 受影响对象表单 -->
         <action name="affectedItemsTableBuilder">
@@ -176,7 +182,10 @@
         </action>
         <!-- 事务性任务表单 -->
         <action name="changeTaskTableBuilder">
-            <component name="ext.appo.ecn.mvc.builder.ChangeTaskTableBuilder" windowType="page"/>
+            <!--            add by lzy at 20191209 start-->
+<!--            <component name="ext.appo.ecn.mvc.builder.ChangeTaskTableBuilder" windowType="page"/>-->
+            <component name="ext.appo.change.mvc.builder.ChangeTaskTableBuilder" windowType="page"/>
+            <!--            add by lzy at 20191209 end-->
         </action>
         <!-- 事务性任务表单添加按钮 -->
         <action name="addChangeTask" renderType="GENERAL" selectRequired="true">

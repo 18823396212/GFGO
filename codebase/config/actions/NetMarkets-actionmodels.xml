@@ -1076,7 +1076,12 @@
 
 <model name="taskDetailsPageTaskFormTemplateTabSet" resourceBundle="wt.workflow.worklist.worklistResource">
   <submodel name="taskFormTemplateDetails"/>
+  <!--modify by lzy at 20191210 start-->
+  <!--ECN 修改变更申请页签-->
+  <action name="modifyChangeRequest" type="workitem"/>
+  <!--modify by lzy at 20191210 end-->
   <!--modify by lzy at 20191120 start-->
+  <!--ECN BOM变更报表页签-->
   <action name="bomChangeReport" type="workitem"/>
   <!--modify by lzy at 20191120 end-->
 </model>

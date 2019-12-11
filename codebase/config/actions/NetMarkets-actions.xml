@@ -767,12 +767,22 @@
       </action>
 
       <!--modify by lzy at 20191120 start-->
-      <!--ECN报表页签-->
+      <!--ECN BOM变更报表页签-->
       <action name="bomChangeReport" resourceBundle="wt.workflow.worklist.worklistResource">
          <command class="" url="netmarkets/jsp/ext/appo/change/report/bomChangeReport.jsp"/>
          <includeFilter name="bomChangeReportFilter"/>
       </action>
       <!--modify by lzy at 20191120 end-->
+      <!--modify by lzy at 20191210 start-->
+      <!--ECN 修改变更申请页签-->
+      <action name="modifyChangeRequest" ajax="row" resourceBundle="wt.workflow.worklist.worklistResource">
+         <command url="/netmarkets/jsp/ext/appo/change/request/modifyChangeRequest.jsp" windowType="page" class="ext.appo.change.processor.ExtEditChangeNoticeFormProcessor" method="excute"/>
+         <includeFilter name="modifyChangeRequestFilter"/>
+      </action>
+      <action name="modifyChangeRequestStep" id="modifyChangeRequestStep" preloadWizardPage="false" required="false">
+         <command url="/netmarkets/jsp/ext/appo/change/request/modifyChangeRequestStep.jsp" class="" windowType="wizard_step"/>
+      </action>
+      <!--modify by lzy at 20191210 end-->
    </objecttype>
 
 
