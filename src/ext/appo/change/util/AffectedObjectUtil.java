@@ -175,7 +175,12 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
                                         //根据用户所选"类型"为「替换」必须收集上层部件
                                         if (changeType.contains(VALUE_1)) CHILDPART.add(part);
                                         //用户所选"类型"为「升版」的部件
+//                                        add by lzy at 20191209 start
+                                            //用户所选"类型"为「BOM变更升版」或「图纸变更升版」的部件
                                         else if (changeType.contains(VALUE_4)) LVERSIONPART.add(part);
+//                                        else if (changeType.contains(VALUE_7)||changeType.contains(VALUE_8)) LVERSIONPART.add(part);
+//                                        add by lzy at 20191209 end
+
                                     }
                                 }
                             }
@@ -370,15 +375,17 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
 //                                flog = false;
 //                                break;
 //                            }
-//
-//
                             //add by lzy at 20191130 start
                             //判断关联的ECN是否非「已取消」「已解决」状态，用户所选"类型"为「替换」的部件则无需判断
-                            if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))&&LVERSIONPART.contains(part)) {
-                                MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
-                                flag = true;
-                                flog = false;
-                                break;
+                            if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))) {
+                                if (!LVERSIONPART.contains(part)){
+                                    break;
+                                }else{
+                                    MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
+                                    flag = true;
+                                    flog = false;
+                                    break;
+                                }
                             }
                             //add by lzy at 20191130 end
 
@@ -409,10 +416,15 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
 //                                }
                                 //add by lzy at 20191130 start
                                 //判断关联的ECN是否非「已取消」「已解决」状态,用户所选"类型"为「替换」的部件则无需判断
-                                if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))&&LVERSIONPART.contains(part)) {
-                                    MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
-                                    flag = true;
-                                    break;
+                                if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))) {
+                                    if (!LVERSIONPART.contains(part)){
+                                        break;
+                                    }else{
+                                        MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
+                                        flag = true;
+                                        break;
+                                    }
+
                                 }
                                 //add by lzy at 20191130 end
                             }
@@ -453,11 +465,29 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
 
             Set<String> numbers = new HashSet<>();
             for (Persistable persistable : entryMap.getValue()) {
-                numbers.add(ModifyUtils.getNumber(persistable));
-            }
+                //            add by lzy at 20191205 start
+                if (persistable instanceof  WTDocument){
+                    WTDocument document=(WTDocument) persistable;
+                    //是否为说明文档,必须是说明文档
+                    if (!PartDocHelper.isReferenceDocument(document)){
+                        //部件说明文档中产品命名通知单不需要加入判断
+                        if(!PICoreHelper.service.isType(document, "com.plm.productNamingNotic")){
+                            numbers.add(ModifyUtils.getNumber(persistable));
+                        }
+                    }
+                }
 
+//                numbers.add(ModifyUtils.getNumber(persistable));
+                //            add by lzy at 20191205 end
+            }
             Set<String> result = PICollectionUtils.intersect(numbers, AFFECTEDDOCNUMBER);
-            if (numbers.size() > 0 && result.size() < 1) MESSAGES.add("部件: " + part.getNumber() + "未收集图纸，请收集图纸！");
+            //            add by lzy at 20191205 start
+            //替换类型部件无需判断是否收集图纸,升版才需判断
+//            if (numbers.size() > 0 && result.size() < 1) MESSAGES.add("部件: " + part.getNumber() + "未收集图纸，请收集图纸！");
+            if (LVERSIONPART.contains(part)){
+                if (numbers.size() > 0 && result.size() < 1) MESSAGES.add("部件: " + part.getNumber() + "未收集说明方文档，请至少收集一份说明方文档！！");
+            }
+            //            add by lzy at 20191205 end
         }
 
         //检查受影响对象列表中是否存在已修订的对象
@@ -534,11 +564,15 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
 //                            }
                             //add by lzy at 20191130 start
                             //判断关联的ECN是否非「已取消」「已解决」状态,用户所选"类型"为「替换」的部件则无需判断
-                            if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))&&LVERSIONPART.contains(part)) {
-                                MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
-                                flag = true;
-                                flog = false;
-                                break;
+                            if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))) {
+                                if (!LVERSIONPART.contains(part)){
+                                    break;
+                                }else{
+                                    MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
+                                    flag = true;
+                                    flog = false;
+                                    break;
+                                }
                             }
                             //add by lzy at 20191130 end
                         }
@@ -568,10 +602,14 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
 //                                }
                                 //add by lzy at 20191130 start
                                 //判断关联的ECN是否非「已取消」「已解决」状态,用户所选"类型"为「替换」的部件则无需判断
-                                if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))&&LVERSIONPART.contains(part)) {
-                                    MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
-                                    flag = true;
-                                    break;
+                                if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))) {
+                                    if (!LVERSIONPART.contains(part)){
+                                        break;
+                                    }else{
+                                        MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
+                                        flag = true;
+                                        break;
+                                    }
                                 }
                                 //add by lzy at 20191130 end
 

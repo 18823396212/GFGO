@@ -429,6 +429,13 @@ public class ECAReviewActivityUtil {
                             if (disName != null && disName.length() > 0) {
                                 middleType = disName;
                             }
+                        }else{
+                            disName = CSMUtil.getOneLastClfNodeInternalNameByWTPart(part);
+                            if (disName == null || disName.length() <= 0) {
+                                throw new WTException(WTMessage.getLocalizedMessage(RESOURCE, "11", new Object[0], SessionHelper.getLocale()));
+                            }
+
+                            middleType = disName;
                         }
                     }
 

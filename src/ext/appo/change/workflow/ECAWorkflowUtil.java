@@ -7,6 +7,7 @@ import ext.appo.change.constants.ModifyConstants;
 import ext.appo.change.models.CorrelationObjectLink;
 import ext.appo.change.util.ModifyUtils;
 import ext.appo.ecn.common.util.ChangePartQueryUtils;
+import ext.appo.ecn.common.util.ChangeUtils;
 import ext.appo.ecn.constants.ChangeConstants;
 import ext.appo.part.beans.EffectiveBaselineBean;
 import ext.appo.part.util.EffecitveBaselineUtil;
@@ -20,12 +21,14 @@ import ext.generic.integration.cis.rule.CISBusinessRuleXML;
 import ext.generic.integration.cis.util.OracleUtil;
 import ext.generic.integration.cis.util.SQLServerUtil;
 import ext.generic.integration.erp.common.CommonPDMUtil;
+import ext.lang.PIStringUtils;
 import ext.pi.PIException;
 import ext.pi.core.PIAttributeHelper;
 import ext.pi.core.PIClassificationHelper;
 import ext.pi.core.PICoreHelper;
 import ext.pi.core.PIPartHelper;
 import org.apache.log4j.Logger;
+import wt.change2.ChangeActivityIfc;
 import wt.change2.Changeable2;
 import wt.change2.WTChangeActivity2;
 import wt.change2.WTChangeOrder2;
@@ -51,6 +54,7 @@ import wt.project.Role;
 import wt.session.SessionServerHelper;
 import wt.team.Team;
 import wt.team.WTRoleHolder2;
+import wt.type.ClientTypedUtility;
 import wt.util.WTException;
 import wt.vc.config.LatestConfigSpec;
 import wt.vc.wip.Workable;
@@ -960,5 +964,102 @@ public class ECAWorkflowUtil implements ChangeConstants, ModifyConstants {
             throw new WTException(builder.toString());
         }
     }
+
+    /**
+     *变更前BOM状态为已发布，变更后BOM添加软件必须为已发布
+     * @param pbo
+     * @throws WTException
+     */
+    public void checkSoftwareState(WTObject pbo) throws WTException {
+        if (!(pbo instanceof WTChangeActivity2)) return;
+        Collection<Changeable2> befores = ModifyUtils.getChangeablesBefore((WTChangeActivity2) pbo);
+        Collection<Changeable2> afters = ModifyUtils.getChangeablesAfter((WTChangeActivity2) pbo);
+
+        for (Changeable2 before : befores) {
+            if (before instanceof WTPart) {
+                WTPart beforePart = (WTPart) before;
+                String state = beforePart.getLifeCycleState().toString();
+                String beforePartNumber = beforePart.getNumber();
+                //变更前物料是否为发布状态
+                if (state.equals(RELEASED)) {
+                    //对应的变更后对象软件是否为已发布
+                    for (Changeable2 after : afters) {
+                        if (after instanceof WTPart) {
+                            WTPart afterPart = (WTPart) after;
+                            String afterPartNumber = afterPart.getNumber();
+                            if (beforePartNumber.equals(afterPartNumber)) {
+                                //获取部件下所有子件信息
+                                Collection<WTPart> collection = ChangePartQueryUtils.getPartMultiwallStructure(afterPart);
+                                if (collection.isEmpty()) return;
+                                //软件不是发布状态，添加报错信息
+                                for (WTPart childPart : collection) {
+                                    String childNumber=childPart.getNumber();
+                                    if (childNumber.startsWith("X")){
+                                        String childState = childPart.getLifeCycleState().toString();
+                                        if (!childState.equals(RELEASED)){
+
+                                            MESSAGES.add("软件"+childNumber+"不是发布状态，不能添加到已发布的BOM"+afterPartNumber+"中，请先软件发布后再添加到BOM中！");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+
+    /**
+     * 事务性ECA为初始状态开启时设置事务性ECA为实施
+     * @param pbo
+     * @param targetState
+     * @param orgState
+     * @throws WTException
+     */
+    public static void setTransactionTaskState(WTObject pbo, String targetState, String orgState) throws WTException{
+        if(pbo == null || !(pbo instanceof WTChangeOrder2) || PIStringUtils.isNull(targetState)){
+            return ;
+        }
+        try {
+            WTChangeOrder2 changeOrder2 = (WTChangeOrder2)pbo ;
+            // 获取ECN中所有ECA对象
+            Collection<ChangeActivityIfc> ecaArray = ChangeUtils.getChangeActivities(changeOrder2) ;
+            for(ChangeActivityIfc changeActivityIfc : ecaArray){
+                if(changeActivityIfc instanceof LifeCycleManaged){
+                    LifeCycleManaged lifeCycleManaged = (LifeCycleManaged) changeActivityIfc ;
+                    // 获取完整的内部值
+                    String internalName = ClientTypedUtility.getTypeIdentifier(changeActivityIfc).getTypename();
+                    LOGGER.info("=====internalName==" + internalName);
+                    System.out.println("internalName=="+internalName);
+                    String[] str=internalName.split("\\|");
+                    if (str.length>1){
+                        internalName=str[1];
+                    }
+                    System.out.println("internalName2=="+internalName);
+                    LOGGER.info("=====internalName2==" + internalName);
+                    //任务性内部值
+                    if (internalName.equals("com.plm.TransactionalChangeActivity2")) {
+                        if(PIStringUtils.isNotNull(orgState)){
+                            if(lifeCycleManaged.getState().toString().equalsIgnoreCase(orgState)){
+                                WorkflowUtil.setLifeCycleState(lifeCycleManaged, targetState);
+
+                            }
+                        }else{
+                            WorkflowUtil.setLifeCycleState(lifeCycleManaged, targetState);
+                        }
+
+                    }
+
+                }
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            throw new WTException(e.getLocalizedMessage()) ;
+        }
+    }
+
 
 }
