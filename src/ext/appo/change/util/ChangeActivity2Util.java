@@ -149,6 +149,34 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
                     // 部件「类型」选择「替换」时ECA状态设置为「已解决」不起流程、不升版、不添加到产生对象
                     if (PIStringUtils.isNotNull(attributeValue) && attributeValue.contains(VALUE_1)) {
                         eca = (WTChangeActivity2) PICoreHelper.service.setLifeCycleState(eca, RESOLVED);
+
+                        // 期望完成日期
+                        if (attributesMap.containsKey(ChangeConstants.COMPLETIONTIME_COMPID)) {
+                            eca = ModifyUtils.updateNeedDate(eca, attributesMap.get(ChangeConstants.COMPLETIONTIME_COMPID));
+                        }
+                        // 更新备注
+                        if (attributesMap.containsKey(AADDESCRIPTION_COMPID)) {
+                            AffectedActivityData affectedActivityData = ModifyUtils.getAffectedActivity(eca, changeable2);
+                            if (affectedActivityData != null) {
+                                affectedActivityData.setDescription(attributesMap.get(AADDESCRIPTION_COMPID));
+                                PersistenceHelper.manager.save(affectedActivityData);
+                            }
+                        }
+                        // 更新部件关联的说明文档及图纸备注
+                        for (Persistable persistable : entryMap.getValue()) {
+                            attributesMap = PAGEDATAMAP.get(persistable);
+                            if (attributesMap.containsKey(AADDESCRIPTION_COMPID)) {
+                                AffectedActivityData affectedActivityData = ModifyUtils.getAffectedActivity(eca, (Changeable2) persistable);
+                                if (affectedActivityData != null) {
+                                    affectedActivityData.setDescription(attributesMap.get(AADDESCRIPTION_COMPID));
+                                    PersistenceHelper.manager.save(affectedActivityData);
+                                }
+                            }
+                        }
+                        eca = (WTChangeActivity2) PersistenceHelper.manager.refresh(eca);
+                        ACTIVITY2S.add(eca);
+
+                        updateAttributes(entryMap, changeObjectType);
                     }
                     //部件「类型」选择「升级」时ECA状态设置为「开启」启动子流程、修订受影响对象，并添加到产生对象列表
                     else if (PIStringUtils.isNotNull(attributeValue) && attributeValue.contains(VALUE_4)) {
