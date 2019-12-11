@@ -7,8 +7,13 @@ import com.ptc.netmarkets.util.beans.NmCommandBean;
 import com.ptc.netmarkets.util.beans.NmHelperBean;
 import ext.appo.change.ModifyHelper;
 import ext.appo.change.resource.ModifyResource;
+import ext.appo.ecn.common.util.ChangeUtils;
+import ext.appo.ecn.constants.ChangeConstants;
 import ext.pi.core.PICoreHelper;
 import org.apache.log4j.Logger;
+import wt.change2.ChangeHelper2;
+import wt.change2.Changeable2;
+import wt.change2.WTChangeActivity2;
 import wt.change2.WTChangeOrder2;
 import wt.fc.QueryResult;
 import wt.log4j.LogR;
@@ -30,7 +35,7 @@ public class ChangeHistoryTableBuilder extends AbstractComponentBuilder {
 
     @Override
     public Object buildComponentData(ComponentConfig config, ComponentParams params) throws Exception {
-        Set<WTChangeOrder2> result = new HashSet<>();
+        Set<WTChangeOrder2> order2s = new HashSet<>();
 
         NmHelperBean nmHelperBean = ((JcaComponentParams) params).getHelperBean();
         NmCommandBean nmCommandBean = nmHelperBean.getNmCommandBean();
@@ -44,12 +49,21 @@ public class ChangeHistoryTableBuilder extends AbstractComponentBuilder {
                 LOGGER.info("=====object: " + object);
                 String branchId = String.valueOf(PICoreHelper.service.getBranchId(object));
                 LOGGER.info("=====branchId: " + branchId);
-                result.addAll(ModifyHelper.service.queryWTChangeOrder2(branchId, LINKTYPE_1));
+                order2s.addAll(ModifyHelper.service.queryWTChangeOrder2(branchId, LINKTYPE_1));
+
+                QueryResult result = ChangeHelper2.service.getAffectingChangeActivities((Changeable2) object);
+                while (result.hasMoreElements()) {
+                    WTChangeActivity2 changeActivity2 = (WTChangeActivity2) result.nextElement();
+                    LOGGER.info("=====changeActivity2:" + changeActivity2.getNumber());
+                    WTChangeOrder2 changeOrder2 = ChangeUtils.getEcnByEca(changeActivity2);
+                    LOGGER.info("=====changeOrder2:" + changeOrder2.getNumber());
+                    order2s.add(changeOrder2);
+                }
             }
         }
 
-        LOGGER.info("=====result: " + result);
-        return result;
+        LOGGER.info("=====result: " + order2s);
+        return order2s;
     }
 
     @Override
