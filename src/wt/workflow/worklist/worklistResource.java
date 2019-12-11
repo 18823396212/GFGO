@@ -949,7 +949,11 @@ public final class worklistResource extends WTListResourceBundle {
 	public static final String TASK_SIGN_OFF_PANEL = "TASK_SIGN_OFF_PANEL";
 
     //add by lzy 20191120 start
-    @RBEntry("BOM change report")
+    @RBEntry("BOM Change Report")
     public static final String workitem_bomChangeReport_description = "workitem.bomChangeReport.description";
     //add by lzy 20191120 end
+    //add by lzy 20191209 start
+    @RBEntry("Modify Change Request")
+    public static final String workitem_modifyChangeRequest_description = "workitem.modifyChangeRequest.description";
+    //add by lzy 20191209 end
 }

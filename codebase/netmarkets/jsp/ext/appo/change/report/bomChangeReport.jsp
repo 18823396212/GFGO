@@ -12,6 +12,9 @@
 <%@ page import="wt.change2.WTChangeActivity2" %>
 <%@ page import="ext.appo.change.beans.BOMChangeInfoBean" %>
 <%@ page import="ext.appo.change.constants.BomChangeConstants" %>
+<%@ page import="wt.fc.QueryResult" %>
+<%@ page import="wt.change2.ChangeHelper2" %>
+<%@ page import="wt.part.WTPart" %>
 
 <style type="text/css">
     .tb{
@@ -70,7 +73,7 @@
     ECNInfoBean ecnInfo=new ECNInfoBean();
     List<AffectedParentPartsBean> affectedParts=new ArrayList<>();
     Map<String,List<BOMChangeInfoBean>> bomChangeInfos=new HashMap<>();
-
+    String currentaffectedObject="";
     if (persistable instanceof WorkItem){
         WorkItem workItem=(WorkItem)persistable;
         wfprocess = PIWorkflowHelper.service.getParentProcess(workItem);
@@ -78,7 +81,18 @@
         if (objects.length>0) {
             for (int i = 0; i < objects.length; i++) {
                 if (objects[i] instanceof WTChangeActivity2) { //eca
-                    ecn=BomChangeReport.getECNbyECA((WTChangeActivity2)objects[i]);
+                    WTChangeActivity2 eca=(WTChangeActivity2)objects[i];
+                    ecn=BomChangeReport.getECNbyECA(eca);
+                    // 查询ECA中所有受影响对象
+                    QueryResult qr = ChangeHelper2.service.getChangeablesBefore(eca);
+                    while (qr.hasMoreElements()) {
+                        Object object = qr.nextElement();
+
+                        if (object instanceof WTPart) {
+                            WTPart part = (WTPart) object;
+                            currentaffectedObject=part.getNumber();
+                        }
+                    }
                 }else if (objects[i] instanceof WTChangeOrder2) { //ecn
                     ecn= (WTChangeOrder2) objects[i];
                 }
@@ -86,17 +100,26 @@
                     ecnInfo= BomChangeReport.getECNInfo(ecn);
                     affectedParts=BomChangeReport.getAffectedInfo(ecn);
                     bomChangeInfos=BomChangeReport.getBomChangeInfos(ecn);
-
                 }
 
             }
         }
+    }else if (persistable instanceof WTChangeOrder2){
+        ecn=(WTChangeOrder2)persistable;
+        if (ecn!=null){
+            ecnInfo= BomChangeReport.getECNInfo(ecn);
+            affectedParts=BomChangeReport.getAffectedInfo(ecn);
+            bomChangeInfos=BomChangeReport.getBomChangeInfos(ecn);
+        }
+
     }
+
 %>
 
 <body width="100%">
 <input type="hidden" id="expandImageUrl" value="<%=expandImageUrl%>">
 <input type="hidden" id="collapseImageUrl" value="<%=collapseImageUrl%>">
+<input type="hidden" id="currentaffectedObject" value="<%=currentaffectedObject%>">
     <br />
     <div style="background: #D2E1FD;height: 20px;line-height: 20px;"><h4>BOM变更报表</h4></div>
     <br />
@@ -459,6 +482,7 @@
 </body>
 
 <script type="text/javascript">
+
     function showInfo(e) {
         var expandImageUrl=document.getElementById("expandImageUrl").value;
         var collapseImageUrl=document.getElementById("collapseImageUrl").value;
@@ -483,7 +507,14 @@
         document.getElementById(e.id).style.backgroundColor="#FBD9A7";
         document.getElementById("div_"+e.id).style.display="block";
     }
+    function showCurrentaffectedObject() {
+        var currentaffectedObject=document.getElementById("currentaffectedObject").value;
+        if (currentaffectedObject!=""&&document.getElementById(currentaffectedObject)){
+            document.getElementById(currentaffectedObject).click();
+        }
 
+    }
+    showCurrentaffectedObject();
 
 </script>
 
