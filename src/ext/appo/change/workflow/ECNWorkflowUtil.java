@@ -12,15 +12,14 @@ import ext.pi.core.PICoreHelper;
 import ext.pi.core.PIWorkflowHelper;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import wt.change2.AffectedActivityData;
-import wt.change2.Changeable2;
-import wt.change2.WTChangeActivity2;
-import wt.change2.WTChangeOrder2;
+import wt.change2.*;
 import wt.doc.WTDocument;
 import wt.epm.EPMDocument;
 import wt.fc.*;
 import wt.fc.collections.WTCollection;
 import wt.fc.collections.WTHashSet;
+import wt.lifecycle.LifeCycleHelper;
+import wt.lifecycle.State;
 import wt.log4j.LogR;
 import wt.part.PartDocHelper;
 import wt.part.WTPart;
@@ -62,19 +61,23 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
         String routing = "OK";
 
         if (pbo instanceof WTChangeOrder2) {
-            //所有ECA都是已解决状态
-            if (WorkflowProcessHelper.isRelatedChildrenInStates(pbo, new String[]{RESOLVED})) {
+            //所有ECA都是已解决,已取消状态
+            if (WorkflowProcessHelper.isRelatedChildrenInStates(pbo, new String[]{RESOLVED,CANCELLED})) {
                 Set<CorrelationObjectLink> links = ModifyHelper.service.queryCorrelationObjectLinks((WTChangeOrder2) pbo, LINKTYPE_1);
                 LOGGER.info("=====syncExpression.links: " + links);
                 for (CorrelationObjectLink link : links) {
-                    //存在路由不是「已完成」继续等待
-                    if (!ROUTING_3.equals(link.getRouting())) {
-                        routing = "WAIT";
-                        break;
+                    Persistable persistable = ModifyUtils.getPersistable(link.getEcaIdentifier());
+                    if (!isReplace((WTChangeActivity2) persistable)){
+                        //存在路由不是「已完成」继续等待
+                        if (!ROUTING_3.equals(link.getRouting())) {
+                            routing = "WAIT";
+                            break;
+                        }
                     }
                 }
+
             }
-            //存在ECA不是「已解决」状态，继续等待
+            //存在ECA不是「已解决」,已取消状态，继续等待
             else {
                 routing = "WAIT";
             }
@@ -88,6 +91,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
      * 2.2.2 删除的“受影响对象”关联的ECA及ECN中的“受影响的对象”“产生的对象”列表需要同步处理。
      * 2.2.3 删除的“受影响对象”的收集图纸对象需要同步处理。
      * 2.2.4 若ECA中无受影响的对象，需要删除当前的ECA对象及流程
+     * 驳回处理（新增）：保留ECA，状态更改为已取消，ECA流程结束，产生的对象还原，ECA跟受影响对象关系解除。
      * @param pbo
      * @param self
      * @throws WTException
@@ -134,10 +138,17 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                         while (result.hasMoreElements()) {
                             WfProcess process = (WfProcess) result.nextElement();
                             LOGGER.info(">>>>>>>>>>syncExpression.process:" + process);
-                            PersistenceServerHelper.manager.remove(process);
+                            //add by lzy at 20191207 start
+                            //终止进程,不删除进程，不删除ECA
+                            PIWorkflowHelper.service.stop(process);
+//                            PersistenceServerHelper.manager.remove(process);
                         }
-                        //删除ECA
-                        PersistenceServerHelper.manager.remove(activity2);
+//                        //删除ECA
+//                        PersistenceServerHelper.manager.remove(activity2);
+                        //设置ECA状态为-已取消
+                        State state = State.toState("CANCELLED");
+                        LifeCycleHelper.service.setLifeCycleState(activity2,state);
+                        //add by lzy at 20191207 end
                         //删除修订版本
                         SandboxHelper.service.removeObjects(new WTHashSet(collection));
                         flog = true;
@@ -426,7 +437,10 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                     String attributeValue = ModifyUtils.getValue(changeable2, CHANGETYPE_COMPID);
                     if (PIStringUtils.isNotNull(attributeValue) && attributeValue.contains(VALUE_1)) {
                         eca = (WTChangeActivity2) PICoreHelper.service.setLifeCycleState(eca, RESOLVED);
+//                        add by lzy at 20191209 start
                     } else if (PIStringUtils.isNotNull(attributeValue) && attributeValue.contains(VALUE_4)) {
+//                    } else if (PIStringUtils.isNotNull(attributeValue) && (attributeValue.contains(VALUE_7)||attributeValue.contains(VALUE_8))) {
+//                        add by lzy at 20191209 end
                         eca = (WTChangeActivity2) PICoreHelper.service.setLifeCycleState(eca, OPEN);
 
                         // 期望完成日期
@@ -496,11 +510,11 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                             activity2 = (WTChangeActivity2) PersistenceHelper.manager.save(activity2);
                         }
                     }
-
                     // 期望完成日期
                     if (PIStringUtils.isNotNull(needDate)) {
                         ModifyUtils.updateNeedDate(activity2, needDate);
                     }
+
                 }
             }
         } catch (Exception e) {
@@ -598,6 +612,27 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
         if (builder.length() > 0) {
             throw new WTException(builder.toString());
         }
+    }
+
+
+    // 获取ECA中所有受影响对象,如果物料变更类型为替换，则不需判断路由节点是否已完成，没启动流程，查询的路由节点为已创建
+    public boolean isReplace(WTChangeActivity2 changeActivity2) throws WTException {
+        Boolean isReplace=false;
+        Collection<Changeable2> befores = ModifyUtils.getChangeablesBefore(changeActivity2);
+        for (Changeable2 before : befores) {
+            if (before instanceof WTPart) {
+                String value = ModifyUtils.getValue(before, "ChangeType");//获取物料变更类型
+//                System.out.println("value=="+value);
+                String[] str=value.split(";");
+                if (str.length>1){
+                    value=str[1];
+                }
+                if (value.equals("替换")){
+                    isReplace=true;
+                }
+            }
+        }
+        return isReplace;
     }
 
 }
