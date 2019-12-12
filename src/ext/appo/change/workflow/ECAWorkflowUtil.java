@@ -10,6 +10,7 @@ import ext.appo.ecn.common.util.ChangePartQueryUtils;
 import ext.appo.ecn.common.util.ChangeUtils;
 import ext.appo.ecn.constants.ChangeConstants;
 import ext.appo.part.beans.EffectiveBaselineBean;
+import ext.appo.part.processor.StartAppoPartArchiveIssueWF;
 import ext.appo.part.util.EffecitveBaselineUtil;
 import ext.appo.part.util.MversionControlHelper;
 import ext.appo.part.workflow.PartWorkflowUtil;
@@ -28,15 +29,16 @@ import ext.pi.core.PIClassificationHelper;
 import ext.pi.core.PICoreHelper;
 import ext.pi.core.PIPartHelper;
 import org.apache.log4j.Logger;
+import wt.access.AccessControlHelper;
+import wt.access.AccessPermission;
+import wt.access.AdHocAccessKey;
+import wt.access.AdHocControlled;
 import wt.change2.ChangeActivityIfc;
 import wt.change2.Changeable2;
 import wt.change2.WTChangeActivity2;
 import wt.change2.WTChangeOrder2;
 import wt.doc.WTDocument;
-import wt.fc.ObjectReference;
-import wt.fc.Persistable;
-import wt.fc.QueryResult;
-import wt.fc.WTObject;
+import wt.fc.*;
 import wt.fc.collections.WTArrayList;
 import wt.fc.collections.WTCollection;
 import wt.fc.collections.WTList;
@@ -50,7 +52,13 @@ import wt.org.WTPrincipal;
 import wt.org.WTPrincipalReference;
 import wt.org.WTUser;
 import wt.part.*;
+import wt.pds.StatementSpec;
 import wt.project.Role;
+import wt.query.QuerySpec;
+import wt.query.SearchCondition;
+import wt.query.WhereExpression;
+import wt.session.SessionContext;
+import wt.session.SessionHelper;
 import wt.session.SessionServerHelper;
 import wt.team.Team;
 import wt.team.WTRoleHolder2;
@@ -481,6 +489,7 @@ public class ECAWorkflowUtil implements ChangeConstants, ModifyConstants {
 
         Role role = Role.toRole(rolename);
         System.out.println("role===" + role.getShortDescription());
+        System.out.println("pbo===" + pbo);
         WTContainer container = null;
         if (pbo instanceof WTChangeOrder2) {
             WTChangeOrder2 object = (WTChangeOrder2) pbo;
@@ -494,6 +503,12 @@ public class ECAWorkflowUtil implements ChangeConstants, ModifyConstants {
             WTDocument object = (WTDocument) pbo;
             container = object.getContainer();
         }
+        //add by lzy at 20191212 start
+        if (pbo instanceof WTChangeActivity2) {
+            WTChangeActivity2 object = (WTChangeActivity2) pbo;
+            container = object.getContainer();
+        }
+        //add by lzy at 20191212 end
         if (container != null) {
             try {
                 WTRoleHolder2 wtroleholder2 = TeamCCHelper.getTeamFromObject(container);
@@ -1061,5 +1076,219 @@ public class ECAWorkflowUtil implements ChangeConstants, ModifyConstants {
         }
     }
 
+    /**
+     * 检查光峰的BOM结构中不能有小米定制的物料（除“激光产品库”“微投产品库”外）
+     *
+     * @param pbo
+     * @throws WTException
+     */
+    public void checkMICustomizeorNot(WTObject pbo) throws WTException {
 
+        if (pbo == null || !(pbo instanceof WTPart)) {
+            return;
+        }
+        WTPart parentPart = (WTPart) pbo;
+        String containerName = parentPart.getContainerName();
+        if (!"激光电视产品库".equals(containerName) && !"微投产品库".equals(containerName)) {
+
+            // 查询第一层结构信息
+            WTList wtList = new WTArrayList();
+            wtList.add(parentPart);
+            QueryResult queryResult = ChangePartQueryUtils.getPartsFirstStructure(wtList, new LatestConfigSpec());
+            while (queryResult.hasMoreElements()) {
+                Persistable[] persistables = (Persistable[]) queryResult.nextElement();
+                // 子件对象
+                Object object = persistables[1];
+                if (object instanceof WTPart) {
+                    WTPart childPart = (WTPart) object;
+                    Object valueObject = PIAttributeHelper.service.getValue(childPart,
+                            "MI_Customize_orNot");
+                    String MICustomizeorNot = valueObject == null ? "" : (String) valueObject;
+                    if ("是".equals(MICustomizeorNot)) {
+                        MESSAGES.add("BOM编码" + (parentPart.getNumber() + "的子件" + childPart.getNumber() + "是小米定制物料，请删除！"));
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 检查子类状态（制造视图）
+     *
+     * @author HYJ&NJH
+     * @param part
+     * @param isArchive
+     *            是否归档流程
+     * @return
+     * @throws WTException
+     */
+    public void checkSonHistoryversionMAf(WTObject pbo) throws WTException {
+        // boolean stateIsOK = true;
+        if (pbo == null || !(pbo instanceof WTPart)) {
+            return;
+        }
+        WTPart part = (WTPart) pbo;
+        String viewname = part.getViewName();
+        if (viewname.contains("Manufacturing")) {
+            String message = "";
+            List<String> partlist = new ArrayList<String>();
+
+            WTUser previous = (WTUser) SessionHelper.manager.getPrincipal();
+
+            // 当前用户设置为管理员，用于忽略权限
+            try {
+                WTPrincipal wtadministrator = SessionHelper.manager.getAdministrator();
+                // 取得当前用户
+                SessionContext.setEffectivePrincipal(wtadministrator);
+                WTPrincipalReference wtprincipalreference = (WTPrincipalReference) (new ReferenceFactory())
+                        .getReference(previous);
+                AccessControlHelper.manager.addPermission((AdHocControlled) part, wtprincipalreference,
+                        AccessPermission.MODIFY_IDENTITY, AdHocAccessKey.WNC_ACCESS_CONTROL);
+            } catch (WTException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+            // 获取单层子件
+            // WTCollection childrens = PIPartHelper.service.findChildren(part);
+            // 获取所有子件
+            ArrayList<WTPart> childpartList = new ArrayList<WTPart>();
+            try {
+                StartAppoPartArchiveIssueWF.getBomallchildpart(part, childpartList);
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            System.out.println("childpartList.size()====" + childpartList.size());
+            if (!part.getNumber().startsWith("A") && !part.getNumber().startsWith("B")) {
+                if (childpartList.size() > 0) {
+                    MESSAGES.add("除成品、半成品外不允许搭BOM！");
+                }
+            }
+            for (int i = 0; i < childpartList.size(); i++) {
+                WTPart son = (WTPart) childpartList.get(i);
+                String stateVal = son.getLifeCycleState().toString();
+
+                if (part.getVersionIdentifier().getValue().startsWith("A")) {
+                    System.out.println("part container name====" + part.getContainerName());
+                    if (!part.getContainerName().startsWith("微投产品库") && !part.getContainerName().startsWith("激光电视产品库")) {
+                        // 检出子件是否有总成
+                        String cls = (String) PIAttributeHelper.service.getValue(son, "Classification");
+                        System.out.println("cls ====" + cls);
+                        if (cls.startsWith("appo_bcp17") || cls.startsWith("appo_bcp21") || cls.startsWith("appo_bcp22")
+                                || cls.startsWith("appo_bcp24") || cls.startsWith("appo_bcp11")
+                                || cls.startsWith("appo_bcp25") || cls.startsWith("appo_bcp19")
+                                || cls.startsWith("appo_bcp16")) {
+                            MESSAGES.add("制造BOM(Manufacturing)下面不能直接引用设计虚拟件，如“硬件总成”等！");
+                        }
+                    }
+                }
+                if (stateVal.equals("ARCHIVED") || stateVal.equals("RELEASED")) {
+                } else {
+                    QueryResult partqr = getParts(son.getNumber());
+                    while (partqr.hasMoreElements()) {
+                        WTPart oldpart = (WTPart) partqr.nextElement();
+                        String state = oldpart.getState().toString();
+                        System.out.println("version=====" + state);
+                        if (!partlist.contains(state)) {
+                            partlist.add(state);
+                        }
+
+                    } // 存在有已归档或已发布的版本，
+                    if (partlist.contains("ARCHIVED") || partlist.contains("RELEASED")) {
+                    } else {
+                        message = message + "子件:" + son.getNumber() + "未存在已归档或已发布的版本,不符合归档逻辑，无法提交归档流程!" + "\n";
+                    }
+                }
+                // 检出全局替代
+                WTCollection wtcol = WTPartHelper.service.getAlternateLinks((WTPartMaster) son.getMaster());
+                Iterator ite = wtcol.iterator();
+                while (ite.hasNext()) {
+                    Object obj = ite.next();
+
+                    if (obj != null && obj instanceof ObjectReference) {
+                        ObjectReference objRef = (ObjectReference) obj;
+
+                        Object tempObj = objRef.getObject();
+
+                        if (tempObj != null && tempObj instanceof WTPartAlternateLink) {
+                            WTPartAlternateLink alternateLink = (WTPartAlternateLink) tempObj;
+
+                            WTPartMaster alternatePartMaster = alternateLink.getAlternates();
+                            System.out.println("alternatePartMaster number=" + alternatePartMaster.getNumber());
+                            WTPart alPart = PartUtil.getLastestWTPartByNumber(alternatePartMaster.getNumber());
+                            String alpartstate = alPart.getState().toString();
+                            if (!alpartstate.equalsIgnoreCase("RELEASED") && !alpartstate.equalsIgnoreCase("ARCHIVED")) {
+                                QueryResult partqr = getParts(alPart.getNumber());
+                                List<String> partlistA = new ArrayList<String>();
+                                while (partqr.hasMoreElements()) {
+                                    WTPart oldpart = (WTPart) partqr.nextElement();
+                                    String statea = oldpart.getState().toString();
+                                    System.out.println("version=====" + statea);
+                                    if (!partlistA.contains(statea)) {
+                                        partlistA.add(statea);
+                                    }
+
+                                } // 存在有已归档或已发布的版本，
+                                if (partlistA.contains("ARCHIVED") || partlistA.contains("RELEASED")) {
+                                } else {
+                                    message = message + "全局替代料:" + alPart.getNumber() + "未存在已归档或已发布的版本,不符合归档逻辑，无法提交归档流程!";
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            // 检查特定替代料状态
+            QueryResult qr = WTPartHelper.service.getUsesWTPartMasters(part);
+            System.out.println("qr size=========" + qr.size());
+            ArrayList<String> subpartList = new ArrayList<String>();
+            while (qr.hasMoreElements()) {
+                WTPartUsageLink link = (WTPartUsageLink) qr.nextElement();
+                subpartList = getSubstitutePart(link);
+                System.out.println("subpartList=========" + subpartList.size());
+                for (int j = 0; j < subpartList.size(); j++) {
+                    String number = subpartList.get(j);
+                    WTPart subpart = PartUtil.getLastestWTPartByNumber(number);
+                    String state = subpart.getState().toString();
+                    System.out.println(" number  =========" + number);
+                    System.out.println(" subpart   state=========" + state);
+                    if (!state.equalsIgnoreCase("RELEASED") && !state.equalsIgnoreCase("ARCHIVED")) {
+
+                        QueryResult partqr = getParts(subpart.getNumber());
+                        List<String> partlistS = new ArrayList<String>();
+                        while (partqr.hasMoreElements()) {
+                            WTPart oldpart = (WTPart) partqr.nextElement();
+                            String stateold = oldpart.getState().toString();
+                            System.out.println("version=====" + stateold);
+                            if (!partlistS.contains(stateold)) {
+                                partlistS.add(stateold);
+                            }
+
+                        } // 存在有已归档或已发布的版本，
+                        if (partlistS.contains("ARCHIVED") || partlistS.contains("RELEASED")) {
+                        } else {
+                            message = message + "特定替代料:" + subpart.getNumber() + "未存在已归档或已发布的版本,不符合归档逻辑，无法提交归档流程!";
+                        }
+
+                    }
+                }
+            }
+
+            SessionContext.setEffectivePrincipal(previous);
+            if (message.length() > 0) {
+                MESSAGES.add(message);
+            }
+        }
+
+    }
+
+    public static QueryResult getParts(String number) throws WTException {
+        StatementSpec stmtSpec = new QuerySpec(WTPart.class);
+        WhereExpression where = new SearchCondition(WTPart.class, WTPart.NUMBER, SearchCondition.EQUAL,
+                number.toUpperCase());
+        QuerySpec querySpec = (QuerySpec) stmtSpec;
+        querySpec.appendWhere(where, new int[] { 0 });
+        QueryResult qr = PersistenceServerHelper.manager.query(stmtSpec);
+        return qr;
+    }
 }
