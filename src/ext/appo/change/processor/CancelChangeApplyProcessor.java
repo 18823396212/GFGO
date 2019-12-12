@@ -10,6 +10,7 @@ import ext.appo.change.models.TransactionTask;
 import ext.appo.change.util.ModifyUtils;
 import ext.appo.ecn.constants.ChangeConstants;
 import ext.pi.core.PICoreHelper;
+import ext.pi.core.PIWorkflowHelper;
 import org.apache.log4j.Logger;
 import wt.change2.WTChangeActivity2;
 import wt.change2.WTChangeOrder2;
@@ -78,13 +79,26 @@ public class CancelChangeApplyProcessor extends DefaultObjectFormProcessor imple
                     while (result.hasMoreElements()) {
                         WfProcess process = (WfProcess) result.nextElement();
                         LOGGER.info(">>>>>>>>>>process:" + process);
-                        PersistenceServerHelper.manager.remove(process);
+                        //add by lzy at 20191207 start
+                        //终止进程
+                        PIWorkflowHelper.service.stop(process);
+//                        PersistenceServerHelper.manager.remove(process);
+//                        //add by lzy at 20191207 end
                     }
                     //删除ECA
                     PersistenceServerHelper.manager.remove(activity2);
                     //删除修订版本
                     SandboxHelper.service.removeObjects(new WTHashSet(collection));
                 }
+                //add by lzy at 20191207 start
+                //先终止进程
+                QueryResult result = WfEngineHelper.service.getAssociatedProcesses(changeOrder2, null, null);
+                LOGGER.info(">>>>>>>>>>activity2:" + changeOrder2.getNumber() + " >>>>>result: " + result.size());
+                while (result.hasMoreElements()) {
+                    WfProcess process = (WfProcess) result.nextElement();
+                    PIWorkflowHelper.service.stop(process);
+                }
+                //add by lzy at 20191207 end
                 //add by lzy at 20191130 start
                 //设置ECN状态为-已取消
                 State state = State.toState("CANCELLED");
