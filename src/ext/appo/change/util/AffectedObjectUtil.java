@@ -19,6 +19,7 @@ import org.json.JSONObject;
 import wt.change2.*;
 import wt.configurablelink.ConfigurableDescribeLink;
 import wt.doc.WTDocument;
+import wt.enterprise.RevisionControlled;
 import wt.epm.EPMDocument;
 import wt.fc.*;
 import wt.identity.IdentityFactory;
@@ -28,8 +29,14 @@ import wt.part.PartDocHelper;
 import wt.part.WTPart;
 import wt.part.WTPartMaster;
 import wt.part.WTPartUsageLink;
+import wt.query.QuerySpec;
+import wt.query.SearchCondition;
+import wt.util.WTAttributeNameIfc;
 import wt.util.WTException;
 import wt.vc.VersionControlHelper;
+import wt.vc.config.LatestConfigSpec;
+import wt.vc.views.View;
+import wt.vc.views.ViewHelper;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -101,6 +108,10 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
             collectionThree();
 
             checkEnvProtection(ORDER2);
+
+            //add by lzy at 20191213 start
+            checkObjectVesionNew();
+            //add by lzy at 20191213 end
 
             //校验需要收集上层对象的部件是否满足收集条件
             checkOne();
@@ -695,4 +706,72 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
         }
     }
 
+    /**
+     * 判断部件同一视图是不是最新大版本(有部件可通过修订升版)
+     * @throws WTException
+     */
+    private void checkObjectVesionNew() throws WTException {
+        for (Persistable persistable : PAGEDATAMAP.keySet()) {
+            if (persistable instanceof WTPart) {
+                Vector latestVector= new Vector();
+                WTPart part = (WTPart) persistable;
+                String number=part.getNumber();
+                String version = part.getVersionInfo().getIdentifier().getValue();
+                String view=part.getViewName();
+                System.out.println("当前部件"+number+"==版本=="+version+"==视图=="+view);
+                //获取同一视图下最新物料
+                latestVector=getAllLatestWTParts(view,number);
+                if (latestVector!=null&&latestVector.size()>0){
+                    WTPart newPart= (WTPart) latestVector.get(0);
+                    if (newPart!=null){
+                        String newNumber=newPart.getNumber();
+                        String newVersion = newPart.getVersionInfo().getIdentifier().getValue();
+                        String newView=newPart.getViewName();
+                        System.out.println("同一视图最新部件"+newNumber+"==版本=="+newVersion+"==视图=="+newView);
+                        if (!version.equals(newVersion)){
+                            MESSAGES.add("物料："+number+"不是最新版本！");
+                        }
+                    }
+
+                }
+            }
+
+        }
+
+    }
+
+
+    /*
+     * 通过number获取某视图的最新的物料
+     */
+    public static Vector getAllLatestWTParts(String viewName, String number) throws WTException {
+        QuerySpec qs = new QuerySpec(WTPart.class);
+
+        View view = ViewHelper.service.getView(viewName);
+        SearchCondition sc = new SearchCondition(WTPart.class, "view.key.id", SearchCondition.EQUAL,
+                view.getPersistInfo().getObjectIdentifier().getId());
+        qs.appendWhere(sc);
+        if (number.trim().length() > 0) {
+            qs.appendAnd();
+            SearchCondition scNumber = new SearchCondition(WTPart.class, WTPart.NUMBER, SearchCondition.EQUAL,
+                    number.toUpperCase());
+            qs.appendWhere(scNumber);
+        }
+
+        SearchCondition scLatestIteration = new SearchCondition(WTPart.class, WTAttributeNameIfc.LATEST_ITERATION,
+                SearchCondition.IS_TRUE);
+        qs.appendAnd();
+        qs.appendWhere(scLatestIteration);
+
+        QueryResult qr = PersistenceHelper.manager.find(qs);
+        if (qr != null && qr.hasMoreElements())
+            qr = (new LatestConfigSpec()).process(qr);
+
+        if (qr != null && qr.hasMoreElements())
+            return qr.getObjectVectorIfc().getVector();
+
+        return new Vector();
+    }
+
 }
+
