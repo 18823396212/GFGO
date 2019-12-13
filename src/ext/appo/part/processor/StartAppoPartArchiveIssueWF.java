@@ -1,3 +1,23 @@
+
+/**
+ * <pre>
+ * 修改记录：05
+ * 修改日期：2019-11-01 
+ * 修   改  人：毛兵义
+ * 关联活动：
+ * 修改内容：修改发布成品BOM的权限（已归档），以前为修改者，现在更改为，对正在工作状态有修改权限的用户
+ * </pre>
+ */
+
+/**
+ * <pre>
+ * 修改记录：06
+ * 修改日期：2019-11-22 
+ * 修   改  人：毛兵义
+ * 关联活动：
+ * 修改内容：去掉设计视图中不能包含制造视图的限制
+ * </pre>
+ */
 package ext.appo.part.processor;
 
 import java.util.ArrayList;
@@ -6,6 +26,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import ext.appo.change.ModifyHelper;
+import ext.appo.ecn.common.util.ChangeUtils;
+import ext.pi.core.PICoreHelper;
 import org.apache.log4j.Logger;
 
 import com.ptc.core.components.beans.ObjectBean;
@@ -22,12 +45,18 @@ import com.ptc.netmarkets.workflow.NmWorkflowHelper;
 import ext.appo.util.PartUtil;
 import ext.com.workflow.WorkflowUtil;
 import ext.generic.workflow.WorkFlowBase;
+import ext.lang.PIStringUtils;
 import ext.pi.PIException;
 import ext.pi.core.PIAttributeHelper;
 import wt.access.AccessControlHelper;
 import wt.access.AccessPermission;
 import wt.access.AdHocAccessKey;
 import wt.access.AdHocControlled;
+import wt.admin.AdminDomainRef;
+import wt.change2.ChangeHelper2;
+import wt.change2.Changeable2;
+import wt.change2.WTChangeActivity2;
+import wt.change2.WTChangeOrder2;
 import wt.doc.DocumentVersion;
 import wt.doc.WTDocument;
 import wt.enterprise.RevisionControlled;
@@ -41,11 +70,14 @@ import wt.fc.WTObject;
 import wt.fc.collections.WTArrayList;
 import wt.fc.collections.WTCollection;
 import wt.fc.collections.WTKeyedMap;
+import wt.folder.SubFolder;
+import wt.identity.IdentityFactory;
 import wt.inf.container.WTContained;
 import wt.inf.container.WTContainerHelper;
 import wt.inf.container.WTContainerRef;
 import wt.lifecycle.LifeCycleManaged;
 import wt.lifecycle.LifeCycleTemplateReference;
+import wt.lifecycle.State;
 import wt.log4j.LogR;
 import wt.org.WTPrincipal;
 import wt.org.WTPrincipalReference;
@@ -68,7 +100,10 @@ import wt.session.SessionHelper;
 import wt.session.SessionServerHelper;
 import wt.team.TeamManaged;
 import wt.team.TeamReference;
+import wt.type.TypedUtility;
 import wt.util.WTException;
+import wt.vc.VersionControlHelper;
+import wt.vc.Versioned;
 import wt.workflow.definer.WfDefinerHelper;
 import wt.workflow.definer.WfProcessTemplate;
 import wt.workflow.definer.WfProcessTemplateMaster;
@@ -77,6 +112,8 @@ import wt.workflow.engine.WfEngineHelper;
 import wt.workflow.engine.WfEngineServerHelper;
 import wt.workflow.engine.WfProcess;
 import wt.workflow.engine.WfState;
+
+import static ext.appo.change.constants.ModifyConstants.LINKTYPE_1;
 
 /**
  * @author HYJ&NJH 四合一流程启动入口处理类
@@ -120,36 +157,65 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 				if (!WorkflowUtil.isObjectCheckedOut(part)) {
 					// 部件必须是最新的
 					if (isLatestObject(part)) {
-						// 是修改者
-						if (isEqualCreator(part)) {
+						String doctype = getObjectType(part);
+						String type = "WCTYPE|" + doctype;
+						SubFolder folder = (SubFolder) (part.getFolderingInfo().getParentFolder().getObject());
+						AdminDomainRef adminDomainRef = null;
+						if (folder != null) {
+							adminDomainRef = folder.getDomainRef();
+						}
+						Boolean operability = isOperability(SessionHelper.manager.getPrincipal(), type, adminDomainRef,
+								State.INWORK, AccessPermission.MODIFY);
+						// 如果是正在工作状态，必须是修改者；如果是已归档状态，需要针对，正在工作的当前对象有修改权限
+						if ((isEqualCreator(part) && stateVal.equals("INWORK"))
+								|| (stateVal.equals("ARCHIVED") && operability)
+								|| (stateVal.equals("ARCHIVED") && isEqualCreator(part))) {
 							// 存在视图
 							String viewName = part.getViewName();
 							if (viewName != null && !"".equals(viewName.trim())) {
-								String wfShortName = getWFShortName(viewName, stateVal);
+								//add by lzy at 20191213 start
+								Boolean flag=isRunningNewEcnWorkflow(part);
+								System.out.println("flag=="+flag);
+								if(!flag){
+								//add by lzy at 20191213 end
+									String wfShortName = getWFShortName(viewName, stateVal);
 
-								WorkFlowBase workFlowBase = new WorkFlowBase();
-								// 设计部件归档ManualStartProcessor
-								if (wfShortName.equals(DA)) {
-									doOperation = startDAWF(nmCommandBean, doOperation, part, workFlowBase);
+									WorkFlowBase workFlowBase = new WorkFlowBase();
+									// 设计部件归档ManualStartProcessor
+									if (wfShortName.equals(DA)) {
+										doOperation = startDAWF(nmCommandBean, doOperation, part, workFlowBase);
+									}
+									// 设计部件发布DesignPartStartProcessor
+									else if (wfShortName.equals(DR)) {
+										doOperation = startDRWF(nmCommandBean, doOperation, part, workFlowBase);
+									}
+									// 工程部件归档ManualStartManufacturingProcessor
+									else if (wfShortName.equals(MA)) {
+										doOperation = startMAWF(nmCommandBean, doOperation, part, workFlowBase);
+									}
+									// 工程部件发布EngineerPartStartProcessor
+									else if (wfShortName.equals(MR)) {
+										doOperation = startMRWF(nmCommandBean, doOperation, part, workFlowBase);
+									}
+								//add by lzy at 20191213 start
+								}else{
+									doOperation = setFeedbackMessage(doOperation, nmCommandBean, false,
+											"当前部件存在于ECN流程中,无法启动流程!");
 								}
-								// 设计部件发布DesignPartStartProcessor
-								else if (wfShortName.equals(DR)) {
-									doOperation = startDRWF(nmCommandBean, doOperation, part, workFlowBase);
-								}
-								// 工程部件归档ManualStartManufacturingProcessor
-								else if (wfShortName.equals(MA)) {
-									doOperation = startMAWF(nmCommandBean, doOperation, part, workFlowBase);
-								}
-								// 工程部件发布EngineerPartStartProcessor
-								else if (wfShortName.equals(MR)) {
-									doOperation = startMRWF(nmCommandBean, doOperation, part, workFlowBase);
-								}
+								//add by lzy at 20191213 end
+
 							} else {
 								doOperation = setFeedbackMessage(doOperation, nmCommandBean, false,
 										"当前部件不存在'视图'，无法启动流程!");
 							}
 						} else {
-							doOperation = setFeedbackMessage(doOperation, nmCommandBean, false, "您不是该当前部件的修改者，无法启动流程!");
+							if (stateVal.equals("INWORK")) {
+								doOperation = setFeedbackMessage(doOperation, nmCommandBean, false,
+										"您不是该当前部件的修改者，无法启动流程!");
+							} else {
+								doOperation = setFeedbackMessage(doOperation, nmCommandBean, false,
+										"您没有当前部件的修改权限，无法启动流程!");
+							}
 						}
 					} else {
 						doOperation = setFeedbackMessage(doOperation, nmCommandBean, false, "当前部件被不是最新版本，无法启动流程!");
@@ -580,7 +646,8 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 			// 检查D视图下，是否有M视图的部件
 			String viewname = son.getViewName();
 			if (parentview.equalsIgnoreCase("Design") && viewname.equalsIgnoreCase("Manufacturing")) {
-				return "子件:" + son.getNumber() + ",为制造视图(Manufacturing)，不能加到设计视图的bom中,无法启动设计部件归档流程!";
+				// return "子件:" + son.getNumber() +
+				// ",为制造视图(Manufacturing)，不能加到设计视图的bom中,无法启动设计部件归档流程!";
 			}
 			String stateVal = son.getLifeCycleState().toString();
 			if (son.getNumber().startsWith("X") && !isArchive) {
@@ -960,4 +1027,121 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 		}
 		return newProcess;
 	}
+
+	/***
+	 * 检查用户在指定库中对某种类型的某种状态是否具有相应权限
+	 * 
+	 * @param principal
+	 *            用户
+	 * @param type
+	 *            类型 (列如:WCTYPE|wt.change2.WTChangeOrder2)
+	 * @param adminDomainRef
+	 *            静态权限域
+	 * @param state
+	 *            指定状态
+	 * @param accessPermission
+	 *            相应权限
+	 * @return
+	 * @throws WTException
+	 */
+	public Boolean isOperability(WTPrincipal principal, String type, AdminDomainRef adminDomainRef, State state,
+			AccessPermission accessPermission) throws WTException {
+		if (PIStringUtils.isNull(type) || adminDomainRef == null || accessPermission == null) {
+			return false;
+		}
+
+		String displayTypeIdentifier = displayTypeIdentifier(type);
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("adminDomainRef : " + IdentityFactory.getDisplayIdentity(adminDomainRef.getObject()));
+			LOGGER.debug("displayTypeIdentifier : " + displayTypeIdentifier);
+		}
+		if (PIStringUtils.isNotNull(displayTypeIdentifier)) {
+			return AccessControlHelper.manager.hasAccess(principal, displayTypeIdentifier, adminDomainRef, state,
+					AccessPermission.CREATE);
+		}
+
+		return false;
+	}
+
+	/***
+	 * 获取类型定义
+	 * 
+	 * @param paramString
+	 * @return
+	 * @throws WTException
+	 */
+	@SuppressWarnings("deprecation")
+	public String displayTypeIdentifier(String paramString) throws WTException {
+		if (paramString == null) {
+			return null;
+		}
+
+		String str1 = TypedUtility.getExternalTypeIdentifier(paramString);
+		if (str1 == null) {
+			String str2 = TypedUtility.getPersistedType(paramString);
+			if (str2 != null) {
+				str1 = TypedUtility.getExternalTypeIdentifier(str2);
+			}
+		}
+		return str1 == null ? paramString : str1;
+	}
+
+	public static String getObjectType(Object object) throws WTException {
+		String type = "";
+		boolean flag = true;
+		try {
+			flag = SessionServerHelper.manager.isAccessEnforced();
+			SessionServerHelper.manager.setAccessEnforced(false);
+
+			if (object != null) {
+				TypeIdentifier ti = TypeIdentifierUtility.getTypeIdentifier(object);
+				type = ti.getTypename();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			SessionServerHelper.manager.setAccessEnforced(flag);
+		}
+		return type;
+	}
+
+	/**
+	 * 判断pbo所有大版本的最新小版本是否在新ECN流程APPO_ECNWF中运行
+	 * @param pbo
+	 * @return
+	 * @throws WTException
+	 */
+	private static boolean isRunningNewEcnWorkflow(WTPart pbo) throws WTException {
+		boolean flag = false;
+		QueryResult queryResult = VersionControlHelper.service.allVersionsOf(pbo.getMaster());//获取所有大版本的最新小版本
+		all:while (queryResult.hasMoreElements()) {
+			WTPart oldPart = (WTPart) queryResult.nextElement();
+			//获取对象所有关联的ECA对象
+			QueryResult result = ChangeHelper2.service.getAffectingChangeActivities(oldPart);
+			while (result.hasMoreElements()) {
+				WTChangeActivity2 changeActivity2 = (WTChangeActivity2) result.nextElement();
+				WTChangeOrder2 changeOrder2 = ChangeUtils.getEcnByEca(changeActivity2);
+				//ECN进程
+				QueryResult qr = WfEngineHelper.service.getAssociatedProcesses(changeOrder2, null, null);
+				while (qr.hasMoreElements()) {
+					WfProcess process = (WfProcess) qr.nextElement();
+					String templateName = process.getTemplate().getName();
+					String state = String.valueOf(changeOrder2.getLifeCycleState());
+					//存在运行,不是已取消、已解决的新ECN流程APPO_ECNWF
+					if (templateName.equals("APPO_ECNWF")) {
+						if (process.getState().equals(WfState.OPEN_RUNNING) || !state.equals("CANCELLED") || !state.equals("RESOLVED")) {
+							flag = true;
+							break all;
+						}
+					}
+				}
+			}
+		}
+
+		return flag;
+	}
+
+
+
+
 }
