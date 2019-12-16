@@ -10,6 +10,7 @@ import ext.appo.ecn.pdf.PdfUtil;
 import ext.appo.part.filter.StandardPartsRevise;
 import ext.lang.PICollectionUtils;
 import ext.lang.PIStringUtils;
+import ext.pi.PIException;
 import ext.pi.core.PIAttributeHelper;
 import ext.pi.core.PICoreHelper;
 import org.apache.commons.lang.StringUtils;
@@ -19,24 +20,25 @@ import org.json.JSONObject;
 import wt.change2.*;
 import wt.configurablelink.ConfigurableDescribeLink;
 import wt.doc.WTDocument;
+import wt.enterprise.Master;
 import wt.enterprise.RevisionControlled;
 import wt.epm.EPMDocument;
 import wt.fc.*;
 import wt.identity.IdentityFactory;
 import wt.lifecycle.LifeCycleManaged;
 import wt.log4j.LogR;
-import wt.part.PartDocHelper;
-import wt.part.WTPart;
-import wt.part.WTPartMaster;
-import wt.part.WTPartUsageLink;
+import wt.part.*;
+import wt.query.QueryException;
 import wt.query.QuerySpec;
 import wt.query.SearchCondition;
 import wt.util.WTAttributeNameIfc;
 import wt.util.WTException;
+import wt.vc.OneOffVersioned;
 import wt.vc.VersionControlHelper;
 import wt.vc.config.LatestConfigSpec;
 import wt.vc.views.View;
 import wt.vc.views.ViewHelper;
+import wt.workflow.engine.WfProcess;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -110,7 +112,8 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
             checkEnvProtection(ORDER2);
 
             //add by lzy at 20191213 start
-            checkObjectVesionNew();
+//            checkObjectVesionNew();
+            checkStandardPartsRevise();
             //add by lzy at 20191213 end
 
             //校验需要收集上层对象的部件是否满足收集条件
@@ -707,6 +710,32 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
     }
 
     /**
+     * 归档状态下未进BOM的定制件、PCBA及归档状态的软件可通过修订来升版(只需考虑升版的部件)
+     */
+    private void checkStandardPartsRevise() throws WTException {
+        //选择升版的部件
+        for (WTPart part : LVERSIONPART) {
+            String cls = (String) PIAttributeHelper.service.getValue(part, "Classification");
+            String state=part.getState().toString();
+            String number=part.getNumber();
+            // PCBA归档状态，没有被bom使用过的
+            if (cls.contains("appo_bcp01")&& !isbyuse(part)&& state.endsWith("ARCHIVED")){
+                MESSAGES.add("物料："+number+"是归档状态下未进BOM的PCBA，请通过修订升版！");
+            }
+            //归档状态的软件
+            if (number.startsWith("X")&&state.endsWith("ARCHIVED")) {
+                MESSAGES.add("物料："+number+"是归档状态的软件，请通过修订升版！");
+            }
+            //非A、B、X开头成品、半成品、软件归档状态物料,没有被bom使用到
+            if (!number.startsWith("A")&&!number.startsWith("B")&&!number.startsWith("X")&&!isbyuse(part)&&state.endsWith("ARCHIVED")){
+                MESSAGES.add("物料："+number+"是归档状态下未进BOM的定制件，请通过修订升版！");
+            }
+
+        }
+
+    }
+
+    /**
      * 判断部件同一视图是不是最新大版本(有部件可通过修订升版)
      * @throws WTException
      */
@@ -771,6 +800,93 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
             return qr.getObjectVectorIfc().getVector();
 
         return new Vector();
+    }
+
+    /**
+     * 判断物料是否被BOM使用
+     * @param part
+     * @return
+     * @throws WTException
+     */
+    public Boolean isbyuse(WTPart part) throws WTException {
+        //默认被使用
+        Boolean isbyuse=true;
+        QueryResult parentResult = WTPartHelper.service.getUsedByWTParts((WTPartMaster) part.getMaster());
+        // 剔除非最新版本的BOM,剔除掉“A版本”“正在工作”的BOM
+        List<WTPart> partList = deleteAAndInworkData(parentResult);
+        if (partList == null || partList.size() == 0) {
+            isbyuse = false;
+        }
+        return  isbyuse;
+    }
+
+    /**
+     * 过滤掉非最新版本的母件，过滤掉A版本正在工作的母件
+     *
+     * @param qr
+     * @return
+     */
+    public List<WTPart> deleteAAndInworkData(QueryResult qr) {
+        List<WTPart> parentParts = new ArrayList<WTPart>();
+
+        while (qr != null && qr.hasMoreElements()) {
+            Object obj = qr.nextElement();
+            if (obj instanceof WTPart) {
+                WTPart parentPart = (WTPart) obj;
+                WTPart newParentPart = (WTPart) getLatestVersionByMaster(parentPart.getMaster());
+                // 过滤不是最新版本的物料
+                if (!getOidByObject(parentPart).equals(getOidByObject(newParentPart))) {
+                    continue;
+                }
+                // 过滤掉为A版本正在工作的物料
+                String version = parentPart.getVersionInfo().getIdentifier().getValue();
+                String state = parentPart.getState().toString();
+
+                if ("INWORK".equals(state) && "A".equals(version)) {
+                    continue;
+                }
+                parentParts.add(parentPart);
+            }
+        }
+
+        return parentParts;
+    }
+
+    /**
+     * 获取最新大版本的最新小版本
+     *
+     * @param master
+     * @return
+     */
+    public static Persistable getLatestVersionByMaster(Master master) {
+        try {
+            if (master != null) {
+                QueryResult qrVersions = VersionControlHelper.service.allVersionsOf(master);
+                while (qrVersions.hasMoreElements()) {
+                    Persistable p = (Persistable) qrVersions.nextElement();
+                    if (!VersionControlHelper.isAOneOff((OneOffVersioned) p)) {
+                        return p;
+                    }
+                }
+            }
+        } catch (QueryException e) {
+            e.printStackTrace();
+        } catch (WTException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String getOidByObject(Persistable p) {
+        String oid = "";
+        if (p instanceof WfProcess) {
+            oid = "OR:wt.workflow.engine.WfProcess:" + p.getPersistInfo().getObjectIdentifier().getId();
+            return oid;
+        }
+        if (p != null) {
+            oid = "OR:" + p.toString();
+        }
+        return oid;
     }
 
 }
