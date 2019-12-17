@@ -359,8 +359,8 @@ public class BomChangeReport {
         Map<String,List<BOMChangeInfoBean>> bomChangeInfos=new HashMap<>();
         boolean flag = SessionServerHelper.manager.setAccessEnforced(false);// 忽略权限
         try {
-            List<WTPart> affectedParts=getAffectedParts(ecn);
-            List<WTPart> produceParts=getProduceParts(ecn);
+            List<WTPart> affectedParts=getAffectedParts(ecn);//所有受影响对象
+            List<WTPart> produceParts=getProduceParts(ecn);//所有产生对象
             System.out.println("affectedParts=="+affectedParts+"==produceParts=="+produceParts);
             if (affectedParts!=null&&affectedParts.size()>0&&produceParts!=null&&affectedParts.size()>0){
                 for (int i = 0; i < affectedParts.size(); i++) {

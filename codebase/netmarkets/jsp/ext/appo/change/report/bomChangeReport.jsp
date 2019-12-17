@@ -15,6 +15,9 @@
 <%@ page import="wt.fc.QueryResult" %>
 <%@ page import="wt.change2.ChangeHelper2" %>
 <%@ page import="wt.part.WTPart" %>
+<%@ page import="wt.org.WTPrincipal" %>
+<%@ page import="wt.session.SessionHelper" %>
+<%@ page import="wt.org.WTUser" %>
 
 <style type="text/css">
     .tb{
@@ -101,7 +104,6 @@
                     affectedParts=BomChangeReport.getAffectedInfo(ecn);
                     bomChangeInfos=BomChangeReport.getBomChangeInfos(ecn);
                 }
-
             }
         }
     }else if (persistable instanceof WTChangeOrder2){
@@ -111,11 +113,9 @@
             affectedParts=BomChangeReport.getAffectedInfo(ecn);
             bomChangeInfos=BomChangeReport.getBomChangeInfos(ecn);
         }
-
     }
 
 %>
-
 <body width="100%">
 <input type="hidden" id="expandImageUrl" value="<%=expandImageUrl%>">
 <input type="hidden" id="collapseImageUrl" value="<%=collapseImageUrl%>">
@@ -160,7 +160,7 @@
     </div>
     <br />
     <br />
-    <div style="float: left;line-height: normal; " ><img id="affectedObject"src="<%=collapseImageUrl%>" onclick="showInfo(this)" /></div><span class="affectedObject">受影响的母件</span>
+    <div style="float: left;line-height: normal; " ><img id="affectedObject"src="<%=collapseImageUrl%>" onclick="showInfo(this)" /></div><span class="affectedObject">受影响的部件</span>
     <div id="tb_affectedObject">
     <table class="tb" border="1">
         <tr>
@@ -313,6 +313,7 @@
                 Map<String,String> placeNumber=new HashMap<>();
                 Map<String,String> quantit=new HashMap<>();
                 Map<String,List<String>> replacePartNumbers=new HashMap<>();
+                Map<String,String> parentSpecification=new HashMap<>();
                 String typeName="";
                 for(Object s:changeTypeList){
                     typeName=typeName+","+s;
@@ -330,12 +331,32 @@
                 if (bean.getReplacePartNumbers()!=null&&bean.getReplacePartNumbers().size()>0){
                     replacePartNumbers=bean.getReplacePartNumbers();
                 }
+                if (bean.getParentSpecification()!=null&&bean.getParentSpecification().size()>0){
+                    parentSpecification=bean.getParentSpecification();
+                }
             %>
             <td colspan="2"><p><%=typeName%></p></td>
             <td colspan="2"><p><%=bean.getNumber()%></p></td>
             <td colspan="2"><p><%=bean.getName()%></p></td>
-            <td colspan="2"><p><%=bean.getSpecification()%></p></td>
             <%
+                //规格描述
+                if (parentSpecification!=null&&parentSpecification.size()>0){
+                    String before=parentSpecification.get("before");
+                    String after=parentSpecification.get("after");
+                %>
+                <td style="text-align: center" colspan="2">
+                    <div>
+                        <p style="border-bottom: 1px solid #DDDDDD;">变更前：<%=before%></p>
+                        <p>变更后：<%=after%></p></div>
+                </td>
+                <%
+                }else{
+                %>
+                <td colspan="2"><p><%=bean.getSpecification()%></p></td>
+                <%
+                }
+
+                //位号
                 if (placeNumber!=null&&placeNumber.size()>0){
                     if(typeName.contains(BomChangeConstants.TYPE_1)||typeName.contains(BomChangeConstants.TYPE_7)){
                         String after=placeNumber.get("after");
@@ -365,6 +386,7 @@
                 }
                 %>
             <%
+                //数量
                 if (quantit!=null&&quantit.size()>0){
                     if(typeName.contains(BomChangeConstants.TYPE_1)||typeName.contains(BomChangeConstants.TYPE_7)){
                         String after=quantit.get("after");
@@ -394,6 +416,7 @@
                     }
                 %>
             <%
+                //替代料
                 if (replacePartNumbers!=null&&replacePartNumbers.size()>0){
 
                     if (typeName.contains(BomChangeConstants.TYPE_2)&&typeName.contains(BomChangeConstants.TYPE_4)){

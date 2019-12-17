@@ -230,8 +230,8 @@ public class CompareBom {
                 }
             }
         }
-        System.out.println("oldSubstitutes=="+oldSubstitutes);
-        System.out.println("newSubstitutes=="+newSubstitutes);
+//        System.out.println("oldSubstitutes=="+oldSubstitutes);
+//        System.out.println("newSubstitutes=="+newSubstitutes);
 
         for (WTPartMaster wm : oldSubstitutes.keySet()) {
             if (!newSubstitutes.keySet().contains(wm)) {
@@ -308,8 +308,8 @@ public class CompareBom {
                         newReplacePartNumber.put(substituteNumber, newSubstituteList.get(i));
                     }
                 }
-                System.out.println("oldReplacePartNumber=="+oldReplacePartNumber);
-                System.out.println("newReplacePartNumber=="+newReplacePartNumber);
+//                System.out.println("oldReplacePartNumber=="+oldReplacePartNumber);
+//                System.out.println("newReplacePartNumber=="+newReplacePartNumber);
                 for (String str : newReplacePartNumber.keySet()) {
                     if (!oldReplacePartNumber.keySet().contains(str)) {
                         //新增替代料
@@ -490,6 +490,30 @@ public class CompareBom {
             }
         }
 
+        //判断物料是否物料属性变更（只判断规格描述）
+        Map<String,String> parentSpecification=new HashMap<>();
+        // 变更前规格描述
+        Object affectedSpecification = PIAttributeHelper.service.getValue(affectedPart, "ggms") ;
+        // 变更后规格描述
+        Object produceSpecification = PIAttributeHelper.service.getValue(producePart, "ggms") ;
+        String affectedStr="";
+        if (affectedSpecification!=null) affectedStr= String.valueOf(affectedSpecification).trim();
+        String produceStr="";
+        if (produceSpecification!=null) produceStr= String.valueOf(produceSpecification).trim();
+        if (!affectedStr.equals(produceStr)){
+            Set changeTypes = new HashSet();
+            parentSpecification.put("before",affectedStr);
+            parentSpecification.put("after",produceStr);
+            changeTypes.add(BomChangeConstants.TYPE_9);
+            //物料属性变更
+            BOMChangeInfoBean bomChangeInfoBean = new BOMChangeInfoBean();
+            bomChangeInfoBean.setChangeType(changeTypes);
+            bomChangeInfoBean.setNumber(producePart.getNumber());
+            bomChangeInfoBean.setParentSpecification(parentSpecification);
+            bomChangeInfoBean.setParentSpecification(parentSpecification);
+            bomChangeInfoBeans.add(bomChangeInfoBean);
+        }
+
         System.out.println("=====================BOM报表差异结果：" + bomChangeInfoBeans);
         return bomChangeInfoBeans;
     }
@@ -497,7 +521,6 @@ public class CompareBom {
     /**
      * 获取Part所有WTPartUsageLink
      * 即Part的下层子料
-     *
      * @param part
      * @return
      * @throws WTException

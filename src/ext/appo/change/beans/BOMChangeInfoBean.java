@@ -12,7 +12,7 @@ public class BOMChangeInfoBean implements Serializable {
     private String number="";
     // 名称
     private String name = "";
-    //规格描述
+    //规格描述(子料)
     private String specification="";
     //位号(key：before 变更前;after 变更后)
     private Map<String,String> placeNumber=new HashMap<>();
@@ -20,6 +20,8 @@ public class BOMChangeInfoBean implements Serializable {
     private Map<String,String> quantit=new HashMap<>();
     //替代料(key：delete 删除的替代料;add 新增的替代料)
     private Map<String,List<String>> replacePartNumbers=new HashMap<>();
+    //规格描述(父件。key：before 变更前;after 变更后)
+    private Map<String,String> parentSpecification=new HashMap<>();
 
     public Set getChangeType() { return changeType; }
 
@@ -45,6 +47,8 @@ public class BOMChangeInfoBean implements Serializable {
 
     public Map<String,List<String>> getReplacePartNumbers() { return replacePartNumbers; }
 
+    public Map<String, String> getParentSpecification() { return parentSpecification; }
+
     public void setChangeType(Set changeType) {
         this.changeType = changeType;
     }
@@ -69,6 +73,8 @@ public class BOMChangeInfoBean implements Serializable {
 
     public void setReplacePartNumbers(Map<String,List<String>> replacePartNumbers) {this.replacePartNumbers = replacePartNumbers;}
 
+    public void setParentSpecification(Map<String, String> parentSpecification) { this.parentSpecification = parentSpecification; }
+
     @Override
     public String toString() {
         return "BOMChangeInfoBean{" +
@@ -79,6 +85,7 @@ public class BOMChangeInfoBean implements Serializable {
                 ", placeNumber=" + placeNumber +
                 ", quantit=" + quantit +
                 ", replacePartNumbers=" + replacePartNumbers +
+                ", parentSpecification=" + parentSpecification +
                 '}';
     }
 }
