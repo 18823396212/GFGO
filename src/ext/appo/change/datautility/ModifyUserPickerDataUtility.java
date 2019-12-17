@@ -18,6 +18,8 @@ import ext.appo.ecn.datautiliy.AffectedItemsDataUtility;
 import ext.pi.core.PICoreHelper;
 import org.apache.log4j.Logger;
 import wt.log4j.LogR;
+import wt.org.WTPrincipal;
+import wt.org.WTUser;
 import wt.session.SessionContext;
 import wt.session.SessionHelper;
 import wt.util.WTException;
@@ -31,6 +33,13 @@ public class ModifyUserPickerDataUtility extends ChangeLinkAttributeDataUtility 
     @Override
     public Object getDataValue(String paramString, Object paramObject, ModelContext paramModelContext) throws WTException {
         SessionContext previous = SessionContext.newContext();
+        //add by lzy at 20191216 start
+        // 获取当前用户
+        WTPrincipal principal = SessionHelper.manager.getPrincipal();
+        WTUser user=(WTUser) principal;
+        String fullName=user.getFullName();
+//        System.out.println("fullName=="+fullName);
+        //add by lzy at 20191216 end
         // 当前用户设置为管理员，用于忽略权限
         SessionHelper.manager.setAdministrator();
         try {
@@ -48,7 +57,10 @@ public class ModifyUserPickerDataUtility extends ChangeLinkAttributeDataUtility 
                 if (link != null) flag = ROUTING_1.equals(link.getRouting()) || ROUTING_3.equals(link.getRouting());
                 LOGGER.info("=====flag: " + flag);
 
-                PickerInputComponent userPicker = createPickerComponent(paramString, paramObject, paramModelContext, bool);
+//                add by lzy at 20191216 start
+//                PickerInputComponent userPicker = createPickerComponent(paramString, paramObject, paramModelContext, bool);
+                PickerInputComponent userPicker = createPickerUserComponent(paramString, paramObject, paramModelContext, bool,fullName);
+//                add by lzy at 20191216 end
                 if (flag) userPicker.setEditable(false);
                 return userPicker;
             } else {
@@ -131,4 +143,66 @@ public class ModifyUserPickerDataUtility extends ChangeLinkAttributeDataUtility 
         }
         return value;
     }
+
+
+    /**
+     * 传当前用户名
+     * @param param
+     * @param object
+     * @param modelContext
+     * @param isCreateEdit
+     * @param fullName
+     * @return
+     * @throws WTException
+     */
+    public PickerInputComponent createPickerUserComponent(String param, Object object, ModelContext modelContext, Boolean isCreateEdit,String fullName) throws WTException {
+        String label = getLabel(param, modelContext);
+        if (label == null) {
+            label = "Picker";
+        }
+        // 初始化Picker数据
+        if (object instanceof ChangeTaskBean) {
+            setPickerConfig(param, modelContext, modelContext.getRawValue());
+        } else {
+            // 是否创建及编辑状态
+            AffectedItemsDataUtility dataUtility = new AffectedItemsDataUtility();
+            setPickerUserConfig(param, modelContext, dataUtility.getValue(modelContext, object, isCreateEdit, param),fullName);
+        }
+
+        ComponentDescriptor componentDescriptor = modelContext.getDescriptor();
+        Map<Object, Object> propertiesMap = componentDescriptor.getProperties();
+        String defaultValue = (String) propertiesMap.get(PickerRenderConfigs.DEFAULT_HIDDEN_VALUE);
+
+        PickerInputComponent component = new PickerInputComponent(label, defaultValue, PickerRenderConfigs.getPickerConfigs(propertiesMap));
+        component.setColumnName(AttributeDataUtilityHelper.getColumnName(param, object, modelContext));
+        component.setRequired(true);
+
+        return component;
+    }
+
+    /***
+     * 初始化Picker数据(传当前用户名)
+     * @param param
+     * @param modelContext
+     * @param value
+     * @param fullName
+     * @throws WTException
+     */
+    //add by lzy at 20191216
+    public void setPickerUserConfig(String param, ModelContext modelContext, Object value,String fullName) throws WTException {
+        // 获取参数列表
+        Map<Object, Object> propertiesMap = modelContext.getDescriptor().getProperties();
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Befor propertiesMap : " + propertiesMap);
+        }
+        // 添加Picker配置
+        UserPickerConfig.setPickerProperties(param, modelContext.getNmCommandBean(), propertiesMap);
+
+        propertiesMap.put(PickerRenderConfigs.DEFAULT_HIDDEN_VALUE, value == null ? fullName : (String) value);
+        propertiesMap.put(PickerRenderConfigs.DEFAULT_VALUE, value == null ? fullName : (String) value);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("After propertiesMap : " + propertiesMap);
+        }
+    }
+
 }

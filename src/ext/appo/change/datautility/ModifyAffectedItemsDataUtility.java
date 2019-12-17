@@ -73,14 +73,11 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
                 boolean flag = false;
                 if (link != null) flag = ROUTING_1.equals(link.getRouting()) || ROUTING_3.equals(link.getRouting());
                 LOGGER.info("=====flag: " + flag);
-
                 if (paramString.contains(ChangeConstants.ARTICLEINVENTORY_COMPID) || paramString.contains(ChangeConstants.CENTRALWAREHOUSEINVENTORY_COMPID) || paramString.contains(ChangeConstants.PASSAGEINVENTORY_COMPID)) {
                     if (paramObject instanceof WTPart) {
                         GUIComponentArray gui_array = new GUIComponentArray();
-                        //add by tongwang 20191023 start 占时注释
-                        //gui_array.addGUIComponent(generateTextDisplayComponent(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString)));
-                        gui_array.addGUIComponent(generateTextDisplayComponent(paramModelContext, paramObject, paramString, null));
-                        //add by tongwang 20191023 end	占时注释
+                        gui_array.addGUIComponent(generateTextDisplayComponent(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString)));
+//                        gui_array.addGUIComponent(generateTextDisplayComponent(paramModelContext, paramObject, paramString, null));
                         return gui_array;
                     }
                 } else if (paramString.contains(ChangeConstants.ARTICLEDISPOSE_COMPID) || paramString.contains(ChangeConstants.INVENTORYDISPOSE_COMPID) || paramString.contains(ChangeConstants.PASSAGEDISPOSE_COMPID) || paramString.contains(ChangeConstants.PRODUCTDISPOSE_COMPID) || paramString.contains(ChangeConstants.CHANGETYPE_COMPID) || paramString.contains(ATTRIBUTE_7)) {
@@ -244,7 +241,14 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
                 }
                 component.setValue(Timestamp.valueOf((new SimpleDateFormat(ChangeConstants.SIMPLE_DATE_FORMAT)).format((new SimpleDateFormat(ChangeConstants.SIMPLE_DATE_FORMAT_02)).parse(valueStr))));
             } else {
-                component.setValue(Timestamp.valueOf(format.format(new Date())));
+                //add by lzuy at 20191216 start
+//                component.setValue(Timestamp.valueOf(format.format(new Date())));
+                //期望完成时间默认推迟一周
+                Calendar curr = Calendar.getInstance();
+                curr.set(Calendar.DAY_OF_MONTH,curr.get(Calendar.DAY_OF_MONTH)+7);
+                Date date=curr.getTime();
+                component.setValue(Timestamp.valueOf(format.format(date)));
+                //add by lzuy at 20191216 end
             }
         } catch (Exception e) {
             e.printStackTrace();
