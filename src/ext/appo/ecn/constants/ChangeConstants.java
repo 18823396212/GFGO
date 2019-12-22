@@ -44,14 +44,14 @@ public interface ChangeConstants {
 
 	
 	// 受影响列表新增列
-	String ARTICLEINVENTORY_COMPID = "ArticleInventory"; 
-	String CENTRALWAREHOUSEINVENTORY_COMPID = "CentralWarehouseInventory"; 
-	String PASSAGEINVENTORY_COMPID = "PassageInventory"; 
+	String ARTICLEINVENTORY_COMPID = "ArticleInventory";//在制数量
+	String CENTRALWAREHOUSEINVENTORY_COMPID = "CentralWarehouseInventory";//库存数量
+	String PASSAGEINVENTORY_COMPID = "PassageInventory";//在途数量
 	String RESPONSIBLEPERSON_COMPID = "ResponsiblePerson"; //责任人
-	String ARTICLEDISPOSE_COMPID = "ArticleDispose"; 
-	String PASSAGEDISPOSE_COMPID = "PassageDispose"; 
-	String INVENTORYDISPOSE_COMPID = "InventoryDispose"; 
-	String PRODUCTDISPOSE_COMPID = "ProductDispose"; 
+	String ARTICLEDISPOSE_COMPID = "ArticleDispose";//*在制处理措施
+	String PASSAGEDISPOSE_COMPID = "PassageDispose";//*在途处理措施
+	String INVENTORYDISPOSE_COMPID = "InventoryDispose";//*库存处理措施
+	String PRODUCTDISPOSE_COMPID = "ProductDispose";//*已出货成品处理措施
 	String CHANGETYPE_COMPID = "ChangeType";
 	//add by tongwang 20191023 start
 	String CHANGOBJECTETYPE_COMPID = "ChangeObjectType";//变更对象类型

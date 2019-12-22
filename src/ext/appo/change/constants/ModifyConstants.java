@@ -14,6 +14,9 @@ public interface ModifyConstants {
     String ATTRIBUTE_6 = "ActionName";//操作名称
     String ATTRIBUTE_7 = "ChangeObjectType";//变更对象类型
     String ATTRIBUTE_8 = "ChangeItemType";//变更类型
+    String ATTRIBUTE_9 = "ApprovalOpinion";//审批意见
+    String ATTRIBUTE_10 = "Remark";//备注（驳回必填）
+
 
     //类型定义
     String TYPE_1 = "com.pisx.BOMChangeActivity2";//BOM变更ECA
@@ -43,14 +46,24 @@ public interface ModifyConstants {
     String FLOWNAME_2 = "APPO_DRAWINGCHANGEWF";//图纸变更流程
     String FLOWNAME_3 = "BOM变更流程";
     String FLOWNAME_4 = "图纸变更流程";
+    String FLOWNAME_5 = "APPO_ECNWF";
 
     //分隔符
     String SEPARATOR_1 = "_";
+    String SEPARATOR_2 = "_col_";
 
     //常量
     String CONSTANTS_1 = "cacheButton";//缓存按钮
     String CONSTANTS_2 = "修改变更申请";//工作流节点名称
     String CONSTANTS_3 = "CORRELATION_LINK_CHANGE";
+    String CONSTANTS_4 = "";
+    String CONSTANTS_5 = "会签";
+    String CONSTANTS_6 = "批准";
+    String CONSTANTS_7 = "other";
+    String CONSTANTS_8 = "驳回";
+    String CONSTANTS_9 = "其他情况";
+    String CONSTANTS_10 = "同意";
+    String CONSTANTS_11 = "通过";
 
     /**
      * ECN与受影响对象链接

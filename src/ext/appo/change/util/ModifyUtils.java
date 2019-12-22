@@ -1,5 +1,6 @@
 package ext.appo.change.util;
 
+import com.ptc.netmarkets.util.beans.NmCommandBean;
 import ext.appo.change.constants.ModifyConstants;
 import ext.appo.ecn.constants.ChangeConstants;
 import ext.lang.PIStringUtils;
@@ -1189,6 +1190,28 @@ public class ModifyUtils implements ChangeConstants {
 
         LOGGER.info("=====getChangeActivity2.activity2s: " + activity2s);
         return activity2s;
+    }
+
+    public static List<String> getVoteList(NmCommandBean nmCommandBean) {
+        List<String> eventList = new Vector();
+        Enumeration parameterNames = nmCommandBean.getRequest().getParameterNames();
+
+        while(parameterNames.hasMoreElements()) {
+            String plainKey = (String)parameterNames.nextElement();
+            String key = NmCommandBean.convert(plainKey);
+            if (key.contains("WfUserEvent") && key.lastIndexOf("old") == -1) {
+                String eventValue;
+                if (key.contains("WfRouterCheck")) {
+                    eventValue = key.substring(key.indexOf("WfRouterCheck") + "WfRouterCheck".length(), key.lastIndexOf("___"));
+                } else {
+                    eventValue = nmCommandBean.getTextParameter(plainKey);
+                }
+
+                eventList.add(eventValue);
+            }
+        }
+
+        return eventList;
     }
 
 }

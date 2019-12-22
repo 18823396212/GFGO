@@ -25,7 +25,8 @@
 <fmt:setBundle basename="ext.appo.ecn.resource.changeNoticeActionsRB"/>
 <fmt:message var="createTitle" key="changeNotice.createEngineeringChangeOrder.title"/>
 
-<jca:wizard helpSelectorKey="change_createChangeNotice" buttonList="CustomWizardButtonsWithSubmitPrompt" formProcessorController="com.ptc.windchill.enterprise.change2.forms.controllers.ChangeTaskTemplatedFormProcessorController" wizardSelectedOnly="true" title="${createTitle}">
+<!-- buttonList="CustomWizardButtonsWithSubmitPrompt" -->
+<jca:wizard helpSelectorKey="change_createChangeNotice" buttonList="DefaultWizardButtonsWithSubmitPrompt" formProcessorController="com.ptc.windchill.enterprise.change2.forms.controllers.ChangeTaskTemplatedFormProcessorController" wizardSelectedOnly="true" title="${createTitle}">
     <jca:wizardStep action="createChangeOrderStep" type="modify"/>
 </jca:wizard>
 

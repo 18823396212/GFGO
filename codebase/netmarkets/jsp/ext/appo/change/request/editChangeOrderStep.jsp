@@ -422,7 +422,10 @@
         setTimeout("saveChangeTaskArray()", 1000);
 
         //add by tongwang 20191023 start
-        document.getElementById("PJL_wizard_cache").onclick = function () {
+        /*document.getElementById("PJL_wizard_cache").onclick = function () {
+            document.getElementById("routingName").value = "cacheButton";
+        };*/
+        document.getElementById("PJL_wizard_ok").onclick = function () {
             document.getElementById("routingName").value = "cacheButton";
         };
         //add by tongwang 20191023 end

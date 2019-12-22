@@ -1,722 +1,797 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE listofactions SYSTEM "actions.dtd">
 <listofactions>
-	<!-- Part DescDoc  ReferDoc  -->
-	<objecttype name="part" class="wt.part.WTPart" resourceBundle="com.ptc.windchill.enterprise.part.partResource">
-		  <action name="related_delete_references" multiselect="true" ajax="component">
-			 <command class="ext.generic.part.processor.PartRefDocDeleteProcessor" method="execute" />
-		  </action>
-		  <action name="related_delete_described" multiselect="true" ajax="component">
-			 <command class="ext.generic.part.processor.PartDescDocDeleteProcessor" method="execute" />
-		  </action>
-		  <action name="related_paste_references" ajax="component">
-			 <command class="ext.generic.part.processor.PartRefDocPasteProcessor" method="execute" />
-		  </action>
-		  <action name="related_paste_described" ajax="component">
-			 <command class="ext.generic.part.processor.PartDescDocPasteProcessor" method="execute" />
-		  </action>
-		  <action name="related_paste_select_references" multiselect="true" uicomponent="PASTE" ajax="component">
-			 <command class="ext.generic.part.processor.PartRefDocPasteProcessor" method="execute"  windowType="popup"/>
-		  </action>
-		  <action name="related_paste_select_described" multiselect="true" uicomponent="PASTE" ajax="component">
-			 <command class="ext.generic.part.processor.PartDescDocPasteProcessor" method="execute"  windowType="popup"/>
-		  </action>
-		  <action name="related_add_references" multiselect="true" ajax="component">
-			  <command class="ext.generic.part.processor.PartRefDocAddProcessor" method="execute"  windowType="popup"/>
-		  </action>
-		  <action name="related_add_described" multiselect="true" ajax="component">
-			 <command class="ext.generic.part.processor.PartDescDocAddProcessor" method="execute"  windowType="popup"/>
-		  </action>
-	</objecttype>
-	
-	<objecttype name="showBaseline" resourceBundle="ext.appo.part.resource.BaselineResourceRB">
-			<action name="showBaselineMaterialsTable">
-                 <component name="ext.appo.part.builder.BaseLineTreeBuilder"/>
-            </action>
-       <action name="exportBaselineMaterials">
-           <command url="netmarkets/jsp/ext/appo/part/baseline/ExportEffecitveBaseline.jsp" windowType="popup"></command>
-       </action>
-</objecttype>
-
-	<objecttype name="ChangeStateECN"  resourceBundle="ext.appo.part.resource.BaselineResourceRB" >
-        <action name="ChangeStateECNTableBuilder" >
-            <component name="ext.appo.part.builder.ChangeStateECNTableBuilder" ></component>
+    <!-- Part DescDoc  ReferDoc  -->
+    <objecttype name="part" class="wt.part.WTPart" resourceBundle="com.ptc.windchill.enterprise.part.partResource">
+        <action name="related_delete_references" multiselect="true" ajax="component">
+            <command class="ext.generic.part.processor.PartRefDocDeleteProcessor" method="execute"/>
+        </action>
+        <action name="related_delete_described" multiselect="true" ajax="component">
+            <command class="ext.generic.part.processor.PartDescDocDeleteProcessor" method="execute"/>
+        </action>
+        <action name="related_paste_references" ajax="component">
+            <command class="ext.generic.part.processor.PartRefDocPasteProcessor" method="execute"/>
+        </action>
+        <action name="related_paste_described" ajax="component">
+            <command class="ext.generic.part.processor.PartDescDocPasteProcessor" method="execute"/>
+        </action>
+        <action name="related_paste_select_references" multiselect="true" uicomponent="PASTE" ajax="component">
+            <command class="ext.generic.part.processor.PartRefDocPasteProcessor" method="execute" windowType="popup"/>
+        </action>
+        <action name="related_paste_select_described" multiselect="true" uicomponent="PASTE" ajax="component">
+            <command class="ext.generic.part.processor.PartDescDocPasteProcessor" method="execute" windowType="popup"/>
+        </action>
+        <action name="related_add_references" multiselect="true" ajax="component">
+            <command class="ext.generic.part.processor.PartRefDocAddProcessor" method="execute" windowType="popup"/>
+        </action>
+        <action name="related_add_described" multiselect="true" ajax="component">
+            <command class="ext.generic.part.processor.PartDescDocAddProcessor" method="execute" windowType="popup"/>
         </action>
     </objecttype>
 
-	
-	
-	<!-- Doc DescPart  ReferPart  -->
-	<objecttype name="part" class="wt.part.WTPart" resourceBundle="com.ptc.windchill.enterprise.part.partResource">
+    <objecttype name="showBaseline" resourceBundle="ext.appo.part.resource.BaselineResourceRB">
+        <action name="showBaselineMaterialsTable">
+            <component name="ext.appo.part.builder.BaseLineTreeBuilder"/>
+        </action>
+        <action name="exportBaselineMaterials">
+            <command url="netmarkets/jsp/ext/appo/part/baseline/ExportEffecitveBaseline.jsp"
+                     windowType="popup"></command>
+        </action>
+    </objecttype>
 
-		  <action name="related_delete_references_part" multiselect="true"  ajax="component">
-			 <command class="ext.generic.part.processor.DocRefPartDeleteProcessor" method="execute" onClick="onClickValidation(event,'related_delete_references_part')" />
-		  </action>
-		  <action name="related_delete_described_part" multiselect="true" ajax="component" >
-			 <command class="ext.generic.part.processor.DocDescPartDeleteProcessor" method="execute" onClick="onClickValidation(event,'related_delete_described_part')" />
-		  </action>
-		  <action name="related_paste_references_part" ajax="component" >
-			 <command class="ext.generic.part.processor.DocRefPartPasteProcessor" method="execute" onClick="onClickValidation(event,'related_paste_references_part')"/>
-		  </action>
-		  <action name="related_paste_described_part" ajax="component" >
-			 <command class="ext.generic.part.processor.DocDescPartPasteProcessor" method="execute" onClick="onClickValidation(event,'related_paste_described_part')"/>
-		  </action>
-		  <action name="related_paste_select_references_part" multiselect="true" uicomponent="PASTE" ajax="component" >
-			 <command class ="ext.generic.part.processor.DocRefPartPasteProcessor" method="execute" windowType="popup"/>
-		  </action>
-		  <action name="related_paste_select_described_part" multiselect="true" uicomponent="PASTE" ajax="component" >
-			 <command class ="ext.generic.part.processor.DocDescPartPasteProcessor" method="execute" windowType="popup"/>
-		  </action>
-		  <action name="related_add_references_docpart" multiselect="true" ajax="component" >
-			  <command class="ext.generic.part.processor.DocRefPartAddProcessor" method="execute" windowType="popup"/>
-		  </action>
-		  <action name="related_add_described_docpart" multiselect="true" ajax="component" >
-			  <command class="ext.generic.part.processor.DocDescPartAddProcessor" method="execute" windowType="popup"/>
-		  </action>
-      <action name="download_selected_attachments" enabledwhensuspended="true">
-          <command url="servlet/AttachmentsDownloadDirectionServlet/selected" windowType="popup"/>
-      </action>
-	</objecttype>
+    <objecttype name="ChangeStateECN" resourceBundle="ext.appo.part.resource.BaselineResourceRB">
+        <action name="ChangeStateECNTableBuilder">
+            <component name="ext.appo.part.builder.ChangeStateECNTableBuilder"></component>
+        </action>
+    </objecttype>
 
-	<objecttype class="wt.part.WTPart" name="part" resourceBundle="com.ptc.windchill.enterprise.part.partResource" >
-		<action ajax="component" multiselect="true" name="related_add_references_docpart" >
-			<command class="ext.generic.doc.processor.CustDocPartRefAddRelationFormProcessor" method="execute" windowType="popup"/>
-		</action>
-	</objecttype>
-	<objecttype name="pdmObject" class="wt.fc.WTObject">
-		<action name="REVISEITEMS" checkaccess="true" enabledwhensuspended="true" renderType="PDM">
-			<command windowType="popup" class="java.lang.Object" method="REVISEITEMS"/>
-			<includeFilter name="sandboxSharingValidationSimple"/>
-			<includeFilter name="hideFromNonAgreementMgrs"/>
-			<includeFilter name="hideForAdminLocked"/>
-			<includeFilter name="disableForPartToCadBuildAdminLocked"/>   
-			<includeFilter name="StandardPartsReviseFilter"/> 
-		</action>
+
+    <!-- Doc DescPart  ReferPart  -->
+    <objecttype name="part" class="wt.part.WTPart" resourceBundle="com.ptc.windchill.enterprise.part.partResource">
+
+        <action name="related_delete_references_part" multiselect="true" ajax="component">
+            <command class="ext.generic.part.processor.DocRefPartDeleteProcessor" method="execute"
+                     onClick="onClickValidation(event,'related_delete_references_part')"/>
+        </action>
+        <action name="related_delete_described_part" multiselect="true" ajax="component">
+            <command class="ext.generic.part.processor.DocDescPartDeleteProcessor" method="execute"
+                     onClick="onClickValidation(event,'related_delete_described_part')"/>
+        </action>
+        <action name="related_paste_references_part" ajax="component">
+            <command class="ext.generic.part.processor.DocRefPartPasteProcessor" method="execute"
+                     onClick="onClickValidation(event,'related_paste_references_part')"/>
+        </action>
+        <action name="related_paste_described_part" ajax="component">
+            <command class="ext.generic.part.processor.DocDescPartPasteProcessor" method="execute"
+                     onClick="onClickValidation(event,'related_paste_described_part')"/>
+        </action>
+        <action name="related_paste_select_references_part" multiselect="true" uicomponent="PASTE" ajax="component">
+            <command class="ext.generic.part.processor.DocRefPartPasteProcessor" method="execute" windowType="popup"/>
+        </action>
+        <action name="related_paste_select_described_part" multiselect="true" uicomponent="PASTE" ajax="component">
+            <command class="ext.generic.part.processor.DocDescPartPasteProcessor" method="execute" windowType="popup"/>
+        </action>
+        <action name="related_add_references_docpart" multiselect="true" ajax="component">
+            <command class="ext.generic.part.processor.DocRefPartAddProcessor" method="execute" windowType="popup"/>
+        </action>
+        <action name="related_add_described_docpart" multiselect="true" ajax="component">
+            <command class="ext.generic.part.processor.DocDescPartAddProcessor" method="execute" windowType="popup"/>
+        </action>
+        <action name="download_selected_attachments" enabledwhensuspended="true">
+            <command url="servlet/AttachmentsDownloadDirectionServlet/selected" windowType="popup"/>
+        </action>
+    </objecttype>
+
+    <objecttype class="wt.part.WTPart" name="part" resourceBundle="com.ptc.windchill.enterprise.part.partResource">
+        <action ajax="component" multiselect="true" name="related_add_references_docpart">
+            <command class="ext.generic.doc.processor.CustDocPartRefAddRelationFormProcessor" method="execute"
+                     windowType="popup"/>
+        </action>
+    </objecttype>
+    <objecttype name="pdmObject" class="wt.fc.WTObject">
+        <action name="REVISEITEMS" checkaccess="true" enabledwhensuspended="true" renderType="PDM">
+            <command windowType="popup" class="java.lang.Object" method="REVISEITEMS"/>
+            <includeFilter name="sandboxSharingValidationSimple"/>
+            <includeFilter name="hideFromNonAgreementMgrs"/>
+            <includeFilter name="hideForAdminLocked"/>
+            <includeFilter name="disableForPartToCadBuildAdminLocked"/>
+            <includeFilter name="StandardPartsReviseFilter"/>
+        </action>
     </objecttype>
     <objecttype name="querylink" resourceBundle="ext.generic.wfbaseline.BaselineActionsRB">
-		<action name="wtObjectBaselinelink">
-			<component name="ext.generic.wfbaseline.mvc.builders.WTObjectBaselineLinkTable" />
-		</action>
-	</objecttype>
-	<objecttype name="appo" class="" resourceBundle="ext.appo.folder.resource.APPOCreateRB"> 
-      <action name="createWizardFolders" ajax="component"> 
-	<command windowType="popup" class="ext.appo.folder.APPOCreateWizardFolderProcess" 
-		method="doOperation" url="netmarkets/jsp/appo/folder/createWizardFolders.jsp"/> 
-      </action>
- 
-      <action name="editPartCommonAttrsWizard" ajax="row">
-        <command class="com.ptc.windchill.enterprise.part.forms.EditPartCommonAttrsFormProcessor" method="execute" windowType="popup"/>
-        <includeFilter name="sandboxSharingValidationSimple"/>
-        <includeFilter name="hideSBHiddenFilter"/>
-		<includeFilter name="EditPartCommonAttrsWizardFilter"/>
-      </action>
-      <action name="setFolderAttribute"> 
-	<command windowType="wizard_step" url="netmarkets/jsp/appo/folder/setFolderAttribute.jsp"/> 
-      </action> 
- </objecttype> 
-	
-	<objecttype name="changeNotice" resourceBundle="ext.appo.ecn.resource.changeNoticeActionsRB">		
-		<!-- 创建工程ECN对象 -->
-		<action name="createEngineeringChangeOrder" ajax="component" uicomponent="CREATE_CHANGENOTICE">
-           <command url="/netmarkets/jsp/ext/appo/changeNotice/createEngineeringECN.jsp" windowType="popup" class="ext.appo.ecn.processor.ExtCreateChangeNoticeFormProcessor" method="excute" />
+        <action name="wtObjectBaselinelink">
+            <component name="ext.generic.wfbaseline.mvc.builders.WTObjectBaselineLinkTable"/>
         </action>
-		
-		<action name="createEngineeringChangeOrderStep" id="createEngineeringChangeOrderStep" preloadWizardPage="false" required="false">
-           <command  url="netmarkets/jsp/ext/appo/changeNotice/createEngineeringECNStep.jsp" class="" windowType="wizard_step"/>
+    </objecttype>
+    <objecttype name="appo" class="" resourceBundle="ext.appo.folder.resource.APPOCreateRB">
+        <action name="createWizardFolders" ajax="component">
+            <command windowType="popup" class="ext.appo.folder.APPOCreateWizardFolderProcess"
+                     method="doOperation" url="netmarkets/jsp/appo/folder/createWizardFolders.jsp"/>
         </action>
-		
-		<!-- 受影响上层物料表 -->
-         <action name="affectedUpperMaterialsTableBuilder">
-             <component name="ext.appo.ecn.mvc.builder.AffectedUpperMaterialsTableBuilder" windowType="page"/>
-         <includeFilter name="AffectedMaterialsFilter"></includeFilter>
-         </action>
-         <!-- 受影响下层物料表 -->
-         <action name="affectedDownMaterialsTableBuilder">
-             <component name="ext.appo.ecn.mvc.builder.AffectedDownMaterialsTableBuilder" windowType="page"/>
-         <includeFilter name="AffectedMaterialsFilter"></includeFilter>
-         </action>
 
-		<!-- 编辑工程ECN对象 -->
-		<action name="editEngineeringChangeOrder" ajax="row">
-           <command url="/netmarkets/jsp/ext/appo/changeNotice/editEngineeringECN.jsp" windowType="popup" class="ext.appo.ecn.processor.ExtEditChangeNoticeFormProcessor" method="excute" />
-		   <includeFilter name="editECNFilter"/>
+        <action name="editPartCommonAttrsWizard" ajax="row">
+            <command class="com.ptc.windchill.enterprise.part.forms.EditPartCommonAttrsFormProcessor" method="execute"
+                     windowType="popup"/>
+            <includeFilter name="sandboxSharingValidationSimple"/>
+            <includeFilter name="hideSBHiddenFilter"/>
+            <includeFilter name="EditPartCommonAttrsWizardFilter"/>
         </action>
-		
-		<action name="editEngineeringChangeOrderStep" id="editEngineeringChangeOrderStep" preloadWizardPage="false" required="false">
-           <command  url="netmarkets/jsp/ext/appo/changeNotice/editEngineeringECNStep.jsp" class="" windowType="wizard_step"/>
+        <action name="setFolderAttribute">
+            <command windowType="wizard_step" url="netmarkets/jsp/appo/folder/setFolderAttribute.jsp"/>
         </action>
-		
-	    <!-- 受影响对象表单 -->
-	    <action name="affectedItemsTable">
+    </objecttype>
+
+    <objecttype name="changeNotice" resourceBundle="ext.appo.ecn.resource.changeNoticeActionsRB">
+        <!-- 创建工程ECN对象 -->
+        <action name="createEngineeringChangeOrder" ajax="component" uicomponent="CREATE_CHANGENOTICE">
+            <command url="/netmarkets/jsp/ext/appo/changeNotice/createEngineeringECN.jsp" windowType="popup"
+                     class="ext.appo.ecn.processor.ExtCreateChangeNoticeFormProcessor" method="excute"/>
+        </action>
+
+        <action name="createEngineeringChangeOrderStep" id="createEngineeringChangeOrderStep" preloadWizardPage="false"
+                required="false">
+            <command url="netmarkets/jsp/ext/appo/changeNotice/createEngineeringECNStep.jsp" class=""
+                     windowType="wizard_step"/>
+        </action>
+
+        <!-- 受影响上层物料表 -->
+        <action name="affectedUpperMaterialsTableBuilder">
+            <component name="ext.appo.ecn.mvc.builder.AffectedUpperMaterialsTableBuilder" windowType="page"/>
+            <includeFilter name="AffectedMaterialsFilter"></includeFilter>
+        </action>
+        <!-- 受影响下层物料表 -->
+        <action name="affectedDownMaterialsTableBuilder">
+            <component name="ext.appo.ecn.mvc.builder.AffectedDownMaterialsTableBuilder" windowType="page"/>
+            <includeFilter name="AffectedMaterialsFilter"></includeFilter>
+        </action>
+
+        <!-- 编辑工程ECN对象 -->
+        <action name="editEngineeringChangeOrder" ajax="row">
+            <command url="/netmarkets/jsp/ext/appo/changeNotice/editEngineeringECN.jsp" windowType="popup"
+                     class="ext.appo.ecn.processor.ExtEditChangeNoticeFormProcessor" method="excute"/>
+            <includeFilter name="editECNFilter"/>
+        </action>
+
+        <action name="editEngineeringChangeOrderStep" id="editEngineeringChangeOrderStep" preloadWizardPage="false"
+                required="false">
+            <command url="netmarkets/jsp/ext/appo/changeNotice/editEngineeringECNStep.jsp" class=""
+                     windowType="wizard_step"/>
+        </action>
+
+        <!-- 受影响对象表单 -->
+        <action name="affectedItemsTable">
             <!--            add by lzy at 20191205 satart-->
-<!--           <component name="ext.appo.ecn.mvc.builder.AffectedItemsTableBuilder" windowType="page"/>-->
+            <!--           <component name="ext.appo.ecn.mvc.builder.AffectedItemsTableBuilder" windowType="page"/>-->
             <component name="ext.appo.change.mvc.builder.AffectedItemsTableBuilder" windowType="page"/>
             <!--            add by lzy at 20191205 end-->
         </action>
-		<!-- 受影响产品表单 -->
-	    <action name="affectedEndItemsTableBuilder">
+        <!-- 受影响产品表单 -->
+        <action name="affectedEndItemsTableBuilder">
             <!--            add by lzy at 20191209 satart-->
-<!--           <component name="ext.appo.ecn.mvc.builder.AffectedEndItemsTableBuilder" windowType="page"/>-->
+            <!--           <component name="ext.appo.ecn.mvc.builder.AffectedEndItemsTableBuilder" windowType="page"/>-->
             <component name="ext.appo.change.mvc.builder.AffectedEndItemsTableBuilder" windowType="page"/>
             <!--            add by lzy at 20191209 end-->
         </action>
-		<!-- 受影响对象表单 -->
-	    <action name="affectedItemsTableBuilder">
-           <component name="ext.appo.ecn.mvc.builder.AffectedItemsTableBuilder" windowType="page"/>
+        <!-- 受影响对象表单 -->
+        <action name="affectedItemsTableBuilder">
+            <component name="ext.appo.ecn.mvc.builder.AffectedItemsTableBuilder" windowType="page"/>
         </action>
-		<!-- 受影响产品表单添加按钮 -->
-	    <action name="addAffectedEndItems" renderType="GENERAL" selectRequired="true">
-            <command onClick="addAffectedEndItems()" windowType="no_content" />
+        <!-- 受影响产品表单添加按钮 -->
+        <action name="addAffectedEndItems" renderType="GENERAL" selectRequired="true">
+            <command onClick="addAffectedEndItems()" windowType="no_content"/>
         </action>
-		<!-- 受影响产品表单单删除按钮 -->
-		<action name="deleteAffectedEndItems" renderType="GENERAL" selectRequired="true">
-            <command onClick="deleteAffectedEndItems()" windowType="no_content" />
+        <!-- 受影响产品表单单删除按钮 -->
+        <action name="deleteAffectedEndItems" renderType="GENERAL" selectRequired="true">
+            <command onClick="deleteAffectedEndItems()" windowType="no_content"/>
         </action>
-		<!-- 产生对象表单 -->
-	    <action name="resultingItemsTable">
-           <component name="wt.change2.ChangeActivity2.changeTask.resultingItemsTable" windowType="page"/>
+        <!-- 产生对象表单 -->
+        <action name="resultingItemsTable">
+            <component name="wt.change2.ChangeActivity2.changeTask.resultingItemsTable" windowType="page"/>
         </action>
-		<!-- 事务性任务表单 -->
-	    <action name="changeTaskTableBuilder">
+        <!-- 事务性任务表单 -->
+        <action name="changeTaskTableBuilder">
             <!--            add by lzy at 20191209 start-->
-<!--            <component name="ext.appo.ecn.mvc.builder.ChangeTaskTableBuilder" windowType="page"/>-->
+            <!--            <component name="ext.appo.ecn.mvc.builder.ChangeTaskTableBuilder" windowType="page"/>-->
             <component name="ext.appo.change.mvc.builder.ChangeTaskTableBuilder" windowType="page"/>
             <!--            add by lzy at 20191209 end-->
         </action>
-	    <!-- 事务性任务表单添加按钮 -->
-	    <action name="addChangeTask" renderType="GENERAL" selectRequired="true">
-            <command onClick="addChangeTask()" windowType="no_content" />
+        <!-- 事务性任务表单添加按钮 -->
+        <action name="addChangeTask" renderType="GENERAL" selectRequired="true">
+            <command onClick="addChangeTask()" windowType="no_content"/>
         </action>
-		<!-- 事务性任务表单删除按钮 -->
-		<action name="deleteChangeTask" renderType="GENERAL" selectRequired="true">
-            <command onClick="deleteChangeTask()" windowType="no_content" />
+        <!-- 事务性任务表单删除按钮 -->
+        <action name="deleteChangeTask" renderType="GENERAL" selectRequired="true">
+            <command onClick="deleteChangeTask()" windowType="no_content"/>
         </action>
-		<!-- 事务性任务表单修改按钮 -->
-		<action name="editChangeTask" renderType="GENERAL" selectRequired="true">
-            <command onClick="editChangeTask()" windowType="no_content" />
+        <!-- 事务性任务表单修改按钮 -->
+        <action name="editChangeTask" renderType="GENERAL" selectRequired="true">
+            <command onClick="editChangeTask()" windowType="no_content"/>
         </action>
-		<!-- 受影响对象表单收集上层产品按钮 -->
-		<action name="collectUpperProduct" renderType="GENERAL" selectRequired="true">
-            <command onClick="collectUpperProduct()" windowType="no_content" />
+        <!-- 受影响对象表单收集上层产品按钮 -->
+        <action name="collectUpperProduct" renderType="GENERAL" selectRequired="true">
+            <command onClick="collectUpperProduct()" windowType="no_content"/>
         </action>
         <!-- 受影响对象表单收集对象按钮 -->
-		<action name="collectRelatedObject" selectRequired="true">
-            <command onClick="collectUpperProduct()" windowType="no_content" />
+        <action name="collectRelatedObject" selectRequired="true">
+            <command onClick="collectUpperProduct()" windowType="no_content"/>
         </action>
-		
-		<!-- 添加受影响对象 -->
-		<!--action name="additionAffectedEndItems" renderType="GENERAL" selectRequired="true">
+
+        <!-- 添加受影响对象 -->
+        <!--action name="additionAffectedEndItems" renderType="GENERAL" selectRequired="true">
             <command onClick="additionAffectedEndItems()" windowType="no_content" />
         </action-->
-		
-		<!-- 移除受影响对象 -->
-		<action name="removeAffectedEndItems" renderType="GENERAL" selectRequired="true">
-            <command onClick="removeAffectedEndItems(event)" windowType="no_content" />
+
+        <!-- 移除受影响对象 -->
+        <action name="removeAffectedEndItems" renderType="GENERAL" selectRequired="true">
+            <command onClick="removeAffectedEndItems(event)" windowType="no_content"/>
         </action>
-		
-		<!-- 受影响对象表单：弹出收集对象列表 -->
-		<action name="collectItems" >
-            <command url="netmarkets/jsp/ext/appo/changeNotice/collectItems.jsp" class="com.ptc.cat.ui.client.action.LaunchURLAction" method="execute" windowType="popup" />
+
+        <!-- 受影响对象表单：弹出收集对象列表 -->
+        <action name="collectItems">
+            <command url="netmarkets/jsp/ext/appo/changeNotice/collectItems.jsp"
+                     class="com.ptc.cat.ui.client.action.LaunchURLAction" method="execute" windowType="popup"/>
         </action>
-        
-        <action name="collectItemsStep" >
+
+        <action name="collectItemsStep">
             <command url="netmarkets/jsp/ext/appo/changeNotice/collectItemsStep.jsp" windowType="wizard_step"/>
         </action>
 
-		<!-- 受影响对象表单：添加受影响对象 -->
-		<action name="additionAffectedEndItems" >
-            <command url="netmarkets/jsp/ext/appo/changeNotice/additionAffectedEndItems.jsp" class="com.ptc.cat.ui.client.action.LaunchURLAction" method="execute" windowType="popup" />
+        <!-- 受影响对象表单：添加受影响对象 -->
+        <action name="additionAffectedEndItems">
+            <command url="/netmarkets/jsp/ext/appo/changeNotice/additionAffectedEndItems.jsp"
+                     class="com.ptc.cat.ui.client.action.LaunchURLAction" method="execute" windowType="popup"/>
         </action>
-        
-        <action name="additionAffectedEndItemsStep" >
-            <command url="netmarkets/jsp/ext/appo/changeNotice/additionAffectedEndItemsStep.jsp" windowType="wizard_step"/>
+
+        <action name="additionAffectedEndItemsStep">
+            <command url="netmarkets/jsp/ext/appo/changeNotice/additionAffectedEndItemsStep.jsp"
+                     windowType="wizard_step"/>
         </action>
 
         <!-- add by lzy at 20191217 start -->
         <!-- 受影响对象表单：一键设置 -->
-        <action name="oneKeySetup" >
-            <command url="netmarkets/jsp/ext/appo/change/request/oneKeySetup.jsp" class="com.ptc.cat.ui.client.action.LaunchURLAction" method="execute" windowType="popup" />
+        <action name="oneKeySetup">
+            <command url="netmarkets/jsp/ext/appo/change/request/oneKeySetup.jsp"
+                     class="com.ptc.cat.ui.client.action.LaunchURLAction" method="execute" windowType="popup"/>
         </action>
 
-        <action name="oneKeySetupStep" >
+        <action name="oneKeySetupStep">
             <command url="netmarkets/jsp/ext/appo/change/request/oneKeySetupStep.jsp" windowType="wizard_step"/>
         </action>
         <!-- add by lzy at 20191217 end -->
 
         <!-- 收集对象页面‘确定’按钮 -->
-		<action name="okButton">
+        <action name="okButton">
             <command onClick="okButton()"/>
         </action>
-		
-		<!-- 收集对象页面‘取消’按钮 -->
-		<action name="clientButton">
+
+        <!-- 收集对象页面‘取消’按钮 -->
+        <action name="clientButton">
             <command onClick="window.close();"/>
         </action>
-		
-		<!-- 添加受影响对象页面‘确定’按钮 -->
-		<action name="addButton">
+
+        <!-- 添加受影响对象页面‘确定’按钮 -->
+        <action name="addButton">
             <command onClick="affectedEndItemsBySearch()"/>
         </action>
-	</objecttype>
-	
-	<!-- 产品模型导入 -->
-	<objecttype name="partStruct" resourceBundle="ext.appo.part.resource.PartResourceRB">
-		<action name="buildStruct">
-            <command class="ext.appo.part.processor.GenerateProductStructureProcessor" method="execute" url="netmarkets/jsp/ext/appo/part/BuildStruct.jsp" windowType="popup" />       
-            <includeFilter name="buildStructFilter"/>     
+    </objecttype>
+
+    <!-- 产品模型导入 -->
+    <objecttype name="partStruct" resourceBundle="ext.appo.part.resource.PartResourceRB">
+        <action name="buildStruct">
+            <command class="ext.appo.part.processor.GenerateProductStructureProcessor" method="execute"
+                     url="netmarkets/jsp/ext/appo/part/BuildStruct.jsp" windowType="popup"/>
+            <includeFilter name="buildStructFilter"/>
         </action>
         <action name="buildStructWizardStep">
-            <command url="netmarkets/jsp/ext/appo/part/BuildStructWizardStep.jsp" windowType="wizard_step" />
+            <command url="netmarkets/jsp/ext/appo/part/BuildStructWizardStep.jsp" windowType="wizard_step"/>
         </action>
-	</objecttype>
-	
-	<!-- BOM结构导入 -->
-	<objecttype name="importData" resourceBundle="ext.appo.bom.resource.bomResourceRB">
-		<action name="importPartStruct">
-            <command class="ext.appo.bom.processor.ImportProductStructureProcessor" method="execute" url="netmarkets/jsp/ext/appo/bom/ImportPartStruct.jsp" windowType="popup" />       
+    </objecttype>
+
+    <!-- BOM结构导入 -->
+    <objecttype name="importData" resourceBundle="ext.appo.bom.resource.bomResourceRB">
+        <action name="importPartStruct">
+            <command class="ext.appo.bom.processor.ImportProductStructureProcessor" method="execute"
+                     url="netmarkets/jsp/ext/appo/bom/ImportPartStruct.jsp" windowType="popup"/>
         </action>
         <action name="importPartStructWizardStep">
-            <command url="netmarkets/jsp/ext/appo/bom/ImportPartStructWizardStep.jsp" windowType="wizard_step" />
+            <command url="netmarkets/jsp/ext/appo/bom/ImportPartStructWizardStep.jsp" windowType="wizard_step"/>
         </action>
-	</objecttype>
-	
-	<!-- BOM结构导出 -->
-	<objecttype name="exportData" resourceBundle="ext.appo.bom.resource.bomResourceRB">
-		<action name="exportPartStruct">
-            <command method="execute" url="netmarkets/jsp/ext/appo/bom/ExportPartStructReport.jsp" windowType="popup" />    
-			<includeFilter name="partProducctNamingNoticeFilter"/>
+    </objecttype>
+
+    <!-- BOM结构导出 -->
+    <objecttype name="exportData" resourceBundle="ext.appo.bom.resource.bomResourceRB">
+        <action name="exportPartStruct">
+            <command method="execute" url="netmarkets/jsp/ext/appo/bom/ExportPartStructReport.jsp" windowType="popup"/>
+            <includeFilter name="partProducctNamingNoticeFilter"/>
         </action>
-	</objecttype>
-	
-	<!-- add by wym 20180601 -->
-	<!-- 文档归档按钮 -->
-	 <objecttype name="cusAppoDoc" resourceBundle="ext.appo.doc.resource.DocWorkflowRB">
-		   <action name="appoDocArchived">
-			<command class="ext.appo.doc.processor.DocArchivedWorkflowProcessor" method="execute"  onClick="JCAConfirm(event,'ext.appo.doc.resource.DocWorkflowRB.confirmToDocSign')"/>
-			<includeFilter name="docArchivedWorkflowFilter"/>
-			<supportedTypes>
-				<type value="wt.doc.WTDocument|com.ptc.ReferenceDocument"/>
-			</supportedTypes>
-		  </action>
-		  
-	  </objecttype>
+    </objecttype>
 
-    <objecttype resourceBundle="ext.appo.part.resource.PartResourceRB" name="partProductNamingNotice">        
-        <action name="productNamingNotice">
-     	  	<command url="netmarkets/jsp/ext/appo/part/partProductNamingNotice/productNamingNotice.jsp" windowType="popup"/>
-        </action>     
-    </objecttype>	
-    
-	<!-- 创建部件按钮 -->
-     <objecttype name="part" class="wt.part.WTPart" resourceBundle="com.ptc.windchill.enterprise.part.partResource">
-      <action name="createPartWizard" uicomponent="CREATE_PART" ajax="row">
-        <command class="ext.appo.part.processor.CusCreatePartAndCADDocFormProcessor" method="execute" url="/netmarkets/jsp/part/createPartWizard.jsp?revisionMode=create&amp;showNewCADDocStep=true&amp;hideAssociatePart=true" onClick="validateCreateLocation(event)" windowType="popup"/>
-      <includeFilter name="showNewActionPreValidation"/>
-      </action>   
-      <action name="createMultiPart" uicomponent="CREATE_PART" ajax="row">
-           <command class="ext.appo.part.processor.CusCreateMultiPartFormProcessor" method="execute" onClick="validateCreateLocation(event)" windowType="popup" url="/netmarkets/jsp/part/createPartWizard.jsp?wizardType=multiPart"/>
-           <includeFilter name="showNewActionPreValidation"/>
-      </action>
-     </objecttype>	
-      
-      <objecttype name="engineerPart" resourceBundle="ext.appo.part.resource.PartResourceRB">
-      <action name="engineerPartPublish">
-        <command class="ext.appo.part.processor.EngineerPartStartProcessor" method="execute" onClick="JCAConfirm(event,'ext.appo.part.resource.PartResourceRB.confirmToEngineerPartSign')"/>
-      		 <includeFilter name="engineerPartPublishFilter"/>
-      </action>
-           <action name="designPartPublish">
-        <command class="ext.appo.part.processor.DesignPartStartProcessor" method="execute" onClick="JCAConfirm(event,'ext.appo.part.resource.PartResourceRB.confirmToDesignPartSign')"/>
-      		 <includeFilter name="designPartPublishFilter"/>
-      </action>
-      </objecttype>	
-     
-	<objecttype name="appoPartArchiveIssueWF" resourceBundle="ext.appo.part.resource.PartResourceRB">
-		<action name="startAppoPartArchiveIssueWF">
-			<command class="ext.appo.part.processor.StartAppoPartArchiveIssueWF" method="execute" />
-		</action>
-		
-	</objecttype>	
-      
-      <!-- CIS库发布按钮 -->
-    <objecttype name="cis" resourceBundle="ext.generic.integration.cis.resource.CisActionsRB">
-    	<action name="sendToCis" ajax="page">
-    		<command class="ext.generic.integration.cis.processors.PublishDocToCISProcessor" method="execute" checkaccess="true" url="netmarkets/jsp/ext/appo/part/cis/sendToCis.jsp" windowType="popup"/>
-    		<includeFilter name="cisFilter"/>
-    		</action>
-    	 	<action name="sendToCis_step" ajax="page">
-    		<command url="netmarkets/jsp/ext/appo/part/cis/sendToCis_step.jsp" windowType="page"/>
-    		</action>	
-    		
-    </objecttype>  
-    
-     <!-- 另存为按钮 -->
-   <objecttype name="pdmObject" class="wt.fc.WTObject">
-    <action name="WFSAVEAS" checkaccess="true" enabledwhensuspended="true" renderType="PDM" uicomponent="SAVE_AS">
-         <command windowType="popup" class="java.lang.Object" method="WFSAVEAS"/>
-         <includeFilter name="hideFromNonAgreementMgrs"/>
-         <includeFilter name="saveAsGenerationCodeFilter"/>
-    </action> 
-      </objecttype>
-      
-      <!-- 产品命名通知单 -->
-    <objecttype name="partProductNamingNotice" class="wt.fc.WTObject" resourceBundle="ext.appo.part.resource.PartResourceRB">
-         <action name="productNamingNotice">
-         	<command class="ext.appo.part.processor.ProductNamingNoticeStartProcessor" method="execute" url="netmarkets/jsp/ext/appo/part/partProductNamingNotice/productNamingNotice.jsp" windowType="popup"/>
-     	  	<includeFilter name="partProducctNamingNoticeFilter"/>
-         </action>
-         
-        <action name="productNamingNotice_step">
-         	<command url="netmarkets/jsp/ext/appo/part/partProductNamingNotice/productNamingNotice_step.jsp" windowType="page"/>
-         </action>  
-		 
-		 <action name="copyAddPartData">
-         		 <command onClick="copyAddPartData()" windowType="no_content" />
-         </action> 
-         
-         <action name="addPartData">
-         		 <command onClick="addPartData()" windowType="no_content" />
-         </action> 
-         
-         <action name="deletePartData" ajax="row">
-         	   <command windowType="page" url="javascript:removeSelectedRow(event)" />
-         </action> 
-        
-         <action name="editProductNamingNotice">
-         	<command class="ext.appo.part.processor.EditNamingNoticeStartProcessor" method="execute" url="netmarkets/jsp/ext/appo/part/partProductNamingNotice/editProductNamingNotice.jsp" windowType="popup" />
-     	  	<includeFilter name="partProducctNamingNoticeFilter"/>
-			<supportedTypes>
-               <type value="wt.doc.WTDocument|com.plm.productNamingNotic"/>
-           </supportedTypes>
-         </action> 
-       
-         <action name="editProductNamingNotice_step">
-         	  <command url="netmarkets/jsp/ext/appo/part/partProductNamingNotice/editProductNamingNotice_step.jsp" windowType="page"  />
-         </action>
-        
-         <action name="docRelationPart">
-								<command url="netmarkets/jsp/ext/appo/part/partProductNamingNotice/docRelationPart.jsp" windowType="page"  />
-         				<supportedTypes>
-				           <type value="wt.doc.WTDocument|com.plm.productNamingNotic"/>
-		            </supportedTypes>
-         </action>
-   </objecttype>	
-	
-	   <objecttype name="partItemStageControl" class="wt.fc.WTObject" resourceBundle="ext.appo.part.resource.PartResourceRB">
-         <action name="itemStageControl">
-         		<command class="ext.appo.part.processor.ItemStageControlStartProcessor" method="execute"/>
-         		<includeFilter name="itemStageControlFilter"/>
-         </action> 
- 
-    </objecttype> 
-
-	<objecttype name="partAttrChangeProcessor" class="wt.fc.WTObject" resourceBundle="ext.appo.part.resource.PartResourceRB">
-         <action name="standardPartAttrChangeProcessor">
-         		<command class="ext.appo.part.processor.StandardPartAttrChangeProcessor" method="execute"/>
-         		<includeFilter name="standardPartAttrChangeFilter"/>
-         </action> 
- 
-    </objecttype>	
-	
-	<objecttype name="changeTask" class="wt.change2.WTChangeActivity2" resourceBundle="com.ptc.windchill.enterprise.change2.changeManagementActionsRB">
-
-      <action name="create" ajax="page">
-         <description>Create a change task</description>
-         <command class="com.ptc.windchill.enterprise.change2.forms.processors.CreateChangeTaskFormProcessor" method="execute" windowType="popup" url="?mode=CREATE"/>
-         <includeFilter name="OptionSetLocalRuleContextFilter"/>
-         <includeFilter name="adminLockModifyChangeObjectsFilter"/>
-      </action>
-
-      <action name="wizardCreate" ajax="row">
-         <description>Create a change task</description>
-         <command class="com.ptc.windchill.enterprise.change2.forms.processors.CreateChangeTaskFormProcessor" method="execute" windowType="lightbox" url="?mode=CREATE&amp;isIframeWizard=true&amp;resizeIframeWizard=false"/>
-      </action>
-
-      <action name="removeChangeTask" renderType="GENERAL">
-           <description>Remove a change task from a change notice</description>
-           <command onClick="removeChangeTask(event)" windowType="no_content"/>
-      </action>
-  
-      <action name="removeNewChangeTask" renderType="GENERAL">
-           <description>Remove a change task from a change notice</description>
-           <command onClick="removeChangeTask(event)" windowType="no_content"/>
-      </action>
-
-      <action name="editOnCreateChangeTask" ajax="row">
-         <description>Edit a change task while creating a change notice</description>
-         <command class="com.ptc.windchill.enterprise.change2.forms.processors.CreateChangeTaskFormProcessor" method="execute" windowType="lightbox" url="netmarkets/jsp/changeTask/wizardCreate.jsp?isIframeWizard=true&amp;resizeIframeWizard=false"/>
-      </action>
-
-      <action name="edit" ajax="page">
-         <description>Edit a change task</description>
-         <command class="com.ptc.windchill.enterprise.change2.forms.processors.EditChangeTaskFormProcessor" method="execute" windowType="popup"/>
-         <includeFilter name="adminLockModifyChangeObjectsFilter"/>
-         <includeFilter name="hideForChangeTemplates"/> 
-      </action>
-
-      <action name="wizardEdit" ajax="row">
-         <description>Edit a change task</description>
-         <command class="com.ptc.windchill.enterprise.change2.forms.processors.EditChangeTaskFormProcessor" method="execute" windowType="lightbox" url="netmarkets/jsp/changeTask/edit.jsp?isIframeWizard=true&amp;resizeIframeWizard=false"/>
-         <includeFilter name="hideForChangeTemplates"/> 
-      </action>
-      
-	  <action name="createTemplate" ajax="page">
-         <description>Create a change task template</description>
-         <command class="com.ptc.windchill.enterprise.change2.forms.processors.template.CreateChangeTaskTemplateFormProcessor" method="execute" windowType="popup" url="?operation=CREATE"/>
-         <includeFilter name="showNewActionPreValidation"/>
-      </action>     
-      
-	  <action name="wizardCreateTemplate" ajax="row">
-         <description>Create a change task template</description>
-         <command class="com.ptc.windchill.enterprise.change2.forms.processors.template.CreateChangeTaskTemplateFormProcessor" method="execute" windowType="lightbox" url="?mode=CREATE&amp;isIframeWizard=true&amp;resizeIframeWizard=false"/>
-         <includeFilter name="showNewActionPreValidation"/>
-      </action>   
-                 
-      <action name="editOnCreateChangeTaskTemplate" ajax="row">
-         <description>Edit a change task template while creating a change notice template</description>
-         <command class="com.ptc.windchill.enterprise.change2.forms.processors.template.CreateChangeTaskTemplateFormProcessor" method="execute" windowType="lightbox" url="netmarkets/jsp/changeTask/wizardCreateTemplate.jsp?isIframeWizard=true&amp;resizeIframeWizard=false"/>
-      </action>   
-     
-      <action name="editTemplate" ajax="page">
-         <description>Edit a change task template </description>
-         <command class="com.ptc.windchill.enterprise.change2.forms.processors.template.EditChangeTaskTemplateFormProcessor" method="execute" windowType="popup"/>
-         <includeFilter name="adminLockModifyChangeObjectsFilter"/>
-         <includeFilter name="hideForChangeObjects"/>
-      </action> 
-	  
-      <action name="wizardEditTemplate" ajax="row">
-         <description>Edit a change task template </description>
-         <command class="com.ptc.windchill.enterprise.change2.forms.processors.template.EditChangeTaskTemplateFormProcessor" method="execute" windowType="lightbox" url="netmarkets/jsp/changeTask/editTemplate.jsp?isIframeWizard=true&amp;resizeIframeWizard=false"/>
-         <includeFilter name="hideForChangeObjects"/>         
-      </action>         	  
-
-      <action name="newOneOffVersionInChange" selectRequired="true" ajax="row" renderType="GENERAL">
-        <description>New one-off version for affected objects</description>
-        <command onClick="OneOffVersionHandler.processSelected(event)" windowType="no_content"/>
-      </action>
-
-      <action name="collectItems_AffectedItems" renderType="GENERAL" selectRequired="true">
-        <description>Collect items to be added to the affected objects</description>
-        <command onClick="openCollectorPicker(&apos;CollectItemsFromChangeItem_AffectedItems&apos;,event)" windowType="no_content"/>
-      </action>
-
-      <action name="collectItems_ResultingItems" renderType="GENERAL" selectRequired="true">
-        <description>Collect items to be added to the resulting objects</description>
-        <command onClick="openCollectorPicker(&apos;CollectItemsFromChange_ResultingItems&apos;,event)" windowType="no_content"/>
-      </action>
-
-      <action name="addResultingItems" ajax="row" renderType="GENERAL">
-         <description>Add resulting objects</description>
-         <command windowType="new"/>
-      </action>
-
-      <action name="removeResultingItems" ajax="row" renderType="GENERAL">
-         <description>Remove resulting data</description>
-         <command onClick="changeRowHandler.removeResultingObjects(event)" windowType="no_content"/>
-      </action>
-
-      <action name="affectedAndResultingItems" id="affectedAndResultingItems">
-         <description>Affected and resulting objects</description>
-         <includeFilter name="hideForChangeTemplates"/> 
-		 <supportedTypes>
-				<type value="wt.change2.WTChangeActivity2"/>
-		 </supportedTypes>
-      </action>
-
-      <action name="affectedAndResultingItemsStep" id="affectedAndResultingItems" preloadWizardPage="false" required="false">
-         <description>Affected and resulting objects wizard step</description>
-         <command class="com.ptc.windchill.enterprise.change2.forms.delegates.AffectedAndResultingItemsFormDelegate" windowType="wizard_step"/>
-      </action>
-
-      <action name="associatedChangeIssuesStep" id="associatedChangeIssuesStep" preloadWizardPage="false" required="false">
-         <description>Associated change issue wizard step</description>
-         <component name="associatedChangesStep"/>
-         <includeFilter name="legacyChangeFilter"/>
-      </action>
-
-      <action name="associatedChangeIssues">
-         <description>Associated change issue table</description>
-         <component name="changemanagement.relatedchanges.changeIssues"/>
-         <includeFilter name="hideForChangeTemplates"/> 
-      </action>
-
-      <action name="setReleaseTarget" uicomponent="SET_RELEASE_TARGET" selectRequired="true" ajax="component">
-         <description>Allows change administrators to set release target on one or more resulting objects at time.</description>
-         <command onClick="PTC.change.setReleaseTarget(event)" windowType="no_content"/>
-         <includeFilter name="restrictGuestMembers"/>
-      </action>
-      
-      <action name="reviewTask_ResultingDataTable">
-         <description>Resulting data table for a review workflow task</description>
-         <component name="workflowTask.pbo" urlParams="pboCompId=changeTask.resultingItemsTable&amp;useTypeBased=true&amp;changeableTableId=reviewTask.resultingItems&amp;changeableLabel=com.ptc.windchill.enterprise.change2.change2ClientResource.REVIEW_TASK_RESULTING_ITEMS_TABLE&amp;enableAddToWorkspace=true"/>
-         <includeFilter name="configurableTypeBaseFilter"/>
-      </action>
-
-      <action name="completeTask_ResultingDataTable">
-         <description>Resulting data table for a complete workflow task</description>
-         <component name="workflowTask.pbo" urlParams="pboCompId=changeTask.resultingItemsTable&amp;useTypeBased=true&amp;changeableTableId=completeTask.resultingItems&amp;changeableLabel=com.ptc.windchill.enterprise.change2.change2ClientResource.COMPLETE_TASK_RESULTING_ITEMS_TABLE&amp;enableAddToWorkspace=true"/>
-         <includeFilter name="configurableTypeBaseFilter"/>
-      </action>
-      
-      <action name="workItem_AffectedDataTable">
-         <description>Affected data table for a workflow task</description>
-         <component name="workflowTask.pbo" urlParams="pboCompId=changeTask.affectedItemsTable&amp;useTypeBased=true&amp;enableAddToWorkspace=true"/>
-         <includeFilter name="configurableTypeBaseFilter"/>
-      </action>
-      
-      <action name="workItem_ResultingDataTable">
-         <description>Resulting data table for a workflow task</description>
-         <component name="workflowTask.pbo" urlParams="pboCompId=changeTask.resultingItemsTable&amp;useTypeBased=true&amp;enableAddToWorkspace=true"/>
-         <includeFilter name="configurableTypeBaseFilter"/>
-      </action>
-
-      <action name="addToChangeTask" multiselect="true" selectRequired="true">
-          <description>Add to resulting objects of a change task</description>
-          <command class="com.ptc.windchill.enterprise.change2.forms.processors.AddToChangeTaskFormProcessor" windowType="popup" />
-      </action>
-        
-      <action name="findChangeTaskStep" required="true" afterJS="PTC.addToChangeTask.ensureValidChangeTaskSelection" afterVK="addToResultingObjectsStepValidator">
-          <description>Wizard step to find a change task</description>
-          <component name="changeManagement.findChangeTasks" windowType="wizard_step"/>
-      </action>
-      
-      <action name="addToResultingObjectsStep" preloadWizardPage="false" required="false" beforeJS="PTC.addToChangeTask.validateChangeTaskReservation">
-          <description>Wizard step to add objects to change task resulting objects table</description>
-          <component name="changeTask.resultingItemsTable" typeBased="true" windowType="wizard_step" class="com.ptc.windchill.enterprise.change2.forms.delegates.ChangeTaskResultingItemsFormDelegate" urlParams="typeIdForTypeLookup=wt.change2.ChangeActivity2"/>
-      </action>
-      
-   </objecttype>
-
-	<objecttype resourceBundle="com.ptc.windchill.enterprise.part.partResource"
-		name="part" class="wt.part.WTPart">
-		<action name="checkoutAndEdit" ajax="row">
-			<command method="execute"
-				class="ext.appo.part.processor.CusEditPartFormProcessor" windowType="popup"
-				url="/netmarkets/jsp/part/edit.jsp" />
-			<includeFilter name="sandboxSharingValidationSimple" />
-			<includeFilter name="disableForNewObjectInWorkspace" />
-			<includeFilter name="hideSBHiddenFilter" />
-			<includeFilter name="hideForAdminLocked" />
-			<includeFilter name="disableForPartToCadBuildAdminLocked" />
-			<includeFilter name="scheduledDeliverablesActionSimpleFilter" />
-		</action>
-		<action name="edit" ajax="row">
-			<command method="execute"
-				class="ext.appo.part.processor.CusEditPartFormProcessor" windowType="popup" />
-			<includeFilter name="sandboxSharingValidationSimple" />
-			<includeFilter name="hideForNewObjectInWorkspace" />
-			<includeFilter name="hideForCheckedoutObjectInWorkspace" />
-			<includeFilter name="hideSBHiddenFilter" />
-			<includeFilter name="hideForAdminLocked" />
-			<includeFilter name="disableForPartToCadBuildAdminLocked" />
-		</action>
-		<action name="editCheckedOutPartInWorkspace" ajax="row">
-			<command method="execute"
-				class="ext.appo.part.processor.CusEditPartFormProcessor" windowType="popup"
-				url="/netmarkets/jsp/part/edit.jsp?checkedOutInWorkspace=true" />
-		</action>
-	</objecttype>
-
-	<objecttype resourceBundle="com.ptc.windchill.enterprise.doc.documentResource"
-		name="document" class="wt.doc.WTDocument">
-		<action dtiUpload="true" name="create" uicomponent="CREATE_DOC"
-			ajax="row">
-			<command onClick="validateCreateLocation(event)" method="execute"
-				class="ext.appo.doc.processor.CusCreateDocFormProcessor" windowType="popup" />
-			<includeFilter name="projectM4D" />
-			<includeFilter name="showNewActionPreValidation" />
-		</action>
-		<action dtiUpload="true" name="edit" ajax="row">
-			<includeFilter name="sandboxSharingValidationSimple" />
-			<includeFilter name="hideSBHiddenFilter" />
-			<includeFilter name="hideForClashJobDefinition" />
-			<command method="execute"
-				class="ext.appo.doc.processor.CusEditWorkableFormProcessor"
-				windowType="popup" />
-		</action>
-		<action dtiUpload="true" name="checkoutAndEdit" ajax="row">
-			<includeFilter name="sandboxSharingValidationSimple" />
-			<includeFilter name="hideSBHiddenFilter" />
-			<includeFilter name="hideForClashJobDefinition" />
-			<includeFilter name="hideForAdminLocked" />
-			<includeFilter name="scheduledDeliverablesActionSimpleFilter" />
-			<command onClick="onClickValidation(event,'checkout')"
-				method="execute" class="ext.appo.doc.processor.CusEditWorkableFormProcessor"
-				url="netmarkets/jsp/document/edit.jsp" windowType="popup" />
-		    <supportedTypes>
+    <!-- add by wym 20180601 -->
+    <!-- 文档归档按钮 -->
+    <objecttype name="cusAppoDoc" resourceBundle="ext.appo.doc.resource.DocWorkflowRB">
+        <action name="appoDocArchived">
+            <command class="ext.appo.doc.processor.DocArchivedWorkflowProcessor" method="execute"
+                     onClick="JCAConfirm(event,'ext.appo.doc.resource.DocWorkflowRB.confirmToDocSign')"/>
+            <includeFilter name="docArchivedWorkflowFilter"/>
+            <supportedTypes>
                 <type value="wt.doc.WTDocument|com.ptc.ReferenceDocument"/>
-				<type value="wt.doc.WTDocument|com.plm.description_square_document"/>
-				<type value="wt.doc.WTDocument|com.ptc.InterCommData"/>
             </supportedTypes>
-		</action>
-	</objecttype>
-	
-	<objecttype name="searchItems" resourceBundle="ext.appo.ecn.resource.changeNoticeActionsRB">
-		<action name="searchItemsPage" ajax="component">
-			<command class="" method="" windowType="popup" url="/netmarkets/jsp/borrowOrder/searchItemsPage.jsp"/>
-		</action>
+        </action>
 
-		<action name="searchItemsPageStep">
-			<command windowType="wizard_step" url="/netmarkets/jsp/borrowOrder/searchItemsPageStep.jsp"/>
-		</action>
-		
-		<action name="exportPdf" ajax="component">
-			 <command url="netmarkets/jsp/appo/pdf/exportPdf.jsp" windowType="popup"></command>
-		</action>
-		<action name="exportAffObjExcel" ajax="component">
-			 <command url="netmarkets/jsp/appo/pdf/generateAffObjExcel.jsp" windowType="popup"></command>
-		</action>
-	</objecttype>
-	
-	 <objecttype name="partStruct" class="wt.fc.WTObject" resourceBundle="ext.appo.part.resource.PartResourceRB">		 
-		<action name="addrole">
-            <command class="ext.appo.bom.processor.AddRoleProcessor" method="execute" url="netmarkets/jsp/ext/appo/bom/ImportPartStruct.jsp" windowType="popup" />       
+    </objecttype>
+
+    <objecttype resourceBundle="ext.appo.part.resource.PartResourceRB" name="partProductNamingNotice">
+        <action name="productNamingNotice">
+            <command url="netmarkets/jsp/ext/appo/part/partProductNamingNotice/productNamingNotice.jsp"
+                     windowType="popup"/>
         </action>
-		  <action name="importPartStructWizardStep">
-            <command url="netmarkets/jsp/ext/appo/bom/ImportPartStructWizardStep.jsp" windowType="wizard_step" />
+    </objecttype>
+
+    <!-- 创建部件按钮 -->
+    <objecttype name="part" class="wt.part.WTPart" resourceBundle="com.ptc.windchill.enterprise.part.partResource">
+        <action name="createPartWizard" uicomponent="CREATE_PART" ajax="row">
+            <command class="ext.appo.part.processor.CusCreatePartAndCADDocFormProcessor" method="execute"
+                     url="/netmarkets/jsp/part/createPartWizard.jsp?revisionMode=create&amp;showNewCADDocStep=true&amp;hideAssociatePart=true"
+                     onClick="validateCreateLocation(event)" windowType="popup"/>
+            <includeFilter name="showNewActionPreValidation"/>
         </action>
-    </objecttype> 
-	
-	<!-- 发送DCC接口 -->
-	<objecttype name="sendDcc" resourceBundle="ext.appo.doc.resource.DocWorkflowRB">
-	
-	     <action name="manualSendPartDcc" ajax="row">
-			<command class="ext.appo.doc.uploadDoc.processor.UploadAttachmentProcessor" method="execute" />
-			<includeFilter name="ManualSendDCCValidator"/>
-		</action>
-	
-		 <action name="manualSendDocDcc" ajax="row">
-			<command class="ext.appo.doc.uploadDoc.processor.DocUploadAttachmentProcessor" method="execute" />
-			<includeFilter name="ManualSendDCCValidator"/>
-		 </action>
-		 
-		 <!-- 发送所有部件 -->
-		 <action name="CountPartSendDcc" ajax="row">             
-			<!--<command class="ext.appo.doc.uploadDoc.UploadHistoricalData" method="execute" />-->
-			<command url="netmarkets/jsp/ext/appo/doc/uploadHistoricalData.jsp" windowType="popup"></command>
-			<includeFilter name="ManualSendDCCValidator"/>
-		 </action>
-		 
-		 <!-- 发送所有文档-->
-		 <action name="CountDocSendDcc" ajax="row">               
-			<!--<command class="ext.appo.doc.uploadDoc.UploadHistoricalDataDoc" method="execute" />-->
-			<command url="netmarkets/jsp/ext/appo/doc/uploadHistoricalDataDoc.jsp" windowType="popup"></command>
-			<includeFilter name="ManualSendDCCValidator"/>
-		 </action>
-	</objecttype>
-	
-	
-	<objecttype name="navigation" class="" resourceBundle="ext.appo.part.resource.PartResourceRB">
-    <action name="StatReport" renderType="GENERAL">
-       <command class="netmarkets" method="servlet/Navigation?tab=StatReport" windowType="page" /> 
-    </action> 
-  </objecttype>
-	
-	<objecttype name="StatReport" class="" resourceBundle="ext.appo.part.resource.PartResourceRB">
-    <!--变更统计报表--> 
-    <action name="subtab1">
-       <command url="netmarkets/jsp/appo/statReport/statChangeInfo/statChangeInfo.jsp?tab=StatReport" windowType="page"/>
-      </action> 
-   </objecttype>
+        <action name="createMultiPart" uicomponent="CREATE_PART" ajax="row">
+            <command class="ext.appo.part.processor.CusCreateMultiPartFormProcessor" method="execute"
+                     onClick="validateCreateLocation(event)" windowType="popup"
+                     url="/netmarkets/jsp/part/createPartWizard.jsp?wizardType=multiPart"/>
+            <includeFilter name="showNewActionPreValidation"/>
+        </action>
+    </objecttype>
+
+    <objecttype name="engineerPart" resourceBundle="ext.appo.part.resource.PartResourceRB">
+        <action name="engineerPartPublish">
+            <command class="ext.appo.part.processor.EngineerPartStartProcessor" method="execute"
+                     onClick="JCAConfirm(event,'ext.appo.part.resource.PartResourceRB.confirmToEngineerPartSign')"/>
+            <includeFilter name="engineerPartPublishFilter"/>
+        </action>
+        <action name="designPartPublish">
+            <command class="ext.appo.part.processor.DesignPartStartProcessor" method="execute"
+                     onClick="JCAConfirm(event,'ext.appo.part.resource.PartResourceRB.confirmToDesignPartSign')"/>
+            <includeFilter name="designPartPublishFilter"/>
+        </action>
+    </objecttype>
+
+    <objecttype name="appoPartArchiveIssueWF" resourceBundle="ext.appo.part.resource.PartResourceRB">
+        <action name="startAppoPartArchiveIssueWF">
+            <command class="ext.appo.part.processor.StartAppoPartArchiveIssueWF" method="execute"/>
+        </action>
+
+    </objecttype>
+
+    <!-- CIS库发布按钮 -->
+    <objecttype name="cis" resourceBundle="ext.generic.integration.cis.resource.CisActionsRB">
+        <action name="sendToCis" ajax="page">
+            <command class="ext.generic.integration.cis.processors.PublishDocToCISProcessor" method="execute"
+                     checkaccess="true" url="netmarkets/jsp/ext/appo/part/cis/sendToCis.jsp" windowType="popup"/>
+            <includeFilter name="cisFilter"/>
+        </action>
+        <action name="sendToCis_step" ajax="page">
+            <command url="netmarkets/jsp/ext/appo/part/cis/sendToCis_step.jsp" windowType="page"/>
+        </action>
+
+    </objecttype>
+
+    <!-- 另存为按钮 -->
+    <objecttype name="pdmObject" class="wt.fc.WTObject">
+        <action name="WFSAVEAS" checkaccess="true" enabledwhensuspended="true" renderType="PDM" uicomponent="SAVE_AS">
+            <command windowType="popup" class="java.lang.Object" method="WFSAVEAS"/>
+            <includeFilter name="hideFromNonAgreementMgrs"/>
+            <includeFilter name="saveAsGenerationCodeFilter"/>
+        </action>
+    </objecttype>
+
+    <!-- 产品命名通知单 -->
+    <objecttype name="partProductNamingNotice" class="wt.fc.WTObject"
+                resourceBundle="ext.appo.part.resource.PartResourceRB">
+        <action name="productNamingNotice">
+            <command class="ext.appo.part.processor.ProductNamingNoticeStartProcessor" method="execute"
+                     url="netmarkets/jsp/ext/appo/part/partProductNamingNotice/productNamingNotice.jsp"
+                     windowType="popup"/>
+            <includeFilter name="partProducctNamingNoticeFilter"/>
+        </action>
+
+        <action name="productNamingNotice_step">
+            <command url="netmarkets/jsp/ext/appo/part/partProductNamingNotice/productNamingNotice_step.jsp"
+                     windowType="page"/>
+        </action>
+
+        <action name="copyAddPartData">
+            <command onClick="copyAddPartData()" windowType="no_content"/>
+        </action>
+
+        <action name="addPartData">
+            <command onClick="addPartData()" windowType="no_content"/>
+        </action>
+
+        <action name="deletePartData" ajax="row">
+            <command windowType="page" url="javascript:removeSelectedRow(event)"/>
+        </action>
+
+        <action name="editProductNamingNotice">
+            <command class="ext.appo.part.processor.EditNamingNoticeStartProcessor" method="execute"
+                     url="netmarkets/jsp/ext/appo/part/partProductNamingNotice/editProductNamingNotice.jsp"
+                     windowType="popup"/>
+            <includeFilter name="partProducctNamingNoticeFilter"/>
+            <supportedTypes>
+                <type value="wt.doc.WTDocument|com.plm.productNamingNotic"/>
+            </supportedTypes>
+        </action>
+
+        <action name="editProductNamingNotice_step">
+            <command url="netmarkets/jsp/ext/appo/part/partProductNamingNotice/editProductNamingNotice_step.jsp"
+                     windowType="page"/>
+        </action>
+
+        <action name="docRelationPart">
+            <command url="netmarkets/jsp/ext/appo/part/partProductNamingNotice/docRelationPart.jsp" windowType="page"/>
+            <supportedTypes>
+                <type value="wt.doc.WTDocument|com.plm.productNamingNotic"/>
+            </supportedTypes>
+        </action>
+    </objecttype>
+
+    <objecttype name="partItemStageControl" class="wt.fc.WTObject"
+                resourceBundle="ext.appo.part.resource.PartResourceRB">
+        <action name="itemStageControl">
+            <command class="ext.appo.part.processor.ItemStageControlStartProcessor" method="execute"/>
+            <includeFilter name="itemStageControlFilter"/>
+        </action>
+
+    </objecttype>
+
+    <objecttype name="partAttrChangeProcessor" class="wt.fc.WTObject"
+                resourceBundle="ext.appo.part.resource.PartResourceRB">
+        <action name="standardPartAttrChangeProcessor">
+            <command class="ext.appo.part.processor.StandardPartAttrChangeProcessor" method="execute"/>
+            <includeFilter name="standardPartAttrChangeFilter"/>
+        </action>
+
+    </objecttype>
+
+    <objecttype name="changeTask" class="wt.change2.WTChangeActivity2"
+                resourceBundle="com.ptc.windchill.enterprise.change2.changeManagementActionsRB">
+
+        <action name="create" ajax="page">
+            <description>Create a change task</description>
+            <command class="com.ptc.windchill.enterprise.change2.forms.processors.CreateChangeTaskFormProcessor"
+                     method="execute" windowType="popup" url="?mode=CREATE"/>
+            <includeFilter name="OptionSetLocalRuleContextFilter"/>
+            <includeFilter name="adminLockModifyChangeObjectsFilter"/>
+        </action>
+
+        <action name="wizardCreate" ajax="row">
+            <description>Create a change task</description>
+            <command class="com.ptc.windchill.enterprise.change2.forms.processors.CreateChangeTaskFormProcessor"
+                     method="execute" windowType="lightbox"
+                     url="?mode=CREATE&amp;isIframeWizard=true&amp;resizeIframeWizard=false"/>
+        </action>
+
+        <action name="removeChangeTask" renderType="GENERAL">
+            <description>Remove a change task from a change notice</description>
+            <command onClick="removeChangeTask(event)" windowType="no_content"/>
+        </action>
+
+        <action name="removeNewChangeTask" renderType="GENERAL">
+            <description>Remove a change task from a change notice</description>
+            <command onClick="removeChangeTask(event)" windowType="no_content"/>
+        </action>
+
+        <action name="editOnCreateChangeTask" ajax="row">
+            <description>Edit a change task while creating a change notice</description>
+            <command class="com.ptc.windchill.enterprise.change2.forms.processors.CreateChangeTaskFormProcessor"
+                     method="execute" windowType="lightbox"
+                     url="netmarkets/jsp/changeTask/wizardCreate.jsp?isIframeWizard=true&amp;resizeIframeWizard=false"/>
+        </action>
+
+        <action name="edit" ajax="page">
+            <description>Edit a change task</description>
+            <command class="com.ptc.windchill.enterprise.change2.forms.processors.EditChangeTaskFormProcessor"
+                     method="execute" windowType="popup"/>
+            <includeFilter name="adminLockModifyChangeObjectsFilter"/>
+            <includeFilter name="hideForChangeTemplates"/>
+        </action>
+
+        <action name="wizardEdit" ajax="row">
+            <description>Edit a change task</description>
+            <command class="com.ptc.windchill.enterprise.change2.forms.processors.EditChangeTaskFormProcessor"
+                     method="execute" windowType="lightbox"
+                     url="netmarkets/jsp/changeTask/edit.jsp?isIframeWizard=true&amp;resizeIframeWizard=false"/>
+            <includeFilter name="hideForChangeTemplates"/>
+        </action>
+
+        <action name="createTemplate" ajax="page">
+            <description>Create a change task template</description>
+            <command
+                    class="com.ptc.windchill.enterprise.change2.forms.processors.template.CreateChangeTaskTemplateFormProcessor"
+                    method="execute" windowType="popup" url="?operation=CREATE"/>
+            <includeFilter name="showNewActionPreValidation"/>
+        </action>
+
+        <action name="wizardCreateTemplate" ajax="row">
+            <description>Create a change task template</description>
+            <command
+                    class="com.ptc.windchill.enterprise.change2.forms.processors.template.CreateChangeTaskTemplateFormProcessor"
+                    method="execute" windowType="lightbox"
+                    url="?mode=CREATE&amp;isIframeWizard=true&amp;resizeIframeWizard=false"/>
+            <includeFilter name="showNewActionPreValidation"/>
+        </action>
+
+        <action name="editOnCreateChangeTaskTemplate" ajax="row">
+            <description>Edit a change task template while creating a change notice template</description>
+            <command
+                    class="com.ptc.windchill.enterprise.change2.forms.processors.template.CreateChangeTaskTemplateFormProcessor"
+                    method="execute" windowType="lightbox"
+                    url="netmarkets/jsp/changeTask/wizardCreateTemplate.jsp?isIframeWizard=true&amp;resizeIframeWizard=false"/>
+        </action>
+
+        <action name="editTemplate" ajax="page">
+            <description>Edit a change task template</description>
+            <command
+                    class="com.ptc.windchill.enterprise.change2.forms.processors.template.EditChangeTaskTemplateFormProcessor"
+                    method="execute" windowType="popup"/>
+            <includeFilter name="adminLockModifyChangeObjectsFilter"/>
+            <includeFilter name="hideForChangeObjects"/>
+        </action>
+
+        <action name="wizardEditTemplate" ajax="row">
+            <description>Edit a change task template</description>
+            <command
+                    class="com.ptc.windchill.enterprise.change2.forms.processors.template.EditChangeTaskTemplateFormProcessor"
+                    method="execute" windowType="lightbox"
+                    url="netmarkets/jsp/changeTask/editTemplate.jsp?isIframeWizard=true&amp;resizeIframeWizard=false"/>
+            <includeFilter name="hideForChangeObjects"/>
+        </action>
+
+        <action name="newOneOffVersionInChange" selectRequired="true" ajax="row" renderType="GENERAL">
+            <description>New one-off version for affected objects</description>
+            <command onClick="OneOffVersionHandler.processSelected(event)" windowType="no_content"/>
+        </action>
+
+        <action name="collectItems_AffectedItems" renderType="GENERAL" selectRequired="true">
+            <description>Collect items to be added to the affected objects</description>
+            <command onClick="openCollectorPicker(&apos;CollectItemsFromChangeItem_AffectedItems&apos;,event)"
+                     windowType="no_content"/>
+        </action>
+
+        <action name="collectItems_ResultingItems" renderType="GENERAL" selectRequired="true">
+            <description>Collect items to be added to the resulting objects</description>
+            <command onClick="openCollectorPicker(&apos;CollectItemsFromChange_ResultingItems&apos;,event)"
+                     windowType="no_content"/>
+        </action>
+
+        <action name="addResultingItems" ajax="row" renderType="GENERAL">
+            <description>Add resulting objects</description>
+            <command windowType="new"/>
+        </action>
+
+        <action name="removeResultingItems" ajax="row" renderType="GENERAL">
+            <description>Remove resulting data</description>
+            <command onClick="changeRowHandler.removeResultingObjects(event)" windowType="no_content"/>
+        </action>
+
+        <action name="affectedAndResultingItems" id="affectedAndResultingItems">
+            <description>Affected and resulting objects</description>
+            <includeFilter name="hideForChangeTemplates"/>
+            <supportedTypes>
+                <type value="wt.change2.WTChangeActivity2"/>
+            </supportedTypes>
+        </action>
+
+        <action name="affectedAndResultingItemsStep" id="affectedAndResultingItems" preloadWizardPage="false"
+                required="false">
+            <description>Affected and resulting objects wizard step</description>
+            <command class="com.ptc.windchill.enterprise.change2.forms.delegates.AffectedAndResultingItemsFormDelegate"
+                     windowType="wizard_step"/>
+        </action>
+
+        <action name="associatedChangeIssuesStep" id="associatedChangeIssuesStep" preloadWizardPage="false"
+                required="false">
+            <description>Associated change issue wizard step</description>
+            <component name="associatedChangesStep"/>
+            <includeFilter name="legacyChangeFilter"/>
+        </action>
+
+        <action name="associatedChangeIssues">
+            <description>Associated change issue table</description>
+            <component name="changemanagement.relatedchanges.changeIssues"/>
+            <includeFilter name="hideForChangeTemplates"/>
+        </action>
+
+        <action name="setReleaseTarget" uicomponent="SET_RELEASE_TARGET" selectRequired="true" ajax="component">
+            <description>Allows change administrators to set release target on one or more resulting objects at time.
+            </description>
+            <command onClick="PTC.change.setReleaseTarget(event)" windowType="no_content"/>
+            <includeFilter name="restrictGuestMembers"/>
+        </action>
+
+        <action name="reviewTask_ResultingDataTable">
+            <description>Resulting data table for a review workflow task</description>
+            <component name="workflowTask.pbo"
+                       urlParams="pboCompId=changeTask.resultingItemsTable&amp;useTypeBased=true&amp;changeableTableId=reviewTask.resultingItems&amp;changeableLabel=com.ptc.windchill.enterprise.change2.change2ClientResource.REVIEW_TASK_RESULTING_ITEMS_TABLE&amp;enableAddToWorkspace=true"/>
+            <includeFilter name="configurableTypeBaseFilter"/>
+        </action>
+
+        <action name="completeTask_ResultingDataTable">
+            <description>Resulting data table for a complete workflow task</description>
+            <component name="workflowTask.pbo"
+                       urlParams="pboCompId=changeTask.resultingItemsTable&amp;useTypeBased=true&amp;changeableTableId=completeTask.resultingItems&amp;changeableLabel=com.ptc.windchill.enterprise.change2.change2ClientResource.COMPLETE_TASK_RESULTING_ITEMS_TABLE&amp;enableAddToWorkspace=true"/>
+            <includeFilter name="configurableTypeBaseFilter"/>
+        </action>
+
+        <action name="workItem_AffectedDataTable">
+            <description>Affected data table for a workflow task</description>
+            <component name="workflowTask.pbo"
+                       urlParams="pboCompId=changeTask.affectedItemsTable&amp;useTypeBased=true&amp;enableAddToWorkspace=true"/>
+            <includeFilter name="configurableTypeBaseFilter"/>
+        </action>
+
+        <action name="workItem_ResultingDataTable">
+            <description>Resulting data table for a workflow task</description>
+            <component name="workflowTask.pbo"
+                       urlParams="pboCompId=changeTask.resultingItemsTable&amp;useTypeBased=true&amp;enableAddToWorkspace=true"/>
+            <includeFilter name="configurableTypeBaseFilter"/>
+        </action>
+
+        <action name="addToChangeTask" multiselect="true" selectRequired="true">
+            <description>Add to resulting objects of a change task</description>
+            <command class="com.ptc.windchill.enterprise.change2.forms.processors.AddToChangeTaskFormProcessor"
+                     windowType="popup"/>
+        </action>
+
+        <action name="findChangeTaskStep" required="true" afterJS="PTC.addToChangeTask.ensureValidChangeTaskSelection"
+                afterVK="addToResultingObjectsStepValidator">
+            <description>Wizard step to find a change task</description>
+            <component name="changeManagement.findChangeTasks" windowType="wizard_step"/>
+        </action>
+
+        <action name="addToResultingObjectsStep" preloadWizardPage="false" required="false"
+                beforeJS="PTC.addToChangeTask.validateChangeTaskReservation">
+            <description>Wizard step to add objects to change task resulting objects table</description>
+            <component name="changeTask.resultingItemsTable" typeBased="true" windowType="wizard_step"
+                       class="com.ptc.windchill.enterprise.change2.forms.delegates.ChangeTaskResultingItemsFormDelegate"
+                       urlParams="typeIdForTypeLookup=wt.change2.ChangeActivity2"/>
+        </action>
+
+    </objecttype>
+
+    <objecttype resourceBundle="com.ptc.windchill.enterprise.part.partResource"
+                name="part" class="wt.part.WTPart">
+        <action name="checkoutAndEdit" ajax="row">
+            <command method="execute"
+                     class="ext.appo.part.processor.CusEditPartFormProcessor" windowType="popup"
+                     url="/netmarkets/jsp/part/edit.jsp"/>
+            <includeFilter name="sandboxSharingValidationSimple"/>
+            <includeFilter name="disableForNewObjectInWorkspace"/>
+            <includeFilter name="hideSBHiddenFilter"/>
+            <includeFilter name="hideForAdminLocked"/>
+            <includeFilter name="disableForPartToCadBuildAdminLocked"/>
+            <includeFilter name="scheduledDeliverablesActionSimpleFilter"/>
+        </action>
+        <action name="edit" ajax="row">
+            <command method="execute"
+                     class="ext.appo.part.processor.CusEditPartFormProcessor" windowType="popup"/>
+            <includeFilter name="sandboxSharingValidationSimple"/>
+            <includeFilter name="hideForNewObjectInWorkspace"/>
+            <includeFilter name="hideForCheckedoutObjectInWorkspace"/>
+            <includeFilter name="hideSBHiddenFilter"/>
+            <includeFilter name="hideForAdminLocked"/>
+            <includeFilter name="disableForPartToCadBuildAdminLocked"/>
+        </action>
+        <action name="editCheckedOutPartInWorkspace" ajax="row">
+            <command method="execute"
+                     class="ext.appo.part.processor.CusEditPartFormProcessor" windowType="popup"
+                     url="/netmarkets/jsp/part/edit.jsp?checkedOutInWorkspace=true"/>
+        </action>
+    </objecttype>
+
+    <objecttype resourceBundle="com.ptc.windchill.enterprise.doc.documentResource"
+                name="document" class="wt.doc.WTDocument">
+        <action dtiUpload="true" name="create" uicomponent="CREATE_DOC"
+                ajax="row">
+            <command onClick="validateCreateLocation(event)" method="execute"
+                     class="ext.appo.doc.processor.CusCreateDocFormProcessor" windowType="popup"/>
+            <includeFilter name="projectM4D"/>
+            <includeFilter name="showNewActionPreValidation"/>
+        </action>
+        <action dtiUpload="true" name="edit" ajax="row">
+            <includeFilter name="sandboxSharingValidationSimple"/>
+            <includeFilter name="hideSBHiddenFilter"/>
+            <includeFilter name="hideForClashJobDefinition"/>
+            <command method="execute"
+                     class="ext.appo.doc.processor.CusEditWorkableFormProcessor"
+                     windowType="popup"/>
+        </action>
+        <action dtiUpload="true" name="checkoutAndEdit" ajax="row">
+            <includeFilter name="sandboxSharingValidationSimple"/>
+            <includeFilter name="hideSBHiddenFilter"/>
+            <includeFilter name="hideForClashJobDefinition"/>
+            <includeFilter name="hideForAdminLocked"/>
+            <includeFilter name="scheduledDeliverablesActionSimpleFilter"/>
+            <command onClick="onClickValidation(event,'checkout')"
+                     method="execute" class="ext.appo.doc.processor.CusEditWorkableFormProcessor"
+                     url="netmarkets/jsp/document/edit.jsp" windowType="popup"/>
+            <supportedTypes>
+                <type value="wt.doc.WTDocument|com.ptc.ReferenceDocument"/>
+                <type value="wt.doc.WTDocument|com.plm.description_square_document"/>
+                <type value="wt.doc.WTDocument|com.ptc.InterCommData"/>
+            </supportedTypes>
+        </action>
+    </objecttype>
+
+    <objecttype name="searchItems" resourceBundle="ext.appo.ecn.resource.changeNoticeActionsRB">
+        <action name="searchItemsPage" ajax="component">
+            <command class="" method="" windowType="popup" url="/netmarkets/jsp/borrowOrder/searchItemsPage.jsp"/>
+        </action>
+
+        <action name="searchItemsPageStep">
+            <command windowType="wizard_step" url="/netmarkets/jsp/borrowOrder/searchItemsPageStep.jsp"/>
+        </action>
+
+        <action name="exportPdf" ajax="component">
+            <command url="netmarkets/jsp/appo/pdf/exportPdf.jsp" windowType="popup"></command>
+        </action>
+        <action name="exportAffObjExcel" ajax="component">
+            <command url="netmarkets/jsp/appo/pdf/generateAffObjExcel.jsp" windowType="popup"></command>
+        </action>
+    </objecttype>
+
+    <objecttype name="partStruct" class="wt.fc.WTObject" resourceBundle="ext.appo.part.resource.PartResourceRB">
+        <action name="addrole">
+            <command class="ext.appo.bom.processor.AddRoleProcessor" method="execute"
+                     url="netmarkets/jsp/ext/appo/bom/ImportPartStruct.jsp" windowType="popup"/>
+        </action>
+        <action name="importPartStructWizardStep">
+            <command url="netmarkets/jsp/ext/appo/bom/ImportPartStructWizardStep.jsp" windowType="wizard_step"/>
+        </action>
+    </objecttype>
+
+    <!-- 发送DCC接口 -->
+    <objecttype name="sendDcc" resourceBundle="ext.appo.doc.resource.DocWorkflowRB">
+
+        <action name="manualSendPartDcc" ajax="row">
+            <command class="ext.appo.doc.uploadDoc.processor.UploadAttachmentProcessor" method="execute"/>
+            <includeFilter name="ManualSendDCCValidator"/>
+        </action>
+
+        <action name="manualSendDocDcc" ajax="row">
+            <command class="ext.appo.doc.uploadDoc.processor.DocUploadAttachmentProcessor" method="execute"/>
+            <includeFilter name="ManualSendDCCValidator"/>
+        </action>
+
+        <!-- 发送所有部件 -->
+        <action name="CountPartSendDcc" ajax="row">
+            <!--<command class="ext.appo.doc.uploadDoc.UploadHistoricalData" method="execute" />-->
+            <command url="netmarkets/jsp/ext/appo/doc/uploadHistoricalData.jsp" windowType="popup"></command>
+            <includeFilter name="ManualSendDCCValidator"/>
+        </action>
+
+        <!-- 发送所有文档-->
+        <action name="CountDocSendDcc" ajax="row">
+            <!--<command class="ext.appo.doc.uploadDoc.UploadHistoricalDataDoc" method="execute" />-->
+            <command url="netmarkets/jsp/ext/appo/doc/uploadHistoricalDataDoc.jsp" windowType="popup"></command>
+            <includeFilter name="ManualSendDCCValidator"/>
+        </action>
+    </objecttype>
+
+
+    <objecttype name="navigation" class="" resourceBundle="ext.appo.part.resource.PartResourceRB">
+        <action name="StatReport" renderType="GENERAL">
+            <command class="netmarkets" method="servlet/Navigation?tab=StatReport" windowType="page"/>
+        </action>
+    </objecttype>
+
+    <objecttype name="StatReport" class="" resourceBundle="ext.appo.part.resource.PartResourceRB">
+        <!--变更统计报表-->
+        <action name="subtab1">
+            <command url="netmarkets/jsp/appo/statReport/statChangeInfo/statChangeInfo.jsp?tab=StatReport"
+                     windowType="page"/>
+        </action>
+    </objecttype>
 
     <!--modify by wangtong at 20191024 start-->
     <include href="config/actions/modify-actions.xml"/>

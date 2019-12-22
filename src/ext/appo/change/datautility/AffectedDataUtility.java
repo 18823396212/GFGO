@@ -1,6 +1,5 @@
 package ext.appo.change.datautility;
 
-import com.ptc.core.components.beans.CreateAndEditWizBean;
 import com.ptc.core.components.descriptor.ModelContext;
 import com.ptc.core.components.factory.dataUtilities.AttributeDataUtilityHelper;
 import com.ptc.core.components.rendering.guicomponents.*;
@@ -12,7 +11,6 @@ import com.ptc.core.lwc.common.view.PropertyValueReadView;
 import com.ptc.core.lwc.server.TypeDefinitionServiceHelper;
 import com.ptc.netmarkets.util.beans.NmCommandBean;
 import com.ptc.windchill.enterprise.change2.dataUtilities.ChangeLinkAttributeDataUtility;
-import com.ptc.windchill.enterprise.changeable.ChangeableObjectBean;
 import ext.appo.change.ModifyHelper;
 import ext.appo.change.constants.ModifyConstants;
 import ext.appo.change.models.CorrelationObjectLink;
@@ -20,28 +18,23 @@ import ext.appo.ecn.common.util.ChangePartQueryUtils;
 import ext.appo.ecn.common.util.ChangeUtils;
 import ext.appo.ecn.constants.ChangeConstants;
 import ext.appo.ecn.util.AffectedItemsUtil;
-import ext.generic.borrow.common.BorrowOrderConstants;
 import ext.generic.integration.erp.bean.InventoryPrice;
-import ext.generic.integration.erp.common.CommonPDMUtil;
 import ext.generic.integration.erp.ibatis.InventoryPriceIbatis;
 import ext.lang.PIStringUtils;
-import ext.pi.core.PIAttributeHelper;
 import ext.pi.core.PICoreHelper;
 import org.apache.log4j.Logger;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import wt.change2.*;
-import wt.enterprise.RevisionControlled;
+import wt.change2.AffectedActivityData;
+import wt.change2.ChangeActivityIfc;
+import wt.change2.Changeable2;
+import wt.change2.WTChangeOrder2;
 import wt.fc.Persistable;
-import wt.fc.PersistenceHelper;
-import wt.fc.ReferenceFactory;
-import wt.lifecycle.LifeCycleManaged;
 import wt.log4j.LogR;
 import wt.org.WTUser;
 import wt.part.WTPart;
 import wt.session.SessionContext;
 import wt.session.SessionHelper;
 import wt.util.WTException;
+import wt.workflow.work.WorkItem;
 
 import java.net.InetAddress;
 import java.sql.Timestamp;
@@ -49,9 +42,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtility implements ChangeConstants, ModifyConstants {
+public class AffectedDataUtility extends ChangeLinkAttributeDataUtility implements ChangeConstants, ModifyConstants {
 
-    private static final Logger LOGGER = LogR.getLogger(ModifyAffectedItemsDataUtility.class.getName());
+    private static final Logger LOGGER = LogR.getLogger(AffectedDataUtility.class.getName());
 
     @Override
     public Object getDataValue(String paramString, Object paramObject, ModelContext paramModelContext) throws WTException {
@@ -59,76 +52,104 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
         // 当前用户设置为管理员，用于忽略权限
         SessionHelper.manager.setAdministrator();
         try {
-            NmCommandBean nmCommandBean = paramModelContext.getNmCommandBean();
-            boolean bool = CreateAndEditWizBean.isCreateEditWizard(nmCommandBean);//是否创建及编辑状态
-            LOGGER.info("=====bool: " + bool);
-            if (bool) {
-                Object actionObject = nmCommandBean.getActionOid().getRefObject();
-                LOGGER.info("=====actionObject: " + actionObject);
-                String ecnVid = String.valueOf(PICoreHelper.service.getBranchId(actionObject));
-                String branchId = String.valueOf(PICoreHelper.service.getBranchId(paramObject));
-                LOGGER.info("=====ecnVid: " + ecnVid + " >>>>>branchId: " + branchId);
-                CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, branchId, LINKTYPE_1);
-                LOGGER.info("=====link: " + link);
-                boolean flag = false;
-                if (link != null) flag = ROUTING_1.equals(link.getRouting()) || ROUTING_3.equals(link.getRouting());
-                LOGGER.info("=====flag: " + flag);
-                if (paramString.contains(ARTICLEINVENTORY_COMPID) || paramString.contains(CENTRALWAREHOUSEINVENTORY_COMPID) || paramString.contains(PASSAGEINVENTORY_COMPID)) {
-                    if (paramObject instanceof WTPart) {
-                        GUIComponentArray gui_array = new GUIComponentArray();
-                        //gui_array.addGUIComponent(generateTextDisplayComponent(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString)));
-                        gui_array.addGUIComponent(generateTextDisplayComponent(paramModelContext, paramObject, paramString, null));
-                        return gui_array;
-                    }
-                } else if (paramString.contains(ARTICLEDISPOSE_COMPID) || paramString.contains(INVENTORYDISPOSE_COMPID) || paramString.contains(PASSAGEDISPOSE_COMPID) || paramString.contains(PRODUCTDISPOSE_COMPID) || paramString.contains(CHANGETYPE_COMPID) || paramString.contains(ATTRIBUTE_7)) {
-                    if (paramObject instanceof WTPart) {
-                        GUIComponentArray gui_array = new GUIComponentArray();
-                        ComboBox comboBox = generateComboBox(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString));
-                        if (flag) comboBox.setEditable(false);
-                        gui_array.addGUIComponent(comboBox);
-                        return gui_array;
-                    } else {
-                        return "";//非部件不显示「变更对象类型」的值
-                    }
-                } else if (paramString.contains(COMPLETIONTIME_COMPID)) {
+            if (paramString.contains(ARTICLEINVENTORY_COMPID) || paramString.contains(CENTRALWAREHOUSEINVENTORY_COMPID) || paramString.contains(PASSAGEINVENTORY_COMPID)) {
+                if (paramObject instanceof WTPart) {
                     GUIComponentArray gui_array = new GUIComponentArray();
-                    DateInputComponent dateInputComponent = generateDateInputComponent(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString));
-                    if (flag) dateInputComponent.setEditable(false);
-                    gui_array.addGUIComponent(dateInputComponent);
+                    //gui_array.addGUIComponent(generateTextDisplayComponent(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, paramString)));
+                    gui_array.addGUIComponent(generateTextDisplayComponent(paramModelContext, paramObject, paramString, null));
                     return gui_array;
-                } else if (paramString.contains(AADDESCRIPTION_COMPID)) {
-                    GUIComponentArray gui_array = new GUIComponentArray();
-                    TextBox textBox = generateTextBox(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString));
-                    if (flag) textBox.setEditable(false);
-                    gui_array.addGUIComponent(textBox);
-                    return gui_array;
-                } else if (paramString.contains(ATTRIBUTE_9)) {
-                    GUIComponentArray gui_array = new GUIComponentArray();
-                    ComboBox comboBox = generateComboBox(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString));
-                    gui_array.addGUIComponent(comboBox);
-                    return gui_array;
-                } else if (paramString.contains(ATTRIBUTE_10)) {
-                    GUIComponentArray gui_array = new GUIComponentArray();
-                    TextBox textBox = generateTextBox(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString));
-                    gui_array.addGUIComponent(textBox);
-                    return gui_array;
-                } else {
-                    if (paramObject instanceof WTPart) {
-                        GUIComponentArray gui_array = new GUIComponentArray();
-                        gui_array.addGUIComponent(generateTextDisplayComponent(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString)));
-                        return gui_array;
-                    }
                 }
+            } else if (paramString.contains(ARTICLEDISPOSE_COMPID) || paramString.contains(INVENTORYDISPOSE_COMPID) || paramString.contains(PASSAGEDISPOSE_COMPID) || paramString.contains(PRODUCTDISPOSE_COMPID) || paramString.contains(AADDESCRIPTION_COMPID)) {
+                GUIComponentArray gui_array = new GUIComponentArray();
+                gui_array.addGUIComponent(generateTextDisplayComponent(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, paramString)));
+                return gui_array;
+            } else if (paramString.contains(ATTRIBUTE_9)) {
+                GUIComponentArray gui_array = new GUIComponentArray();
+                ComboBox comboBox = generateComboBox(paramModelContext, paramObject, paramString, getApprovalOpinion(paramModelContext, paramObject));
+                gui_array.addGUIComponent(comboBox);
+                return gui_array;
+            } else if (paramString.contains(ATTRIBUTE_10)) {
+                GUIComponentArray gui_array = new GUIComponentArray();
+                TextBox textBox = generateTextBox(paramModelContext, paramObject, paramString, getRemark(paramModelContext, paramObject));
+                textBox.setRequired(false);
+                gui_array.addGUIComponent(textBox);
+                return gui_array;
             }
-
-            GUIComponentArray gui_array = new GUIComponentArray();
-            gui_array.addGUIComponent(generateTextDisplayComponent(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, false, paramString)));
-            return gui_array;
         } catch (Exception e) {
             throw new WTException(e.getStackTrace());
         } finally {
             SessionContext.setContext(previous);
         }
+        return super.getDataValue(paramString, paramObject, paramModelContext);
+    }
+
+    /**
+     * 获取审批意见
+     * @param paramModelContext
+     * @param paramObject
+     * @return
+     * @throws WTException
+     */
+    public String getApprovalOpinion(ModelContext paramModelContext, Object paramObject) throws WTException {
+        String approvalOpinion = "";
+        NmCommandBean nmCommandBean = paramModelContext.getNmCommandBean();
+        Object object = nmCommandBean.getPageOid().getRefObject();
+        LOGGER.info("=====object: " + object);
+        if (object instanceof WorkItem) {
+            WorkItem workItem = (WorkItem) object;
+            Persistable persistable = workItem.getPrimaryBusinessObject().getObject();
+            if (persistable instanceof WTChangeOrder2) {
+                WTChangeOrder2 changeOrder2 = (WTChangeOrder2) persistable;
+                String ecnVid = String.valueOf(PICoreHelper.service.getBranchId(changeOrder2));
+                String branchId = String.valueOf(PICoreHelper.service.getBranchId(paramObject));
+                LOGGER.info("=====ecnVid: " + ecnVid + " >>>>>branchId: " + branchId);
+                CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, branchId, LINKTYPE_1);
+                if (null == link && paramObject instanceof Map) {
+                    Map map = (Map) paramObject;
+                    Object number = map.get("number");
+                    if (CONSTANTS_9.equals(number))
+                        link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, CONSTANTS_7, CONSTANTS_7);
+                }
+                LOGGER.info("=====link: " + link);
+                if (null != link)
+                    approvalOpinion = PIStringUtils.isNull(link.getApprovalOpinion()) ? "" : link.getApprovalOpinion();
+            }
+        }
+        return approvalOpinion;
+    }
+
+    /**
+     * 获取备注（驳回必填）
+     * @param paramModelContext
+     * @param paramObject
+     * @return
+     * @throws WTException
+     */
+    public String getRemark(ModelContext paramModelContext, Object paramObject) throws WTException {
+        String remark = "";
+        NmCommandBean nmCommandBean = paramModelContext.getNmCommandBean();
+        Object object = nmCommandBean.getPageOid().getRefObject();
+        LOGGER.info("=====object: " + object);
+        if (object instanceof WorkItem) {
+            WorkItem workItem = (WorkItem) object;
+            Persistable persistable = workItem.getPrimaryBusinessObject().getObject();
+            if (persistable instanceof WTChangeOrder2) {
+                WTChangeOrder2 changeOrder2 = (WTChangeOrder2) persistable;
+                String ecnVid = String.valueOf(PICoreHelper.service.getBranchId(changeOrder2));
+                String branchId = String.valueOf(PICoreHelper.service.getBranchId(paramObject));
+                LOGGER.info("=====ecnVid: " + ecnVid + " >>>>>branchId: " + branchId);
+                CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, branchId, LINKTYPE_1);
+                if (null == link && paramObject instanceof Map) {
+                    Map map = (Map) paramObject;
+                    Object number = map.get("number");
+                    if (CONSTANTS_9.equals(number))
+                        link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, CONSTANTS_7, CONSTANTS_7);
+                }
+                LOGGER.info("=====link: " + link);
+                if (null != link) remark = PIStringUtils.isNull(link.getRemark()) ? "" : link.getRemark();
+            }
+        }
+        return remark;
     }
 
     /***
@@ -202,8 +223,7 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
         //add by tongwang 20191023 start
         else if (keyStr.contains(ATTRIBUTE_7)) {
             enumMap = getEnumeratedMap(ATTRIBUTE_7);
-        }
-        else if (keyStr.contains(ATTRIBUTE_9)) {
+        } else if (keyStr.contains(ATTRIBUTE_9)) {
             enumMap = getEnumeratedMap(ATTRIBUTE_9);
         }
         //add by tongwang 20191023 end
@@ -288,124 +308,77 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
      * @param paramModelContext
      * @param paramObject
      *            表单行对象
-     * @param isCreateEdit
-     *            是否为创建编辑状态
      * @param compid
      *            表单列名称
      * @return
      * @throws WTException
      */
-    public Object getValue(ModelContext paramModelContext, Object paramObject, Boolean isCreateEdit, String compid) throws WTException {
+    public Object getValue(ModelContext paramModelContext, Object paramObject, String compid) throws WTException {
         try {
-            /* 受影响对象 表单数据处理 */
-            if (isCreateEdit) {
-                if (compid.contains(ARTICLEINVENTORY_COMPID) || compid.contains(CENTRALWAREHOUSEINVENTORY_COMPID) || compid.contains(PASSAGEINVENTORY_COMPID)) {
-                    // 对象为部件时查询
-                    if (!(paramObject instanceof WTPart)) {
-                        return "";
-                    }
-                    WTPart part = (WTPart) paramObject;
+            String rawValue = paramModelContext.getRawValue() == null ? "" : paramModelContext.getRawValue().toString();
 
-                    // 获取IP地址
-                    String ip = InetAddress.getLocalHost().getHostAddress();
-                    System.out.println("IP地址：" + ip);
-                    // 区别光峰61，70,71服务器，绎立服务器，光峰采用发K3方法，其余采用发中间表方法
-                    String mVersion = part.getVersionIdentifier().getValue();// 物料大版本
-                    if (ip.equals("172.32.252.61") || ip.equals("172.32.252.70") || ip.equals("172.32.252.71")) {
-                        // 查询数据库表 EXT_STOCK_TAB
-                        // WTPARTNUMBER 物料编码,VERSIONINFO 大版本,ZZNUM 在制数量,KCNUM
-                        // 库存数量,ZTNUM 在途数量
-                        List rList = AffectedItemsUtil.queryAmount(part.getNumber(), mVersion);
-                        if (rList != null && rList.size() > 0) {
-                            System.out.println("查询数据库表 EXT_STOCK_TAB下物料==" + part.getNumber() + "==大版本==" + mVersion + "==在制数量==" + rList.get(0) + "==库存数量==" + rList.get(1) + "==在途数量==" + rList.get(2));
-                            if (compid.contains(ARTICLEINVENTORY_COMPID)) {
-                                return rList.get(0) == null ? "" : rList.get(0);// 在制数量
-                            } else if (compid.contains(CENTRALWAREHOUSEINVENTORY_COMPID)) {
-                                return rList.get(1) == null ? "" : rList.get(1);// 库存数量
-                            } else if (compid.contains(PASSAGEINVENTORY_COMPID)) {
-                                return rList.get(2) == null ? "" : rList.get(2);// 在途数量
-                            }
-                        } else {
-                            if (compid.contains(ARTICLEINVENTORY_COMPID)) {
-                                return "";
-                            } else if (compid.contains(CENTRALWAREHOUSEINVENTORY_COMPID)) {
-                                return "";
-                            } else if (compid.contains(PASSAGEINVENTORY_COMPID)) {
-                                return "";
-                            }
+            /* 在制数量、库存数量、在途数量 */
+            if (compid.contains(ARTICLEINVENTORY_COMPID) || compid.contains(CENTRALWAREHOUSEINVENTORY_COMPID) || compid.contains(PASSAGEINVENTORY_COMPID)) {
+                // 对象为部件时查询
+                if (!(paramObject instanceof WTPart)) {
+                    return "";
+                }
+                WTPart part = (WTPart) paramObject;
+
+                // 获取IP地址
+                String ip = InetAddress.getLocalHost().getHostAddress();
+                System.out.println("IP地址：" + ip);
+                // 区别光峰61，70,71服务器，绎立服务器，光峰采用发K3方法，其余采用发中间表方法
+                String mVersion = part.getVersionIdentifier().getValue();// 物料大版本
+                if (ip.equals("172.32.252.61") || ip.equals("172.32.252.70") || ip.equals("172.32.252.71")) {
+                    // 查询数据库表 EXT_STOCK_TAB
+                    // WTPARTNUMBER 物料编码,VERSIONINFO 大版本,ZZNUM 在制数量,KCNUM
+                    // 库存数量,ZTNUM 在途数量
+                    List rList = AffectedItemsUtil.queryAmount(part.getNumber(), mVersion);
+                    if (rList != null && rList.size() > 0) {
+                        System.out.println("查询数据库表 EXT_STOCK_TAB下物料==" + part.getNumber() + "==大版本==" + mVersion + "==在制数量==" + rList.get(0) + "==库存数量==" + rList.get(1) + "==在途数量==" + rList.get(2));
+                        if (compid.contains(ARTICLEINVENTORY_COMPID)) {
+                            return rList.get(0) == null ? "" : rList.get(0);// 在制数量
+                        } else if (compid.contains(CENTRALWAREHOUSEINVENTORY_COMPID)) {
+                            return rList.get(1) == null ? "" : rList.get(1);// 库存数量
+                        } else if (compid.contains(PASSAGEINVENTORY_COMPID)) {
+                            return rList.get(2) == null ? "" : rList.get(2);// 在途数量
                         }
                     } else {
-                        System.out.println("ECN在制，库存，在途调用中间表接口==");
-                        List<?> datasList = InventoryPriceIbatis.queryInventoryPrice(part.getNumber(), "total", (WTUser) SessionHelper.getPrincipal());
-                        for (Object inventoryPriceObject : datasList) {
-                            InventoryPrice inventoryPrice = (InventoryPrice) inventoryPriceObject;
-                            if (compid.contains(ARTICLEINVENTORY_COMPID)) {
-                                return inventoryPrice.getfInquantity();
-                            } else if (compid.contains(CENTRALWAREHOUSEINVENTORY_COMPID)) {
-                                return inventoryPrice.getiQuantity();
-                            } else if (compid.contains(PASSAGEINVENTORY_COMPID)) {
-                                return inventoryPrice.getfTransinquantity();
-                            }
+                        if (compid.contains(ARTICLEINVENTORY_COMPID)) {
+                            return "";
+                        } else if (compid.contains(CENTRALWAREHOUSEINVENTORY_COMPID)) {
+                            return "";
+                        } else if (compid.contains(PASSAGEINVENTORY_COMPID)) {
+                            return "";
                         }
                     }
-                }
-            }
-
-            Object value = null;
-            /* 受影响产品 表单数据处理 */
-            if (compid.contains("childNumber")) {
-                if (paramObject instanceof WTPart) {
-                    return getChildsNumber(paramModelContext, (WTPart) paramObject);
-                }
-                return value;
-            } else if (compid.equals("ggms") || compid.contains("sscpx") || compid.contains("ssxm") || compid.contains("xsxh") || compid.contains("cpzt") || compid.contains("nbxh")) {
-                if (paramObject instanceof WTPart) {
-                    return PIAttributeHelper.service.getDisplayValue((WTPart) paramObject, compid, Locale.CHINA);
-                }
-            }
-
-            // 受影响对象列表中的‘收集对象’处理
-            if (compid.contains("CollectionNumber")) {
-                if (paramObject instanceof WTPart) {
-                    return getChildsNumber(paramModelContext, (WTPart) paramObject);
-                }
-                return value;
-            }
-
-            /* 受影响对象 表单数据处理 */
-            if (!isCreateEdit) {
-                if (compid.equals(BorrowOrderConstants.VERSION)) {
-                    if (paramObject instanceof WTPart) {
-                        WTPart part = (WTPart) paramObject;
-                        return CommonPDMUtil.getVersion(part) + "(" + part.getViewName() + ")";
-                    } else if (paramObject instanceof RevisionControlled) {
-                        return CommonPDMUtil.getVersion((RevisionControlled) paramObject);
-                    }
-                } else if (compid.equals(BorrowOrderConstants.STATE)) {
-                    return CommonPDMUtil.getLifecycleCN((LifeCycleManaged) paramObject);
                 } else {
-                    value = paramModelContext.getRawValue();
-                }
-            } else {
-                value = getValue(paramModelContext, paramObject, compid);
-            }
-            if (value == null) {
-                if (compid.contains(AADDESCRIPTION_COMPID) || compid.contains(CRDESCRIPTION_COMPID)) {
-                    Object modelObject = paramModelContext.getModelObject();
-                    if (modelObject instanceof ChangeableObjectBean) {
-                        ChangeableObjectBean localChangeableObjectBean = (ChangeableObjectBean) modelObject;
-                        // 获取受影响的或产生的活动对象
-                        if (localChangeableObjectBean.getRelatedProductData() != null) {
-                            RelatedProductData relatedProductData = localChangeableObjectBean.getRelatedProductData();
-                            // 获取备注
-                            return relatedProductData.getDescription();
+                    System.out.println("ECN在制，库存，在途调用中间表接口==");
+                    List<?> datasList = InventoryPriceIbatis.queryInventoryPrice(part.getNumber(), "total", (WTUser) SessionHelper.getPrincipal());
+                    for (Object inventoryPriceObject : datasList) {
+                        InventoryPrice inventoryPrice = (InventoryPrice) inventoryPriceObject;
+                        if (compid.contains(ARTICLEINVENTORY_COMPID)) {
+                            return inventoryPrice.getfInquantity();
+                        } else if (compid.contains(CENTRALWAREHOUSEINVENTORY_COMPID)) {
+                            return inventoryPrice.getiQuantity();
+                        } else if (compid.contains(PASSAGEINVENTORY_COMPID)) {
+                            return inventoryPrice.getfTransinquantity();
                         }
-                    } else if (modelObject instanceof Changeable2) {
-                        //add by tongwang 20191023 start
-                        Changeable2 changeable2 = (Changeable2) modelObject;
-                        Object object = paramModelContext.getNmCommandBean().getActionOid().getRefObject();
-                        if (object instanceof WTChangeOrder2) {
-                            WTChangeOrder2 changeOrder2 = (WTChangeOrder2) object;
+                    }
+                }
+            }
+            /* 更改详细描述 */
+            if (compid.contains(AADDESCRIPTION_COMPID)) {
+                Object modelObject = paramModelContext.getModelObject();
+                if (modelObject instanceof Changeable2) {
+                    Changeable2 changeable2 = (Changeable2) modelObject;
+                    Object object = paramModelContext.getNmCommandBean().getActionOid().getRefObject();
+                    if (object instanceof WorkItem) {
+                        WorkItem workItem = (WorkItem) object;
+                        Object pbo = workItem.getPrimaryBusinessObject().getObject();
+                        if (pbo instanceof WTChangeOrder2) {
+                            WTChangeOrder2 changeOrder2 = (WTChangeOrder2) pbo;
                             Collection<ChangeActivityIfc> changeActivities = ChangeUtils.getChangeActivities(changeOrder2);
                             for (ChangeActivityIfc changeActivityIfc : changeActivities) {
                                 AffectedActivityData affectedActivityData = ChangeUtils.getAffectedActivity(changeActivityIfc, changeable2);
@@ -421,79 +394,18 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
                                 return link.getAadDescription();
                             }
                         }
-                        //add by tongwang 20191023 end
-                    }
-                }
-            } else {
-                if (compid.contains(ARTICLEDISPOSE_COMPID) || compid.contains(INVENTORYDISPOSE_COMPID) || compid.contains(PASSAGEDISPOSE_COMPID) || compid.contains(PRODUCTDISPOSE_COMPID) || compid.contains(CHANGETYPE_COMPID)) {
-                    if (!isCreateEdit) {
-                        String ibaValue = (String) value;
-                        if (ibaValue.contains(USER_KEYWORD)) {
-                            ibaValue = ibaValue.substring(ibaValue.lastIndexOf(USER_KEYWORD) + 1);
-                        }
-                        return ibaValue;
                     }
                 }
             }
-
-            return value;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new WTException(e.getLocalizedMessage());
-        }
-    }
-
-    /***
-     * 获取页面已存的数据
-     * @param paramModelContext
-     * @param paramObject
-     * @param compid
-     * @return
-     * @throws WTException
-     */
-    public Object getValue(ModelContext paramModelContext, Object paramObject, String compid) throws WTException {
-        if (paramModelContext == null || paramObject == null || PIStringUtils.isNull(compid)) {
-            return null;
-        }
-
-        if (!(paramObject instanceof Persistable)) {
-            return null;
-        }
-        NmCommandBean nmCommandBean = paramModelContext.getNmCommandBean();
-        try {
-            if (compid.contains(USER_KEYWORD3)) {
-                compid = compid.replace(USER_KEYWORD3, "");
-            }
-            // 添加原有数据
-            Map<String, Object> parameterMap = nmCommandBean.getParameterMap();
-            if (parameterMap.containsKey(CHANGETASK_ARRAY)) {
-                String[] changeTaskArrayStr = (String[]) parameterMap.get(CHANGETASK_ARRAY);
-                if (changeTaskArrayStr != null && changeTaskArrayStr.length > 0) {
-                    String datasJSON = changeTaskArrayStr[0];
-                    if (PIStringUtils.isNotNull(datasJSON)) {
-                        JSONArray jsonArray = new JSONArray(datasJSON);
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject jsonObject = new JSONObject(jsonArray.getString(i));
-                            // 获取主对象
-                            Persistable persistable = (new ReferenceFactory()).getReference(jsonObject.getString(OID_COMPID)).getObject();
-                            if (PersistenceHelper.isEquivalent(persistable, (Persistable) paramObject)) {
-                                String value = jsonObject.getString(compid);
-                                if (PIStringUtils.isNull(value)) {
-                                    return null;
-                                }
-                                return value;
-                            }
-                        }
-                    }
+            /* *在制处理措施、*库存处理措施、*在途处理措施、*已出货成品处理措施 */
+            if (compid.contains(ARTICLEDISPOSE_COMPID) || compid.contains(INVENTORYDISPOSE_COMPID) || compid.contains(PASSAGEDISPOSE_COMPID) || compid.contains(PRODUCTDISPOSE_COMPID)) {
+                if (rawValue.contains(USER_KEYWORD)) {
+                    rawValue = rawValue.substring(rawValue.lastIndexOf(USER_KEYWORD) + 1);
                 }
-            } else {
-                String str = CreateAndEditWizBean.getOperation(nmCommandBean);
-                if ((str.equals(CreateAndEditWizBean.EDIT))) {
-                    return paramModelContext.getRawValue();
-                }
+                return rawValue;
             }
 
-            return null;
+            return rawValue;
         } catch (Exception e) {
             e.printStackTrace();
             throw new WTException(e.getLocalizedMessage());

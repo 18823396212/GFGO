@@ -2,11 +2,13 @@ set echo on
 REM Creating table APPO_CORRELATIONOBJECTLINK for ext.appo.change.models.CorrelationObjectLink
 set echo off
 CREATE TABLE APPO_CORRELATIONOBJECTLINK (
-   aadDescription   VARCHAR2(600),
+   aadDescription   VARCHAR2(4000),
+   approvalOpinion   VARCHAR2(600),
    ecaIdentifier   VARCHAR2(600),
    ecnBranchIdentifier   VARCHAR2(600),
    linkType   VARCHAR2(600),
    perBranchIdentifier   VARCHAR2(600),
+   remark   VARCHAR2(4000),
    classnamekeyroleAObjectRef   VARCHAR2(600),
    idA3A5   NUMBER,
    classnamekeyroleBObjectRef   VARCHAR2(600),
