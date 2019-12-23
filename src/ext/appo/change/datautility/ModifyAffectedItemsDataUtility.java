@@ -73,14 +73,14 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
                 boolean flag = false;
                 if (link != null) flag = ROUTING_1.equals(link.getRouting()) || ROUTING_3.equals(link.getRouting());
                 LOGGER.info("=====flag: " + flag);
-                if (paramString.contains(ChangeConstants.ARTICLEINVENTORY_COMPID) || paramString.contains(ChangeConstants.CENTRALWAREHOUSEINVENTORY_COMPID) || paramString.contains(ChangeConstants.PASSAGEINVENTORY_COMPID)) {
+                if (paramString.contains(ARTICLEINVENTORY_COMPID) || paramString.contains(CENTRALWAREHOUSEINVENTORY_COMPID) || paramString.contains(PASSAGEINVENTORY_COMPID)) {
                     if (paramObject instanceof WTPart) {
                         GUIComponentArray gui_array = new GUIComponentArray();
-                        gui_array.addGUIComponent(generateTextDisplayComponent(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString)));
-//                        gui_array.addGUIComponent(generateTextDisplayComponent(paramModelContext, paramObject, paramString, null));
+                        //gui_array.addGUIComponent(generateTextDisplayComponent(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString)));
+                        gui_array.addGUIComponent(generateTextDisplayComponent(paramModelContext, paramObject, paramString, null));
                         return gui_array;
                     }
-                } else if (paramString.contains(ChangeConstants.ARTICLEDISPOSE_COMPID) || paramString.contains(ChangeConstants.INVENTORYDISPOSE_COMPID) || paramString.contains(ChangeConstants.PASSAGEDISPOSE_COMPID) || paramString.contains(ChangeConstants.PRODUCTDISPOSE_COMPID) || paramString.contains(ChangeConstants.CHANGETYPE_COMPID) || paramString.contains(ATTRIBUTE_7)) {
+                } else if (paramString.contains(ARTICLEDISPOSE_COMPID) || paramString.contains(INVENTORYDISPOSE_COMPID) || paramString.contains(PASSAGEDISPOSE_COMPID) || paramString.contains(PRODUCTDISPOSE_COMPID) || paramString.contains(CHANGETYPE_COMPID) || paramString.contains(ATTRIBUTE_7)) {
                     if (paramObject instanceof WTPart) {
                         GUIComponentArray gui_array = new GUIComponentArray();
                         ComboBox comboBox = generateComboBox(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString));
@@ -90,16 +90,26 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
                     } else {
                         return "";//非部件不显示「变更对象类型」的值
                     }
-                } else if (paramString.contains(ChangeConstants.COMPLETIONTIME_COMPID)) {
+                } else if (paramString.contains(COMPLETIONTIME_COMPID)) {
                     GUIComponentArray gui_array = new GUIComponentArray();
                     DateInputComponent dateInputComponent = generateDateInputComponent(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString));
                     if (flag) dateInputComponent.setEditable(false);
                     gui_array.addGUIComponent(dateInputComponent);
                     return gui_array;
-                } else if (paramString.contains(ChangeConstants.AADDESCRIPTION_COMPID)) {
+                } else if (paramString.contains(AADDESCRIPTION_COMPID)) {
                     GUIComponentArray gui_array = new GUIComponentArray();
                     TextBox textBox = generateTextBox(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString));
                     if (flag) textBox.setEditable(false);
+                    gui_array.addGUIComponent(textBox);
+                    return gui_array;
+                } else if (paramString.contains(ATTRIBUTE_9)) {
+                    GUIComponentArray gui_array = new GUIComponentArray();
+                    ComboBox comboBox = generateComboBox(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString));
+                    gui_array.addGUIComponent(comboBox);
+                    return gui_array;
+                } else if (paramString.contains(ATTRIBUTE_10)) {
+                    GUIComponentArray gui_array = new GUIComponentArray();
+                    TextBox textBox = generateTextBox(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString));
                     gui_array.addGUIComponent(textBox);
                     return gui_array;
                 } else {
@@ -156,7 +166,11 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
     public TextBox generateTextBox(ModelContext paramModelContext, Object paramObject, String keyStr, Object value) throws WTException {
         TextBox textBox = new TextBox();
         textBox.setWidth(100);
-        textBox.addJsAction("onChange", "delaySaveChangeTaskArray() ;");
+        if (keyStr.contains(ATTRIBUTE_10)) {
+
+        } else {
+            textBox.addJsAction("onChange", "delaySaveChangeTaskArray();");
+        }
         textBox.setEnabled(true);
         textBox.setRequired(true);
         textBox.setId(keyStr);
@@ -180,18 +194,21 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
     public ComboBox generateComboBox(ModelContext paramModelContext, Object paramObject, String keyStr, Object value) throws WTException {
         // 枚举定义
         Map<ArrayList<String>, ArrayList<String>> enumMap;
-        if (keyStr.contains(ChangeConstants.CHANGETYPE_COMPID)) {
-            enumMap = getEnumeratedMap(ChangeConstants.CHANGETYPE_COMPID);
-        } else if (keyStr.contains(ChangeConstants.PRODUCTDISPOSE_COMPID)) {
-            enumMap = getEnumeratedMap(ChangeConstants.PRODUCTDISPOSE_COMPID);
+        if (keyStr.contains(CHANGETYPE_COMPID)) {
+            enumMap = getEnumeratedMap(CHANGETYPE_COMPID);
+        } else if (keyStr.contains(PRODUCTDISPOSE_COMPID)) {
+            enumMap = getEnumeratedMap(PRODUCTDISPOSE_COMPID);
         }
         //add by tongwang 20191023 start
         else if (keyStr.contains(ATTRIBUTE_7)) {
             enumMap = getEnumeratedMap(ATTRIBUTE_7);
         }
+        else if (keyStr.contains(ATTRIBUTE_9)) {
+            enumMap = getEnumeratedMap(ATTRIBUTE_9);
+        }
         //add by tongwang 20191023 end
         else {
-            enumMap = getEnumeratedMap(ChangeConstants.ARTICLEDISPOSE_COMPID);
+            enumMap = getEnumeratedMap(ARTICLEDISPOSE_COMPID);
         }
         // 内部名称
         ArrayList<String> keyArray = enumMap.keySet().iterator().next();
@@ -210,7 +227,11 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
         box.setId(keyStr);
         box.setColumnName(AttributeDataUtilityHelper.getColumnName(keyStr, paramObject, paramModelContext));
         box.setMultiSelect(false);
-        box.addJsAction("onChange", "delaySaveChangeTaskArray();");
+        if (keyStr.contains(ATTRIBUTE_9)) {
+
+        } else {
+            box.addJsAction("onChange", "delaySaveChangeTaskArray();");
+        }
         return box;
     }
 
@@ -230,23 +251,23 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
         DateInputComponent component = new DateInputComponent(keyStr, DateInputComponent.ValueType.DATE_ONLY);
         component.setColumnName(AttributeDataUtilityHelper.getColumnName(keyStr, paramObject, paramModelContext));
         try {
-            DateFormat format = new SimpleDateFormat(ChangeConstants.SIMPLE_DATE_FORMAT);
+            DateFormat format = new SimpleDateFormat(SIMPLE_DATE_FORMAT);
             if (value != null) {
                 String valueStr = (String) value;
                 if (valueStr.contains(" ")) {
                     valueStr = valueStr.substring(0, valueStr.indexOf(" ")).trim();
                 }
                 if (valueStr.contains("-")) {
-                    valueStr = (new SimpleDateFormat(ChangeConstants.SIMPLE_DATE_FORMAT_02)).format((new SimpleDateFormat(ChangeConstants.SIMPLE_DATE_FORMAT_03)).parse(valueStr));
+                    valueStr = (new SimpleDateFormat(SIMPLE_DATE_FORMAT_02)).format((new SimpleDateFormat(SIMPLE_DATE_FORMAT_03)).parse(valueStr));
                 }
-                component.setValue(Timestamp.valueOf((new SimpleDateFormat(ChangeConstants.SIMPLE_DATE_FORMAT)).format((new SimpleDateFormat(ChangeConstants.SIMPLE_DATE_FORMAT_02)).parse(valueStr))));
+                component.setValue(Timestamp.valueOf((new SimpleDateFormat(SIMPLE_DATE_FORMAT)).format((new SimpleDateFormat(SIMPLE_DATE_FORMAT_02)).parse(valueStr))));
             } else {
                 //add by lzuy at 20191216 start
 //                component.setValue(Timestamp.valueOf(format.format(new Date())));
                 //期望完成时间默认推迟一周
                 Calendar curr = Calendar.getInstance();
-                curr.set(Calendar.DAY_OF_MONTH,curr.get(Calendar.DAY_OF_MONTH)+7);
-                Date date=curr.getTime();
+                curr.set(Calendar.DAY_OF_MONTH, curr.get(Calendar.DAY_OF_MONTH) + 7);
+                Date date = curr.getTime();
                 component.setValue(Timestamp.valueOf(format.format(date)));
                 //add by lzuy at 20191216 end
             }
@@ -278,7 +299,7 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
         try {
             /* 受影响对象 表单数据处理 */
             if (isCreateEdit) {
-                if (compid.contains(ChangeConstants.ARTICLEINVENTORY_COMPID) || compid.contains(ChangeConstants.CENTRALWAREHOUSEINVENTORY_COMPID) || compid.contains(ChangeConstants.PASSAGEINVENTORY_COMPID)) {
+                if (compid.contains(ARTICLEINVENTORY_COMPID) || compid.contains(CENTRALWAREHOUSEINVENTORY_COMPID) || compid.contains(PASSAGEINVENTORY_COMPID)) {
                     // 对象为部件时查询
                     if (!(paramObject instanceof WTPart)) {
                         return "";
@@ -297,19 +318,19 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
                         List rList = AffectedItemsUtil.queryAmount(part.getNumber(), mVersion);
                         if (rList != null && rList.size() > 0) {
                             System.out.println("查询数据库表 EXT_STOCK_TAB下物料==" + part.getNumber() + "==大版本==" + mVersion + "==在制数量==" + rList.get(0) + "==库存数量==" + rList.get(1) + "==在途数量==" + rList.get(2));
-                            if (compid.contains(ChangeConstants.ARTICLEINVENTORY_COMPID)) {
+                            if (compid.contains(ARTICLEINVENTORY_COMPID)) {
                                 return rList.get(0) == null ? "" : rList.get(0);// 在制数量
-                            } else if (compid.contains(ChangeConstants.CENTRALWAREHOUSEINVENTORY_COMPID)) {
+                            } else if (compid.contains(CENTRALWAREHOUSEINVENTORY_COMPID)) {
                                 return rList.get(1) == null ? "" : rList.get(1);// 库存数量
-                            } else if (compid.contains(ChangeConstants.PASSAGEINVENTORY_COMPID)) {
+                            } else if (compid.contains(PASSAGEINVENTORY_COMPID)) {
                                 return rList.get(2) == null ? "" : rList.get(2);// 在途数量
                             }
                         } else {
-                            if (compid.contains(ChangeConstants.ARTICLEINVENTORY_COMPID)) {
+                            if (compid.contains(ARTICLEINVENTORY_COMPID)) {
                                 return "";
-                            } else if (compid.contains(ChangeConstants.CENTRALWAREHOUSEINVENTORY_COMPID)) {
+                            } else if (compid.contains(CENTRALWAREHOUSEINVENTORY_COMPID)) {
                                 return "";
-                            } else if (compid.contains(ChangeConstants.PASSAGEINVENTORY_COMPID)) {
+                            } else if (compid.contains(PASSAGEINVENTORY_COMPID)) {
                                 return "";
                             }
                         }
@@ -318,11 +339,11 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
                         List<?> datasList = InventoryPriceIbatis.queryInventoryPrice(part.getNumber(), "total", (WTUser) SessionHelper.getPrincipal());
                         for (Object inventoryPriceObject : datasList) {
                             InventoryPrice inventoryPrice = (InventoryPrice) inventoryPriceObject;
-                            if (compid.contains(ChangeConstants.ARTICLEINVENTORY_COMPID)) {
+                            if (compid.contains(ARTICLEINVENTORY_COMPID)) {
                                 return inventoryPrice.getfInquantity();
-                            } else if (compid.contains(ChangeConstants.CENTRALWAREHOUSEINVENTORY_COMPID)) {
+                            } else if (compid.contains(CENTRALWAREHOUSEINVENTORY_COMPID)) {
                                 return inventoryPrice.getiQuantity();
-                            } else if (compid.contains(ChangeConstants.PASSAGEINVENTORY_COMPID)) {
+                            } else if (compid.contains(PASSAGEINVENTORY_COMPID)) {
                                 return inventoryPrice.getfTransinquantity();
                             }
                         }
@@ -369,7 +390,7 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
                 value = getValue(paramModelContext, paramObject, compid);
             }
             if (value == null) {
-                if (compid.contains(ChangeConstants.AADDESCRIPTION_COMPID) || compid.contains(ChangeConstants.CRDESCRIPTION_COMPID)) {
+                if (compid.contains(AADDESCRIPTION_COMPID) || compid.contains(CRDESCRIPTION_COMPID)) {
                     Object modelObject = paramModelContext.getModelObject();
                     if (modelObject instanceof ChangeableObjectBean) {
                         ChangeableObjectBean localChangeableObjectBean = (ChangeableObjectBean) modelObject;
@@ -404,11 +425,11 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
                     }
                 }
             } else {
-                if (compid.contains(ChangeConstants.ARTICLEDISPOSE_COMPID) || compid.contains(ChangeConstants.INVENTORYDISPOSE_COMPID) || compid.contains(ChangeConstants.PASSAGEDISPOSE_COMPID) || compid.contains(ChangeConstants.PRODUCTDISPOSE_COMPID) || compid.contains(ChangeConstants.CHANGETYPE_COMPID)) {
+                if (compid.contains(ARTICLEDISPOSE_COMPID) || compid.contains(INVENTORYDISPOSE_COMPID) || compid.contains(PASSAGEDISPOSE_COMPID) || compid.contains(PRODUCTDISPOSE_COMPID) || compid.contains(CHANGETYPE_COMPID)) {
                     if (!isCreateEdit) {
                         String ibaValue = (String) value;
-                        if (ibaValue.contains(ChangeConstants.USER_KEYWORD)) {
-                            ibaValue = ibaValue.substring(ibaValue.lastIndexOf(ChangeConstants.USER_KEYWORD) + 1);
+                        if (ibaValue.contains(USER_KEYWORD)) {
+                            ibaValue = ibaValue.substring(ibaValue.lastIndexOf(USER_KEYWORD) + 1);
                         }
                         return ibaValue;
                     }
@@ -440,13 +461,13 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
         }
         NmCommandBean nmCommandBean = paramModelContext.getNmCommandBean();
         try {
-            if (compid.contains(ChangeConstants.USER_KEYWORD3)) {
-                compid = compid.replace(ChangeConstants.USER_KEYWORD3, "");
+            if (compid.contains(USER_KEYWORD3)) {
+                compid = compid.replace(USER_KEYWORD3, "");
             }
             // 添加原有数据
             Map<String, Object> parameterMap = nmCommandBean.getParameterMap();
-            if (parameterMap.containsKey(ChangeConstants.CHANGETASK_ARRAY)) {
-                String[] changeTaskArrayStr = (String[]) parameterMap.get(ChangeConstants.CHANGETASK_ARRAY);
+            if (parameterMap.containsKey(CHANGETASK_ARRAY)) {
+                String[] changeTaskArrayStr = (String[]) parameterMap.get(CHANGETASK_ARRAY);
                 if (changeTaskArrayStr != null && changeTaskArrayStr.length > 0) {
                     String datasJSON = changeTaskArrayStr[0];
                     if (PIStringUtils.isNotNull(datasJSON)) {
@@ -454,7 +475,7 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = new JSONObject(jsonArray.getString(i));
                             // 获取主对象
-                            Persistable persistable = (new ReferenceFactory()).getReference(jsonObject.getString(ChangeConstants.OID_COMPID)).getObject();
+                            Persistable persistable = (new ReferenceFactory()).getReference(jsonObject.getString(OID_COMPID)).getObject();
                             if (PersistenceHelper.isEquivalent(persistable, (Persistable) paramObject)) {
                                 String value = jsonObject.getString(compid);
                                 if (PIStringUtils.isNull(value)) {
@@ -518,7 +539,7 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
                     ArrayList<String> interiorArray = new ArrayList<>();
                     for (Map.Entry<Integer, Map<String, String>> entryMap : datasMap.entrySet()) {
                         for (Map.Entry<String, String> enumEntryMap : entryMap.getValue().entrySet()) {
-                            interiorArray.add(enumEntryMap.getKey() + ChangeConstants.USER_KEYWORD + enumEntryMap.getValue());
+                            interiorArray.add(enumEntryMap.getKey() + USER_KEYWORD + enumEntryMap.getValue());
                             displayArray.add(enumEntryMap.getValue());
                         }
                     }
@@ -561,7 +582,7 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
                     for (WTPart childPart : childArray) {
                         if (ChangeUtils.getNumber(persistable).equals(childPart.getNumber())) {
                             if (returnStr.length() > 0) {
-                                returnStr.append(ChangeConstants.USER_KEYWORD);
+                                returnStr.append(USER_KEYWORD);
                             }
                             returnStr.append(childPart.getNumber());
                             break;
@@ -572,7 +593,7 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
         } else {
             // 编辑添加数据过滤问题
             Map<String, Object> parameterMap = paramModelContext.getNmCommandBean().getParameterMap();
-            if (parameterMap.containsKey(ChangeConstants.CHANGETASK_ARRAY)) {
+            if (parameterMap.containsKey(CHANGETASK_ARRAY)) {
                 return returnStr.toString();
             }
             Object object = paramModelContext.getNmCommandBean().getActionOid().getRefObject();
@@ -584,7 +605,7 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
                         for (WTPart childPart : childArray) {
                             if (ChangeUtils.getNumber(changeable2).equals(childPart.getNumber())) {
                                 if (returnStr.length() > 0) {
-                                    returnStr.append(ChangeConstants.USER_KEYWORD);
+                                    returnStr.append(USER_KEYWORD);
                                 }
                                 returnStr.append(childPart.getNumber());
                                 break;

@@ -9,8 +9,6 @@
 
 
 <%@ page import="com.ptc.netmarkets.util.beans.NmCommandBean,
-                 com.ptc.netmarkets.util.misc.NmAction,
-                 com.ptc.netmarkets.util.misc.NmActionServiceHelper,
                  ext.generic.borrow.utils.BorrowUtil,
                  java.util.ArrayList,
                  java.util.Vector"
@@ -50,9 +48,9 @@
     //String context_in = RequestHelper.getEncodedRequestParam("contextselect", request);
     String contexttype_in = RequestHelper.getEncodedRequestParam("contexttype", request);
 
-    NmAction nmaction = NmActionServiceHelper.service.getAction("borrowObjects", "searchContext");
+    /*NmAction nmaction = NmActionServiceHelper.service.getAction("borrowObjects", "searchContext");
     nmaction.setContextObject(nmcontext.getContext().getPrimaryOid());
-    String url = nmaction.getActionUrlExternal();
+    String url = nmaction.getActionUrlExternal();*/
 
 %>
 <c:set var="objecttpyevalue" value="<%=objecttpyevaluetemp%>"/>

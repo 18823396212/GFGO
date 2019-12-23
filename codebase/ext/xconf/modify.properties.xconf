@@ -8,6 +8,8 @@
         <Option serviceClass="ext.appo.change.datautility.ModifyAffectedItemsDataUtility" requestor="java.lang.Object" selector="ModifyAffectedItemsDataUtility" cardinality="duplicate"/>
         <Option serviceClass="ext.appo.change.datautility.ModifyUserPickerDataUtility" requestor="java.lang.Object" selector="ModifyUserPickerDataUtility" cardinality="duplicate"/>
         <Option serviceClass="ext.appo.change.datautility.ModifyChangeTaskDataUtility" requestor="java.lang.Object" selector="ModifyChangeTaskDataUtility" cardinality="duplicate"/>
+        <Option serviceClass="ext.appo.change.datautility.AffectedDataUtility" requestor="java.lang.Object" selector="AffectedDataUtility" cardinality="duplicate"/>
+        <Option serviceClass="ext.appo.change.datautility.TransactionalTaskDataUtility" requestor="java.lang.Object" selector="TransactionalTaskDataUtility" cardinality="duplicate"/>
     </Service>
 
     <Service context="default" name="com.ptc.core.ui.validation.SimpleValidationFilter">

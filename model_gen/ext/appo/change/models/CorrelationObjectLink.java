@@ -43,12 +43,24 @@ import wt.workflow.engine.WfProcess;
                 @GeneratedProperty(
                         name = "aadDescription",
                         type = String.class,
-                        javaDoc = "更改详细描述"
+                        javaDoc = "更改详细描述",
+                        constraints = @PropertyConstraints(upperLimit = 2000)
                 ),
                 @GeneratedProperty(
                         name = "routing",
                         type = String.class,
                         javaDoc = "路由"
+                ),
+                @GeneratedProperty(
+                        name = "approvalOpinion",
+                        type = String.class,
+                        javaDoc = "审批意见"
+                ),
+                @GeneratedProperty(
+                        name = "remark",
+                        type = String.class,
+                        javaDoc = "备注（驳回必填）",
+                        constraints = @PropertyConstraints(upperLimit = 2000)
                 )
         },
         tableProperties = @TableProperties(
