@@ -383,4 +383,19 @@ public class changeNoticeActionsRB_zh_CN extends WTListResourceBundle {
     public static final String PRIVATE_CONSTANT_90 = "changeNotice.affectedUpperMaterialsTableBuilder.description";
     @RBEntry("受影响下层物料")
     public static final String PRIVATE_CONSTANT_91 = "changeNotice.affectedDownMaterialsTableBuilder.description";
+
+    //add by lzy at 20191217 start
+    @RBEntry("一键设置")
+    public static final String oneKeySetup_description = "changeNotice.oneKeySetup.description";
+
+    @RBEntry("一键设置")
+    public static final String oneKeySetup_title = "changeNotice.oneKeySetup.title";
+
+    @RBEntry("一键设置")
+    public static final String oneKeySetup_tooltip = "changeNotice.oneKeySetup.tooltip";
+
+    @RBEntry("edit.gif")
+    public static final String oneKeySetup_icon = "changeNotice.oneKeySetup.icon";
+    //add by lzy at 20191217 end
+
 }

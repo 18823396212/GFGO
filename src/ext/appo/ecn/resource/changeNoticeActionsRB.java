@@ -384,4 +384,19 @@ public class changeNoticeActionsRB extends WTListResourceBundle {
     public static final String PRIVATE_CONSTANT_90 = "changeNotice.affectedUpperMaterialsTableBuilder.description";
     @RBEntry("AffectedDownMaterialsTableBuilder")
     public static final String PRIVATE_CONSTANT_91 = "changeNotice.affectedDownMaterialsTableBuilder.description";
+
+
+	//add by lzy at 20191217 start
+	@RBEntry("One Key Setup")
+	public static final String oneKeySetup_description = "changeNotice.oneKeySetup.description";
+
+	@RBEntry("One Key Setup")
+	public static final String oneKeySetup_title = "changeNotice.oneKeySetup.title";
+
+	@RBEntry("One Key Setup")
+	public static final String oneKeySetup_tooltip = "changeNotice.oneKeySetup.tooltip";
+
+	@RBEntry("edit.gif")
+	public static final String oneKeySetup_icon = "changeNotice.oneKeySetup.icon";
+	//add by lzy at 20191217 end
 }
