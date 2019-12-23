@@ -15,9 +15,6 @@
 <%@ page import="wt.fc.QueryResult" %>
 <%@ page import="wt.change2.ChangeHelper2" %>
 <%@ page import="wt.part.WTPart" %>
-<%@ page import="wt.org.WTPrincipal" %>
-<%@ page import="wt.session.SessionHelper" %>
-<%@ page import="wt.org.WTUser" %>
 
 <style type="text/css">
     .tb{
@@ -506,6 +503,7 @@
 
 <script type="text/javascript">
 
+    //展示当前信息
     function showInfo(e) {
         var expandImageUrl=document.getElementById("expandImageUrl").value;
         var collapseImageUrl=document.getElementById("collapseImageUrl").value;
@@ -518,6 +516,7 @@
             document.getElementById("tb_"+e.id).style.display="block";
         }
     }
+    //展示对应的受影响部件对应的BOM变更内容
     function showBomChange(e){
         var affectedObject=document.getElementById("affectedObjects").value;
         var affectedObjects=affectedObject.split(";");
@@ -530,6 +529,7 @@
         document.getElementById(e.id).style.backgroundColor="#FBD9A7";
         document.getElementById("div_"+e.id).style.display="block";
     }
+    //展示默认的受影响部件
     function showCurrentaffectedObject() {
         var currentaffectedObject=document.getElementById("currentaffectedObject").value;
         if (currentaffectedObject!=""&&document.getElementById(currentaffectedObject)){
