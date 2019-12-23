@@ -952,8 +952,5 @@ public final class worklistResource_zh_TW extends WTListResourceBundle {
     @RBEntry("BOM變更報表")
     public static final String workitem_bomChangeReport_description = "workitem.bomChangeReport.description";
     //add by lzy 20191120 end
-    //add by lzy 20191209 start
-    @RBEntry("修改變更申請")
-    public static final String workitem_modifyChangeRequest_description = "workitem.modifyChangeRequest.description";
-    //add by lzy 20191209 end
+
 }
