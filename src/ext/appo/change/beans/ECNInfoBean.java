@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class ECNInfoBean implements Serializable {
 
+    //ECN编码
+    private String ecnNumber = "";
     //变更申请人
     private String ecnCreator = "";
     //申请时间
@@ -59,6 +61,8 @@ public class ECNInfoBean implements Serializable {
         return changeDescription;
     }
 
+    public String getEcnNumber() { return ecnNumber; }
+
     public void setEcnCreator(String ecnCreator) {
         this.ecnCreator = ecnCreator;
     }
@@ -95,10 +99,13 @@ public class ECNInfoBean implements Serializable {
         this.changeDescription = changeDescription;
     }
 
+    public void setEcnNumber(String ecnNumber) { this.ecnNumber = ecnNumber; }
+
     @Override
     public String toString() {
         return "ECNInfoBean{" +
-                "ecnCreator='" + ecnCreator + '\'' +
+                "ecnNumber='" + ecnNumber + '\'' +
+                ", ecnCreator='" + ecnCreator + '\'' +
                 ", ecnStartTime='" + ecnStartTime + '\'' +
                 ", productType='" + productType + '\'' +
                 ", projectName='" + projectName + '\'' +

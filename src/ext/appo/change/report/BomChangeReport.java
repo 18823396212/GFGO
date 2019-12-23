@@ -19,6 +19,7 @@ import wt.util.WTException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+//BOM报表
 public class BomChangeReport {
 
     //通过Oid获取流程
@@ -38,13 +39,15 @@ public class BomChangeReport {
         return p;
     }
 
+    //获取ECN信息
     public static ECNInfoBean getECNInfo(WTChangeOrder2 ecn){
         boolean flag = SessionServerHelper.manager.setAccessEnforced(false);// 忽略权限
         ECNInfoBean ecnInfoBean=new ECNInfoBean();
         try {
             if (ecn!=null){
+                String ecnNumber=ecn.getNumber();
                 String ecnCreator=getSendPersion(ecn);
-                String ecnStartTime=addDate(ecn.getCreateTimestamp().toLocaleString(),8);
+                String ecnStartTime=addDate(ecn.getCreateTimestamp().toLocaleString(),8);//服务器少8小时
                 String productType=getChangeAtt(ecn,"sscpx");
                 String projectName=getChangeAtt(ecn,"ssxm");
                 String changeType=getChangeAtt(ecn,"ChangeItemType");
@@ -53,6 +56,7 @@ public class BomChangeReport {
                 String isChangeDrawing=getChangeAtt(ecn,"change_dwg_ornot");
                 String changeDescription=ecn.getDescription();
 
+                ecnInfoBean.setEcnNumber(ecnNumber);
                 ecnInfoBean.setEcnCreator(ecnCreator);
                 ecnInfoBean.setEcnStartTime(ecnStartTime);
                 ecnInfoBean.setProductType(productType);

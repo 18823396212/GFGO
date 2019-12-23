@@ -7,7 +7,6 @@ public class BOMChangeInfoBean implements Serializable {
 
     //变更类型
     private Set changeType=new HashSet();
-
     //物料编码
     private String number="";
     // 名称
