@@ -55,7 +55,10 @@
         </action>
 
         <action name="changeHistory">
-            <component name="ext.appo.change.mvc.builder.ChangeHistoryTableBuilder"/>
+            <!-- add by lzy at 20191218 start-->
+<!--            <component name="ext.appo.change.mvc.builder.ChangeHistoryTableBuilder"/>-->
+            <command url="netmarkets/jsp/ext/appo/change/report/changeHistoryReport.jsp"  windowType="page"/>
+            <!-- add by lzy at 20191218 end-->
         </action>
 
         <action name="user" resourceBundle="ext.appo.change.resource.ModifyResource">
