@@ -37,6 +37,7 @@ import wt.workflow.engine.WfEngineHelper;
 import wt.workflow.engine.WfEngineServerHelper;
 import wt.workflow.engine.WfProcess;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 /**
@@ -653,21 +654,51 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
      * @throws WTException
      */
     public boolean isReplace(WTChangeActivity2 changeActivity2) throws WTException {
-        Boolean isReplace=false;
+        Boolean isReplace = false;
         Collection<Changeable2> befores = ModifyUtils.getChangeablesBefore(changeActivity2);
         for (Changeable2 before : befores) {
             if (before instanceof WTPart) {
                 String value = ModifyUtils.getValue(before, "ChangeType");//获取物料变更类型
-                String[] str=value.split(";");
-                if (str.length>1){
-                    value=str[1];
+                String[] str = value.split(";");
+                if (str.length > 1) {
+                    value = str[1];
                 }
-                if (value.equals("替换")){
-                    isReplace=true;
+                if (value.equals("替换")) {
+                    isReplace = true;
                 }
             }
         }
         return isReplace;
+    }
+
+    /**
+     * 设置ECN解决时间
+     * @param pbo
+     * @param self
+     * @throws WTException
+     */
+    public void setECNResolutionDate(WTObject pbo, ObjectReference self) throws WTException {
+        if (pbo instanceof WTChangeOrder2) {
+            WTChangeOrder2 changeOrder2 = (WTChangeOrder2) pbo;
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            changeOrder2.setResolutionDate(timestamp);
+            PersistenceHelper.manager.save(changeOrder2);
+        }
+    }
+
+    /**
+     * 设置ECN解决时间
+     * @param pbo
+     * @param self
+     * @throws WTException
+     */
+    public void setECAResolutionDate(WTObject pbo, ObjectReference self) throws WTException {
+        if (pbo instanceof WTChangeActivity2) {
+            WTChangeActivity2 activity2 = (WTChangeActivity2) pbo;
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            activity2.setResolutionDate(timestamp);
+            PersistenceHelper.manager.save(activity2);
+        }
     }
 
     /**
