@@ -4,6 +4,7 @@
     ext.appo.change.report.*
     ext.appo.change.constants.BomChangeConstants.java
     codebase/netmarkets/jsp/ext/appo/change/report/bomChangeReport.jsp
+    codebase/netmarkets/jsp/ext/appo/change/report/changeHistoryReport.jsp
 
 2.涉及历史文件合并：
     wt.workflow.worklist.resource.worklistResource.java
@@ -13,6 +14,12 @@
     //add by lzy at 20191120 start
     //add by lzy at 20191120 end
 
+    ext.appo.ecn.resource.changeNoticeActionsRB.java
+    ext.appo.ecn.resource.changeNoticeActionsRB_zh_CN.java
+     复制以上文件含以下标签的内容到服务器对应文件对应位置上（正常情况可以直接覆盖，覆盖之前对比一下两个文件出标签外的其他内容是否一致）
+     //add by lzy at 20191217 start
+     //add by lzy at 20191217 end
+
 
     codebase/config/actions/NetMarkets-actionModels.xml
     codebase/config/actions/NetMarkets-actions.xml
@@ -21,7 +28,17 @@
     <!--modify by lzy at 20191120 start-->
     <!--modify by lzy at 20191120 end-->
 
+    codebase/ext/appo/part/processor/StartAppoPartArchiveIssueWF.java
+     复制以上文件含以下标签的内容到服务器对应文件对应位置上（正常情况可以直接覆盖，覆盖之前对比一下两个文件出标签外的其他内容是否一致）
+    //add by lzy at 20191213 start
+    //add by lzy at 20191213 end
+    并将方法isRunningNewEcnWorkflow复制到服务器对应文件上
+
 3.注册xconf文件
     执行xconfmanager -p
 
 4.重启Windchill
+
+5.软类型处理：
+部件:
+A.「是否变更图纸」创建、编辑均不可见
