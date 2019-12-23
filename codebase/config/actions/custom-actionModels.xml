@@ -523,9 +523,6 @@
 		<action name="sysnavTab" type="sysnav"/>
 		<!--<action   name="wtObjectBaselinelink" type="querylink"/> --><!-- Add Kwang : 文档相关基线 -->
 		<action   name="docRelationPart" type="partProductNamingNotice"/>
-        <!--modify by wangtong at 20191024 start-->
-        <action name="changeHistory" type="modify"/>    <!-- Add Twang : 变更履历 -->
-        <!--modify by wangtong at 20191024 end-->
 	</model>
 	
 	<model name="cadInfoPageTabSet">
@@ -1147,6 +1144,10 @@
       <submodel name="changeTaskDetailsTab"/>
       <!--<submodel name="changeTaskProcessTab"/>
       <action   name="sysnavTab" type="sysnav"/>-->
+       <!--        add by lzy at 20191218 start-->
+       <!--ECA BOM变更报表页签-->
+       <action name="bomChangeReport" type="workitem"/>
+       <!--        add by lzy at 20191218 end-->
    </model>
 
    <model name="changeTaskDetailsTab" resourceBundle="com.ptc.windchill.enterprise.change2.changeManagementActionsRB">
