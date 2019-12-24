@@ -35,15 +35,20 @@
 
                         <!-- set the number to a generated number -->
                         <AttrValue id="number" algorithm="com.ptc.windchill.enterprise.revisionControlled.server.impl.NumberGenerator">
-                            <!-- if (template.templated) -->
-                            <Value algorithm="wt.rule.algorithm.BooleanBranch">
-                                <!-- test this value -->
-                                <Attr id="template.templated"/>
-                                <!-- if true -->
+<!--                            &lt;!&ndash; if (template.templated) &ndash;&gt;-->
+<!--                            <Value algorithm="wt.rule.algorithm.BooleanBranch">-->
+<!--                                &lt;!&ndash; test this value &ndash;&gt;-->
+<!--                                <Attr id="template.templated"/>-->
+<!--                                &lt;!&ndash; if true &ndash;&gt;-->
+<!--                                <Arg>{GEN:wt.enterprise.SequenceGenerator:WTCHANGEACTIVITYID_seq:10:0}</Arg>-->
+<!--                                &lt;!&ndash; if false &ndash;&gt;-->
+<!--                                <Arg>{GEN:wt.enterprise.SequenceGenerator:WTCHANGEACTIVITYID_seq:5:0}</Arg>-->
+<!--                            </Value>-->
+
+                            <!--update by lzy at 20191128 start-->
+                                <Arg>CA</Arg>
                                 <Arg>{GEN:wt.enterprise.SequenceGenerator:WTCHANGEACTIVITYID_seq:10:0}</Arg>
-                                <!-- if false -->
-                                <Arg>{GEN:wt.enterprise.SequenceGenerator:WTCHANGEACTIVITYID_seq:5:0}</Arg>
-                            </Value>
+                                <!--update by lzy at 20191128 end-->
                         </AttrValue>
 
                         <!--  set the version info to a generated version info -->
