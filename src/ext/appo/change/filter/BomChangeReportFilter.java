@@ -4,6 +4,7 @@ import com.ptc.core.ui.validation.DefaultSimpleValidationFilter;
 import com.ptc.core.ui.validation.UIValidationCriteria;
 import com.ptc.core.ui.validation.UIValidationKey;
 import com.ptc.core.ui.validation.UIValidationStatus;
+import wt.change2.WTChangeActivity2;
 import wt.change2.WTChangeOrder2;
 import wt.fc.Persistable;
 import wt.fc.WTReference;
@@ -35,22 +36,23 @@ public class BomChangeReportFilter extends DefaultSimpleValidationFilter {
                     if(templateName!=null&&templateName.equals("APPO_BOMCHANGEWF")){
                         uivalidationstatus=UIValidationStatus.ENABLED;
                     }
-                    if(templateName!=null&&templateName.equals("APPO_DRAWINGCHANGEWF")){
+                                    if(templateName!=null&&templateName.equals("APPO_DRAWINGCHANGEWF")){
                         uivalidationstatus=UIValidationStatus.ENABLED;
                     }
-//                    if(templateName!=null&&templateName.equals("GenericECNWF")){
-//                        uivalidationstatus=UIValidationStatus.ENABLED;
-//                    }
-                }else if (persistable != null && persistable instanceof WTChangeOrder2){
+                                    if(templateName!=null&&templateName.equals("GenericECNWF")){
+                        uivalidationstatus=UIValidationStatus.ENABLED;
+                    }
+                }else if (persistable != null && persistable instanceof WTChangeActivity2){
+                    uivalidationstatus=UIValidationStatus.ENABLED;
+                    }else if (persistable != null && persistable instanceof WTChangeOrder2){
                     // 判断是否是ECN流程
                     uivalidationstatus=UIValidationStatus.ENABLED;
-                }
-            } catch (Exception e) {
+                    }
+                } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         return uivalidationstatus;
     }
-
 
 }
