@@ -277,8 +277,6 @@ public class CusNmWorkItemCommands extends NmWorkItemCommands implements Externa
                         PersistenceServerHelper.manager.update(audit);
                     }
 
-                    //备注显示无效
-
                     Object object = workItem.getPrimaryBusinessObject().getObject();
                     LOGGER.info("=====saveAttribute.object: " + object);
                     if (object instanceof WTChangeOrder2) {
