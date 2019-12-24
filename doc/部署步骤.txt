@@ -26,6 +26,7 @@
 1.软类型处理：
     全局枚举:
     A.新增全局枚举「ChangeObjectType」「*变更对象类型」{BOM变更、图纸变更}
+    B.新增全局枚举「ApprovalOpinion」「审批意见」{同意、驳回}
 
     部件：
     A.新增全局属性「ChangeObjectType」「*变更对象类型」「字符串」创建、编辑、查看视图均不可见
@@ -98,7 +99,8 @@
     B，conn <dbUser>/<dbPass>    例如：conn username/password
     C，执行 @ext/appo/change/Make_pkg_change_Table.sql
     D，执行 @ext/appo/change/Make_pkg_change_Index.sql
-    E，执行 exit
+    E，执行 @ext/appo/change/models/update_APPO_CORRELATIONOBJECTLINK_Table.sql
+    F，执行 exit
 
 9. 注册xconf文件：
     xconfmanager -i $WT_HOME/codebase/ext/xconf/modify.properties.xconf -p

@@ -1,0 +1,61 @@
+此次部署涉及文件(复制以下文件到服务器对应目录)：
+    ext.appo.change.*
+    wt.workflow.*
+
+    codebase/config/actions/modify-actionModels.xml
+    codebase/config/actions/modify-actions.xml
+    codebase/ext/xconf/modify.properties.xconf
+    codebase/config/mvc/appo-custom-configs.xml
+    codebase/modelRegistry.properties.addition
+    codebase/descendentRegistry.properties.addition
+    codebase/ext/generic/cfg/APPO_ECNWF.xlsx
+    codebase/ext/generic/cfg/APPO_BOMCHANGEWF.xlsx
+    codebase/ext/generic/cfg/APPO_DRAWINGCHANGEWF.xlsx
+    codebase/ext/generic/cfg/WFTemplate.addition.xlsx
+    codebase/WEB-INF/lib/APPO-Model.jar
+    codebase/netmarkets/jsp/ext/appo/change/*
+    codebase/ext/appo/change/models/*
+
+    db/sql3/ext/appo/change/*
+    loadFiles/ext/appo/lifecycle/*
+    loadFiles/ext/appo/oir/*
+    loadFiles/ext/appo/workflow/*
+    /appo.xml   -   此文件放到服务器的Windchill目录下
+
+
+1.软类型处理：
+    全局枚举:
+    A.新增全局枚举「ApprovalOpinion」「审批意见」{同意、驳回}
+
+
+2. 停止Windchill服务
+
+
+3.更新配置文件：
+    复制codebase/ext/generic/cfg/WFTemplate.addition.xlsx的内容到服务器复制Windchill/codebase/ext/generic/cfg/WFTemplate.xlsx的尾部(「请不要删除此行」前)
+
+
+4. 修改模型自定义表：
+    oracle 用户 进入  代码目录Windchill/db/sql3 目录
+    A，执行sqlplus /nolog
+    B，conn <dbUser>/<dbPass>    例如：conn username/password
+    C，执行 @ext/appo/change/models/update_APPO_CORRELATIONOBJECTLINK_Table.sql
+    D，执行 exit
+
+5. 注册xconf文件：
+    xconfmanager -p
+
+
+6. 编译代码：
+    windchill shell下执行：
+    cd Windchill
+    ant -f appo.xml jc
+
+
+7. 启动Windchill服务(编译成功后)
+
+
+8. 导入工作流模板：
+    windchill wt.load.LoadFromFile -d loadFiles/ext/appo/workflow/APPO_ECNWF.xml -CONT_PATH "/wt.inf.container.OrgContainer=APPO" -u wcadmin -p wcadmin
+    windchill wt.load.LoadFromFile -d loadFiles/ext/appo/workflow/APPO_BOMCHANGEWF.xml -CONT_PATH "/wt.inf.container.OrgContainer=APPO" -u wcadmin -p wcadmin
+    windchill wt.load.LoadFromFile -d loadFiles/ext/appo/workflow/APPO_DRAWINGCHANGEWF.xml -CONT_PATH "/wt.inf.container.OrgContainer=APPO" -u wcadmin -p wcadmin
