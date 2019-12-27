@@ -144,8 +144,10 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
                     // 添加受影响对象
                     LOGGER.info(">>>>>>>>>>createChangeActivity2.vector:" + vector);
                     ModifyUtils.addAffectedActivityData(eca, vector);
-
-                    String attributeValue = attributesMap.get(CHANGETYPE_COMPID);
+                    //modify by xiebowen at 2019/12/24  start
+                    //String attributeValue = attributesMap.get(CHANGETYPE_COMPID);
+                    String attributeValue = attributesMap.get(CHANGOBJECTETYPE_COMPID);
+                    //modify by xiebowen at 2019/12/24  end
                     // 部件「类型」选择「替换」时ECA状态设置为「已解决」不起流程、不升版、不添加到产生对象
                     if (PIStringUtils.isNotNull(attributeValue) && attributeValue.contains(VALUE_1)) {
                         eca = (WTChangeActivity2) PICoreHelper.service.setLifeCycleState(eca, RESOLVED);
@@ -235,7 +237,10 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
         Persistable key = entryMap.getKey();
         //设置部件关联文档、EPM文档的「变更对象类型」与部件相同
         if (key instanceof WTPart) {
-            changeObjectType = changeObjectType.replaceFirst("BOM变更;", "").replaceFirst("图纸变更;", "");
+            //modify by xiebowen at 2019/12/25  start
+            //changeObjectType = changeObjectType.replaceFirst("BOM变更;", "").replaceFirst("图纸变更;", "");
+            changeObjectType = changeObjectType.replaceFirst("BOM变更升版;", "").replaceFirst("图纸变更升版;", "").replaceFirst("替换;", "");
+            //modify by xiebowen at 2019/12/25  end
             Collection<Persistable> collection = entryMap.getValue();
             for (Persistable persistable : collection) {
                 PIAttributeHelper.service.forceUpdateSoftAttribute(persistable, ATTRIBUTE_7, changeObjectType);
@@ -266,7 +271,10 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
 
                 //变更对象类型
                 if (ATTRIBUTE_7.equals(key))
-                    value = value.replaceFirst("BOM变更;", "").replaceFirst("图纸变更;", "");
+                    //modify by xiebowen at 2019/12/25  start
+                    //value = value.replaceFirst("BOM变更;", "").replaceFirst("图纸变更;", "");
+                    value = value.replaceFirst("BOM变更升版;", "").replaceFirst("图纸变更升版;", "").replaceFirst("替换;", "");
+                    //modify by xiebowen at 2019/12/25  start
 
                 attributesMap.put(ibaEntryMap.getKey(), value);
             }

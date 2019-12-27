@@ -8,6 +8,7 @@ import ext.appo.ecn.common.util.ChangeUtils;
 import ext.appo.ecn.constants.ChangeConstants;
 import ext.appo.ecn.pdf.PdfUtil;
 import ext.appo.part.filter.StandardPartsRevise;
+import ext.appo.part.util.EffecitveBaselineUtil;
 import ext.lang.PICollectionUtils;
 import ext.lang.PIStringUtils;
 import ext.pi.PIException;
@@ -184,8 +185,12 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
                                 AFFECTEDPARTNUMBER.add(part.getNumber() + part.getViewName());
                                 AFFECTEDPART.add(part);
 
-                                if (attributesMap.containsKey(CHANGETYPE_COMPID)) {
-                                    String changeType = attributesMap.get(CHANGETYPE_COMPID);
+                                //modify by xiebowen at 2019/12/24  start
+                                //if (attributesMap.containsKey(CHANGETYPE_COMPID)) {
+                                //    String changeType = attributesMap.get(CHANGETYPE_COMPID);
+                                if (attributesMap.containsKey(CHANGOBJECTETYPE_COMPID)) {
+                                    String changeType = attributesMap.get(CHANGOBJECTETYPE_COMPID);
+                                //modify by xiebowen at 2019/12/24  end
                                     if (PIStringUtils.isNotNull(changeType)) {
                                         //根据用户所选"类型"为「替换」必须收集上层部件
                                         if (changeType.contains(VALUE_1)) CHILDPART.add(part);
@@ -692,7 +697,7 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
     /**
      * 若是否经过环保评审为否，环保说明必填
      *
-     * @param order
+     * @param
      * @throws WTException
      */
     public void checkEnvProtection(ChangeOrder2 ecn) throws WTException {

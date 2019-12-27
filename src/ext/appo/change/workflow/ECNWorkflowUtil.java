@@ -439,7 +439,10 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
 //                    }
 
                     // 部件‘类型’选择‘替换’时ECA状态设置为‘已解决’,不启动ECA,选择‘升级’时ECA状态设置为‘开启’
-                    String attributeValue = ModifyUtils.getValue(changeable2, CHANGETYPE_COMPID);
+                    //modify by xiebowen at 2019/12/24  start
+                    //String attributeValue = ModifyUtils.getValue(changeable2, CHANGETYPE_COMPID);
+                    String attributeValue = ModifyUtils.getValue(changeable2, CHANGOBJECTETYPE_COMPID);
+                    //modify by xiebowen at 2019/12/24  end
                     if (PIStringUtils.isNotNull(attributeValue) && attributeValue.contains(VALUE_1)) {
                         PICoreHelper.service.setLifeCycleState(eca, RESOLVED);
 //                        add by lzy at 20191209 start

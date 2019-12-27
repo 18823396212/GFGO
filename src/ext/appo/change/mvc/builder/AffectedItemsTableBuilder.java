@@ -171,11 +171,13 @@ public class AffectedItemsTableBuilder extends AbstractComponentBuilder implemen
         columnconfig.setAutoSize(true);
         tableConfig.addComponent(columnconfig);//变更对象类型
 
-        columnconfig = componentconfigfactory.newColumnConfig("ChangeType", true);
-        columnconfig.setLabel(this.messageChange2ClientResource.getMessage("CHANGETYPE"));
-        columnconfig.setDataUtilityId("ModifyAffectedItemsDataUtility");
-        columnconfig.setAutoSize(true);
-        tableConfig.addComponent(columnconfig);
+//modify by xiebowen at 2019/12/24  start
+//        columnconfig = componentconfigfactory.newColumnConfig("ChangeType", true);
+//        columnconfig.setLabel(this.messageChange2ClientResource.getMessage("CHANGETYPE"));
+//        columnconfig.setDataUtilityId("ModifyAffectedItemsDataUtility");
+//        columnconfig.setAutoSize(true);
+//        tableConfig.addComponent(columnconfig);
+//modify by xiebowen at 2019/12/24  start
 
         columnconfig = componentconfigfactory.newColumnConfig("CompletionTime", true);
         columnconfig.setLabel(this.messageChange2ClientResource.getMessage("COMPLETIONTIME"));

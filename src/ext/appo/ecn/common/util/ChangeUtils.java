@@ -975,8 +975,12 @@ public class ChangeUtils implements ChangeConstants {
                     // 获取用户针对每一列输入的数据
                     Map<String, String> attributesMap = pageDatasMap.get(entryMap.getKey());
                     // 部件‘类型’选择‘替换’时ECA状态设置为‘已发布’,选择‘升级’时ECA状态设置为‘开启’
-                    if (attributesMap.containsKey(CHANGETYPE_COMPID)) {
-                        String attributeValue = attributesMap.get(CHANGETYPE_COMPID);
+                    //modify by xiebowen at 2019/12/24  start
+                    //if (attributesMap.containsKey(CHANGETYPE_COMPID)) {
+                    //    String attributeValue = attributesMap.get(CHANGETYPE_COMPID);
+                    if (attributesMap.containsKey(CHANGOBJECTETYPE_COMPID)) {
+                        String attributeValue = attributesMap.get(CHANGOBJECTETYPE_COMPID);
+                    //modify by xiebowen at 2019/12/24  end
                         if (PIStringUtils.isNotNull(attributeValue) && attributeValue.contains("替换")) {
                             eca = (WTChangeActivity2) PICoreHelper.service.setLifeCycleState(eca, RESOLVED);
                         } else if (PIStringUtils.isNotNull(attributeValue) && attributeValue.contains("升版")) {
@@ -1134,8 +1138,12 @@ public class ChangeUtils implements ChangeConstants {
 
                     // 根据用户所选‘类型’为“替换”必须收集上层部件
                     Map<String, String> attributeInfoMap = entryMap.getValue();
-                    if (attributeInfoMap.containsKey(CHANGETYPE_COMPID)) {
-                        String attributeValue = attributeInfoMap.get(CHANGETYPE_COMPID);
+                    //modify by xiebowen at 2019/12/24  start
+                    //if (attributeInfoMap.containsKey(CHANGETYPE_COMPID)) {
+                    //    String attributeValue = attributeInfoMap.get(CHANGETYPE_COMPID);
+                    if (attributeInfoMap.containsKey(CHANGOBJECTETYPE_COMPID)) {
+                        String attributeValue = attributeInfoMap.get(CHANGOBJECTETYPE_COMPID);
+                    //modify by xiebowen at 2019/12/24  end
                         if (PIStringUtils.isNotNull(attributeValue) && attributeValue.contains("替换")) {
                             childArray.add(part);
                         }
