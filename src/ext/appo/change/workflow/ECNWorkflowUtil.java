@@ -30,9 +30,16 @@ import wt.part.PartDocHelper;
 import wt.part.WTPart;
 import wt.pom.Transaction;
 import wt.project.Role;
+import wt.query.QuerySpec;
+import wt.query.SearchCondition;
 import wt.sandbox.SandboxHelper;
 import wt.session.SessionServerHelper;
+import wt.util.WTAttributeNameIfc;
 import wt.util.WTException;
+import wt.vc.VersionControlHelper;
+import wt.vc.config.LatestConfigSpec;
+import wt.vc.views.View;
+import wt.vc.views.ViewHelper;
 import wt.workflow.engine.WfEngineHelper;
 import wt.workflow.engine.WfEngineServerHelper;
 import wt.workflow.engine.WfProcess;
@@ -722,5 +729,158 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
             throw new WTException(builder.toString());
         }
     }
+    // 检查受影响对象是否为最新大版本
+    public void checkAffectObjectVesionNew(WTObject pbo, ObjectReference self) throws WTException {
+        Set<String> parts=new HashSet();//物料
+        Set<String> docs=new HashSet();//文档
+        String str="";
+        if (pbo instanceof WTChangeOrder2) {
+            WTChangeOrder2 changeOrder2 = (WTChangeOrder2) pbo;
+            //收集需要创建ECA的部件、文档、CAD文档
+            Map<Persistable, Collection<Persistable>> collectionMap = collectionObjectsAffected(changeOrder2);
+            System.out.println("collectionMap=="+collectionMap);
+            for (Map.Entry<Persistable, Collection<Persistable>> entryMap : collectionMap.entrySet()) {
+                if (entryMap.getKey() instanceof Changeable2) {
+                    Changeable2 changeable2 = (Changeable2) entryMap.getKey();
+                    if (changeable2 instanceof WTPart) {
+                        WTPart part = (WTPart) changeable2;
+                        String view=part.getViewName();
+                        String number=part.getNumber();
+                        String version=part.getVersionInfo().getIdentifier().getValue();
+                        Vector latestVector=getAllLatestWTParts(view,number);
+                        if (latestVector!=null&&latestVector.size()>0) {
+                            WTPart newPart = (WTPart) latestVector.get(0);
+                            if (newPart != null) {
+                                String newVersion = newPart.getVersionInfo().getIdentifier().getValue();
+                                if (!version.equals(newVersion)){
+                                    parts.add(number);
+                                }
+                            }
+                        }
+                        for (Persistable persistable : entryMap.getValue()) {
+                            if (persistable instanceof WTDocument) {
+                                WTDocument doc = (WTDocument) persistable;
+                                String docVersion=doc.getVersionInfo().getIdentifier().getValue();
+                                QueryResult qrVersions = VersionControlHelper.service.allVersionsOf(doc.getMaster());
+                                WTDocument newDoc=new WTDocument();
+                                while (qrVersions.hasMoreElements()) {
+                                    newDoc=(WTDocument) qrVersions.nextElement();
+                                    break;
+                                }
+                                if (newDoc!=null){
+                                    String newVersion = newDoc.getVersionInfo().getIdentifier().getValue();
+                                    if (!docVersion.equals(newVersion)){
+                                        docs.add(doc.getNumber());
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if ((parts!= null && parts.size() > 0)||(docs!= null && docs.size() > 0)) {
+                for (String partNumber:parts){
+                    str=str+"物料"+partNumber+",";
+                }
+                for (String docNumber:docs){
+                    str=str+"文档"+docNumber+",";
+                }
+                str=str+"不是最新版本！";
+                throw new WTException(str);
+            }
 
+        }
+
+    }
+
+    /**
+     * 检查受影响对象是否检出
+     * @param pbo
+     * @throws WTException
+     */
+    public void isCheckout(WTObject pbo, ObjectReference self) throws WTException {
+        Set<String> checkoutPart=new HashSet();//检出物料
+        Set<String> checkoutDoc=new HashSet();//检出文档
+        String str="";
+        if (pbo instanceof WTChangeOrder2) {
+            WTChangeOrder2 changeOrder2 = (WTChangeOrder2) pbo;
+            //收集需要创建ECA的部件、文档、CAD文档
+            Map<Persistable, Collection<Persistable>> collectionMap = collectionObjectsAffected(changeOrder2);
+            System.out.println("collectionMap==" + collectionMap);
+            for (Map.Entry<Persistable, Collection<Persistable>> entryMap : collectionMap.entrySet()) {
+                if (entryMap.getKey() instanceof Changeable2) {
+                    Changeable2 changeable2 = (Changeable2) entryMap.getKey();
+                    if (changeable2 instanceof WTPart){
+                        WTPart part = (WTPart) changeable2;
+                        String view=part.getViewName();
+                        String number=part.getNumber();
+                        Vector latestVector=getAllLatestWTParts(view,number);//同一视图最新版本
+                        if (latestVector!=null&&latestVector.size()>0) {
+                            WTPart newPart = (WTPart) latestVector.get(0);
+                            Boolean flag=PICoreHelper.service.isCheckout(newPart);
+                            if (flag){
+                                checkoutPart.add(part.getNumber());
+                            }
+                        }
+                        for (Persistable persistable : entryMap.getValue()) {
+                            if (persistable instanceof WTDocument) {
+                                WTDocument doc= (WTDocument) persistable;
+                                WTDocument wtDocument=(WTDocument)VersionControlHelper.service.getLatestIteration(doc,false);//最新版本
+                                Boolean flag2=PICoreHelper.service.isCheckout(wtDocument);
+                                if (flag2){
+                                    checkoutDoc.add(doc.getNumber());
+                                }
+                            }
+                        }
+
+                    }
+
+                }
+            }
+            if ((checkoutPart!= null && checkoutPart.size() > 0)||(checkoutDoc!= null && checkoutDoc.size() > 0)) {
+                for (String partNumber:checkoutPart){
+                    str=str+"物料"+partNumber+",";
+                }
+                for (String docNumber:checkoutDoc){
+                    str=str+"文档"+docNumber+",";
+                }
+                str=str+"被检出！";
+                throw new WTException(str);
+            }
+
+        }
+    }
+
+
+    /*
+     * 通过number获取某视图的最新的物料
+     */
+    public static Vector getAllLatestWTParts(String viewName, String number) throws WTException {
+        QuerySpec qs = new QuerySpec(WTPart.class);
+
+        View view = ViewHelper.service.getView(viewName);
+        SearchCondition sc = new SearchCondition(WTPart.class, "view.key.id", SearchCondition.EQUAL,
+                view.getPersistInfo().getObjectIdentifier().getId());
+        qs.appendWhere(sc);
+        if (number.trim().length() > 0) {
+            qs.appendAnd();
+            SearchCondition scNumber = new SearchCondition(WTPart.class, WTPart.NUMBER, SearchCondition.EQUAL,
+                    number.toUpperCase());
+            qs.appendWhere(scNumber);
+        }
+
+        SearchCondition scLatestIteration = new SearchCondition(WTPart.class, WTAttributeNameIfc.LATEST_ITERATION,
+                SearchCondition.IS_TRUE);
+        qs.appendAnd();
+        qs.appendWhere(scLatestIteration);
+
+        QueryResult qr = PersistenceHelper.manager.find(qs);
+        if (qr != null && qr.hasMoreElements())
+            qr = (new LatestConfigSpec()).process(qr);
+
+        if (qr != null && qr.hasMoreElements())
+            return qr.getObjectVectorIfc().getVector();
+
+        return new Vector();
+    }
 }
