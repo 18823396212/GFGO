@@ -73,7 +73,8 @@ public class ExtEditChangeNoticeFormProcessor extends EditChangeNoticeFormProces
                  * 9.3、检查受影响对象不能为标准件。
                  * 检查受影响对象列表中是否存在已修订的对象
                  */
-                affectedObjectUtil.cacheButton();
+//                affectedObjectUtil.cacheButton();
+                affectedObjectUtil.okButton();
                 //校验 任务主题 是否重复
                 transactionUtil.check();
 

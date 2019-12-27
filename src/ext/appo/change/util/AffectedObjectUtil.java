@@ -107,9 +107,10 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
             collectionOne();
             //收集子件对应的上层父件编码集合
             collectionTwo();
+            //add by lzy at 20191227 start
             //收集ECA受影响对象集合
-            collectionThree();
-
+//            collectionThree();
+            //add by lzy at 20191227 end
             checkEnvProtection(ORDER2);
 
             //add by lzy at 20191213 start
@@ -752,7 +753,6 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
                 String number=part.getNumber();
                 String version = part.getVersionInfo().getIdentifier().getValue();
                 String view=part.getViewName();
-                System.out.println("当前部件"+number+"==版本=="+version+"==视图=="+view);
                 //获取同一视图下最新物料
                 latestVector=getAllLatestWTParts(view,number);
                 if (latestVector!=null&&latestVector.size()>0){
@@ -761,7 +761,6 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
                         String newNumber=newPart.getNumber();
                         String newVersion = newPart.getVersionInfo().getIdentifier().getValue();
                         String newView=newPart.getViewName();
-                        System.out.println("同一视图最新部件"+newNumber+"==版本=="+newVersion+"==视图=="+newView);
                         if (!version.equals(newVersion)){
                             MESSAGES.add("物料："+number+"不是最新版本！");
                         }
