@@ -14,6 +14,7 @@ import ext.lang.PIStringUtils;
 import ext.pi.PIException;
 import ext.pi.core.PIAttributeHelper;
 import ext.pi.core.PICoreHelper;
+import ext.pi.core.PIPartHelper;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
@@ -25,6 +26,7 @@ import wt.enterprise.Master;
 import wt.enterprise.RevisionControlled;
 import wt.epm.EPMDocument;
 import wt.fc.*;
+import wt.fc.collections.WTCollection;
 import wt.identity.IdentityFactory;
 import wt.lifecycle.LifeCycleManaged;
 import wt.log4j.LogR;
@@ -59,6 +61,7 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
     public Map<WTPart, Collection<Persistable>> PARTASSOCIATIONDOC = new HashMap<>();//部件关联的文档集合
     private Collection<WTPart> CHILDPART = new HashSet<>();//需要收集上层父件的子件集合（用户所选"类型"为「替换」的部件、物料分类为「PCB」「E1500000」的部件）
     private Collection<WTPart> LVERSIONPART = new HashSet<>();//用户所选"类型"为「升版」的部件
+    private Collection<WTPart> BOMLVERSIONPART = new HashSet<>();//用户所选"类型"为「BOM变更升版」的部件
     private Map<String, Set<String>> PARENTMAP = new HashMap<>();//子件对应的上层父件编码集合
     private Set<String> AFFECTEDPARTNUMBER = new HashSet<>();//ECN受影响对象-部件编码集合
     private Set<String> AFFECTEDDOCNUMBER = new HashSet<>();//ECN受影响对象-文档编码集合
@@ -117,6 +120,9 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
 //            checkObjectVesionNew();
             checkStandardPartsRevise();
             //add by lzy at 20191213 end
+            //add by lzy at 20191227 start
+            checkHasBom();
+            //add by lzy at 20191227 end
 
             //校验需要收集上层对象的部件是否满足收集条件
             checkOne();
@@ -196,8 +202,11 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
                                         //根据用户所选"类型"为「替换」必须收集上层部件
                                         if (changeType.contains(VALUE_1)) CHILDPART.add(part);
                                         //用户所选"类型"为「升版」的部件
-                                        else if (changeType.contains(VALUE_4)) LVERSIONPART.add(part);
-
+                                        //add by lzy at 20191227 start
+//                                        else if (changeType.contains(VALUE_4)) LVERSIONPART.add(part);
+                                        if (changeType.contains(VALUE_4)) LVERSIONPART.add(part);
+                                        if (changeType.contains(VALUE_5)) BOMLVERSIONPART.add(part);
+                                        //add by lzy at 20191227 end
                                     }
                                 }
                             }
@@ -505,7 +514,7 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
                 //PCBA不需要加入判断
                 String classification = (String) PIAttributeHelper.service.getValue(part, "Classification");
                 if (!classification.contains("appo_bcp01")){
-                    if (numbers.size() > 0 && result.size() < 1) MESSAGES.add("部件: " + part.getNumber() + "未收集说明方文档，请至少收集一份说明方文档！！");
+                    if (numbers.size() > 0 && result.size() < 1) MESSAGES.add("部件: " + part.getNumber() + "未收集说明方文档，请至少收集一份说明方文档！");
                 }
             }
             //            add by lzy at 20191205 end
@@ -891,6 +900,22 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
             oid = "OR:" + p.toString();
         }
         return oid;
+    }
+
+
+    /**
+     * BOM变更升版需要判断当条受影响的对象是否存在BOM结构
+     */
+    private void checkHasBom() throws WTException {
+        //选择BOM变更升版的部件
+        for (WTPart part : BOMLVERSIONPART) {
+            WTCollection childrens = PIPartHelper.service.findChildren(part);
+            if (childrens.size() <= 0) {
+                MESSAGES.add("物料"+part.getNumber()+"没有BOM结构,不能BOM变更升版!");
+            }
+
+        }
+
     }
 
 }
