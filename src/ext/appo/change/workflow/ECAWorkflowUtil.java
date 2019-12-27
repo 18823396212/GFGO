@@ -1055,7 +1055,7 @@ public class ECAWorkflowUtil implements ChangeConstants, ModifyConstants {
                     System.out.println("internalName2=="+internalName);
                     LOGGER.info("=====internalName2==" + internalName);
                     //任务性内部值
-                    if (internalName.equals("com.plm.TransactionalChangeActivity2")) {
+                    if (internalName.contains(TYPE_3)) {
                         if(PIStringUtils.isNotNull(orgState)){
                             if(lifeCycleManaged.getState().toString().equalsIgnoreCase(orgState)){
                                 WorkflowUtil.setLifeCycleState(lifeCycleManaged, targetState);
