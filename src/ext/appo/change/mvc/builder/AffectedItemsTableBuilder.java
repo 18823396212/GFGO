@@ -15,6 +15,7 @@ import ext.appo.ecn.constants.ChangeConstants;
 import ext.lang.PIStringUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import wt.change2.Changeable2;
 import wt.change2.WTChangeActivity2;
 import wt.change2.WTChangeOrder2;
@@ -27,6 +28,7 @@ import wt.util.WTException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
@@ -39,7 +41,7 @@ public class AffectedItemsTableBuilder extends AbstractComponentBuilder implemen
 
     @Override
     public Object buildComponentData(ComponentConfig paramComponentConfig, ComponentParams paramComponentParams) throws Exception {
-        Collection<Persistable> collection = new HashSet<>();
+        Collection<Persistable> result = new HashSet<>();
 
         SessionContext previous = SessionContext.newContext();
         try {
@@ -62,32 +64,41 @@ public class AffectedItemsTableBuilder extends AbstractComponentBuilder implemen
                         // 获取ECN中所有受影响对象
                         Map<WTChangeActivity2, Collection<Changeable2>> dataMap = ModifyUtils.getChangeablesBefore(changeOrder2);
                         for (Map.Entry<WTChangeActivity2, Collection<Changeable2>> entry : dataMap.entrySet()) {
-                            collection.addAll(entry.getValue());
+                            result.addAll(entry.getValue());
                         }
 
                         //获取ECN暂存的受影响对象
-                        collection.addAll(ModifyHelper.service.queryPersistable(changeOrder2, LINKTYPE_1));
+                        result.addAll(ModifyHelper.service.queryPersistable(changeOrder2, LINKTYPE_1));
                     }
                 }
             } else {
-                collection.addAll(pageDataMap.keySet());
+                result.addAll(pageDataMap.keySet());
             }
 
             // 获取新增数据
+            Map<String, String> collectionMap = new HashMap<>();
             String selectOids = request.getParameter("selectOids");
             LOGGER.info("=====buildComponentData.selectOids: " + selectOids);
-
             if (PIStringUtils.isNotNull(selectOids)) {
                 JSONArray jsonArray = new JSONArray(selectOids);
                 for (int i = 0; i < jsonArray.length(); i++) {
-                    collection.add((new ReferenceFactory()).getReference(jsonArray.getString(i)).getObject());
+                    String oid = jsonArray.getString(i);
+                    String collection = "";
+                    if (oid.startsWith("{") && oid.endsWith("}")) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        oid = jsonObject.getString("oid");
+                        collection = jsonObject.getString("collection");
+                    }
+                    collectionMap.put(oid, collection);
+                    result.add((new ReferenceFactory()).getReference(oid).getObject());
                 }
             }
+            commandbean.getParameterMap().put("collectionObjectMap", collectionMap);
         } finally {
             SessionContext.setContext(previous);
         }
 
-        return collection;
+        return result;
     }
 
     @Override
@@ -200,7 +211,7 @@ public class AffectedItemsTableBuilder extends AbstractComponentBuilder implemen
         columnconfig = componentconfigfactory.newColumnConfig("CollectionNumber", true);
         columnconfig.setLabel("收集对象");
         columnconfig.setDataUtilityId("ModifyAffectedItemsDataUtility");
-        columnconfig.setAutoSize(true);
+        columnconfig.setWidth(60);
         tableConfig.addComponent(columnconfig);
 
         return tableConfig;

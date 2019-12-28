@@ -44,20 +44,19 @@
         }
     }
 
-    var table_id = 'ext.appo.ecn.mvc.builder.CollectItemsTableBuilder';
-
     function okButton() {
-        var selectRows = PTC.jca.table.Utils.getTableSelectedRowsById(table_id, false, false);
-        if (selectRows.length == 0) {
-            alert("至少选择一项进行删除!");
-            return;
+        var items = [];
+        var table = PTC.jca.table.Utils.getTable('ext.appo.ecn.mvc.builder.CollectItemsTableBuilder');
+        var selections = table.getSelectionModel().getSelections();
+        if (selections == null || selections.length == 0) {
+            JCAAlert('com.ptc.core.agreements.agreementsResource.NOTHING_SELECTED');
+            return false;
         }
-        var itemsOid = [];
-        for (var i = 0; i < selectRows.length; i++) {
-            var row = selectRows[i];
-            itemsOid[i] = getOidFromRowValue(row.value);
+        for (var i = 0; i < selections.length; i++) {
+            var selection = selections[i].data;
+            items.push({oid: selection.oid, collection: selection.collection})
         }
-        window.opener.addCollectItemsForAffectedEndItems(itemsOid);
+        window.opener.addCollectItemsForAffectedEndItems(items);
         window.close();
     }
 

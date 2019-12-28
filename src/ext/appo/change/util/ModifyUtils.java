@@ -129,6 +129,35 @@ public class ModifyUtils implements ChangeConstants {
         return number;
     }
 
+    /**
+     * 获取对象名称
+     * @param persistable
+     * @return
+     */
+    public static String getName(Persistable persistable) {
+        if (persistable instanceof ObjectReference) {
+            persistable = ((ObjectReference) persistable).getObject();
+        }
+
+        String number = "";
+
+        if (persistable instanceof WTPart) {
+            number = ((WTPart) persistable).getName();
+        } else if (persistable instanceof EPMDocument) {
+            number = ((EPMDocument) persistable).getName();
+        } else if (persistable instanceof WTDocument) {
+            number = ((WTDocument) persistable).getName();
+        } else if (persistable instanceof WTChangeRequest2) {
+            number = ((WTChangeRequest2) persistable).getName();
+        } else if (persistable instanceof WTChangeOrder2) {
+            number = ((WTChangeOrder2) persistable).getName();
+        } else if (persistable instanceof WTChangeActivity2) {
+            number = ((WTChangeActivity2) persistable).getName();
+        }
+
+        return number;
+    }
+
     /***
      * 获取对象的版本
      * @param persistable
@@ -164,8 +193,37 @@ public class ModifyUtils implements ChangeConstants {
         return version;
     }
 
+    /**
+     * 获取对象状态
+     * @param persistable
+     * @return
+     */
+    public static String getState(Persistable persistable) {
+        if (persistable instanceof ObjectReference) {
+            persistable = ((ObjectReference) persistable).getObject();
+        }
+
+        String state = "";
+
+        if (persistable instanceof WTPart) {
+            state = ((WTPart) persistable).getLifeCycleState().getDisplay(Locale.CHINA);
+        } else if (persistable instanceof EPMDocument) {
+            state = ((EPMDocument) persistable).getLifeCycleState().getDisplay(Locale.CHINA);
+        } else if (persistable instanceof WTDocument) {
+            state = ((WTDocument) persistable).getLifeCycleState().getDisplay(Locale.CHINA);
+        } else if (persistable instanceof WTChangeRequest2) {
+            state = ((WTChangeRequest2) persistable).getLifeCycleState().getDisplay(Locale.CHINA);
+        } else if (persistable instanceof WTChangeOrder2) {
+            state = ((WTChangeOrder2) persistable).getLifeCycleState().getDisplay(Locale.CHINA);
+        } else if (persistable instanceof WTChangeActivity2) {
+            state = ((WTChangeActivity2) persistable).getLifeCycleState().getDisplay(Locale.CHINA);
+        }
+
+        return state;
+    }
+
     /***
-     * 获取对象编码
+     * 获取对象BranchId
      * @param persistable
      * @return
      */
@@ -189,35 +247,6 @@ public class ModifyUtils implements ChangeConstants {
             branchId = String.valueOf(((WTChangeActivity2) persistable).getBranchIdentifier());
         }
         return branchId;
-    }
-
-    /**
-     * 获取对象状态
-     * @param persistable
-     * @return
-     */
-    public static String getState(Persistable persistable) {
-        if (persistable instanceof ObjectReference) {
-            persistable = ((ObjectReference) persistable).getObject();
-        }
-
-        String state = "";
-
-        if (persistable instanceof WTPart) {
-            state = ((WTPart) persistable).getLifeCycleState().toString();
-        } else if (persistable instanceof EPMDocument) {
-            state = ((EPMDocument) persistable).getLifeCycleState().toString();
-        } else if (persistable instanceof WTDocument) {
-            state = ((WTDocument) persistable).getLifeCycleState().toString();
-        } else if (persistable instanceof WTChangeRequest2) {
-            state = ((WTChangeRequest2) persistable).getLifeCycleState().toString();
-        } else if (persistable instanceof WTChangeOrder2) {
-            state = ((WTChangeOrder2) persistable).getLifeCycleState().toString();
-        } else if (persistable instanceof WTChangeActivity2) {
-            state = ((WTChangeActivity2) persistable).getLifeCycleState().toString();
-        }
-
-        return state;
     }
 
     /***

@@ -1,16 +1,20 @@
 package ext.appo.ecn.mvc.builder;
 
-import com.ptc.jca.mvc.components.JcaColumnConfig;
 import com.ptc.jca.mvc.components.JcaComponentParams;
 import com.ptc.jca.mvc.components.JcaTableConfig;
 import com.ptc.mvc.components.*;
 import com.ptc.mvc.util.ClientMessageSource;
+import com.ptc.netmarkets.model.NmOid;
 import com.ptc.netmarkets.util.beans.NmCommandBean;
 import com.ptc.netmarkets.util.beans.NmHelperBean;
+import ext.appo.change.beans.CollectItemsBean;
+import ext.appo.change.constants.ModifyConstants;
+import ext.appo.change.util.ModifyUtils;
 import ext.appo.ecn.common.util.ChangePartQueryUtils;
 import ext.appo.ecn.constants.ChangeConstants;
 import ext.lang.PIStringUtils;
 import ext.pi.core.PIAccessHelper;
+import ext.pi.core.PICoreHelper;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import wt.access.AccessControlHelper;
@@ -31,6 +35,7 @@ import wt.util.WTException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
@@ -74,28 +79,29 @@ public class CollectItemsTableBuilder extends AbstractComponentBuilder {
 
         ColumnConfig columnconfig = componentconfigfactory.newColumnConfig("name", true);
         columnconfig.setAutoSize(true);
-        columnconfig.setDataUtilityId("customizationDataUtility");
         tableConfig.addComponent(columnconfig);
 
         columnconfig =  componentconfigfactory.newColumnConfig("number", true);
         columnconfig.setAutoSize(true);
-        columnconfig.setDataUtilityId("customizationDataUtility");
         tableConfig.addComponent(columnconfig);
 
-        columnconfig = componentconfigfactory.newColumnConfig("version", true);
+        columnconfig = componentconfigfactory.newColumnConfig("pVersion", true);
+        columnconfig.setLabel("版本");
         columnconfig.setAutoSize(true);
-        columnconfig.setDataUtilityId("customizationDataUtility");
         tableConfig.addComponent(columnconfig);
 
-        columnconfig = componentconfigfactory.newColumnConfig("state", true);
+        columnconfig = componentconfigfactory.newColumnConfig("pState", true);
+        columnconfig.setLabel("状态");
         columnconfig.setAutoSize(true);
-        columnconfig.setDataUtilityId("customizationDataUtility");
         tableConfig.addComponent(columnconfig);
 
         columnconfig = componentconfigfactory.newColumnConfig("ggms", true);
         columnconfig.setLabel(this.messageChange2ClientResource.getMessage("COLUMNNAME_GGMS"));
         columnconfig.setAutoSize(true);
-        columnconfig.setDataUtilityId("customizationDataUtility");
+        tableConfig.addComponent(columnconfig);
+
+        columnconfig = componentconfigfactory.newColumnConfig("collection", true);
+        columnconfig.setHidden(true);
         tableConfig.addComponent(columnconfig);
 
         return tableConfig;
@@ -108,10 +114,10 @@ public class CollectItemsTableBuilder extends AbstractComponentBuilder {
      *            部件OID数组字符串
      * @return
      */
-    public Collection<Persistable> collectItems(String selectOid) {
-        Collection<Persistable> itemsArray = new HashSet<>();
+    public Collection<CollectItemsBean> collectItems(String selectOid) {
+        Map<String, CollectItemsBean> map = new HashMap<>();
         if (PIStringUtils.isNull(selectOid)) {
-            return itemsArray;
+            return map.values();
         }
 
         try {
@@ -131,29 +137,65 @@ public class CollectItemsTableBuilder extends AbstractComponentBuilder {
                     partArray.add((WTPart) persistable);
                 }
             }
+            // 获取部件关联文档
             for (WTPart part : partArray) {
-                // 获取部件关联文档
                 QueryResult qr = PartDocHelper.service.getAssociatedDocuments(part);
                 while (qr.hasMoreElements()) {
                     Object object = qr.nextElement();
                     if (object instanceof ObjectReference) {
                         object = ((ObjectReference) object).getObject();
                     }
-                    itemsArray.add((Persistable) object);
+                    if (object instanceof Persistable) {
+                        Persistable persistable = (Persistable) object;
+                        String number = ModifyUtils.getNumber(persistable);
+                        CollectItemsBean bean = map.get(number);
+                        if (null == bean) {
+                            bean = new CollectItemsBean();
+                            bean.setOid(NmOid.newNmOid(PICoreHelper.service.getOid(persistable)));
+                            bean.setNumber(number);
+                            bean.setName(ModifyUtils.getName(persistable));
+                            bean.setpVersion(ModifyUtils.getVersion(persistable));
+                            bean.setpState(ModifyUtils.getState(persistable));
+                            bean.setGgms(ModifyUtils.getValue(persistable, ModifyConstants.ATTRIBUTE_11));
+                            bean.setCollection(part.getNumber());
+                            map.put(number, bean);
+                        } else {
+                            bean.setCollection(bean.getCollection() + ";" + part.getNumber());
+                        }
+                    }
                 }
-            }
-            // 批量查询上层父件
-            Map<WTPart, WTPartUsageLink> parentMap = ChangePartQueryUtils.batchQueryParentParts(partArray);
-            if (parentMap != null && parentMap.size() > 0) {
-                Collection<WTPart> parentArray = parentMap.keySet();
-                // 过滤非最新部件
-                itemsArray.addAll(ChangePartQueryUtils.excludeNonLatestVersionsPart(parentArray));
+
+                // 查询上层父件
+                Collection<WTPart> collection = new HashSet<>();
+                collection.add(part);
+                Map<WTPart, WTPartUsageLink> parentMap = ChangePartQueryUtils.batchQueryParentParts(collection);
+                if (parentMap != null && parentMap.size() > 0) {
+                    // 过滤非最新部件
+                    Collection<WTPart> parents = ChangePartQueryUtils.excludeNonLatestVersionsPart(parentMap.keySet());
+                    for (WTPart parent : parents) {
+                        String number = parent.getNumber();
+                        CollectItemsBean bean = map.get(number);
+                        if (null == bean) {
+                            bean = new CollectItemsBean();
+                            bean.setOid(NmOid.newNmOid(PICoreHelper.service.getOid(parent)));
+                            bean.setNumber(number);
+                            bean.setName(parent.getName());
+                            bean.setpVersion(ModifyUtils.getVersion(parent));
+                            bean.setpState(ModifyUtils.getState(parent));
+                            bean.setGgms(ModifyUtils.getValue(parent, ModifyConstants.ATTRIBUTE_11));
+                            bean.setCollection(part.getNumber());
+                            map.put(number, bean);
+                        } else {
+                            bean.setCollection(bean.getCollection() + ";" + part.getNumber());
+                        }
+                    }
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return itemsArray;
+        return map.values();
     }
 
     /***

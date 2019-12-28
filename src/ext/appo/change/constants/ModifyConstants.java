@@ -16,6 +16,8 @@ public interface ModifyConstants {
     String ATTRIBUTE_8 = "ChangeItemType";//变更类型
     String ATTRIBUTE_9 = "ApprovalOpinion";//审批意见
     String ATTRIBUTE_10 = "Remark";//备注（驳回必填）
+    String ATTRIBUTE_11 = "ggms";//规格描述
+    String ATTRIBUTE_12 = "CollectionNumber";//收集对象
 
     //类型定义
     String TYPE_1 = "com.pisx.BOMChangeActivity2";//BOM变更ECA

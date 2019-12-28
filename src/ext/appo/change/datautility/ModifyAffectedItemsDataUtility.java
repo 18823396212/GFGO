@@ -16,6 +16,7 @@ import com.ptc.windchill.enterprise.changeable.ChangeableObjectBean;
 import ext.appo.change.ModifyHelper;
 import ext.appo.change.constants.ModifyConstants;
 import ext.appo.change.models.CorrelationObjectLink;
+import ext.appo.change.util.AffectedObjectUtil;
 import ext.appo.ecn.common.util.ChangePartQueryUtils;
 import ext.appo.ecn.common.util.ChangeUtils;
 import ext.appo.ecn.constants.ChangeConstants;
@@ -62,14 +63,14 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
             NmCommandBean nmCommandBean = paramModelContext.getNmCommandBean();
             boolean bool = CreateAndEditWizBean.isCreateEditWizard(nmCommandBean);//是否创建及编辑状态
             LOGGER.info("=====bool: " + bool);
+            Object actionObject = nmCommandBean.getActionOid().getRefObject();
+            LOGGER.info("=====actionObject: " + actionObject);
+            String ecnVid = String.valueOf(PICoreHelper.service.getBranchId(actionObject));
+            String branchId = String.valueOf(PICoreHelper.service.getBranchId(paramObject));
+            LOGGER.info("=====ecnVid: " + ecnVid + " >>>>>branchId: " + branchId);
+            CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, branchId, LINKTYPE_1);
+            LOGGER.info("=====link: " + link);
             if (bool) {
-                Object actionObject = nmCommandBean.getActionOid().getRefObject();
-                LOGGER.info("=====actionObject: " + actionObject);
-                String ecnVid = String.valueOf(PICoreHelper.service.getBranchId(actionObject));
-                String branchId = String.valueOf(PICoreHelper.service.getBranchId(paramObject));
-                LOGGER.info("=====ecnVid: " + ecnVid + " >>>>>branchId: " + branchId);
-                CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, branchId, LINKTYPE_1);
-                LOGGER.info("=====link: " + link);
                 boolean flag = false;
                 if (link != null) flag = ROUTING_1.equals(link.getRouting()) || ROUTING_3.equals(link.getRouting());
                 LOGGER.info("=====flag: " + flag);
@@ -112,12 +113,40 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
                     TextBox textBox = generateTextBox(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString));
                     gui_array.addGUIComponent(textBox);
                     return gui_array;
+                } else if (paramString.contains(ATTRIBUTE_12)) {
+                    Object value = null;
+                    HashMap<String, Object> parameterMap = nmCommandBean.getParameterMap();
+                    Object object = parameterMap.get("collectionObjectMap");
+                    if (object instanceof Map) {
+                        Map map = (Map) object;
+                        value = map.get(PICoreHelper.service.getOid(paramObject));
+                        if (null == value) {
+                            AffectedObjectUtil affectedObjectUtil = new AffectedObjectUtil(nmCommandBean, null);
+                            Map<Persistable, Map<String, String>> pageDataMap = affectedObjectUtil.PAGEDATAMAP;
+                            Map<String, String> attributeMap = pageDataMap.get(paramObject);
+                            value = attributeMap == null ? null : attributeMap.get(ATTRIBUTE_12);
+                        }
+                        if (null == value) if (link != null) value = link.getCollection();
+                    }
+                    GUIComponentArray gui_array = new GUIComponentArray();
+                    TextBox textBox = generateTextBox(paramModelContext, paramObject, paramString, value);
+                    textBox.setEditable(false);
+                    textBox.setWidth(50);
+                    textBox.setRequired(false);
+                    gui_array.addGUIComponent(textBox);
+                    return gui_array;
                 } else {
                     if (paramObject instanceof WTPart) {
                         GUIComponentArray gui_array = new GUIComponentArray();
                         gui_array.addGUIComponent(generateTextDisplayComponent(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString)));
                         return gui_array;
                     }
+                }
+            } else {
+                if (paramString.contains(ATTRIBUTE_12)) {
+                    GUIComponentArray gui_array = new GUIComponentArray();
+                    gui_array.addGUIComponent(generateTextDisplayComponent(paramModelContext, paramObject, paramString, link.getCollection()));
+                    return gui_array;
                 }
             }
 

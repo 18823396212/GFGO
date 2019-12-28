@@ -296,6 +296,42 @@ public abstract class _CorrelationObjectLink extends wt.fc.ObjectToObjectLink im
    }
 
    /**
+    * 收集对象
+    *
+    * @see ext.appo.change.models.CorrelationObjectLink
+    */
+   public static final java.lang.String COLLECTION = "collection";
+   static int COLLECTION_UPPER_LIMIT = -1;
+   java.lang.String collection;
+   /**
+    * 收集对象
+    *
+    * @see ext.appo.change.models.CorrelationObjectLink
+    */
+   public java.lang.String getCollection() {
+      return collection;
+   }
+   /**
+    * 收集对象
+    *
+    * @see ext.appo.change.models.CorrelationObjectLink
+    */
+   public void setCollection(java.lang.String collection) throws wt.util.WTPropertyVetoException {
+      collectionValidate(collection);
+      this.collection = collection;
+   }
+   void collectionValidate(java.lang.String collection) throws wt.util.WTPropertyVetoException {
+      if (COLLECTION_UPPER_LIMIT < 1) {
+         try { COLLECTION_UPPER_LIMIT = (java.lang.Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("collection").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT); }
+         catch (wt.introspection.WTIntrospectionException e) { COLLECTION_UPPER_LIMIT = 2000; }
+      }
+      if (collection != null && !wt.fc.PersistenceHelper.checkStoredLength(collection.toString(), COLLECTION_UPPER_LIMIT, true))
+         throw new wt.util.WTPropertyVetoException("wt.introspection.introspectionResource", wt.introspection.introspectionResource.UPPER_LIMIT,
+               new java.lang.Object[] { new wt.introspection.PropertyDisplayName(CLASSNAME, "collection"), java.lang.String.valueOf(java.lang.Math.min(COLLECTION_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE/wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR)) },
+               new java.beans.PropertyChangeEvent(this, "collection", this.collection, collection));
+   }
+
+   /**
     * @see ext.appo.change.models.CorrelationObjectLink
     */
    public static final java.lang.String CHANGE_ORDER2_ROLE = "changeOrder2";
@@ -342,7 +378,7 @@ public abstract class _CorrelationObjectLink extends wt.fc.ObjectToObjectLink im
       catch (wt.introspection.WTIntrospectionException wte) { return wt.util.WTStringUtilities.tail(getConceptualClassname(), '.'); }
    }
 
-   public static final long EXTERNALIZATION_VERSION_UID = -8762476992891204370L;
+   public static final long EXTERNALIZATION_VERSION_UID = -3473050819574853397L;
 
    public void writeExternal(java.io.ObjectOutput output) throws java.io.IOException {
       output.writeLong( EXTERNALIZATION_VERSION_UID );
@@ -351,6 +387,7 @@ public abstract class _CorrelationObjectLink extends wt.fc.ObjectToObjectLink im
 
       output.writeObject( aadDescription );
       output.writeObject( approvalOpinion );
+      output.writeObject( collection );
       output.writeObject( ecaIdentifier );
       output.writeObject( ecnBranchIdentifier );
       output.writeObject( linkType );
@@ -376,6 +413,7 @@ public abstract class _CorrelationObjectLink extends wt.fc.ObjectToObjectLink im
 
       output.setString( "aadDescription", aadDescription );
       output.setString( "approvalOpinion", approvalOpinion );
+      output.setString( "collection", collection );
       output.setString( "ecaIdentifier", ecaIdentifier );
       output.setString( "ecnBranchIdentifier", ecnBranchIdentifier );
       output.setString( "linkType", linkType );
@@ -389,6 +427,7 @@ public abstract class _CorrelationObjectLink extends wt.fc.ObjectToObjectLink im
 
       aadDescription = input.getString( "aadDescription" );
       approvalOpinion = input.getString( "approvalOpinion" );
+      collection = input.getString( "collection" );
       ecaIdentifier = input.getString( "ecaIdentifier" );
       ecnBranchIdentifier = input.getString( "ecnBranchIdentifier" );
       linkType = input.getString( "linkType" );
@@ -397,12 +436,13 @@ public abstract class _CorrelationObjectLink extends wt.fc.ObjectToObjectLink im
       routing = input.getString( "routing" );
    }
 
-   boolean readVersion_8762476992891204370L( java.io.ObjectInput input, long readSerialVersionUID, boolean superDone ) throws java.io.IOException, java.lang.ClassNotFoundException {
+   boolean readVersion_3473050819574853397L( java.io.ObjectInput input, long readSerialVersionUID, boolean superDone ) throws java.io.IOException, java.lang.ClassNotFoundException {
       if ( !superDone )
          super.readExternal( input );
 
       aadDescription = (java.lang.String) input.readObject();
       approvalOpinion = (java.lang.String) input.readObject();
+      collection = (java.lang.String) input.readObject();
       ecaIdentifier = (java.lang.String) input.readObject();
       ecnBranchIdentifier = (java.lang.String) input.readObject();
       linkType = (java.lang.String) input.readObject();
@@ -416,7 +456,7 @@ public abstract class _CorrelationObjectLink extends wt.fc.ObjectToObjectLink im
       boolean success = true;
 
       if ( readSerialVersionUID == EXTERNALIZATION_VERSION_UID )
-         return readVersion_8762476992891204370L( input, readSerialVersionUID, superDone );
+         return readVersion_3473050819574853397L( input, readSerialVersionUID, superDone );
       else
          success = readOldVersion( input, readSerialVersionUID, passThrough, superDone );
 

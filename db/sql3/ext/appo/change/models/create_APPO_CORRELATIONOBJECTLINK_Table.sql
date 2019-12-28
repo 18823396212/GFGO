@@ -4,6 +4,7 @@ set echo off
 CREATE TABLE APPO_CORRELATIONOBJECTLINK (
    aadDescription   VARCHAR2(4000),
    approvalOpinion   VARCHAR2(600),
+   collection   VARCHAR2(4000),
    ecaIdentifier   VARCHAR2(600),
    ecnBranchIdentifier   VARCHAR2(600),
    linkType   VARCHAR2(600),

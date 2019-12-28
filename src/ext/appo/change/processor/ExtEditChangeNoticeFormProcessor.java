@@ -22,6 +22,7 @@ import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import wt.change2.WTChangeOrder2;
 import wt.fc.Persistable;
+import wt.fc.PersistenceServerHelper;
 import wt.fc.QueryResult;
 import wt.fc.ReferenceFactory;
 import wt.log4j.LogR;
@@ -30,6 +31,7 @@ import wt.part.WTPart;
 import wt.session.SessionContext;
 import wt.session.SessionHelper;
 import wt.util.WTException;
+import wt.util.WTPropertyVetoException;
 import wt.workflow.engine.WfEngineHelper;
 import wt.workflow.engine.WfProcess;
 import wt.workflow.engine.WfState;
@@ -168,6 +170,9 @@ public class ExtEditChangeNoticeFormProcessor extends EditChangeNoticeFormProces
             Map<String, String> attributeMap = entry.getValue();
             String aadDescription = attributeMap.get(AADDESCRIPTION_COMPID);
             LOGGER.info(">>>>>>>>>>linkAffectedItems.aadDescription: " + aadDescription);
+            String collectionNumber = attributeMap.get(ATTRIBUTE_12);
+            LOGGER.info(">>>>>>>>>>linkAffectedItems.collectionNumber: " + collectionNumber);
+
             String branchId = String.valueOf(PICoreHelper.service.getBranchId(persistable));
             LOGGER.info(">>>>>>>>>>linkAffectedItems.branchId: " + branchId);
             CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, branchId, LINKTYPE_1);
@@ -177,7 +182,13 @@ public class ExtEditChangeNoticeFormProcessor extends EditChangeNoticeFormProces
                 LOGGER.info(">>>>>>>>>>linkAffectedItems.ecaIdentifier: " + ecaIdentifier);
                 String routing = StringUtils.isEmpty(ecaIdentifier) ? "" : ROUTING_1;
                 LOGGER.info(">>>>>>>>>>linkAffectedItems.routing: " + routing);
-                ModifyHelper.service.newCorrelationObjectLink(changeOrder2, persistable, LINKTYPE_1, ecnVid, branchId, ecaIdentifier, aadDescription, routing);
+                link = ModifyHelper.service.newCorrelationObjectLink(changeOrder2, persistable, LINKTYPE_1, ecnVid, branchId, ecaIdentifier, aadDescription, routing);
+                try {
+                    link.setCollection(collectionNumber);
+                } catch (WTPropertyVetoException e) {
+                    e.printStackTrace();
+                }
+                PersistenceServerHelper.manager.update(link);
             } else {
                 String routing = link.getRouting();
                 LOGGER.info(">>>>>>>>>>linkAffectedItems.routing: " + routing);
@@ -186,7 +197,13 @@ public class ExtEditChangeNoticeFormProcessor extends EditChangeNoticeFormProces
                     LOGGER.info(">>>>>>>>>>linkAffectedItems.ecaIdentifier: " + ecaIdentifier);
                     routing = StringUtils.isEmpty(ecaIdentifier) ? routing : ROUTING_1;
                     LOGGER.info(">>>>>>>>>>linkAffectedItems.routing: " + routing);
-                    ModifyHelper.service.updateCorrelationObjectLink(link, ecaIdentifier, aadDescription, routing);
+                    link = ModifyHelper.service.updateCorrelationObjectLink(link, ecaIdentifier, aadDescription, routing);
+                    try {
+                        link.setCollection(collectionNumber);
+                    } catch (WTPropertyVetoException e) {
+                        e.printStackTrace();
+                    }
+                    PersistenceServerHelper.manager.update(link);
                 }
             }
         }

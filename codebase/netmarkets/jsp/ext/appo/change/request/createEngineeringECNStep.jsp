@@ -358,6 +358,7 @@
             } else {
                 columnArray['ChangeObjectType'] = '';
             }
+            columnArray['CollectionNumber'] = tableRow.CollectionNumber.gui.comparable;
             //add by tongwang 20191023 end
 
             tableRowArry[i] = columnArray;
