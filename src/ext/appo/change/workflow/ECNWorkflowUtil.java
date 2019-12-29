@@ -414,6 +414,13 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                         flowName = FLOWNAME_2;
                         description = FLOWNAME_4;
                     }
+                    //add by lzy at 20191229 start
+                    else if (changeObjectType.contains(VALUE_1)) {
+                        type = TYPE_1;
+                        flowName = FLOWNAME_1;
+                        description = FLOWNAME_3;
+                    }
+                    //add by lzy at 20191229 end
                     //游离WTDocument、EPMDocument(图纸单独走变更的场景)，创建图纸变更ECA
                     if (StringUtils.isEmpty(type) && !(changeable2 instanceof WTPart)) {
                         type = TYPE_2;
@@ -444,11 +451,6 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                     LOGGER.info(">>>>>>>>>>createChangeActivity2.vector:" + vector);
                     ModifyUtils.addAffectedActivityData(eca, vector);
 
-                    //修订受影响对象，并添加到产生对象列表
-                    WTCollection collection = ModifyUtils.revise(vector, reviseMap);
-                    LOGGER.info(">>>>>>>>>>createChangeActivity2.collection:" + collection);
-                    ModifyUtils.AddChangeRecord2(eca, collection);
-
 //                    // 部件‘类型’选择‘替换’时ECA状态设置为‘已发布’,选择‘升级’时ECA状态设置为‘开启’
 //                    String attributeValue = ModifyUtils.getValue(changeable2, CHANGETYPE_COMPID);
 //                    if (PIStringUtils.isNotNull(attributeValue) && attributeValue.contains(VALUE_1)) {
@@ -468,6 +470,12 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                     } else if (PIStringUtils.isNotNull(attributeValue) && attributeValue.contains(VALUE_4)) {
 //                    } else if (PIStringUtils.isNotNull(attributeValue) && (attributeValue.contains(VALUE_7)||attributeValue.contains(VALUE_8))) {
 //                        add by lzy at 20191209 end
+
+                        //修订受影响对象，并添加到产生对象列表
+                        WTCollection collection = ModifyUtils.revise(vector, reviseMap);
+                        LOGGER.info(">>>>>>>>>>createChangeActivity2.collection:" + collection);
+                        ModifyUtils.AddChangeRecord2(eca, collection);
+
                         eca = (WTChangeActivity2) PICoreHelper.service.setLifeCycleState(eca, OPEN);
 
                         // 期望完成日期
