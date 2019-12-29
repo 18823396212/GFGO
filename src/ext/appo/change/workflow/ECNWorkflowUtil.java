@@ -166,6 +166,15 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                         flog = true;
                     }
                 }
+                if (!flog) {
+                    //其他驳回情况处理
+                    String ecnVid = String.valueOf(PICoreHelper.service.getBranchId(changeOrder2));
+                    LOGGER.info(">>>>>>>>>>syncExpression.ecnVid:" + ecnVid);
+                    CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, CONSTANTS_7, CONSTANTS_7);
+                    if (null != link && ROUTING_2.equals(link.getRouting())) {
+                        flog = true;
+                    }
+                }
                 if (flog) {
                     WfEngineServerHelper.service.emitCustomObjectEvent(CONSTANTS_3, changeOrder2, new Hashtable());
                 }
@@ -196,6 +205,9 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
             if (links.size() > 0) return true;
             links = ModifyHelper.service.queryCorrelationObjectLinks((WTChangeOrder2) pbo, LINKTYPE_3, ROUTING_2);
             LOGGER.info("=====isRejected.links2: " + links);
+            if (links.size() > 0) return true;
+            links = ModifyHelper.service.queryCorrelationObjectLinks((WTChangeOrder2) pbo, CONSTANTS_7, ROUTING_2);//其他情况驳回判定
+            LOGGER.info("=====isRejected.links3: " + links);
             if (links.size() > 0) return true;
         }
         return false;
@@ -651,6 +663,9 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                         ModifyUtils.setLifeCycleState((LifeCycleManaged) persistable, CANCELLED);
                     link.setApprovalOpinion("");
                     link.setRemark("");
+                    if (CONSTANTS_7.equals(link.getPerBranchIdentifier()) && CONSTANTS_7.equals(link.getLinkType())) {
+                        link.setRouting(ROUTING_2);
+                    }
                     PersistenceServerHelper.manager.update(link);
                 }
             }
@@ -729,7 +744,13 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
             throw new WTException(builder.toString());
         }
     }
-    // 检查受影响对象是否为最新大版本
+
+    /**
+     * 检查受影响对象是否为最新大版本
+     * @param pbo
+     * @param self
+     * @throws WTException
+     */
     public void checkAffectObjectVesionNew(WTObject pbo, ObjectReference self) throws WTException {
         Set<String> parts=new HashSet();//物料
         Set<String> docs=new HashSet();//文档
@@ -851,36 +872,35 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
         }
     }
 
-
-    /*
+    /**
      * 通过number获取某视图的最新的物料
+     * @param viewName
+     * @param number
+     * @return
+     * @throws WTException
      */
     public static Vector getAllLatestWTParts(String viewName, String number) throws WTException {
         QuerySpec qs = new QuerySpec(WTPart.class);
 
         View view = ViewHelper.service.getView(viewName);
-        SearchCondition sc = new SearchCondition(WTPart.class, "view.key.id", SearchCondition.EQUAL,
-                view.getPersistInfo().getObjectIdentifier().getId());
+        SearchCondition sc = new SearchCondition(WTPart.class, "view.key.id", SearchCondition.EQUAL, view.getPersistInfo().getObjectIdentifier().getId());
         qs.appendWhere(sc);
         if (number.trim().length() > 0) {
             qs.appendAnd();
-            SearchCondition scNumber = new SearchCondition(WTPart.class, WTPart.NUMBER, SearchCondition.EQUAL,
-                    number.toUpperCase());
+            SearchCondition scNumber = new SearchCondition(WTPart.class, WTPart.NUMBER, SearchCondition.EQUAL, number.toUpperCase());
             qs.appendWhere(scNumber);
         }
 
-        SearchCondition scLatestIteration = new SearchCondition(WTPart.class, WTAttributeNameIfc.LATEST_ITERATION,
-                SearchCondition.IS_TRUE);
+        SearchCondition scLatestIteration = new SearchCondition(WTPart.class, WTAttributeNameIfc.LATEST_ITERATION, SearchCondition.IS_TRUE);
         qs.appendAnd();
         qs.appendWhere(scLatestIteration);
 
         QueryResult qr = PersistenceHelper.manager.find(qs);
-        if (qr != null && qr.hasMoreElements())
-            qr = (new LatestConfigSpec()).process(qr);
+        if (qr != null && qr.hasMoreElements()) qr = (new LatestConfigSpec()).process(qr);
 
-        if (qr != null && qr.hasMoreElements())
-            return qr.getObjectVectorIfc().getVector();
+        if (qr != null && qr.hasMoreElements()) return qr.getObjectVectorIfc().getVector();
 
         return new Vector();
     }
+
 }
