@@ -36,6 +36,7 @@ import wt.sandbox.SandboxHelper;
 import wt.session.SessionServerHelper;
 import wt.util.WTAttributeNameIfc;
 import wt.util.WTException;
+import wt.util.WTPropertyVetoException;
 import wt.vc.VersionControlHelper;
 import wt.vc.config.LatestConfigSpec;
 import wt.vc.views.View;
@@ -298,7 +299,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
      * @param self
      * @throws WTException
      */
-    public void submitRoute(WTObject pbo, ObjectReference self) throws WTException {
+    public void submitRoute(WTObject pbo, ObjectReference self) throws Exception {
         if (pbo instanceof WTChangeOrder2) {
             WTChangeOrder2 changeOrder2 = (WTChangeOrder2) pbo;
 
@@ -313,6 +314,11 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
 
             //创建事务性ECA
             createTransactionECA(changeOrder2);
+
+            //add by lzy at 20191230 start
+            //删除other路由link
+            setOtherRouting(changeOrder2);
+            //add by lzy at 20191230 end
         }
     }
 
@@ -914,6 +920,20 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
         if (qr != null && qr.hasMoreElements()) return qr.getObjectVectorIfc().getVector();
 
         return new Vector();
+    }
+
+
+    /**
+     * 如果存在驳回为其他情况other(之前驳回过为其他情况的，删除other路由link)
+     * @param changeOrder2
+     * @throws WTException
+     */
+    public void setOtherRouting(WTChangeOrder2 changeOrder2) throws Exception{
+        String ecnVid = String.valueOf(PICoreHelper.service.getBranchId(changeOrder2));
+        CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, CONSTANTS_7, CONSTANTS_7);
+        if (null != link) {
+            PersistenceServerHelper.manager.remove(link);
+        }
     }
 
 }
