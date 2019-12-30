@@ -451,6 +451,21 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                     LOGGER.info(">>>>>>>>>>createChangeActivity2.vector:" + vector);
                     ModifyUtils.addAffectedActivityData(eca, vector);
 
+                    // 期望完成日期
+                    eca = ModifyUtils.updateNeedDate(eca, ModifyUtils.getValue(changeable2, ChangeConstants.COMPLETIONTIME_COMPID));
+
+                    String ecnVid = String.valueOf(PICoreHelper.service.getBranchId(changeOrder2));
+                    LOGGER.info(">>>>>>>>>>createChangeActivity2.ecnVid:" + ecnVid);
+
+                    //更新受影响对象描述，受影响对象Link路由、ECA ID
+                    updateDescription(ecnVid, eca, changeable2);
+                    //更新部件关联的说明文档及图纸受影响对象描述，受影响对象Link路由、ECA ID
+                    for (Persistable persistable : entryMap.getValue()) {
+                        if (persistable instanceof Changeable2) {
+                            updateDescription(ecnVid, eca, (Changeable2) persistable);
+                        }
+                    }
+
 //                    // 部件‘类型’选择‘替换’时ECA状态设置为‘已发布’,选择‘升级’时ECA状态设置为‘开启’
 //                    String attributeValue = ModifyUtils.getValue(changeable2, CHANGETYPE_COMPID);
 //                    if (PIStringUtils.isNotNull(attributeValue) && attributeValue.contains(VALUE_1)) {
@@ -477,21 +492,6 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                         ModifyUtils.AddChangeRecord2(eca, collection);
 
                         eca = (WTChangeActivity2) PICoreHelper.service.setLifeCycleState(eca, OPEN);
-
-                        // 期望完成日期
-                        eca = ModifyUtils.updateNeedDate(eca, ModifyUtils.getValue(changeable2, ChangeConstants.COMPLETIONTIME_COMPID));
-
-                        String ecnVid = String.valueOf(PICoreHelper.service.getBranchId(changeOrder2));
-                        LOGGER.info(">>>>>>>>>>createChangeActivity2.ecnVid:" + ecnVid);
-
-                        //更新受影响对象描述，受影响对象Link路由、ECA ID
-                        updateDescription(ecnVid, eca, changeable2);
-                        //更新部件关联的说明文档及图纸受影响对象描述，受影响对象Link路由、ECA ID
-                        for (Persistable persistable : entryMap.getValue()) {
-                            if (persistable instanceof Changeable2) {
-                                updateDescription(ecnVid, eca, (Changeable2) persistable);
-                            }
-                        }
 
                         //启动ECA流程
                         ModifyUtils.startWorkflow(eca, flowName, description);
@@ -688,16 +688,21 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
      */
     public boolean isReplace(WTChangeActivity2 changeActivity2) throws WTException {
         Boolean isReplace = false;
-        Collection<Changeable2> befores = ModifyUtils.getChangeablesBefore(changeActivity2);
-        for (Changeable2 before : befores) {
-            if (before instanceof WTPart) {
-                String value = ModifyUtils.getValue(before, "ChangeType");//获取物料变更类型
-                String[] str = value.split(";");
-                if (str.length > 1) {
-                    value = str[1];
-                }
-                if (value.equals("替换")) {
-                    isReplace = true;
+        if (changeActivity2!=null){
+            Collection<Changeable2> befores = ModifyUtils.getChangeablesBefore(changeActivity2);
+            for (Changeable2 before : befores) {
+                if (before instanceof WTPart) {
+//                String value = ModifyUtils.getValue(before, "ChangeType");//获取物料变更类型
+                    //add by lzy at 20191229 start
+                    String value = ModifyUtils.getValue(before, CHANGOBJECTETYPE_COMPID);//获取物料变更对象类型
+                    //add by lzy at 20191229 end
+                    String[] str = value.split(";");
+                    if (str.length > 1) {
+                        value = str[1];
+                    }
+                    if (value.equals("替换")) {
+                        isReplace = true;
+                    }
                 }
             }
         }
