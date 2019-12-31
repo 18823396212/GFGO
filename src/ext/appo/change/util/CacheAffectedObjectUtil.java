@@ -109,12 +109,12 @@ public class CacheAffectedObjectUtil implements ChangeConstants, ModifyConstants
                                 WTPart part = (WTPart) persistable;
                                 AFFECTEDPART.add(part);
 
-                                //modify by xiebowen at 2019/12/24  start
-                                //if (attributesMap.containsKey(CHANGETYPE_COMPID)) {
-                                //    String changeType = attributesMap.get(CHANGETYPE_COMPID);
-                                if (attributesMap.containsKey(CHANGOBJECTETYPE_COMPID)) {
-                                    String changeType = attributesMap.get(CHANGOBJECTETYPE_COMPID);
-                                //modify by xiebowen at 2019/12/24  end
+                                //add by lzy at 20191231  start
+                                if (attributesMap.containsKey(CHANGETYPE_COMPID)) {
+                                    String changeType = attributesMap.get(CHANGETYPE_COMPID);
+//                                if (attributesMap.containsKey(CHANGOBJECTETYPE_COMPID)) {
+//                                    String changeType = attributesMap.get(CHANGOBJECTETYPE_COMPID);
+                                //add by lzy at 20191231  end
                                     if (PIStringUtils.isNotNull(changeType)) {
                                         //用户所选"类型"为「升版」的部件
                                         if (changeType.contains(VALUE_4)) LVERSIONPART.add(part);

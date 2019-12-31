@@ -101,7 +101,10 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
                     String type = "";
                     String flowName = "";
                     String description = "";
-                    String changeObjectType = attributesMap.get(ATTRIBUTE_7) == null ? "" : attributesMap.get(ATTRIBUTE_7);//变更对象类型
+                    //add by lzy at 20191231 start
+                    String changeObjectType = attributesMap.get(CHANGETYPE_COMPID) == null ? "" : attributesMap.get(CHANGETYPE_COMPID);//物料变更类型
+//                    String changeObjectType = attributesMap.get(ATTRIBUTE_7) == null ? "" : attributesMap.get(ATTRIBUTE_7);
+                    //add by lzy at 20191231 end
                     if (changeObjectType.contains(VALUE_5)) {
                         type = TYPE_1;
                         flowName = FLOWNAME_1;
@@ -144,10 +147,10 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
                     // 添加受影响对象
                     LOGGER.info(">>>>>>>>>>createChangeActivity2.vector:" + vector);
                     ModifyUtils.addAffectedActivityData(eca, vector);
-                    //modify by xiebowen at 2019/12/24  start
-                    //String attributeValue = attributesMap.get(CHANGETYPE_COMPID);
-                    String attributeValue = attributesMap.get(CHANGOBJECTETYPE_COMPID);
-                    //modify by xiebowen at 2019/12/24  end
+                    //add by lzy at 20191231  start
+                    String attributeValue = attributesMap.get(CHANGETYPE_COMPID);
+//                    String attributeValue = attributesMap.get(CHANGOBJECTETYPE_COMPID);
+                    //add by lzy at 20191231  end
                     // 部件「类型」选择「替换」时ECA状态设置为「已解决」不起流程、不升版、不添加到产生对象
                     if (PIStringUtils.isNotNull(attributeValue) && attributeValue.contains(VALUE_1)) {
                         eca = (WTChangeActivity2) PICoreHelper.service.setLifeCycleState(eca, RESOLVED);
@@ -229,6 +232,7 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
 
     /**
      * 设置文档、EPM文档「变更对象类型」
+     * 「变更对象类型」修改为「变更类型」
      * @param entryMap
      * @param changeObjectType
      * @throws WTException
@@ -243,7 +247,10 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
             //modify by xiebowen at 2019/12/25  end
             Collection<Persistable> collection = entryMap.getValue();
             for (Persistable persistable : collection) {
-                PIAttributeHelper.service.forceUpdateSoftAttribute(persistable, ATTRIBUTE_7, changeObjectType);
+                //add by lzy at 20191231 start
+//                PIAttributeHelper.service.forceUpdateSoftAttribute(persistable, ATTRIBUTE_7, changeObjectType);
+                PIAttributeHelper.service.forceUpdateSoftAttribute(persistable, CHANGETYPE_COMPID, changeObjectType);
+                //add by lzy at 20191231 end
             }
         }
         //游离WTDocument、EPMDocument(图纸单独走变更的场景)设置「变更对象类型」为「图纸变更」
@@ -268,9 +275,12 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
 
                 // 过滤「受影响对象列表备注」
                 if (AADDESCRIPTION_COMPID.equals(key)) continue;
-
-                //变更对象类型
-                if (ATTRIBUTE_7.equals(key))
+                //add by lzy at 20191231 start
+//                //变更对象类型
+//                if (ATTRIBUTE_7.equals(key))
+                //变更类型
+                if (CHANGETYPE_COMPID.equals(key))
+                //add by lzy at 20191231 end
                     //modify by xiebowen at 2019/12/25  start
                     //value = value.replaceFirst("BOM变更;", "").replaceFirst("图纸变更;", "");
                     value = value.replaceFirst("BOM变更升版;", "").replaceFirst("图纸变更升版;", "").replaceFirst("替换;", "");

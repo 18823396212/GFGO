@@ -169,11 +169,13 @@ public class AffectedTableBuilder extends AbstractComponentBuilder implements Ch
         columnconfig.setAutoSize(true);
         tableConfig.addComponent(columnconfig);
 
-        columnconfig = componentconfigfactory.newColumnConfig("ChangeObjectType", true);
-        columnconfig.setLabel(this.source.getMessage("CHANGEOBJECTTYPE"));
-        //columnconfig.setDataUtilityId("AffectedDataUtility");
-        columnconfig.setAutoSize(true);
-        tableConfig.addComponent(columnconfig);//变更对象类型
+        //add by lzy at 20191231 start
+//        columnconfig = componentconfigfactory.newColumnConfig("ChangeObjectType", true);
+//        columnconfig.setLabel(this.source.getMessage("CHANGEOBJECTTYPE"));
+//        //columnconfig.setDataUtilityId("AffectedDataUtility");
+//        columnconfig.setAutoSize(true);
+//        tableConfig.addComponent(columnconfig);//变更对象类型
+        //add by lzy at 20191231 end
 
         columnconfig = componentconfigfactory.newColumnConfig("ChangeType", true);
         columnconfig.setLabel(this.source.getMessage("CHANGETYPE"));

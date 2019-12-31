@@ -175,20 +175,20 @@ public class AffectedItemsTableBuilder extends AbstractComponentBuilder implemen
         columnconfig.setDataUtilityId("ModifyAffectedItemsDataUtility");
         columnconfig.setAutoSize(true);
         tableConfig.addComponent(columnconfig);
-
-        columnconfig = componentconfigfactory.newColumnConfig("ChangeObjectType", true);
-        columnconfig.setLabel(this.messageChange2ClientResource.getMessage("CHANGEOBJECTTYPE"));
-        columnconfig.setDataUtilityId("ModifyAffectedItemsDataUtility");
-        columnconfig.setAutoSize(true);
-        tableConfig.addComponent(columnconfig);//变更对象类型
-
-//modify by xiebowen at 2019/12/24  start
-//        columnconfig = componentconfigfactory.newColumnConfig("ChangeType", true);
-//        columnconfig.setLabel(this.messageChange2ClientResource.getMessage("CHANGETYPE"));
+        //add by lzy at20191231 start
+//        columnconfig = componentconfigfactory.newColumnConfig("ChangeObjectType", true);
+//        columnconfig.setLabel(this.messageChange2ClientResource.getMessage("CHANGEOBJECTTYPE"));
 //        columnconfig.setDataUtilityId("ModifyAffectedItemsDataUtility");
 //        columnconfig.setAutoSize(true);
-//        tableConfig.addComponent(columnconfig);
-//modify by xiebowen at 2019/12/24  start
+//        tableConfig.addComponent(columnconfig);//变更对象类型
+        //add by lzy at20191231 end
+
+        columnconfig = componentconfigfactory.newColumnConfig("ChangeType", true);
+        columnconfig.setLabel(this.messageChange2ClientResource.getMessage("CHANGETYPE"));
+        columnconfig.setDataUtilityId("ModifyAffectedItemsDataUtility");
+        columnconfig.setAutoSize(true);
+        tableConfig.addComponent(columnconfig);
+
 
         columnconfig = componentconfigfactory.newColumnConfig("CompletionTime", true);
         columnconfig.setLabel(this.messageChange2ClientResource.getMessage("COMPLETIONTIME"));

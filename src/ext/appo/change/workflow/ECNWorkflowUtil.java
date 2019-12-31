@@ -203,12 +203,15 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
         if (pbo instanceof WTChangeOrder2) {
             Set<CorrelationObjectLink> links = ModifyHelper.service.queryCorrelationObjectLinks((WTChangeOrder2) pbo, LINKTYPE_1, ROUTING_2);
             LOGGER.info("=====isRejected.links1: " + links);
+            System.out.println("=====isRejected.links1: " + links);
             if (links.size() > 0) return true;
             links = ModifyHelper.service.queryCorrelationObjectLinks((WTChangeOrder2) pbo, LINKTYPE_3, ROUTING_2);
             LOGGER.info("=====isRejected.links2: " + links);
+            System.out.println("=====isRejected.links2: " + links);
             if (links.size() > 0) return true;
             links = ModifyHelper.service.queryCorrelationObjectLinks((WTChangeOrder2) pbo, CONSTANTS_7, ROUTING_2);//其他情况驳回判定
             LOGGER.info("=====isRejected.links3: " + links);
+            System.out.println("=====isRejected.links3: " + links);
             if (links.size() > 0) return true;
         }
         return false;
@@ -410,7 +413,10 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                     String type = "";
                     String flowName = "";
                     String description = "";
-                    String changeObjectType = ModifyUtils.getValue(changeable2, ATTRIBUTE_7);//变更对象类型
+                    //add by lzy at 20191231 start
+//                    String changeObjectType = ModifyUtils.getValue(changeable2, ATTRIBUTE_7);//变更对象类型
+                    String changeObjectType = ModifyUtils.getValue(changeable2, CHANGETYPE_COMPID);//物料变更类型
+                    //add by lzy at 20191231 end
                     if (changeObjectType.contains(VALUE_5)) {
                         type = TYPE_1;
                         flowName = FLOWNAME_1;
@@ -481,10 +487,10 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
 //                    }
 
                     // 部件‘类型’选择‘替换’时ECA状态设置为‘已解决’,不启动ECA,选择‘升级’时ECA状态设置为‘开启’
-                    //modify by xiebowen at 2019/12/24  start
-                    //String attributeValue = ModifyUtils.getValue(changeable2, CHANGETYPE_COMPID);
-                    String attributeValue = ModifyUtils.getValue(changeable2, CHANGOBJECTETYPE_COMPID);
-                    //modify by xiebowen at 2019/12/24  end
+                    //add by lzy at 20191231 start
+                    String attributeValue = ModifyUtils.getValue(changeable2, CHANGETYPE_COMPID);
+//                    String attributeValue = ModifyUtils.getValue(changeable2, CHANGOBJECTETYPE_COMPID);
+                    //add by lzy at 20191231  end
                     if (PIStringUtils.isNotNull(attributeValue) && attributeValue.contains(VALUE_1)) {
                         PICoreHelper.service.setLifeCycleState(eca, RESOLVED);
 //                        add by lzy at 20191209 start
@@ -498,7 +504,6 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                         ModifyUtils.AddChangeRecord2(eca, collection);
 
                         eca = (WTChangeActivity2) PICoreHelper.service.setLifeCycleState(eca, OPEN);
-
                         //启动ECA流程
                         ModifyUtils.startWorkflow(eca, flowName, description);
                     }
@@ -666,17 +671,26 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
             String ecnVid = String.valueOf(PICoreHelper.service.getBranchId(pbo));
             LOGGER.info(">>>>>>>>>>saveAttribute.ecnVid: " + ecnVid);
             Set<CorrelationObjectLink> links = ModifyHelper.service.queryCorrelationObjectLinks((WTChangeOrder2) pbo, LINKTYPE_1);
-            links.add(ModifyHelper.service.queryCorrelationObjectLink(ecnVid, CONSTANTS_7, CONSTANTS_7));
+            //add by lzy at 20191231 start
+//            links.add(ModifyHelper.service.queryCorrelationObjectLink(ecnVid, CONSTANTS_7, CONSTANTS_7));
+            CorrelationObjectLink otherLink=ModifyHelper.service.queryCorrelationObjectLink(ecnVid, CONSTANTS_7, CONSTANTS_7);
+            if (otherLink!=null) links.add(otherLink);
+            //add by lzy at 20191231 end
             LOGGER.info("=====rejectDispose.links: " + links);
+            System.out.println("=====rejectDispose.links: " + links);
             for (CorrelationObjectLink link : links) {
                 String approvalOpinion = link.getApprovalOpinion();
                 LOGGER.info("=====rejectDispose.approvalOpinion: " + approvalOpinion);
+                System.out.println("=====rejectDispose.approvalOpinion: " + approvalOpinion);
+                System.out.println("CONSTANTS_8.equals(approvalOpinion)=="+CONSTANTS_8.equals(approvalOpinion));
                 if (CONSTANTS_8.equals(approvalOpinion)) {
                     Persistable persistable = ModifyUtils.getPersistable(link.getEcaIdentifier());
+                    System.out.println("persistable=="+persistable);
                     if (persistable instanceof LifeCycleManaged)
                         ModifyUtils.setLifeCycleState((LifeCycleManaged) persistable, CANCELLED);
                     link.setApprovalOpinion("");
                     link.setRemark("");
+                    link.setRouting(ROUTING_2);
                     if (CONSTANTS_7.equals(link.getPerBranchIdentifier()) && CONSTANTS_7.equals(link.getLinkType())) {
                         link.setRouting(ROUTING_2);
                     }
@@ -698,10 +712,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
             Collection<Changeable2> befores = ModifyUtils.getChangeablesBefore(changeActivity2);
             for (Changeable2 before : befores) {
                 if (before instanceof WTPart) {
-//                String value = ModifyUtils.getValue(before, "ChangeType");//获取物料变更类型
-                    //add by lzy at 20191229 start
-                    String value = ModifyUtils.getValue(before, CHANGOBJECTETYPE_COMPID);//获取物料变更对象类型
-                    //add by lzy at 20191229 end
+                String value = ModifyUtils.getValue(before, CHANGETYPE_COMPID);//获取物料变更类型
                     String[] str = value.split(";");
                     if (str.length > 1) {
                         value = str[1];
@@ -792,6 +803,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                             WTPart newPart = (WTPart) latestVector.get(0);
                             if (newPart != null) {
                                 String newVersion = newPart.getVersionInfo().getIdentifier().getValue();
+                                System.out.println("version=="+version+"==newVersion=="+newVersion);
                                 if (!version.equals(newVersion)){
                                     parts.add(number);
                                 }
@@ -801,14 +813,16 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                             if (persistable instanceof WTDocument) {
                                 WTDocument doc = (WTDocument) persistable;
                                 String docVersion=doc.getVersionInfo().getIdentifier().getValue();
-                                QueryResult qrVersions = VersionControlHelper.service.allVersionsOf(doc.getMaster());
-                                WTDocument newDoc=new WTDocument();
-                                while (qrVersions.hasMoreElements()) {
-                                    newDoc=(WTDocument) qrVersions.nextElement();
-                                    break;
-                                }
+                                WTDocument newDoc =(WTDocument) VersionControlHelper.service.getLatestIteration(doc, false);
+//                                QueryResult qrVersions = VersionControlHelper.service.allVersionsOf(doc.getMaster());
+//                                WTDocument newDoc=new WTDocument();
+//                                while (qrVersions.hasMoreElements()) {
+//                                    newDoc=(WTDocument) qrVersions.nextElement();
+//                                    break;
+//                                }
                                 if (newDoc!=null){
                                     String newVersion = newDoc.getVersionInfo().getIdentifier().getValue();
+                                    System.out.println("docVersion=="+docVersion+"==newVersion=="+newVersion);
                                     if (!docVersion.equals(newVersion)){
                                         docs.add(doc.getNumber());
                                     }
