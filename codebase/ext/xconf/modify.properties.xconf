@@ -14,5 +14,8 @@
 
     <Service context="default" name="com.ptc.core.ui.validation.SimpleValidationFilter">
        	<Option serviceClass="ext.appo.change.validator.CancelChangeApplyFilter" selector="CancelChangeApplyFilter" requestor="null" />
+       	<!-- add by xiebowen at 2019/12/30 start-->
+       	<Option serviceClass="ext.appo.change.validator.RejectChangeApplyFilter" selector="RejectChangeApplyFilter" requestor="null" />
+       	<!-- add by xiebowen at 2019/12/30 start-->
     </Service>
 </Configuration>

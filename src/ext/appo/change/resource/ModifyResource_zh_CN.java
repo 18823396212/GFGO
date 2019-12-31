@@ -85,4 +85,13 @@ public class ModifyResource_zh_CN extends WTListResourceBundle {
     @RBEntry("即将撤销所有子流程，是否继续！")
     public static final String MY_CUSTOM_34 = "MY_CUSTOM_24";
 
+    //add by xiebowen at 2019/12/30  start
+    @RBEntry("批量退回变更修改")
+    public static final String MY_CUSTOM_35 = "modify.rejectChangeApply.description";
+    @RBEntry("批量退回变更修改")
+    public static final String MY_CUSTOM_36 = "modify.rejectChangeApply.title";
+    @RBEntry("批量退回变更修改")
+    public static final String MY_CUSTOM_37 = "modify.rejectChangeApply.tooltip";
+    //add by xiebowen at 2019/12/30  end
+
 }

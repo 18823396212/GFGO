@@ -9,6 +9,9 @@
         <action name="editChangeOrder" type="modify"/>     <!-- 变更申请编辑按钮 -->
         <action name="cancelChangeApply" type="modify"/>     <!-- 取消变更申请按钮 -->
         <!--modify by wangtong at 20191024 end-->
+        <!--modify by xiebowen at 2019/12/30  start-->
+        <action name="rejectChangeApply" type="modify"/>     <!-- 驳回变更申请按钮 -->
+        <!--modify by xiebowen at 2019/12/30  end-->
         <action name="separator" type="separator"/>
         <action name="view" type="object"/>
         <action name="separator" type="separator"/>

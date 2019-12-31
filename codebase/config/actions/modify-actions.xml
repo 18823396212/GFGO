@@ -64,6 +64,12 @@
         <action name="user" resourceBundle="ext.appo.change.resource.ModifyResource">
             <command url="netmarkets/jsp/ext/appo/change/reviewprincipal/chooseUser.jsp"  windowType="page"/>
         </action>
+        <!--add by xiebowen at 2019/12/30  start-->
+        <action name="rejectChangeApply" ajax="row">
+            <command class="ext.appo.change.processor.RejectChangeApplyProcessor" method="execute" onClick="JCAConfirm(event,'ext.appo.change.resource.ModifyResource.MY_CUSTOM_35')"/>
+        <includeFilter name="RejectChangeApplyFilter"/>
+        </action>
+        <!--add by xiebowen at 2019/12/30  end-->
     </objecttype>
 
 </listofactions>
