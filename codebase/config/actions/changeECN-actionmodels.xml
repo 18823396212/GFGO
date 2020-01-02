@@ -18,8 +18,8 @@
         <submodel name="thingworxActionsMenu"/>
         <action name="separator" type="separator"/>
         <action name="undoReservation" type="reservation"/>
-        <!--action name="edit" type="changeNotice"/>
-        <action name="editModifyContentOnly" type="changeNotice"/-->
+        <action name="edit" type="changeNotice"/>
+        <action name="editModifyContentOnly" type="changeNotice"/>
         <action name="editTemplate" type="changeNotice"/>
         <action name="reissueChange" type="change"/>
         <action name="separator" type="separator"/>
