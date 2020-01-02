@@ -79,8 +79,9 @@ public class RejectChangeApplyProcessor extends DefaultObjectFormProcessor imple
                         WfProcess process = (WfProcess) result.nextElement();
                         LOGGER.info(">>>>>>>>>>process:" + process);
                         //终止进程
-//                        PIWorkflowHelper.service.stop(process);
-                        PersistenceServerHelper.manager.remove(process);
+                        PIWorkflowHelper.service.stop(process);
+//                        //删除进程
+//                        PersistenceServerHelper.manager.remove(process);
                     }
                     //删除ECA
                     PersistenceServerHelper.manager.remove(activity2);

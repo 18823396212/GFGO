@@ -53,6 +53,7 @@ public class RejectChangeApplyFilter extends DefaultSimpleValidationFilter {
                     LOGGER.info("=====flag: " + flag);
                     Collection<WTChangeActivity2> activity2s = ModifyUtils.getChangeActivities(changeOrder2);
                     LOGGER.info("=====activity2s: " + activity2s);
+                    System.out.println("=====activity2s: " + activity2s);
                     WTUser user = null;
                     if (activity2s.size() > 0) {
                         for (WTChangeActivity2 eca:activity2s){
@@ -62,7 +63,8 @@ public class RejectChangeApplyFilter extends DefaultSimpleValidationFilter {
                                 WorkItem item = (WorkItem) qr.nextElement();
                                 WfAssignedActivity activity = (WfAssignedActivity) item.getSource().getObject();
                                 String activityName = activity.getName();
-                                if(!activityName.equals("数据更改")){
+                                System.out.println("eca=="+eca+"==activityName=="+activityName);
+                                if(!activityName.equals("数据更改")&&!activityName.equals("编制")){
                                     return status;
                                 }else {
                                     WTPrincipalReference owner = item.getOwnership().getOwner();
