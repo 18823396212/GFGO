@@ -36,7 +36,6 @@ import wt.sandbox.SandboxHelper;
 import wt.session.SessionServerHelper;
 import wt.util.WTAttributeNameIfc;
 import wt.util.WTException;
-import wt.util.WTPropertyVetoException;
 import wt.vc.VersionControlHelper;
 import wt.vc.config.LatestConfigSpec;
 import wt.vc.views.View;
@@ -560,7 +559,12 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                     if (PIStringUtils.isNotNull(needDate)) {
                         ModifyUtils.updateNeedDate(activity2, needDate);
                     }
-
+                    //更新路由为已创建
+                    String ecnVid = String.valueOf(changeOrder2.getBranchIdentifier());
+                    String taskOid = String.valueOf(task.getPersistInfo().getObjectIdentifier().getId());
+                    CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, taskOid, LINKTYPE_3);
+                    link.setRouting(ROUTING_1);
+                    PersistenceServerHelper.manager.update(link);
                 }
             }
         } catch (Exception e) {
