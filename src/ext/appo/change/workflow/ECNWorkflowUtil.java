@@ -695,9 +695,11 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                     link.setApprovalOpinion("");
                     link.setRemark("");
                     link.setRouting(ROUTING_2);
-                    if (CONSTANTS_7.equals(link.getPerBranchIdentifier()) && CONSTANTS_7.equals(link.getLinkType())) {
-                        link.setRouting(ROUTING_2);
-                    }
+                    //add by lzy at 20200102 start
+//                    if (CONSTANTS_7.equals(link.getPerBranchIdentifier()) && CONSTANTS_7.equals(link.getLinkType())) {
+//                        link.setRouting(ROUTING_2);
+//                    }
+                    //add by lzy at 20200102 end
                     PersistenceServerHelper.manager.update(link);
                 }
             }
