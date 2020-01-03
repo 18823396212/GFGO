@@ -9,6 +9,8 @@ import com.ptc.wvs.livecycle.assembler.Principal;
 import ext.appo.change.util.AffectedObjectUtil;
 import ext.appo.change.util.ChangeActivity2Util;
 import ext.appo.change.util.ModifyUtils;
+import ext.appo.ecn.constants.ChangeConstants;
+import ext.pi.core.PICoreHelper;
 import ext.pi.core.PIPrincipalHelper;
 import org.apache.log4j.Logger;
 import wt.change2.WTChangeActivity2;
@@ -57,6 +59,8 @@ public class RejectChangeApplyFilter extends DefaultSimpleValidationFilter {
                     WTUser user = null;
                     if (activity2s.size() > 0) {
                         for (WTChangeActivity2 eca:activity2s){
+                            //过滤事务性任务eca
+                            if (PICoreHelper.service.isType(eca, ChangeConstants.TRANSACTIONAL_CHANGEACTIVITY2)) continue;
 
                             QueryResult qr = wt.workflow.work.WorkflowHelper.service.getWorkItems(eca);
                             while (qr.hasMoreElements()) {
@@ -64,7 +68,7 @@ public class RejectChangeApplyFilter extends DefaultSimpleValidationFilter {
                                 WfAssignedActivity activity = (WfAssignedActivity) item.getSource().getObject();
                                 String activityName = activity.getName();
                                 System.out.println("eca=="+eca+"==activityName=="+activityName);
-                                if(!activityName.equals("数据更改")&&!activityName.equals("编制")){
+                                if(!activityName.equals("数据更改")){
                                     return status;
                                 }else {
                                     WTPrincipalReference owner = item.getOwnership().getOwner();
