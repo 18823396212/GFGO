@@ -13,6 +13,7 @@ import ext.lang.PICollectionUtils;
 import ext.lang.PIStringUtils;
 import ext.pi.PIException;
 import ext.pi.core.PIAttributeHelper;
+import ext.pi.core.PIClassificationHelper;
 import ext.pi.core.PICoreHelper;
 import ext.pi.core.PIPartHelper;
 import org.apache.commons.lang.StringUtils;
@@ -34,6 +35,7 @@ import wt.part.*;
 import wt.query.QueryException;
 import wt.query.QuerySpec;
 import wt.query.SearchCondition;
+import wt.session.SessionHelper;
 import wt.util.WTAttributeNameIfc;
 import wt.util.WTException;
 import wt.vc.OneOffVersioned;
@@ -123,6 +125,9 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
             //add by lzy at 20191227 start
             checkHasBom();
             //add by lzy at 20191227 end
+            //add by lzy at 20200103 start
+            checkProductStatus();
+            //add by lzy at 20200103 end
 
             //校验需要收集上层对象的部件是否满足收集条件
             checkOne();
@@ -345,11 +350,18 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
                 }
                 //用户所选"类型"为「替换」的部件
                 else {
-                    Set<String> result = PICollectionUtils.difference(parentInfoArray, AFFECTEDPARTNUMBER);
-                    if (result.size() > 0) {
-                        MESSAGES.add(part.getDisplayIdentity() + " 用户所选\"类型\"为「替换」必须收集所有上层对象！");
+                    //add by lzy at 20200103 start
+//                    Set<String> result = PICollectionUtils.difference(parentInfoArray, AFFECTEDPARTNUMBER);
+//                    if (result.size() > 0) {
+//                        MESSAGES.add(part.getDisplayIdentity() + " 用户所选\"类型\"为「替换」必须收集所有上层对象！");
+//                    }
+                    Set<String> result = PICollectionUtils.intersect(parentInfoArray, AFFECTEDPARTNUMBER);
+                    if (parentInfoArray.size() > 0 && result.size() < 1) {
+                        MESSAGES.add(part.getDisplayIdentity() + " 用户所选\"类型\"为「替换」上层父件必须至少收集一个！");
                     }
+                    //add by lzy at 20200103 end
                 }
+
             }
         }
     }
@@ -750,6 +762,25 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
 
     }
 
+    private void checkProductStatus() throws WTException {
+        for (Persistable persistable : PAGEDATAMAP.keySet()) {
+            if (persistable instanceof WTPart) {
+                WTPart part=(WTPart)persistable;
+                // 是否成品
+                if (specificNode(part, "成品") || specificNode(part, "appo_cp")) {
+                    // 判断‘产品状态’
+                    String jdztValue = PIAttributeHelper.service.getValue(part, JDZT) == null ? ""
+                            : (String) PIAttributeHelper.service.getValue(part, JDZT);
+                    if (("停止销售").equals(jdztValue) || ("停止生产").equals(jdztValue) || ("停止维护").equals(jdztValue)) {
+                        MESSAGES.add("受影响对象中，"+part.getNumber()+"产品状态不能为‘停止销售’、‘停止维护’、‘停止生产’");
+                    }
+                }
+            }
+        }
+
+    }
+
+
     /**
      * 判断部件同一视图是不是最新大版本(有部件可通过修订升版)
      * @throws WTException
@@ -917,6 +948,44 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
         }
 
     }
+
+    /***
+     * 判断物料是否为指定分类
+     *
+     * @param part
+     *            部件
+     * @param nodeName
+     *            分类
+     * @return
+     * @throws WTException
+     */
+    public static Boolean specificNode(WTPart part, String nodeName) throws WTException {
+        Boolean isSpecificNode = false;
+        if (part == null || PIStringUtils.isNull(nodeName)) {
+            return isSpecificNode;
+        }
+
+        Collection<String> classifyNodeArray = PIClassificationHelper.service.getClassifyNodes(part);
+        for (String classifyNode : classifyNodeArray) {
+            // 分类完整路径
+            String classifyNodePath = PIClassificationHelper.service.getNodeLocalizedHierarchy(classifyNode,
+                    SessionHelper.getLocale());
+            // 判断是否为指定分类部件
+            List<String> clfArray = new ArrayList<String>();
+            if (classifyNodePath.contains(USER_KEYWORD4)) {
+                clfArray = Arrays.asList(classifyNodePath.split(USER_KEYWORD4));
+            } else {
+                clfArray.add(classifyNodePath);
+            }
+            if (clfArray.contains(nodeName)) {
+                isSpecificNode = true;
+                break;
+            }
+        }
+
+        return isSpecificNode;
+    }
+
 
 }
 
