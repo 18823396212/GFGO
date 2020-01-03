@@ -248,7 +248,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
             Set<WTChangeActivity2> unfinished = new HashSet<>();
             Set<CorrelationObjectLink> links = ModifyHelper.service.queryCorrelationObjectLinks(changeOrder2, LINKTYPE_1);
             LOGGER.info("=====cancelRoute.links: " + links);
-            for (CorrelationObjectLink link : links) {
+            link:for (CorrelationObjectLink link : links) {
                 Persistable persistable = ModifyUtils.getPersistable(link.getEcaIdentifier());
                 LOGGER.info("=====cancelRoute.persistable: " + persistable);
                 if (persistable instanceof WTChangeActivity2) {
@@ -257,6 +257,22 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
 
                     String routing = link.getRouting();
                     LOGGER.info("=====cancelRoute.routing: " + routing);
+                    //add by lzy at 20200103 start
+                    //替换类型不需判断路由
+                    Collection<Changeable2> befores = ModifyUtils.getChangeablesBefore(activity2);
+                    for (Changeable2 before : befores) {
+                        if (before instanceof WTPart) {
+                            String value = ModifyUtils.getValue(before, CHANGETYPE_COMPID);//获取物料变更类型
+                            String[] str = value.split(";");
+                            if (str.length > 1) {
+                                value = str[1];
+                            }
+                            if (value.equals("替换")) {
+                                continue link;
+                            }
+                        }
+                    }
+                     //add by lzy at 20200103 end
                     if (!ROUTING_2.equals(routing) && !ROUTING_3.equals(routing)) {
                         unfinished.add(activity2);
                     }
@@ -819,13 +835,13 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                             if (persistable instanceof WTDocument) {
                                 WTDocument doc = (WTDocument) persistable;
                                 String docVersion=doc.getVersionInfo().getIdentifier().getValue();
-                                WTDocument newDoc =(WTDocument) VersionControlHelper.service.getLatestIteration(doc, false);
-//                                QueryResult qrVersions = VersionControlHelper.service.allVersionsOf(doc.getMaster());
-//                                WTDocument newDoc=new WTDocument();
-//                                while (qrVersions.hasMoreElements()) {
-//                                    newDoc=(WTDocument) qrVersions.nextElement();
-//                                    break;
-//                                }
+//                                WTDocument newDoc =(WTDocument) VersionControlHelper.service.getLatestIteration(doc, false);
+                                QueryResult qrVersions = VersionControlHelper.service.allVersionsOf(doc.getMaster());
+                                WTDocument newDoc=new WTDocument();
+                                while (qrVersions.hasMoreElements()) {
+                                    newDoc=(WTDocument) qrVersions.nextElement();
+                                    break;
+                                }
                                 if (newDoc!=null){
                                     String newVersion = newDoc.getVersionInfo().getIdentifier().getValue();
                                     System.out.println("docVersion=="+docVersion+"==newVersion=="+newVersion);
