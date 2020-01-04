@@ -993,7 +993,7 @@ public class ECAWorkflowUtil implements ChangeConstants, ModifyConstants {
     }
 
     /**
-     *变更前BOM状态为已发布，变更后BOM添加软件必须为已发布
+     *变更前BOM状态为已发布，变更后BOM添加软件历史版本必须存在已发布状态
      * @param pbo
      * @throws WTException
      */
@@ -1001,7 +1001,7 @@ public class ECAWorkflowUtil implements ChangeConstants, ModifyConstants {
         if (!(pbo instanceof WTChangeActivity2)) return;
         Collection<Changeable2> befores = ModifyUtils.getChangeablesBefore((WTChangeActivity2) pbo);
         Collection<Changeable2> afters = ModifyUtils.getChangeablesAfter((WTChangeActivity2) pbo);
-
+        List<String> partlist=new ArrayList<>();
         for (Changeable2 before : befores) {
             if (before instanceof WTPart) {
                 WTPart beforePart = (WTPart) before;
@@ -1020,13 +1020,22 @@ public class ECAWorkflowUtil implements ChangeConstants, ModifyConstants {
                                 if (collection.isEmpty()) return;
                                 //软件不是发布状态，添加报错信息
                                 for (WTPart childPart : collection) {
-                                    String childNumber=childPart.getNumber();
-                                    if (childNumber.startsWith("X")){
-                                        String childState = childPart.getLifeCycleState().toString();
-                                        if (!childState.equals(RELEASED)){
+                                    String childNumber = childPart.getNumber();
+                                    if (childNumber.startsWith("X")) {
+                                        QueryResult partqr = getParts(childNumber);
+                                        while (partqr.hasMoreElements()) {
+                                            WTPart oldpart = (WTPart) partqr.nextElement();
+                                            String oldState = oldpart.getState().toString();
+                                            System.out.println("version=====" + oldState);
+                                            if (!partlist.contains(oldState)) {
+                                                partlist.add(oldState);
+                                            }
 
-                                            MESSAGES.add("软件"+childNumber+"不是发布状态，不能添加到已发布的BOM"+afterPartNumber+"中，请先软件发布后再添加到BOM中！");
                                         }
+                                    }
+                                    // 不存在有已发布的版本，
+                                    if (!partlist.contains(RELEASED)) {
+                                        MESSAGES.add("软件" + childNumber + "不存在已发布状态，不能添加到已发布的BOM" + afterPartNumber + "中，请先软件发布后再添加到BOM中！");
                                     }
                                 }
                             }
@@ -1034,7 +1043,6 @@ public class ECAWorkflowUtil implements ChangeConstants, ModifyConstants {
                     }
                 }
             }
-
         }
     }
 
@@ -1428,6 +1436,7 @@ public class ECAWorkflowUtil implements ChangeConstants, ModifyConstants {
         }
     }
 
+    //获取所有版本物料
     public static QueryResult getParts(String number) throws WTException {
         StatementSpec stmtSpec = new QuerySpec(WTPart.class);
         WhereExpression where = new SearchCondition(WTPart.class, WTPart.NUMBER, SearchCondition.EQUAL,
