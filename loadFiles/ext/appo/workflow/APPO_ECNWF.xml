@@ -7,7 +7,7 @@
     <csvrouterType>NONE</csvrouterType>
     <csvroutingEvents></csvroutingEvents>
     <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfProcessTemplate:22914989</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfProcessTemplate:22954188</csvuniqueId>
     <csvname>APPO_ECNWF</csvname>
     <csvdescription>变更申请流程</csvdescription>
     <csvcategory>DEFAULT</csvcategory>
@@ -186,12 +186,403 @@
     <csvreset>false</csvreset>
   </csvWfRoleResetMap>
   <csvWfAssignedActivityTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createAssignedActivityTemplate">
+    <csvxCoordinate>1077</csvxCoordinate>
+    <csvyCoordinate>270</csvyCoordinate>
+    <csvrouterType>NONE</csvrouterType>
+    <csvroutingEvents></csvroutingEvents>
+    <csvautoRoutingExpression></csvautoRoutingExpression>
+    <csvuniqueId>wt.workflow.definer.WfAssignedActivityTemplate:22954191</csvuniqueId>
+    <csvname>通知</csvname>
+    <csvdescription>null</csvdescription>
+    <csvcategory>DEFAULT</csvcategory>
+    <csvinstructions>null</csvinstructions>
+    <csviconName>wt/clients/images/assignactvty.gif</csviconName>
+    <csvduration>57600000</csvduration>
+    <csvprocessDuration>0</csvprocessDuration>
+    <csvstartDelay>0</csvstartDelay>
+    <csvstartProcessDelay>0</csvstartProcessDelay>
+    <csvnotifyBeforeDeadline>false</csvnotifyBeforeDeadline>
+    <csvtimeToDeadline>0</csvtimeToDeadline>
+    <csvnotifyAfterDeadline>false</csvnotifyAfterDeadline>
+    <csvtimePastDeadline>0</csvtimePastDeadline>
+    <csvresponsibleRole></csvresponsibleRole>
+    <csvtask>EidtAndReview</csvtask>
+    <csvsendNotification>true</csvsendNotification>
+    <csvlocalProject></csvlocalProject>
+    <csvvariableProject>null</csvvariableProject>
+    <csvsigningRequired>false</csvsigningRequired>
+  </csvWfAssignedActivityTemplateBegin>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>primaryBusinessObject</csvname>
+    <csvtype>wt.fc.WTObject</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>true</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom>primaryBusinessObject</csvinitializeFrom>
+    <csvcopyInto>primaryBusinessObject</csvcopyInto>
+    <csvdefaultValue></csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfOverdueAction handler="wt.workflow.definer.LoadWorkflow.addOverdueAction">
+    <csvoverdueAction>COMPLETE</csvoverdueAction>
+    <csvoverdueActionFlag>true</csvoverdueActionFlag>
+  </csvWfOverdueAction>
+  <csvWfRoleAssignee handler="wt.workflow.definer.LoadWorkflow.addRoleAssignee">
+    <csvrole>Receiver</csvrole>
+    <csvrequired>true</csvrequired>
+    <csvcompletionPolicyType>ALL</csvcompletionPolicyType>
+    <csvcompletionPolicyValue>0</csvcompletionPolicyValue>
+  </csvWfRoleAssignee>
+  <csvWfResourcePool handler="wt.workflow.definer.LoadWorkflow.addResourcePool">
+    <csvrole>Receiver</csvrole>
+    <csvresourcePoolType>Context Team</csvresourcePoolType>
+    <csvresourcePoolName>Context Team</csvresourcePoolName>
+  </csvWfResourcePool>
+  <csvWfAuditAction handler="wt.workflow.definer.LoadWorkflow.addAuditAction">
+    <csvauditAction>ACTIVITY_ASSIGNMENT_CHANGED</csvauditAction>
+    <csvauditActionFlag>true</csvauditActionFlag>
+  </csvWfAuditAction>
+  <csvWfAuditAction handler="wt.workflow.definer.LoadWorkflow.addAuditAction">
+    <csvauditAction>EXECUTION_ERROR</csvauditAction>
+    <csvauditActionFlag>true</csvauditActionFlag>
+  </csvWfAuditAction>
+  <csvWfVotingAction handler="wt.workflow.definer.LoadWorkflow.addVotingAction">
+    <csvvotingAction>RECORD_VOTING</csvvotingAction>
+    <csvvotingActionFlag>true</csvvotingActionFlag>
+  </csvWfVotingAction>
+  <csvWfIgnoreUnresolvedRoleAction handler="wt.workflow.definer.LoadWorkflow.addIgnoreUnresolvedRoleAction">
+    <csvignoreUnresolvedRoleAction>IGNOREUNRESOLVED_ROLE</csvignoreUnresolvedRoleAction>
+    <csvignoreUnresolvedRoleActionFlag>true</csvignoreUnresolvedRoleActionFlag>
+  </csvWfIgnoreUnresolvedRoleAction>
+  <csvRenderChoice handler="wt.workflow.definer.LoadWorkflow.renderTemplate"><csvrender>HTML</csvrender></csvRenderChoice>
+  <csvTaskFormTemplate handler="wt.workflow.definer.LoadWorkflow.saveTaskFormTemplate"><csvTemplateName>default</csvTemplateName></csvTaskFormTemplate>
+  <csvWfAssignedActivityTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveAssignedActivityTemplate"></csvWfAssignedActivityTemplateEnd>
+  <csvWfAssignedActivityTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createAssignedActivityTemplate">
+    <csvxCoordinate>717</csvxCoordinate>
+    <csvyCoordinate>718</csvyCoordinate>
+    <csvrouterType>MANUAL_EXCLUSIVE</csvrouterType>
+    <csvroutingEvents>通过/驳回/</csvroutingEvents>
+    <csvautoRoutingExpression></csvautoRoutingExpression>
+    <csvuniqueId>wt.workflow.definer.WfAssignedActivityTemplate:22954193</csvuniqueId>
+    <csvname>审核</csvname>
+    <csvdescription>null</csvdescription>
+    <csvcategory>DEFAULT</csvcategory>
+    <csvinstructions>null</csvinstructions>
+    <csviconName>wt/clients/images/assignactvty.gif</csviconName>
+    <csvduration>0</csvduration>
+    <csvprocessDuration>0</csvprocessDuration>
+    <csvstartDelay>0</csvstartDelay>
+    <csvstartProcessDelay>0</csvstartProcessDelay>
+    <csvnotifyBeforeDeadline>false</csvnotifyBeforeDeadline>
+    <csvtimeToDeadline>0</csvtimeToDeadline>
+    <csvnotifyAfterDeadline>false</csvnotifyAfterDeadline>
+    <csvtimePastDeadline>0</csvtimePastDeadline>
+    <csvresponsibleRole></csvresponsibleRole>
+    <csvtask>EidtAndReview</csvtask>
+    <csvsendNotification>true</csvsendNotification>
+    <csvlocalProject></csvlocalProject>
+    <csvvariableProject>null</csvvariableProject>
+    <csvsigningRequired>false</csvsigningRequired>
+  </csvWfAssignedActivityTemplateBegin>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>primaryBusinessObject</csvname>
+    <csvtype>wt.fc.WTObject</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>true</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom>primaryBusinessObject</csvinitializeFrom>
+    <csvcopyInto>primaryBusinessObject</csvcopyInto>
+    <csvdefaultValue></csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>augmentActivities</csvname>
+    <csvtype>java.lang.String</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>false</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom>augmentActivities</csvinitializeFrom>
+    <csvcopyInto>augmentActivities</csvcopyInto>
+    <csvdefaultValue></csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>isAllActivties</csvname>
+    <csvtype>java.lang.String</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>false</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom>isAllActivties</csvinitializeFrom>
+    <csvcopyInto>isAllActivties</csvcopyInto>
+    <csvdefaultValue></csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>reviewObjs</csvname>
+    <csvtype>wt.fc.collections.WTArrayList</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>false</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom>reviewObjs</csvinitializeFrom>
+    <csvcopyInto>reviewObjs</csvcopyInto>
+    <csvdefaultValue></csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfRoleAssignee handler="wt.workflow.definer.LoadWorkflow.addRoleAssignee">
+    <csvrole>Assessor</csvrole>
+    <csvrequired>true</csvrequired>
+    <csvcompletionPolicyType>ANY</csvcompletionPolicyType>
+    <csvcompletionPolicyValue>0</csvcompletionPolicyValue>
+  </csvWfRoleAssignee>
+  <csvWfAuditAction handler="wt.workflow.definer.LoadWorkflow.addAuditAction">
+    <csvauditAction>ACTIVITY_ASSIGNMENT_CHANGED</csvauditAction>
+    <csvauditActionFlag>true</csvauditActionFlag>
+  </csvWfAuditAction>
+  <csvWfAuditAction handler="wt.workflow.definer.LoadWorkflow.addAuditAction">
+    <csvauditAction>EXECUTION_ERROR</csvauditAction>
+    <csvauditActionFlag>true</csvauditActionFlag>
+  </csvWfAuditAction>
+  <csvWfVotingAction handler="wt.workflow.definer.LoadWorkflow.addVotingAction">
+    <csvvotingAction>RECORD_VOTING</csvvotingAction>
+    <csvvotingActionFlag>true</csvvotingActionFlag>
+  </csvWfVotingAction>
+  <csvWfIgnoreUnresolvedRoleAction handler="wt.workflow.definer.LoadWorkflow.addIgnoreUnresolvedRoleAction">
+    <csvignoreUnresolvedRoleAction>IGNOREUNRESOLVED_ROLE</csvignoreUnresolvedRoleAction>
+    <csvignoreUnresolvedRoleActionFlag>true</csvignoreUnresolvedRoleActionFlag>
+  </csvWfIgnoreUnresolvedRoleAction>
+  <csvRenderChoice handler="wt.workflow.definer.LoadWorkflow.renderTemplate"><csvrender>HTML</csvrender></csvRenderChoice>
+  <csvTaskFormTemplate handler="wt.workflow.definer.LoadWorkflow.saveTaskFormTemplate"><csvTemplateName>default</csvTemplateName></csvTaskFormTemplate>
+  <csvWfAssignedActivityTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveAssignedActivityTemplate"></csvWfAssignedActivityTemplateEnd>
+  <csvWfAssignedActivityTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createAssignedActivityTemplate">
+    <csvxCoordinate>468</csvxCoordinate>
+    <csvyCoordinate>716</csvyCoordinate>
+    <csvrouterType>MANUAL_EXCLUSIVE</csvrouterType>
+    <csvroutingEvents>提交/取消变更/</csvroutingEvents>
+    <csvautoRoutingExpression></csvautoRoutingExpression>
+    <csvuniqueId>wt.workflow.definer.WfAssignedActivityTemplate:22954195</csvuniqueId>
+    <csvname>修改变更申请</csvname>
+    <csvdescription>1.填写变更属性#@2.添加受影响对象，分配责任人，库存处理意见填写@3.添加受影响成品</csvdescription>
+    <csvcategory>DEFAULT</csvcategory>
+    <csvinstructions>null</csvinstructions>
+    <csviconName>wt/clients/images/assignactvty.gif</csviconName>
+    <csvduration>0</csvduration>
+    <csvprocessDuration>0</csvprocessDuration>
+    <csvstartDelay>0</csvstartDelay>
+    <csvstartProcessDelay>0</csvstartProcessDelay>
+    <csvnotifyBeforeDeadline>false</csvnotifyBeforeDeadline>
+    <csvtimeToDeadline>0</csvtimeToDeadline>
+    <csvnotifyAfterDeadline>false</csvnotifyAfterDeadline>
+    <csvtimePastDeadline>0</csvtimePastDeadline>
+    <csvresponsibleRole></csvresponsibleRole>
+    <csvtask>EidtAndReview</csvtask>
+    <csvsendNotification>true</csvsendNotification>
+    <csvlocalProject></csvlocalProject>
+    <csvvariableProject>null</csvvariableProject>
+    <csvsigningRequired>false</csvsigningRequired>
+  </csvWfAssignedActivityTemplateBegin>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>primaryBusinessObject</csvname>
+    <csvtype>wt.fc.WTObject</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>true</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom>primaryBusinessObject</csvinitializeFrom>
+    <csvcopyInto>primaryBusinessObject</csvcopyInto>
+    <csvdefaultValue></csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>augmentActivities</csvname>
+    <csvtype>java.lang.String</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>false</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom>augmentActivities</csvinitializeFrom>
+    <csvcopyInto>augmentActivities</csvcopyInto>
+    <csvdefaultValue></csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>isAllActivties</csvname>
+    <csvtype>java.lang.String</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>false</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom>isAllActivties</csvinitializeFrom>
+    <csvcopyInto>isAllActivties</csvcopyInto>
+    <csvdefaultValue></csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>reviewObjs</csvname>
+    <csvtype>wt.fc.collections.WTArrayList</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>false</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom>reviewObjs</csvinitializeFrom>
+    <csvcopyInto>reviewObjs</csvcopyInto>
+    <csvdefaultValue></csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfExpression handler="wt.workflow.definer.LoadWorkflow.addExpression">
+    <csvexpression>提交</csvexpression>
+    <csvexprBody>ext.appo.change.workflow.ECNWorkflowUtil ecnUtil = new ext.appo.change.workflow.ECNWorkflowUtil();@//检查受影响对象是否为最新版本是否为最新版本@ecnUtil.checkAffectObjectVesionNew(primaryBusinessObject# self);@//检查受影响对象是否检出@ecnUtil.isCheckout(primaryBusinessObject# self);@@//检查选择的人是否包含必须角色@String flag = ecnUtil.checkPartType(primaryBusinessObject# self);@if (flag.equals(&quot;RD&quot;)) {@    ecnUtil.checkTeam(primaryBusinessObject# &quot;purchasing_representative&quot;# &quot;Signer&quot;);@    ecnUtil.checkTeam(primaryBusinessObject# &quot;quality_representative&quot;# &quot;Signer&quot;);@    ecnUtil.checkTeam(primaryBusinessObject# &quot;manufacturing_manager&quot;# &quot;Signer&quot;);@    ecnUtil.checkTeam(primaryBusinessObject# &quot;pmc_representative&quot;# &quot;Signer&quot;);@    ecnUtil.checkTeam(primaryBusinessObject# &quot;test_representative&quot;# &quot;Signer&quot;);@}   @if (flag.equals(&quot;NOTRD&quot;)) {@    ecnUtil.checkTeam(primaryBusinessObject# &quot;quality_representative&quot;# &quot;Signer&quot;);@    ecnUtil.checkTeam(primaryBusinessObject# &quot;manufacturing_manager&quot;# &quot;Signer&quot;);@    ecnUtil.checkTeam(primaryBusinessObject# &quot;pmc_representative&quot;# &quot;Signer&quot;);@    ecnUtil.checkTeam(primaryBusinessObject# &quot;test_representative&quot;# &quot;Signer&quot;);@}@//添加固定人员@if (ecnUtil.checkContainer(primaryBusinessObject)) {@    ecnUtil.addTeamRole(primaryBusinessObject# &quot;Assessor&quot;# &quot;00873&quot;);@}@//检查流程中的角色是否在上下文团队中@ecnUtil.checkUserPermission(primaryBusinessObject);@@</csvexprBody>
+    <csvcheckSyntax>false</csvcheckSyntax>
+  </csvWfExpression>
+  <csvWfExpression handler="wt.workflow.definer.LoadWorkflow.addExpression">
+    <csvexpression>取消变更</csvexpression>
+    <csvexprBody>/*@* 2.3.1、需要判断是否所有子流程都处于实施状态（或者已取消状态）。@* 2.3.2、若路由选择“取消变更”，需要恢复所有变更对象到变更前版本@*/@new ext.appo.change.workflow.ECNWorkflowUtil().cancelRoute(primaryBusinessObject# self);</csvexprBody>
+    <csvcheckSyntax>false</csvcheckSyntax>
+  </csvWfExpression>
+  <csvWfActorAssignee handler="wt.workflow.definer.LoadWorkflow.addActorAssignee">
+    <csvactor>CREATOR</csvactor>
+    <csvrequired>true</csvrequired>
+    <csvcompletionPolicyType>ANY</csvcompletionPolicyType>
+    <csvcompletionPolicyValue>0</csvcompletionPolicyValue>
+  </csvWfActorAssignee>
+  <csvWfAuditAction handler="wt.workflow.definer.LoadWorkflow.addAuditAction">
+    <csvauditAction>ACTIVITY_ASSIGNMENT_CHANGED</csvauditAction>
+    <csvauditActionFlag>true</csvauditActionFlag>
+  </csvWfAuditAction>
+  <csvWfAuditAction handler="wt.workflow.definer.LoadWorkflow.addAuditAction">
+    <csvauditAction>EXECUTION_ERROR</csvauditAction>
+    <csvauditActionFlag>true</csvauditActionFlag>
+  </csvWfAuditAction>
+  <csvWfVotingAction handler="wt.workflow.definer.LoadWorkflow.addVotingAction">
+    <csvvotingAction>RECORD_VOTING</csvvotingAction>
+    <csvvotingActionFlag>true</csvvotingActionFlag>
+  </csvWfVotingAction>
+  <csvWfIgnoreUnresolvedRoleAction handler="wt.workflow.definer.LoadWorkflow.addIgnoreUnresolvedRoleAction">
+    <csvignoreUnresolvedRoleAction>IGNOREUNRESOLVED_ROLE</csvignoreUnresolvedRoleAction>
+    <csvignoreUnresolvedRoleActionFlag>true</csvignoreUnresolvedRoleActionFlag>
+  </csvWfIgnoreUnresolvedRoleAction>
+  <csvRenderChoice handler="wt.workflow.definer.LoadWorkflow.renderTemplate"><csvrender>HTML</csvrender></csvRenderChoice>
+  <csvTaskFormTemplate handler="wt.workflow.definer.LoadWorkflow.saveTaskFormTemplate"><csvTemplateName>default</csvTemplateName></csvTaskFormTemplate>
+  <csvWfAssignedActivityTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveAssignedActivityTemplate"></csvWfAssignedActivityTemplateEnd>
+  <csvWfAssignedActivityTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createAssignedActivityTemplate">
+    <csvxCoordinate>773</csvxCoordinate>
+    <csvyCoordinate>270</csvyCoordinate>
+    <csvrouterType>MANUAL_EXCLUSIVE</csvrouterType>
+    <csvroutingEvents>通过/驳回/</csvroutingEvents>
+    <csvautoRoutingExpression></csvautoRoutingExpression>
+    <csvuniqueId>wt.workflow.definer.WfAssignedActivityTemplate:22954199</csvuniqueId>
+    <csvname>批准</csvname>
+    <csvdescription>null</csvdescription>
+    <csvcategory>DEFAULT</csvcategory>
+    <csvinstructions>null</csvinstructions>
+    <csviconName>wt/clients/images/assignactvty.gif</csviconName>
+    <csvduration>0</csvduration>
+    <csvprocessDuration>0</csvprocessDuration>
+    <csvstartDelay>0</csvstartDelay>
+    <csvstartProcessDelay>0</csvstartProcessDelay>
+    <csvnotifyBeforeDeadline>false</csvnotifyBeforeDeadline>
+    <csvtimeToDeadline>0</csvtimeToDeadline>
+    <csvnotifyAfterDeadline>false</csvnotifyAfterDeadline>
+    <csvtimePastDeadline>0</csvtimePastDeadline>
+    <csvresponsibleRole></csvresponsibleRole>
+    <csvtask>EidtAndReview</csvtask>
+    <csvsendNotification>true</csvsendNotification>
+    <csvlocalProject></csvlocalProject>
+    <csvvariableProject>null</csvvariableProject>
+    <csvsigningRequired>false</csvsigningRequired>
+  </csvWfAssignedActivityTemplateBegin>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>primaryBusinessObject</csvname>
+    <csvtype>wt.fc.WTObject</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>true</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom>primaryBusinessObject</csvinitializeFrom>
+    <csvcopyInto>primaryBusinessObject</csvcopyInto>
+    <csvdefaultValue></csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>augmentActivities</csvname>
+    <csvtype>java.lang.String</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>false</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom>augmentActivities</csvinitializeFrom>
+    <csvcopyInto>augmentActivities</csvcopyInto>
+    <csvdefaultValue></csvdefaultValue>
+    <csvpermissionList>-1</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfExpression handler="wt.workflow.definer.LoadWorkflow.addExpression">
+    <csvexpression>COMPLETE</csvexpression>
+    <csvexprBody>//ext.shimge.util.WorkflowUtil.setIBAProperty(reviewObjs#&quot;Approver&quot;);</csvexprBody>
+    <csvcheckSyntax>false</csvcheckSyntax>
+  </csvWfExpression>
+  <csvWfRoleAssignee handler="wt.workflow.definer.LoadWorkflow.addRoleAssignee">
+    <csvrole>APPROVER</csvrole>
+    <csvrequired>true</csvrequired>
+    <csvcompletionPolicyType>ANY</csvcompletionPolicyType>
+    <csvcompletionPolicyValue>0</csvcompletionPolicyValue>
+  </csvWfRoleAssignee>
+  <csvWfResourcePool handler="wt.workflow.definer.LoadWorkflow.addResourcePool">
+    <csvrole>APPROVER</csvrole>
+    <csvresourcePoolType>Context Team</csvresourcePoolType>
+    <csvresourcePoolName>Context Team</csvresourcePoolName>
+  </csvWfResourcePool>
+  <csvWfAuditAction handler="wt.workflow.definer.LoadWorkflow.addAuditAction">
+    <csvauditAction>ACTIVITY_ASSIGNMENT_CHANGED</csvauditAction>
+    <csvauditActionFlag>true</csvauditActionFlag>
+  </csvWfAuditAction>
+  <csvWfAuditAction handler="wt.workflow.definer.LoadWorkflow.addAuditAction">
+    <csvauditAction>EXECUTION_ERROR</csvauditAction>
+    <csvauditActionFlag>true</csvauditActionFlag>
+  </csvWfAuditAction>
+  <csvWfVotingAction handler="wt.workflow.definer.LoadWorkflow.addVotingAction">
+    <csvvotingAction>RECORD_VOTING</csvvotingAction>
+    <csvvotingActionFlag>true</csvvotingActionFlag>
+  </csvWfVotingAction>
+  <csvWfIgnoreUnresolvedRoleAction handler="wt.workflow.definer.LoadWorkflow.addIgnoreUnresolvedRoleAction">
+    <csvignoreUnresolvedRoleAction>IGNOREUNRESOLVED_ROLE</csvignoreUnresolvedRoleAction>
+    <csvignoreUnresolvedRoleActionFlag>true</csvignoreUnresolvedRoleActionFlag>
+  </csvWfIgnoreUnresolvedRoleAction>
+  <csvRenderChoice handler="wt.workflow.definer.LoadWorkflow.renderTemplate"><csvrender>HTML</csvrender></csvRenderChoice>
+  <csvTaskFormTemplate handler="wt.workflow.definer.LoadWorkflow.saveTaskFormTemplate"><csvTemplateName>default</csvTemplateName></csvTaskFormTemplate>
+  <csvWfAssignedActivityTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveAssignedActivityTemplate"></csvWfAssignedActivityTemplateEnd>
+  <csvWfAssignedActivityTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createAssignedActivityTemplate">
     <csvxCoordinate>1229</csvxCoordinate>
     <csvyCoordinate>566</csvyCoordinate>
     <csvrouterType>NONE</csvrouterType>
     <csvroutingEvents></csvroutingEvents>
     <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfAssignedActivityTemplate:22914995</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfAssignedActivityTemplate:22954202</csvuniqueId>
     <csvname>CIS库维护</csvname>
     <csvdescription>null</csvdescription>
     <csvcategory>DEFAULT</csvcategory>
@@ -262,7 +653,7 @@
     <csvrouterType>MANUAL_EXCLUSIVE</csvrouterType>
     <csvroutingEvents>通过/驳回/</csvroutingEvents>
     <csvautoRoutingExpression>result = WfTally.all(self# &quot;通过&quot;# &quot;驳回&quot;);</csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfAssignedActivityTemplate:22914997</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfAssignedActivityTemplate:22954204</csvuniqueId>
     <csvname>会签</csvname>
     <csvdescription>null</csvdescription>
     <csvcategory>DEFAULT</csvcategory>
@@ -347,7 +738,7 @@
     <csvrouterType>NONE</csvrouterType>
     <csvroutingEvents></csvroutingEvents>
     <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfAssignedActivityTemplate:22915000</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfAssignedActivityTemplate:22954207</csvuniqueId>
     <csvname>发送DCC失败</csvname>
     <csvdescription>null</csvdescription>
     <csvcategory>DEFAULT</csvcategory>
@@ -407,296 +798,13 @@
   <csvRenderChoice handler="wt.workflow.definer.LoadWorkflow.renderTemplate"><csvrender>HTML</csvrender></csvRenderChoice>
   <csvTaskFormTemplate handler="wt.workflow.definer.LoadWorkflow.saveTaskFormTemplate"><csvTemplateName>default</csvTemplateName></csvTaskFormTemplate>
   <csvWfAssignedActivityTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveAssignedActivityTemplate"></csvWfAssignedActivityTemplateEnd>
-  <csvWfAssignedActivityTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createAssignedActivityTemplate">
-    <csvxCoordinate>1077</csvxCoordinate>
-    <csvyCoordinate>270</csvyCoordinate>
-    <csvrouterType>NONE</csvrouterType>
-    <csvroutingEvents></csvroutingEvents>
-    <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfAssignedActivityTemplate:22916502</csvuniqueId>
-    <csvname>通知</csvname>
-    <csvdescription>null</csvdescription>
-    <csvcategory>DEFAULT</csvcategory>
-    <csvinstructions>null</csvinstructions>
-    <csviconName>wt/clients/images/assignactvty.gif</csviconName>
-    <csvduration>57600000</csvduration>
-    <csvprocessDuration>0</csvprocessDuration>
-    <csvstartDelay>0</csvstartDelay>
-    <csvstartProcessDelay>0</csvstartProcessDelay>
-    <csvnotifyBeforeDeadline>false</csvnotifyBeforeDeadline>
-    <csvtimeToDeadline>0</csvtimeToDeadline>
-    <csvnotifyAfterDeadline>false</csvnotifyAfterDeadline>
-    <csvtimePastDeadline>0</csvtimePastDeadline>
-    <csvresponsibleRole></csvresponsibleRole>
-    <csvtask>EidtAndReview</csvtask>
-    <csvsendNotification>true</csvsendNotification>
-    <csvlocalProject></csvlocalProject>
-    <csvvariableProject>null</csvvariableProject>
-    <csvsigningRequired>false</csvsigningRequired>
-  </csvWfAssignedActivityTemplateBegin>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>primaryBusinessObject</csvname>
-    <csvtype>wt.fc.WTObject</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>true</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom>primaryBusinessObject</csvinitializeFrom>
-    <csvcopyInto>primaryBusinessObject</csvcopyInto>
-    <csvdefaultValue></csvdefaultValue>
-    <csvpermissionList>0</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfOverdueAction handler="wt.workflow.definer.LoadWorkflow.addOverdueAction">
-    <csvoverdueAction>COMPLETE</csvoverdueAction>
-    <csvoverdueActionFlag>true</csvoverdueActionFlag>
-  </csvWfOverdueAction>
-  <csvWfRoleAssignee handler="wt.workflow.definer.LoadWorkflow.addRoleAssignee">
-    <csvrole>Receiver</csvrole>
-    <csvrequired>true</csvrequired>
-    <csvcompletionPolicyType>ALL</csvcompletionPolicyType>
-    <csvcompletionPolicyValue>0</csvcompletionPolicyValue>
-  </csvWfRoleAssignee>
-  <csvWfResourcePool handler="wt.workflow.definer.LoadWorkflow.addResourcePool">
-    <csvrole>Receiver</csvrole>
-    <csvresourcePoolType>Context Team</csvresourcePoolType>
-    <csvresourcePoolName>Context Team</csvresourcePoolName>
-  </csvWfResourcePool>
-  <csvWfAuditAction handler="wt.workflow.definer.LoadWorkflow.addAuditAction">
-    <csvauditAction>ACTIVITY_ASSIGNMENT_CHANGED</csvauditAction>
-    <csvauditActionFlag>true</csvauditActionFlag>
-  </csvWfAuditAction>
-  <csvWfAuditAction handler="wt.workflow.definer.LoadWorkflow.addAuditAction">
-    <csvauditAction>EXECUTION_ERROR</csvauditAction>
-    <csvauditActionFlag>true</csvauditActionFlag>
-  </csvWfAuditAction>
-  <csvWfVotingAction handler="wt.workflow.definer.LoadWorkflow.addVotingAction">
-    <csvvotingAction>RECORD_VOTING</csvvotingAction>
-    <csvvotingActionFlag>true</csvvotingActionFlag>
-  </csvWfVotingAction>
-  <csvWfIgnoreUnresolvedRoleAction handler="wt.workflow.definer.LoadWorkflow.addIgnoreUnresolvedRoleAction">
-    <csvignoreUnresolvedRoleAction>IGNOREUNRESOLVED_ROLE</csvignoreUnresolvedRoleAction>
-    <csvignoreUnresolvedRoleActionFlag>true</csvignoreUnresolvedRoleActionFlag>
-  </csvWfIgnoreUnresolvedRoleAction>
-  <csvRenderChoice handler="wt.workflow.definer.LoadWorkflow.renderTemplate"><csvrender>HTML</csvrender></csvRenderChoice>
-  <csvTaskFormTemplate handler="wt.workflow.definer.LoadWorkflow.saveTaskFormTemplate"><csvTemplateName>default</csvTemplateName></csvTaskFormTemplate>
-  <csvWfAssignedActivityTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveAssignedActivityTemplate"></csvWfAssignedActivityTemplateEnd>
-  <csvWfAssignedActivityTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createAssignedActivityTemplate">
-    <csvxCoordinate>468</csvxCoordinate>
-    <csvyCoordinate>716</csvyCoordinate>
-    <csvrouterType>MANUAL_EXCLUSIVE</csvrouterType>
-    <csvroutingEvents>提交/取消变更/</csvroutingEvents>
-    <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfAssignedActivityTemplate:22916504</csvuniqueId>
-    <csvname>修改变更申请</csvname>
-    <csvdescription>1.填写变更属性#@2.添加受影响对象，分配责任人，库存处理意见填写@3.添加受影响成品</csvdescription>
-    <csvcategory>DEFAULT</csvcategory>
-    <csvinstructions>null</csvinstructions>
-    <csviconName>wt/clients/images/assignactvty.gif</csviconName>
-    <csvduration>0</csvduration>
-    <csvprocessDuration>0</csvprocessDuration>
-    <csvstartDelay>0</csvstartDelay>
-    <csvstartProcessDelay>0</csvstartProcessDelay>
-    <csvnotifyBeforeDeadline>false</csvnotifyBeforeDeadline>
-    <csvtimeToDeadline>0</csvtimeToDeadline>
-    <csvnotifyAfterDeadline>false</csvnotifyAfterDeadline>
-    <csvtimePastDeadline>0</csvtimePastDeadline>
-    <csvresponsibleRole></csvresponsibleRole>
-    <csvtask>EidtAndReview</csvtask>
-    <csvsendNotification>true</csvsendNotification>
-    <csvlocalProject></csvlocalProject>
-    <csvvariableProject>null</csvvariableProject>
-    <csvsigningRequired>false</csvsigningRequired>
-  </csvWfAssignedActivityTemplateBegin>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>primaryBusinessObject</csvname>
-    <csvtype>wt.fc.WTObject</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>true</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom>primaryBusinessObject</csvinitializeFrom>
-    <csvcopyInto>primaryBusinessObject</csvcopyInto>
-    <csvdefaultValue></csvdefaultValue>
-    <csvpermissionList>0</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>augmentActivities</csvname>
-    <csvtype>java.lang.String</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>false</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom>augmentActivities</csvinitializeFrom>
-    <csvcopyInto>augmentActivities</csvcopyInto>
-    <csvdefaultValue></csvdefaultValue>
-    <csvpermissionList>0</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>isAllActivties</csvname>
-    <csvtype>java.lang.String</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>false</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom>isAllActivties</csvinitializeFrom>
-    <csvcopyInto>isAllActivties</csvcopyInto>
-    <csvdefaultValue></csvdefaultValue>
-    <csvpermissionList>0</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>reviewObjs</csvname>
-    <csvtype>wt.fc.collections.WTArrayList</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>false</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom>reviewObjs</csvinitializeFrom>
-    <csvcopyInto>reviewObjs</csvcopyInto>
-    <csvdefaultValue></csvdefaultValue>
-    <csvpermissionList>0</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfExpression handler="wt.workflow.definer.LoadWorkflow.addExpression">
-    <csvexpression>提交</csvexpression>
-    <csvexprBody>ext.appo.change.workflow.ECNWorkflowUtil ecnUtil = new ext.appo.change.workflow.ECNWorkflowUtil();@//检查受影响对象是否为最新版本是否为最新版本@ecnUtil.checkAffectObjectVesionNew(primaryBusinessObject# self);@//检查受影响对象是否检出@ecnUtil.isCheckout(primaryBusinessObject# self);@@ext.appo.change.workflow.ECAWorkflowUtil ecaUtil = new ext.appo.change.workflow.ECAWorkflowUtil();@//检查选择的人是否包含必须角色@String flag = ecaUtil.checkPartType(primaryBusinessObject# self);@if (flag.equals(&quot;RD&quot;)) {@    ecaUtil.checkTeam(primaryBusinessObject# &quot;purchasing_representative&quot;# &quot;Signer&quot;);@    ecaUtil.checkTeam(primaryBusinessObject# &quot;quality_representative&quot;# &quot;Signer&quot;);@    ecaUtil.checkTeam(primaryBusinessObject# &quot;manufacturing_manager&quot;# &quot;Signer&quot;);@    ecaUtil.checkTeam(primaryBusinessObject# &quot;pmc_representative&quot;# &quot;Signer&quot;);@    ecaUtil.checkTeam(primaryBusinessObject# &quot;test_representative&quot;# &quot;Signer&quot;);@}@if (flag.equals(&quot;NOTRD&quot;)) {@    ecaUtil.checkTeam(primaryBusinessObject# &quot;quality_representative&quot;# &quot;Signer&quot;);@    ecaUtil.checkTeam(primaryBusinessObject# &quot;manufacturing_manager&quot;# &quot;Signer&quot;);@    ecaUtil.checkTeam(primaryBusinessObject# &quot;pmc_representative&quot;# &quot;Signer&quot;);@    ecaUtil.checkTeam(primaryBusinessObject# &quot;test_representative&quot;# &quot;Signer&quot;);@}@//添加固定人员@/*if (ecaUtil.checkContainer(primaryBusinessObject)) {@    ecaUtil.addTeamRole(primaryBusinessObject# &quot;Assessor&quot;# &quot;00873&quot;);@}*/@//检查流程中的角色是否在上下文团队中@ecaUtil.checkUserPermission(primaryBusinessObject);</csvexprBody>
-    <csvcheckSyntax>false</csvcheckSyntax>
-  </csvWfExpression>
-  <csvWfExpression handler="wt.workflow.definer.LoadWorkflow.addExpression">
-    <csvexpression>取消变更</csvexpression>
-    <csvexprBody>/*@* 2.3.1、需要判断是否所有子流程都处于实施状态（或者已取消状态）。@* 2.3.2、若路由选择“取消变更”，需要恢复所有变更对象到变更前版本@*/@new ext.appo.change.workflow.ECNWorkflowUtil().cancelRoute(primaryBusinessObject# self);</csvexprBody>
-    <csvcheckSyntax>false</csvcheckSyntax>
-  </csvWfExpression>
-  <csvWfActorAssignee handler="wt.workflow.definer.LoadWorkflow.addActorAssignee">
-    <csvactor>CREATOR</csvactor>
-    <csvrequired>true</csvrequired>
-    <csvcompletionPolicyType>ANY</csvcompletionPolicyType>
-    <csvcompletionPolicyValue>0</csvcompletionPolicyValue>
-  </csvWfActorAssignee>
-  <csvWfAuditAction handler="wt.workflow.definer.LoadWorkflow.addAuditAction">
-    <csvauditAction>ACTIVITY_ASSIGNMENT_CHANGED</csvauditAction>
-    <csvauditActionFlag>true</csvauditActionFlag>
-  </csvWfAuditAction>
-  <csvWfAuditAction handler="wt.workflow.definer.LoadWorkflow.addAuditAction">
-    <csvauditAction>EXECUTION_ERROR</csvauditAction>
-    <csvauditActionFlag>true</csvauditActionFlag>
-  </csvWfAuditAction>
-  <csvWfVotingAction handler="wt.workflow.definer.LoadWorkflow.addVotingAction">
-    <csvvotingAction>RECORD_VOTING</csvvotingAction>
-    <csvvotingActionFlag>true</csvvotingActionFlag>
-  </csvWfVotingAction>
-  <csvWfIgnoreUnresolvedRoleAction handler="wt.workflow.definer.LoadWorkflow.addIgnoreUnresolvedRoleAction">
-    <csvignoreUnresolvedRoleAction>IGNOREUNRESOLVED_ROLE</csvignoreUnresolvedRoleAction>
-    <csvignoreUnresolvedRoleActionFlag>true</csvignoreUnresolvedRoleActionFlag>
-  </csvWfIgnoreUnresolvedRoleAction>
-  <csvRenderChoice handler="wt.workflow.definer.LoadWorkflow.renderTemplate"><csvrender>HTML</csvrender></csvRenderChoice>
-  <csvTaskFormTemplate handler="wt.workflow.definer.LoadWorkflow.saveTaskFormTemplate"><csvTemplateName>default</csvTemplateName></csvTaskFormTemplate>
-  <csvWfAssignedActivityTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveAssignedActivityTemplate"></csvWfAssignedActivityTemplateEnd>
-  <csvWfAssignedActivityTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createAssignedActivityTemplate">
-    <csvxCoordinate>773</csvxCoordinate>
-    <csvyCoordinate>270</csvyCoordinate>
-    <csvrouterType>MANUAL_EXCLUSIVE</csvrouterType>
-    <csvroutingEvents>通过/驳回/</csvroutingEvents>
-    <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfAssignedActivityTemplate:22914992</csvuniqueId>
-    <csvname>批准</csvname>
-    <csvdescription>null</csvdescription>
-    <csvcategory>DEFAULT</csvcategory>
-    <csvinstructions>null</csvinstructions>
-    <csviconName>wt/clients/images/assignactvty.gif</csviconName>
-    <csvduration>0</csvduration>
-    <csvprocessDuration>0</csvprocessDuration>
-    <csvstartDelay>0</csvstartDelay>
-    <csvstartProcessDelay>0</csvstartProcessDelay>
-    <csvnotifyBeforeDeadline>false</csvnotifyBeforeDeadline>
-    <csvtimeToDeadline>0</csvtimeToDeadline>
-    <csvnotifyAfterDeadline>false</csvnotifyAfterDeadline>
-    <csvtimePastDeadline>0</csvtimePastDeadline>
-    <csvresponsibleRole></csvresponsibleRole>
-    <csvtask>EidtAndReview</csvtask>
-    <csvsendNotification>true</csvsendNotification>
-    <csvlocalProject></csvlocalProject>
-    <csvvariableProject>null</csvvariableProject>
-    <csvsigningRequired>false</csvsigningRequired>
-  </csvWfAssignedActivityTemplateBegin>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>primaryBusinessObject</csvname>
-    <csvtype>wt.fc.WTObject</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>true</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom>primaryBusinessObject</csvinitializeFrom>
-    <csvcopyInto>primaryBusinessObject</csvcopyInto>
-    <csvdefaultValue></csvdefaultValue>
-    <csvpermissionList>0</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>augmentActivities</csvname>
-    <csvtype>java.lang.String</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>false</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom>augmentActivities</csvinitializeFrom>
-    <csvcopyInto>augmentActivities</csvcopyInto>
-    <csvdefaultValue></csvdefaultValue>
-    <csvpermissionList>-1</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfExpression handler="wt.workflow.definer.LoadWorkflow.addExpression">
-    <csvexpression>COMPLETE</csvexpression>
-    <csvexprBody>//ext.shimge.util.WorkflowUtil.setIBAProperty(reviewObjs#&quot;Approver&quot;);</csvexprBody>
-    <csvcheckSyntax>false</csvcheckSyntax>
-  </csvWfExpression>
-  <csvWfRoleAssignee handler="wt.workflow.definer.LoadWorkflow.addRoleAssignee">
-    <csvrole>APPROVER</csvrole>
-    <csvrequired>true</csvrequired>
-    <csvcompletionPolicyType>ANY</csvcompletionPolicyType>
-    <csvcompletionPolicyValue>0</csvcompletionPolicyValue>
-  </csvWfRoleAssignee>
-  <csvWfResourcePool handler="wt.workflow.definer.LoadWorkflow.addResourcePool">
-    <csvrole>APPROVER</csvrole>
-    <csvresourcePoolType>Context Team</csvresourcePoolType>
-    <csvresourcePoolName>Context Team</csvresourcePoolName>
-  </csvWfResourcePool>
-  <csvWfAuditAction handler="wt.workflow.definer.LoadWorkflow.addAuditAction">
-    <csvauditAction>ACTIVITY_ASSIGNMENT_CHANGED</csvauditAction>
-    <csvauditActionFlag>true</csvauditActionFlag>
-  </csvWfAuditAction>
-  <csvWfAuditAction handler="wt.workflow.definer.LoadWorkflow.addAuditAction">
-    <csvauditAction>EXECUTION_ERROR</csvauditAction>
-    <csvauditActionFlag>true</csvauditActionFlag>
-  </csvWfAuditAction>
-  <csvWfVotingAction handler="wt.workflow.definer.LoadWorkflow.addVotingAction">
-    <csvvotingAction>RECORD_VOTING</csvvotingAction>
-    <csvvotingActionFlag>true</csvvotingActionFlag>
-  </csvWfVotingAction>
-  <csvWfIgnoreUnresolvedRoleAction handler="wt.workflow.definer.LoadWorkflow.addIgnoreUnresolvedRoleAction">
-    <csvignoreUnresolvedRoleAction>IGNOREUNRESOLVED_ROLE</csvignoreUnresolvedRoleAction>
-    <csvignoreUnresolvedRoleActionFlag>true</csvignoreUnresolvedRoleActionFlag>
-  </csvWfIgnoreUnresolvedRoleAction>
-  <csvRenderChoice handler="wt.workflow.definer.LoadWorkflow.renderTemplate"><csvrender>HTML</csvrender></csvRenderChoice>
-  <csvTaskFormTemplate handler="wt.workflow.definer.LoadWorkflow.saveTaskFormTemplate"><csvTemplateName>default</csvTemplateName></csvTaskFormTemplate>
-  <csvWfAssignedActivityTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveAssignedActivityTemplate"></csvWfAssignedActivityTemplateEnd>
   <csvWfProxyTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createProxyTemplate">
     <csvxCoordinate>1537</csvxCoordinate>
     <csvyCoordinate>418</csvyCoordinate>
     <csvrouterType>NONE</csvrouterType>
     <csvroutingEvents></csvroutingEvents>
     <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfProxyTemplate:22916508</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfProxyTemplate:22954209</csvuniqueId>
     <csvname>ERP集成</csvname>
     <csvdescription></csvdescription>
     <csvcategory>DEFAULT</csvcategory>
@@ -762,7 +870,7 @@
     <csvrouterType>NONE</csvrouterType>
     <csvroutingEvents></csvroutingEvents>
     <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfProxyTemplate:22916510</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfProxyTemplate:22954211</csvuniqueId>
     <csvname>APPO_CISWF</csvname>
     <csvdescription></csvdescription>
     <csvcategory>DEFAULT</csvcategory>
@@ -809,393 +917,12 @@
   </csvWfVariable>
   <csvWfProxyTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveProxyTemplate"></csvWfProxyTemplateEnd>
   <csvWfExprRobotTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createExprRobotTemplate">
-    <csvxCoordinate>165</csvxCoordinate>
-    <csvyCoordinate>419</csvyCoordinate>
-    <csvrouterType>NONE</csvrouterType>
-    <csvroutingEvents></csvroutingEvents>
-    <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfExprRobotTemplate:22916512</csvuniqueId>
-    <csvname>读取签审指南</csvname>
-    <csvdescription>null</csvdescription>
-    <csvcategory>DEFAULT</csvcategory>
-    <csvinstructions></csvinstructions>
-    <csviconName>wt/clients/images/methrobt.gif</csviconName>
-    <csvduration>0</csvduration>
-    <csvprocessDuration>0</csvprocessDuration>
-    <csvstartDelay>0</csvstartDelay>
-    <csvstartProcessDelay>0</csvstartProcessDelay>
-    <csvnotifyBeforeDeadline>false</csvnotifyBeforeDeadline>
-    <csvtimeToDeadline>0</csvtimeToDeadline>
-    <csvnotifyAfterDeadline>false</csvnotifyAfterDeadline>
-    <csvtimePastDeadline>0</csvtimePastDeadline>
-    <csvresponsibleRole></csvresponsibleRole>
-    <csvhost>localhost</csvhost>
-  </csvWfExprRobotTemplateBegin>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>primaryBusinessObject</csvname>
-    <csvtype>wt.fc.WTObject</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>true</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom>primaryBusinessObject</csvinitializeFrom>
-    <csvcopyInto>primaryBusinessObject</csvcopyInto>
-    <csvdefaultValue></csvdefaultValue>
-    <csvpermissionList>0</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>augmentActivities</csvname>
-    <csvtype>java.lang.String</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>false</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom></csvinitializeFrom>
-    <csvcopyInto></csvcopyInto>
-    <csvdefaultValue></csvdefaultValue>
-    <csvpermissionList>-1</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>isAllActivties</csvname>
-    <csvtype>java.lang.String</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>false</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>false</csvresetable>
-    <csvinitializeFrom></csvinitializeFrom>
-    <csvcopyInto></csvcopyInto>
-    <csvdefaultValue>YES</csvdefaultValue>
-    <csvpermissionList>0</csvpermissionList>
-    <csvreadOnly>true</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>reviewObjs</csvname>
-    <csvtype>wt.fc.collections.WTArrayList</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>true</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom></csvinitializeFrom>
-    <csvcopyInto></csvcopyInto>
-    <csvdefaultValue></csvdefaultValue>
-    <csvpermissionList>-1</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>isEnabledECA</csvname>
-    <csvtype>boolean</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>false</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom></csvinitializeFrom>
-    <csvcopyInto></csvcopyInto>
-    <csvdefaultValue>false</csvdefaultValue>
-    <csvpermissionList>0</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>releasePartsArray</csvname>
-    <csvtype>wt.fc.collections.WTArrayList</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>false</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom></csvinitializeFrom>
-    <csvcopyInto></csvcopyInto>
-    <csvdefaultValue></csvdefaultValue>
-    <csvpermissionList>0</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>syncOne</csvname>
-    <csvtype>boolean</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>false</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom></csvinitializeFrom>
-    <csvcopyInto></csvcopyInto>
-    <csvdefaultValue>false</csvdefaultValue>
-    <csvpermissionList>0</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfExpression handler="wt.workflow.definer.LoadWorkflow.addExpression">
-    <csvexpression>_ROBOT_EXPRESSION_</csvexpression>
-    <csvexprBody>//获取流程必走活动和所有活动的集合@try {@    java.util.Hashtable&lt;String# String&gt; table = ext.generic.workflow.util.ReviewActivityUtil.getAugumentTable(primaryBusinessObject# self# null);@    augmentActivities = table.get(&quot;augmentActivities&quot;);@} catch (Exception e) {@    e.printStackTrace();@}</csvexprBody>
-    <csvcheckSyntax>false</csvcheckSyntax>
-  </csvWfExpression>
-  <csvWfExprRobotTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveExprRobotTemplate"></csvWfExprRobotTemplateEnd>
-  <csvWfExprRobotTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createExprRobotTemplate">
-    <csvxCoordinate>1537</csvxCoordinate>
-    <csvyCoordinate>566</csvyCoordinate>
-    <csvrouterType>NONE</csvrouterType>
-    <csvroutingEvents></csvroutingEvents>
-    <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfExprRobotTemplate:22916515</csvuniqueId>
-    <csvname>DCC图纸集成</csvname>
-    <csvdescription>null</csvdescription>
-    <csvcategory>DEFAULT</csvcategory>
-    <csvinstructions></csvinstructions>
-    <csviconName>wt/clients/images/methrobt.gif</csviconName>
-    <csvduration>0</csvduration>
-    <csvprocessDuration>0</csvprocessDuration>
-    <csvstartDelay>0</csvstartDelay>
-    <csvstartProcessDelay>0</csvstartProcessDelay>
-    <csvnotifyBeforeDeadline>false</csvnotifyBeforeDeadline>
-    <csvtimeToDeadline>0</csvtimeToDeadline>
-    <csvnotifyAfterDeadline>false</csvnotifyAfterDeadline>
-    <csvtimePastDeadline>0</csvtimePastDeadline>
-    <csvresponsibleRole></csvresponsibleRole>
-    <csvhost>localhost</csvhost>
-  </csvWfExprRobotTemplateBegin>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>primaryBusinessObject</csvname>
-    <csvtype>wt.fc.WTObject</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>true</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom>primaryBusinessObject</csvinitializeFrom>
-    <csvcopyInto>primaryBusinessObject</csvcopyInto>
-    <csvdefaultValue></csvdefaultValue>
-    <csvpermissionList>0</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>augmentActivities</csvname>
-    <csvtype>java.lang.String</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>false</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom></csvinitializeFrom>
-    <csvcopyInto></csvcopyInto>
-    <csvdefaultValue></csvdefaultValue>
-    <csvpermissionList>-1</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>isAllActivties</csvname>
-    <csvtype>java.lang.String</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>false</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>false</csvresetable>
-    <csvinitializeFrom></csvinitializeFrom>
-    <csvcopyInto></csvcopyInto>
-    <csvdefaultValue>YES</csvdefaultValue>
-    <csvpermissionList>0</csvpermissionList>
-    <csvreadOnly>true</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>reviewObjs</csvname>
-    <csvtype>wt.fc.collections.WTArrayList</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>true</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom></csvinitializeFrom>
-    <csvcopyInto></csvcopyInto>
-    <csvdefaultValue></csvdefaultValue>
-    <csvpermissionList>-1</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>isEnabledECA</csvname>
-    <csvtype>boolean</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>false</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom></csvinitializeFrom>
-    <csvcopyInto></csvcopyInto>
-    <csvdefaultValue>false</csvdefaultValue>
-    <csvpermissionList>0</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>releasePartsArray</csvname>
-    <csvtype>wt.fc.collections.WTArrayList</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>false</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom></csvinitializeFrom>
-    <csvcopyInto></csvcopyInto>
-    <csvdefaultValue></csvdefaultValue>
-    <csvpermissionList>0</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>syncOne</csvname>
-    <csvtype>boolean</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>false</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom></csvinitializeFrom>
-    <csvcopyInto></csvcopyInto>
-    <csvdefaultValue>false</csvdefaultValue>
-    <csvpermissionList>0</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfExpression handler="wt.workflow.definer.LoadWorkflow.addExpression">
-    <csvexpression>_ROBOT_EXPRESSION_</csvexpression>
-    <csvexprBody>try {@    new ext.appo.doc.uploadDoc.UploadAttachmentContent(primaryBusinessObject# self).uploadContentData();@} catch (Exception e) {@    e.printStackTrace();@}</csvexprBody>
-    <csvcheckSyntax>false</csvcheckSyntax>
-  </csvWfExpression>
-  <csvWfExprRobotTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveExprRobotTemplate"></csvWfExprRobotTemplateEnd>
-  <csvWfExprRobotTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createExprRobotTemplate">
-    <csvxCoordinate>316</csvxCoordinate>
-    <csvyCoordinate>418</csvyCoordinate>
-    <csvrouterType>NONE</csvrouterType>
-    <csvroutingEvents></csvroutingEvents>
-    <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfExprRobotTemplate:22916518</csvuniqueId>
-    <csvname>设置事务性任务状态-实施</csvname>
-    <csvdescription>null</csvdescription>
-    <csvcategory>DEFAULT</csvcategory>
-    <csvinstructions></csvinstructions>
-    <csviconName>wt/clients/images/methrobt.gif</csviconName>
-    <csvduration>0</csvduration>
-    <csvprocessDuration>0</csvprocessDuration>
-    <csvstartDelay>0</csvstartDelay>
-    <csvstartProcessDelay>0</csvstartProcessDelay>
-    <csvnotifyBeforeDeadline>false</csvnotifyBeforeDeadline>
-    <csvtimeToDeadline>0</csvtimeToDeadline>
-    <csvnotifyAfterDeadline>false</csvnotifyAfterDeadline>
-    <csvtimePastDeadline>0</csvtimePastDeadline>
-    <csvresponsibleRole></csvresponsibleRole>
-    <csvhost>localhost</csvhost>
-  </csvWfExprRobotTemplateBegin>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>primaryBusinessObject</csvname>
-    <csvtype>wt.fc.WTObject</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>true</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom>primaryBusinessObject</csvinitializeFrom>
-    <csvcopyInto>primaryBusinessObject</csvcopyInto>
-    <csvdefaultValue></csvdefaultValue>
-    <csvpermissionList>0</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>augmentActivities</csvname>
-    <csvtype>java.lang.String</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>false</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom></csvinitializeFrom>
-    <csvcopyInto></csvcopyInto>
-    <csvdefaultValue></csvdefaultValue>
-    <csvpermissionList>-1</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>isAllActivties</csvname>
-    <csvtype>java.lang.String</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>false</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>false</csvresetable>
-    <csvinitializeFrom></csvinitializeFrom>
-    <csvcopyInto></csvcopyInto>
-    <csvdefaultValue>YES</csvdefaultValue>
-    <csvpermissionList>0</csvpermissionList>
-    <csvreadOnly>true</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>reviewObjs</csvname>
-    <csvtype>wt.fc.collections.WTArrayList</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>true</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom></csvinitializeFrom>
-    <csvcopyInto></csvcopyInto>
-    <csvdefaultValue></csvdefaultValue>
-    <csvpermissionList>-1</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>isEnabledECA</csvname>
-    <csvtype>boolean</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>false</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom></csvinitializeFrom>
-    <csvcopyInto></csvcopyInto>
-    <csvdefaultValue>false</csvdefaultValue>
-    <csvpermissionList>0</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>releasePartsArray</csvname>
-    <csvtype>wt.fc.collections.WTArrayList</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>false</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom></csvinitializeFrom>
-    <csvcopyInto></csvcopyInto>
-    <csvdefaultValue></csvdefaultValue>
-    <csvpermissionList>0</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>syncOne</csvname>
-    <csvtype>boolean</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>false</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom></csvinitializeFrom>
-    <csvcopyInto></csvcopyInto>
-    <csvdefaultValue>false</csvdefaultValue>
-    <csvpermissionList>0</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfExpression handler="wt.workflow.definer.LoadWorkflow.addExpression">
-    <csvexpression>_ROBOT_EXPRESSION_</csvexpression>
-    <csvexprBody>if(isEnabledECA){@	try{@                    //ext.appo.ecn.common.util.ChangeWorkFlowUtils.setChangeActivitiesState(primaryBusinessObject# &quot;IMPLEMENTATION&quot;# &quot;OPEN&quot;);@		ext.appo.change.workflow.ECAWorkflowUtil.setTransactionTaskState(primaryBusinessObject# &quot;IMPLEMENTATION&quot;# &quot;OPEN&quot;) ;@	}catch(Exception e){@		e.printStackTrace();@	}@}</csvexprBody>
-    <csvcheckSyntax>false</csvcheckSyntax>
-  </csvWfExpression>
-  <csvWfExprRobotTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveExprRobotTemplate"></csvWfExprRobotTemplateEnd>
-  <csvWfExprRobotTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createExprRobotTemplate">
     <csvxCoordinate>928</csvxCoordinate>
     <csvyCoordinate>716</csvyCoordinate>
     <csvrouterType>NONE</csvrouterType>
     <csvroutingEvents></csvroutingEvents>
     <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfExprRobotTemplate:22916521</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfExprRobotTemplate:22954213</csvuniqueId>
     <csvname>设置解决时间</csvname>
     <csvdescription>null</csvdescription>
     <csvcategory>DEFAULT</csvcategory>
@@ -1322,7 +1049,7 @@
     <csvrouterType>NONE</csvrouterType>
     <csvroutingEvents></csvroutingEvents>
     <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfExprRobotTemplate:22916524</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfExprRobotTemplate:22954216</csvuniqueId>
     <csvname>打印影响物料状态ECN</csvname>
     <csvdescription>null</csvdescription>
     <csvcategory>DEFAULT</csvcategory>
@@ -1449,7 +1176,7 @@
     <csvrouterType>NONE</csvrouterType>
     <csvroutingEvents></csvroutingEvents>
     <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfExprRobotTemplate:22916527</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfExprRobotTemplate:22954219</csvuniqueId>
     <csvname>设置产生对象已发布状态并下发ERP</csvname>
     <csvdescription>null</csvdescription>
     <csvcategory>DEFAULT</csvcategory>
@@ -1576,7 +1303,7 @@
     <csvrouterType>NONE</csvrouterType>
     <csvroutingEvents></csvroutingEvents>
     <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfExprRobotTemplate:22916530</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfExprRobotTemplate:22954222</csvuniqueId>
     <csvname>驳回处理</csvname>
     <csvdescription>null</csvdescription>
     <csvcategory>DEFAULT</csvcategory>
@@ -1703,7 +1430,7 @@
     <csvrouterType>NONE</csvrouterType>
     <csvroutingEvents></csvroutingEvents>
     <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfExprRobotTemplate:22916533</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfExprRobotTemplate:22954225</csvuniqueId>
     <csvname>添加基线</csvname>
     <csvdescription>null</csvdescription>
     <csvcategory>DEFAULT</csvcategory>
@@ -1830,7 +1557,7 @@
     <csvrouterType>NONE</csvrouterType>
     <csvroutingEvents></csvroutingEvents>
     <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfExprRobotTemplate:22916536</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfExprRobotTemplate:22954228</csvuniqueId>
     <csvname>子流程驳回处理</csvname>
     <csvdescription>null</csvdescription>
     <csvcategory>DEFAULT</csvcategory>
@@ -1952,12 +1679,12 @@
   </csvWfExpression>
   <csvWfExprRobotTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveExprRobotTemplate"></csvWfExprRobotTemplateEnd>
   <csvWfExprRobotTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createExprRobotTemplate">
-    <csvxCoordinate>620</csvxCoordinate>
-    <csvyCoordinate>616</csvyCoordinate>
+    <csvxCoordinate>721</csvxCoordinate>
+    <csvyCoordinate>631</csvyCoordinate>
     <csvrouterType>NONE</csvrouterType>
     <csvroutingEvents></csvroutingEvents>
     <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfExprRobotTemplate:22916539</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfExprRobotTemplate:22954231</csvuniqueId>
     <csvname>创建ECA</csvname>
     <csvdescription>null</csvdescription>
     <csvcategory>DEFAULT</csvcategory>
@@ -2079,12 +1806,12 @@
   </csvWfExpression>
   <csvWfExprRobotTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveExprRobotTemplate"></csvWfExprRobotTemplateEnd>
   <csvWfExprRobotTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createExprRobotTemplate">
-    <csvxCoordinate>620</csvxCoordinate>
-    <csvyCoordinate>517</csvyCoordinate>
+    <csvxCoordinate>721</csvxCoordinate>
+    <csvyCoordinate>526</csvyCoordinate>
     <csvrouterType>NONE</csvrouterType>
     <csvroutingEvents></csvroutingEvents>
     <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfExprRobotTemplate:22916542</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfExprRobotTemplate:22954234</csvuniqueId>
     <csvname>设置事务性任务状态-实施</csvname>
     <csvdescription>null</csvdescription>
     <csvcategory>DEFAULT</csvcategory>
@@ -2211,7 +1938,7 @@
     <csvrouterType>NONE</csvrouterType>
     <csvroutingEvents></csvroutingEvents>
     <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfExprRobotTemplate:22916545</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfExprRobotTemplate:22954237</csvuniqueId>
     <csvname>收集流程随迁对象</csvname>
     <csvdescription>null</csvdescription>
     <csvcategory>DEFAULT</csvcategory>
@@ -2338,7 +2065,7 @@
     <csvrouterType>NONE</csvrouterType>
     <csvroutingEvents></csvroutingEvents>
     <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfExprRobotTemplate:22916548</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfExprRobotTemplate:22954240</csvuniqueId>
     <csvname>抓取受影响对象上下层数据</csvname>
     <csvdescription>null</csvdescription>
     <csvcategory>DEFAULT</csvcategory>
@@ -2459,13 +2186,451 @@
     <csvcheckSyntax>false</csvcheckSyntax>
   </csvWfExpression>
   <csvWfExprRobotTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveExprRobotTemplate"></csvWfExprRobotTemplateEnd>
-  <csvWfInternalMethodTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createInternalMethodTemplate">
-    <csvxCoordinate>620</csvxCoordinate>
+  <csvWfExprRobotTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createExprRobotTemplate">
+    <csvxCoordinate>165</csvxCoordinate>
+    <csvyCoordinate>419</csvyCoordinate>
+    <csvrouterType>NONE</csvrouterType>
+    <csvroutingEvents></csvroutingEvents>
+    <csvautoRoutingExpression></csvautoRoutingExpression>
+    <csvuniqueId>wt.workflow.definer.WfExprRobotTemplate:22954243</csvuniqueId>
+    <csvname>读取签审指南</csvname>
+    <csvdescription>null</csvdescription>
+    <csvcategory>DEFAULT</csvcategory>
+    <csvinstructions></csvinstructions>
+    <csviconName>wt/clients/images/methrobt.gif</csviconName>
+    <csvduration>0</csvduration>
+    <csvprocessDuration>0</csvprocessDuration>
+    <csvstartDelay>0</csvstartDelay>
+    <csvstartProcessDelay>0</csvstartProcessDelay>
+    <csvnotifyBeforeDeadline>false</csvnotifyBeforeDeadline>
+    <csvtimeToDeadline>0</csvtimeToDeadline>
+    <csvnotifyAfterDeadline>false</csvnotifyAfterDeadline>
+    <csvtimePastDeadline>0</csvtimePastDeadline>
+    <csvresponsibleRole></csvresponsibleRole>
+    <csvhost>localhost</csvhost>
+  </csvWfExprRobotTemplateBegin>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>primaryBusinessObject</csvname>
+    <csvtype>wt.fc.WTObject</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>true</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom>primaryBusinessObject</csvinitializeFrom>
+    <csvcopyInto>primaryBusinessObject</csvcopyInto>
+    <csvdefaultValue></csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>augmentActivities</csvname>
+    <csvtype>java.lang.String</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>false</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom></csvinitializeFrom>
+    <csvcopyInto></csvcopyInto>
+    <csvdefaultValue></csvdefaultValue>
+    <csvpermissionList>-1</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>isAllActivties</csvname>
+    <csvtype>java.lang.String</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>false</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>false</csvresetable>
+    <csvinitializeFrom></csvinitializeFrom>
+    <csvcopyInto></csvcopyInto>
+    <csvdefaultValue>YES</csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>true</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>reviewObjs</csvname>
+    <csvtype>wt.fc.collections.WTArrayList</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>true</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom></csvinitializeFrom>
+    <csvcopyInto></csvcopyInto>
+    <csvdefaultValue></csvdefaultValue>
+    <csvpermissionList>-1</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>isEnabledECA</csvname>
+    <csvtype>boolean</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>false</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom></csvinitializeFrom>
+    <csvcopyInto></csvcopyInto>
+    <csvdefaultValue>false</csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>releasePartsArray</csvname>
+    <csvtype>wt.fc.collections.WTArrayList</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>false</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom></csvinitializeFrom>
+    <csvcopyInto></csvcopyInto>
+    <csvdefaultValue></csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>syncOne</csvname>
+    <csvtype>boolean</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>false</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom></csvinitializeFrom>
+    <csvcopyInto></csvcopyInto>
+    <csvdefaultValue>false</csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfExpression handler="wt.workflow.definer.LoadWorkflow.addExpression">
+    <csvexpression>_ROBOT_EXPRESSION_</csvexpression>
+    <csvexprBody>//获取流程必走活动和所有活动的集合@try {@    java.util.Hashtable&lt;String# String&gt; table = ext.generic.workflow.util.ReviewActivityUtil.getAugumentTable(primaryBusinessObject# self# null);@    augmentActivities = table.get(&quot;augmentActivities&quot;);@} catch (Exception e) {@    e.printStackTrace();@}</csvexprBody>
+    <csvcheckSyntax>false</csvcheckSyntax>
+  </csvWfExpression>
+  <csvWfExprRobotTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveExprRobotTemplate"></csvWfExprRobotTemplateEnd>
+  <csvWfExprRobotTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createExprRobotTemplate">
+    <csvxCoordinate>1537</csvxCoordinate>
+    <csvyCoordinate>566</csvyCoordinate>
+    <csvrouterType>NONE</csvrouterType>
+    <csvroutingEvents></csvroutingEvents>
+    <csvautoRoutingExpression></csvautoRoutingExpression>
+    <csvuniqueId>wt.workflow.definer.WfExprRobotTemplate:22954246</csvuniqueId>
+    <csvname>DCC图纸集成</csvname>
+    <csvdescription>null</csvdescription>
+    <csvcategory>DEFAULT</csvcategory>
+    <csvinstructions></csvinstructions>
+    <csviconName>wt/clients/images/methrobt.gif</csviconName>
+    <csvduration>0</csvduration>
+    <csvprocessDuration>0</csvprocessDuration>
+    <csvstartDelay>0</csvstartDelay>
+    <csvstartProcessDelay>0</csvstartProcessDelay>
+    <csvnotifyBeforeDeadline>false</csvnotifyBeforeDeadline>
+    <csvtimeToDeadline>0</csvtimeToDeadline>
+    <csvnotifyAfterDeadline>false</csvnotifyAfterDeadline>
+    <csvtimePastDeadline>0</csvtimePastDeadline>
+    <csvresponsibleRole></csvresponsibleRole>
+    <csvhost>localhost</csvhost>
+  </csvWfExprRobotTemplateBegin>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>primaryBusinessObject</csvname>
+    <csvtype>wt.fc.WTObject</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>true</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom>primaryBusinessObject</csvinitializeFrom>
+    <csvcopyInto>primaryBusinessObject</csvcopyInto>
+    <csvdefaultValue></csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>augmentActivities</csvname>
+    <csvtype>java.lang.String</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>false</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom></csvinitializeFrom>
+    <csvcopyInto></csvcopyInto>
+    <csvdefaultValue></csvdefaultValue>
+    <csvpermissionList>-1</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>isAllActivties</csvname>
+    <csvtype>java.lang.String</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>false</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>false</csvresetable>
+    <csvinitializeFrom></csvinitializeFrom>
+    <csvcopyInto></csvcopyInto>
+    <csvdefaultValue>YES</csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>true</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>reviewObjs</csvname>
+    <csvtype>wt.fc.collections.WTArrayList</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>true</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom></csvinitializeFrom>
+    <csvcopyInto></csvcopyInto>
+    <csvdefaultValue></csvdefaultValue>
+    <csvpermissionList>-1</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>isEnabledECA</csvname>
+    <csvtype>boolean</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>false</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom></csvinitializeFrom>
+    <csvcopyInto></csvcopyInto>
+    <csvdefaultValue>false</csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>releasePartsArray</csvname>
+    <csvtype>wt.fc.collections.WTArrayList</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>false</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom></csvinitializeFrom>
+    <csvcopyInto></csvcopyInto>
+    <csvdefaultValue></csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>syncOne</csvname>
+    <csvtype>boolean</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>false</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom></csvinitializeFrom>
+    <csvcopyInto></csvcopyInto>
+    <csvdefaultValue>false</csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfExpression handler="wt.workflow.definer.LoadWorkflow.addExpression">
+    <csvexpression>_ROBOT_EXPRESSION_</csvexpression>
+    <csvexprBody>try {@    new ext.appo.doc.uploadDoc.UploadAttachmentContent(primaryBusinessObject# self).uploadContentData();@} catch (Exception e) {@    e.printStackTrace();@}</csvexprBody>
+    <csvcheckSyntax>false</csvcheckSyntax>
+  </csvWfExpression>
+  <csvWfExprRobotTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveExprRobotTemplate"></csvWfExprRobotTemplateEnd>
+  <csvWfExprRobotTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createExprRobotTemplate">
+    <csvxCoordinate>316</csvxCoordinate>
     <csvyCoordinate>418</csvyCoordinate>
     <csvrouterType>NONE</csvrouterType>
     <csvroutingEvents></csvroutingEvents>
     <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfInternalMethodTemplate:22916551</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfExprRobotTemplate:22954249</csvuniqueId>
+    <csvname>设置事务性任务状态-实施</csvname>
+    <csvdescription>null</csvdescription>
+    <csvcategory>DEFAULT</csvcategory>
+    <csvinstructions></csvinstructions>
+    <csviconName>wt/clients/images/methrobt.gif</csviconName>
+    <csvduration>0</csvduration>
+    <csvprocessDuration>0</csvprocessDuration>
+    <csvstartDelay>0</csvstartDelay>
+    <csvstartProcessDelay>0</csvstartProcessDelay>
+    <csvnotifyBeforeDeadline>false</csvnotifyBeforeDeadline>
+    <csvtimeToDeadline>0</csvtimeToDeadline>
+    <csvnotifyAfterDeadline>false</csvnotifyAfterDeadline>
+    <csvtimePastDeadline>0</csvtimePastDeadline>
+    <csvresponsibleRole></csvresponsibleRole>
+    <csvhost>localhost</csvhost>
+  </csvWfExprRobotTemplateBegin>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>primaryBusinessObject</csvname>
+    <csvtype>wt.fc.WTObject</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>true</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom>primaryBusinessObject</csvinitializeFrom>
+    <csvcopyInto>primaryBusinessObject</csvcopyInto>
+    <csvdefaultValue></csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>augmentActivities</csvname>
+    <csvtype>java.lang.String</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>false</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom></csvinitializeFrom>
+    <csvcopyInto></csvcopyInto>
+    <csvdefaultValue></csvdefaultValue>
+    <csvpermissionList>-1</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>isAllActivties</csvname>
+    <csvtype>java.lang.String</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>false</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>false</csvresetable>
+    <csvinitializeFrom></csvinitializeFrom>
+    <csvcopyInto></csvcopyInto>
+    <csvdefaultValue>YES</csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>true</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>reviewObjs</csvname>
+    <csvtype>wt.fc.collections.WTArrayList</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>true</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom></csvinitializeFrom>
+    <csvcopyInto></csvcopyInto>
+    <csvdefaultValue></csvdefaultValue>
+    <csvpermissionList>-1</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>isEnabledECA</csvname>
+    <csvtype>boolean</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>false</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom></csvinitializeFrom>
+    <csvcopyInto></csvcopyInto>
+    <csvdefaultValue>false</csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>releasePartsArray</csvname>
+    <csvtype>wt.fc.collections.WTArrayList</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>false</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom></csvinitializeFrom>
+    <csvcopyInto></csvcopyInto>
+    <csvdefaultValue></csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>syncOne</csvname>
+    <csvtype>boolean</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>false</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom></csvinitializeFrom>
+    <csvcopyInto></csvcopyInto>
+    <csvdefaultValue>false</csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfExpression handler="wt.workflow.definer.LoadWorkflow.addExpression">
+    <csvexpression>_ROBOT_EXPRESSION_</csvexpression>
+    <csvexprBody>if(isEnabledECA){@	try{@                    //ext.appo.ecn.common.util.ChangeWorkFlowUtils.setChangeActivitiesState(primaryBusinessObject# &quot;IMPLEMENTATION&quot;# &quot;OPEN&quot;);@		ext.appo.change.workflow.ECAWorkflowUtil.setTransactionTaskState(primaryBusinessObject# &quot;IMPLEMENTATION&quot;# &quot;OPEN&quot;) ;@	}catch(Exception e){@		e.printStackTrace();@	}@}</csvexprBody>
+    <csvcheckSyntax>false</csvcheckSyntax>
+  </csvWfExpression>
+  <csvWfExprRobotTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveExprRobotTemplate"></csvWfExprRobotTemplateEnd>
+  <csvWfInternalMethodTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createInternalMethodTemplate">
+    <csvxCoordinate>468</csvxCoordinate>
+    <csvyCoordinate>566</csvyCoordinate>
+    <csvrouterType>NONE</csvrouterType>
+    <csvroutingEvents></csvroutingEvents>
+    <csvautoRoutingExpression></csvautoRoutingExpression>
+    <csvuniqueId>wt.workflow.definer.WfInternalMethodTemplate:22954258</csvuniqueId>
+    <csvname>设置ECN状态-重新工作</csvname>
+    <csvdescription>null</csvdescription>
+    <csvcategory>DEFAULT</csvcategory>
+    <csvinstructions></csvinstructions>
+    <csviconName>wt/clients/images/genrobt.gif</csviconName>
+    <csvduration>0</csvduration>
+    <csvprocessDuration>0</csvprocessDuration>
+    <csvstartDelay>0</csvstartDelay>
+    <csvstartProcessDelay>0</csvstartProcessDelay>
+    <csvnotifyBeforeDeadline>false</csvnotifyBeforeDeadline>
+    <csvtimeToDeadline>0</csvtimeToDeadline>
+    <csvnotifyAfterDeadline>false</csvnotifyAfterDeadline>
+    <csvtimePastDeadline>0</csvtimePastDeadline>
+    <csvresponsibleRole></csvresponsibleRole>
+    <csvhost>localhost</csvhost>
+    <csvserviceName>wt.lifecycle.LifeCycleService</csvserviceName>
+    <csvmethodName>setState</csvmethodName>
+    <csvmethodReturn>null</csvmethodReturn>
+  </csvWfInternalMethodTemplateBegin>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>primaryBusinessObject</csvname>
+    <csvtype>wt.fc.WTObject</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>true</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom>primaryBusinessObject</csvinitializeFrom>
+    <csvcopyInto>primaryBusinessObject</csvcopyInto>
+    <csvdefaultValue></csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>aState</csvname>
+    <csvtype>wt.lifecycle.State</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>false</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom></csvinitializeFrom>
+    <csvcopyInto></csvcopyInto>
+    <csvdefaultValue>REWORK</csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfSignature handler="wt.workflow.definer.LoadWorkflow.addSignature"><csvsignature>primaryBusinessObject</csvsignature></csvWfSignature>
+  <csvWfSignature handler="wt.workflow.definer.LoadWorkflow.addSignature"><csvsignature>aState</csvsignature></csvWfSignature>
+  <csvWfInternalMethodTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveInternalMethodTemplate"></csvWfInternalMethodTemplateEnd>
+  <csvWfInternalMethodTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createInternalMethodTemplate">
+    <csvxCoordinate>316</csvxCoordinate>
+    <csvyCoordinate>566</csvyCoordinate>
+    <csvrouterType>NONE</csvrouterType>
+    <csvroutingEvents></csvroutingEvents>
+    <csvautoRoutingExpression></csvautoRoutingExpression>
+    <csvuniqueId>wt.workflow.definer.WfInternalMethodTemplate:22954254</csvuniqueId>
     <csvname>设置ECN状态-正在审阅</csvname>
     <csvdescription>null</csvdescription>
     <csvcategory>DEFAULT</csvcategory>
@@ -2517,12 +2682,12 @@
   <csvWfSignature handler="wt.workflow.definer.LoadWorkflow.addSignature"><csvsignature>aState</csvsignature></csvWfSignature>
   <csvWfInternalMethodTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveInternalMethodTemplate"></csvWfInternalMethodTemplateEnd>
   <csvWfInternalMethodTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createInternalMethodTemplate">
-    <csvxCoordinate>468</csvxCoordinate>
-    <csvyCoordinate>566</csvyCoordinate>
+    <csvxCoordinate>582</csvxCoordinate>
+    <csvyCoordinate>846</csvyCoordinate>
     <csvrouterType>NONE</csvrouterType>
     <csvroutingEvents></csvroutingEvents>
     <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfInternalMethodTemplate:22916553</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfInternalMethodTemplate:22954256</csvuniqueId>
     <csvname>设置ECN状态-重新工作</csvname>
     <csvdescription>null</csvdescription>
     <csvcategory>DEFAULT</csvcategory>
@@ -2579,7 +2744,7 @@
     <csvrouterType>NONE</csvrouterType>
     <csvroutingEvents></csvroutingEvents>
     <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfInternalMethodTemplate:22916555</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfInternalMethodTemplate:22954260</csvuniqueId>
     <csvname>设置ECN状态-实施</csvname>
     <csvdescription>null</csvdescription>
     <csvcategory>DEFAULT</csvcategory>
@@ -2631,12 +2796,126 @@
   <csvWfSignature handler="wt.workflow.definer.LoadWorkflow.addSignature"><csvsignature>aState</csvsignature></csvWfSignature>
   <csvWfInternalMethodTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveInternalMethodTemplate"></csvWfInternalMethodTemplateEnd>
   <csvWfInternalMethodTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createInternalMethodTemplate">
+    <csvxCoordinate>721</csvxCoordinate>
+    <csvyCoordinate>418</csvyCoordinate>
+    <csvrouterType>NONE</csvrouterType>
+    <csvroutingEvents></csvroutingEvents>
+    <csvautoRoutingExpression></csvautoRoutingExpression>
+    <csvuniqueId>wt.workflow.definer.WfInternalMethodTemplate:22954262</csvuniqueId>
+    <csvname>设置ECN状态-正在审阅</csvname>
+    <csvdescription>null</csvdescription>
+    <csvcategory>DEFAULT</csvcategory>
+    <csvinstructions></csvinstructions>
+    <csviconName>wt/clients/images/genrobt.gif</csviconName>
+    <csvduration>0</csvduration>
+    <csvprocessDuration>0</csvprocessDuration>
+    <csvstartDelay>0</csvstartDelay>
+    <csvstartProcessDelay>0</csvstartProcessDelay>
+    <csvnotifyBeforeDeadline>false</csvnotifyBeforeDeadline>
+    <csvtimeToDeadline>0</csvtimeToDeadline>
+    <csvnotifyAfterDeadline>false</csvnotifyAfterDeadline>
+    <csvtimePastDeadline>0</csvtimePastDeadline>
+    <csvresponsibleRole></csvresponsibleRole>
+    <csvhost>localhost</csvhost>
+    <csvserviceName>wt.lifecycle.LifeCycleService</csvserviceName>
+    <csvmethodName>setState</csvmethodName>
+    <csvmethodReturn>null</csvmethodReturn>
+  </csvWfInternalMethodTemplateBegin>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>primaryBusinessObject</csvname>
+    <csvtype>wt.fc.WTObject</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>true</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom>primaryBusinessObject</csvinitializeFrom>
+    <csvcopyInto>primaryBusinessObject</csvcopyInto>
+    <csvdefaultValue></csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>aState</csvname>
+    <csvtype>wt.lifecycle.State</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>false</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom></csvinitializeFrom>
+    <csvcopyInto></csvcopyInto>
+    <csvdefaultValue>UNDERREVIEW</csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfSignature handler="wt.workflow.definer.LoadWorkflow.addSignature"><csvsignature>primaryBusinessObject</csvsignature></csvWfSignature>
+  <csvWfSignature handler="wt.workflow.definer.LoadWorkflow.addSignature"><csvsignature>aState</csvsignature></csvWfSignature>
+  <csvWfInternalMethodTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveInternalMethodTemplate"></csvWfInternalMethodTemplateEnd>
+  <csvWfInternalMethodTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createInternalMethodTemplate">
+    <csvxCoordinate>549</csvxCoordinate>
+    <csvyCoordinate>716</csvyCoordinate>
+    <csvrouterType>NONE</csvrouterType>
+    <csvroutingEvents></csvroutingEvents>
+    <csvautoRoutingExpression></csvautoRoutingExpression>
+    <csvuniqueId>wt.workflow.definer.WfInternalMethodTemplate:22954264</csvuniqueId>
+    <csvname>设置ECN状态-正在审阅</csvname>
+    <csvdescription>null</csvdescription>
+    <csvcategory>DEFAULT</csvcategory>
+    <csvinstructions></csvinstructions>
+    <csviconName>wt/clients/images/genrobt.gif</csviconName>
+    <csvduration>0</csvduration>
+    <csvprocessDuration>0</csvprocessDuration>
+    <csvstartDelay>0</csvstartDelay>
+    <csvstartProcessDelay>0</csvstartProcessDelay>
+    <csvnotifyBeforeDeadline>false</csvnotifyBeforeDeadline>
+    <csvtimeToDeadline>0</csvtimeToDeadline>
+    <csvnotifyAfterDeadline>false</csvnotifyAfterDeadline>
+    <csvtimePastDeadline>0</csvtimePastDeadline>
+    <csvresponsibleRole></csvresponsibleRole>
+    <csvhost>localhost</csvhost>
+    <csvserviceName>wt.lifecycle.LifeCycleService</csvserviceName>
+    <csvmethodName>setState</csvmethodName>
+    <csvmethodReturn>null</csvmethodReturn>
+  </csvWfInternalMethodTemplateBegin>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>primaryBusinessObject</csvname>
+    <csvtype>wt.fc.WTObject</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>true</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom>primaryBusinessObject</csvinitializeFrom>
+    <csvcopyInto>primaryBusinessObject</csvcopyInto>
+    <csvdefaultValue></csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>aState</csvname>
+    <csvtype>wt.lifecycle.State</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>false</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom></csvinitializeFrom>
+    <csvcopyInto></csvcopyInto>
+    <csvdefaultValue>UNDERREVIEW</csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfSignature handler="wt.workflow.definer.LoadWorkflow.addSignature"><csvsignature>primaryBusinessObject</csvsignature></csvWfSignature>
+  <csvWfSignature handler="wt.workflow.definer.LoadWorkflow.addSignature"><csvsignature>aState</csvsignature></csvWfSignature>
+  <csvWfInternalMethodTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveInternalMethodTemplate"></csvWfInternalMethodTemplateEnd>
+  <csvWfInternalMethodTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createInternalMethodTemplate">
     <csvxCoordinate>773</csvxCoordinate>
     <csvyCoordinate>122</csvyCoordinate>
     <csvrouterType>NONE</csvrouterType>
     <csvroutingEvents></csvroutingEvents>
     <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfInternalMethodTemplate:22916557</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfInternalMethodTemplate:22954266</csvuniqueId>
     <csvname>ECN批准通知</csvname>
     <csvdescription>ECN批准通知</csvdescription>
     <csvcategory>DEFAULT</csvcategory>
@@ -2774,12 +3053,12 @@
   <csvWfSignature handler="wt.workflow.definer.LoadWorkflow.addSignature"><csvsignature>subjectCheck</csvsignature></csvWfSignature>
   <csvWfInternalMethodTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveInternalMethodTemplate"></csvWfInternalMethodTemplateEnd>
   <csvWfInternalMethodTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createInternalMethodTemplate">
-    <csvxCoordinate>620</csvxCoordinate>
-    <csvyCoordinate>716</csvyCoordinate>
+    <csvxCoordinate>373</csvxCoordinate>
+    <csvyCoordinate>837</csvyCoordinate>
     <csvrouterType>NONE</csvrouterType>
     <csvroutingEvents></csvroutingEvents>
     <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfInternalMethodTemplate:22916559</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfInternalMethodTemplate:22954268</csvuniqueId>
     <csvname>设置ECN状态-已取消</csvname>
     <csvdescription>null</csvdescription>
     <csvcategory>DEFAULT</csvcategory>
@@ -2831,12 +3110,69 @@
   <csvWfSignature handler="wt.workflow.definer.LoadWorkflow.addSignature"><csvsignature>aState</csvsignature></csvWfSignature>
   <csvWfInternalMethodTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveInternalMethodTemplate"></csvWfInternalMethodTemplateEnd>
   <csvWfInternalMethodTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createInternalMethodTemplate">
+    <csvxCoordinate>1229</csvxCoordinate>
+    <csvyCoordinate>270</csvyCoordinate>
+    <csvrouterType>NONE</csvrouterType>
+    <csvroutingEvents></csvroutingEvents>
+    <csvautoRoutingExpression></csvautoRoutingExpression>
+    <csvuniqueId>wt.workflow.definer.WfInternalMethodTemplate:22954270</csvuniqueId>
+    <csvname>设置ECN状态-已解决</csvname>
+    <csvdescription>null</csvdescription>
+    <csvcategory>DEFAULT</csvcategory>
+    <csvinstructions></csvinstructions>
+    <csviconName>wt/clients/images/genrobt.gif</csviconName>
+    <csvduration>0</csvduration>
+    <csvprocessDuration>0</csvprocessDuration>
+    <csvstartDelay>0</csvstartDelay>
+    <csvstartProcessDelay>0</csvstartProcessDelay>
+    <csvnotifyBeforeDeadline>false</csvnotifyBeforeDeadline>
+    <csvtimeToDeadline>0</csvtimeToDeadline>
+    <csvnotifyAfterDeadline>false</csvnotifyAfterDeadline>
+    <csvtimePastDeadline>0</csvtimePastDeadline>
+    <csvresponsibleRole></csvresponsibleRole>
+    <csvhost>localhost</csvhost>
+    <csvserviceName>wt.lifecycle.LifeCycleService</csvserviceName>
+    <csvmethodName>setState</csvmethodName>
+    <csvmethodReturn>null</csvmethodReturn>
+  </csvWfInternalMethodTemplateBegin>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>primaryBusinessObject</csvname>
+    <csvtype>wt.fc.WTObject</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>true</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom>primaryBusinessObject</csvinitializeFrom>
+    <csvcopyInto>primaryBusinessObject</csvcopyInto>
+    <csvdefaultValue></csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>aState</csvname>
+    <csvtype>wt.lifecycle.State</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>false</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom></csvinitializeFrom>
+    <csvcopyInto></csvcopyInto>
+    <csvdefaultValue>RESOLVED</csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfSignature handler="wt.workflow.definer.LoadWorkflow.addSignature"><csvsignature>primaryBusinessObject</csvsignature></csvWfSignature>
+  <csvWfSignature handler="wt.workflow.definer.LoadWorkflow.addSignature"><csvsignature>aState</csvsignature></csvWfSignature>
+  <csvWfInternalMethodTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveInternalMethodTemplate"></csvWfInternalMethodTemplateEnd>
+  <csvWfInternalMethodTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createInternalMethodTemplate">
     <csvxCoordinate>1077</csvxCoordinate>
     <csvyCoordinate>418</csvyCoordinate>
     <csvrouterType>NONE</csvrouterType>
     <csvroutingEvents></csvroutingEvents>
     <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfInternalMethodTemplate:22916561</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfInternalMethodTemplate:22954272</csvuniqueId>
     <csvname>通知</csvname>
     <csvdescription>null</csvdescription>
     <csvcategory>DEFAULT</csvcategory>
@@ -2979,7 +3315,7 @@
     <csvrouterType>NONE</csvrouterType>
     <csvroutingEvents></csvroutingEvents>
     <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfInternalMethodTemplate:22916563</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfInternalMethodTemplate:22954252</csvuniqueId>
     <csvname>通知</csvname>
     <csvdescription>null</csvdescription>
     <csvcategory>DEFAULT</csvcategory>
@@ -3188,263 +3524,13 @@
   <csvWfSignature handler="wt.workflow.definer.LoadWorkflow.addSignature"><csvsignature>attachments</csvsignature></csvWfSignature>
   <csvWfSignature handler="wt.workflow.definer.LoadWorkflow.addSignature"><csvsignature>subjectCheck</csvsignature></csvWfSignature>
   <csvWfInternalMethodTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveInternalMethodTemplate"></csvWfInternalMethodTemplateEnd>
-  <csvWfInternalMethodTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createInternalMethodTemplate">
-    <csvxCoordinate>316</csvxCoordinate>
-    <csvyCoordinate>566</csvyCoordinate>
-    <csvrouterType>NONE</csvrouterType>
-    <csvroutingEvents></csvroutingEvents>
-    <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfInternalMethodTemplate:22916565</csvuniqueId>
-    <csvname>设置ECN状态-正在审阅</csvname>
-    <csvdescription>null</csvdescription>
-    <csvcategory>DEFAULT</csvcategory>
-    <csvinstructions></csvinstructions>
-    <csviconName>wt/clients/images/genrobt.gif</csviconName>
-    <csvduration>0</csvduration>
-    <csvprocessDuration>0</csvprocessDuration>
-    <csvstartDelay>0</csvstartDelay>
-    <csvstartProcessDelay>0</csvstartProcessDelay>
-    <csvnotifyBeforeDeadline>false</csvnotifyBeforeDeadline>
-    <csvtimeToDeadline>0</csvtimeToDeadline>
-    <csvnotifyAfterDeadline>false</csvnotifyAfterDeadline>
-    <csvtimePastDeadline>0</csvtimePastDeadline>
-    <csvresponsibleRole></csvresponsibleRole>
-    <csvhost>localhost</csvhost>
-    <csvserviceName>wt.lifecycle.LifeCycleService</csvserviceName>
-    <csvmethodName>setState</csvmethodName>
-    <csvmethodReturn>null</csvmethodReturn>
-  </csvWfInternalMethodTemplateBegin>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>primaryBusinessObject</csvname>
-    <csvtype>wt.fc.WTObject</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>true</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom>primaryBusinessObject</csvinitializeFrom>
-    <csvcopyInto>primaryBusinessObject</csvcopyInto>
-    <csvdefaultValue></csvdefaultValue>
-    <csvpermissionList>0</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>aState</csvname>
-    <csvtype>wt.lifecycle.State</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>false</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom></csvinitializeFrom>
-    <csvcopyInto></csvcopyInto>
-    <csvdefaultValue>UNDERREVIEW</csvdefaultValue>
-    <csvpermissionList>0</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfSignature handler="wt.workflow.definer.LoadWorkflow.addSignature"><csvsignature>primaryBusinessObject</csvsignature></csvWfSignature>
-  <csvWfSignature handler="wt.workflow.definer.LoadWorkflow.addSignature"><csvsignature>aState</csvsignature></csvWfSignature>
-  <csvWfInternalMethodTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveInternalMethodTemplate"></csvWfInternalMethodTemplateEnd>
-  <csvWfInternalMethodTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createInternalMethodTemplate">
-    <csvxCoordinate>1229</csvxCoordinate>
-    <csvyCoordinate>270</csvyCoordinate>
-    <csvrouterType>NONE</csvrouterType>
-    <csvroutingEvents></csvroutingEvents>
-    <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfInternalMethodTemplate:22916567</csvuniqueId>
-    <csvname>设置ECN状态-已解决</csvname>
-    <csvdescription>null</csvdescription>
-    <csvcategory>DEFAULT</csvcategory>
-    <csvinstructions></csvinstructions>
-    <csviconName>wt/clients/images/genrobt.gif</csviconName>
-    <csvduration>0</csvduration>
-    <csvprocessDuration>0</csvprocessDuration>
-    <csvstartDelay>0</csvstartDelay>
-    <csvstartProcessDelay>0</csvstartProcessDelay>
-    <csvnotifyBeforeDeadline>false</csvnotifyBeforeDeadline>
-    <csvtimeToDeadline>0</csvtimeToDeadline>
-    <csvnotifyAfterDeadline>false</csvnotifyAfterDeadline>
-    <csvtimePastDeadline>0</csvtimePastDeadline>
-    <csvresponsibleRole></csvresponsibleRole>
-    <csvhost>localhost</csvhost>
-    <csvserviceName>wt.lifecycle.LifeCycleService</csvserviceName>
-    <csvmethodName>setState</csvmethodName>
-    <csvmethodReturn>null</csvmethodReturn>
-  </csvWfInternalMethodTemplateBegin>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>primaryBusinessObject</csvname>
-    <csvtype>wt.fc.WTObject</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>true</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom>primaryBusinessObject</csvinitializeFrom>
-    <csvcopyInto>primaryBusinessObject</csvcopyInto>
-    <csvdefaultValue></csvdefaultValue>
-    <csvpermissionList>0</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>aState</csvname>
-    <csvtype>wt.lifecycle.State</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>false</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom></csvinitializeFrom>
-    <csvcopyInto></csvcopyInto>
-    <csvdefaultValue>RESOLVED</csvdefaultValue>
-    <csvpermissionList>0</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfSignature handler="wt.workflow.definer.LoadWorkflow.addSignature"><csvsignature>primaryBusinessObject</csvsignature></csvWfSignature>
-  <csvWfSignature handler="wt.workflow.definer.LoadWorkflow.addSignature"><csvsignature>aState</csvsignature></csvWfSignature>
-  <csvWfInternalMethodTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveInternalMethodTemplate"></csvWfInternalMethodTemplateEnd>
-  <csvWfSynchRobotTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createSynchRobotTemplate">
-    <csvxCoordinate>468</csvxCoordinate>
-    <csvyCoordinate>418</csvyCoordinate>
-    <csvrouterType>NONE</csvrouterType>
-    <csvroutingEvents>REJECT/</csvroutingEvents>
-    <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfSynchRobotTemplate:22916569</csvuniqueId>
-    <csvname>同步LINK状态-已驳回</csvname>
-    <csvdescription>null</csvdescription>
-    <csvcategory>DEFAULT</csvcategory>
-    <csvinstructions></csvinstructions>
-    <csviconName>wt/clients/images/syncrobt.gif</csviconName>
-    <csvduration>0</csvduration>
-    <csvprocessDuration>0</csvprocessDuration>
-    <csvstartDelay>0</csvstartDelay>
-    <csvstartProcessDelay>0</csvstartProcessDelay>
-    <csvnotifyBeforeDeadline>false</csvnotifyBeforeDeadline>
-    <csvtimeToDeadline>0</csvtimeToDeadline>
-    <csvnotifyAfterDeadline>false</csvnotifyAfterDeadline>
-    <csvtimePastDeadline>0</csvtimePastDeadline>
-    <csvresponsibleRole></csvresponsibleRole>
-    <csvhost>localhost</csvhost>
-    <csveventKey>*/wt.workflow.engine.WfCustomEvent/CORRELATION_LINK_CHANGE</csveventKey>
-    <csvtargetClass>null</csvtargetClass>
-    <csvsynchType>OBJECT_EVENT</csvsynchType>
-    <csvtargetVariableName>primaryBusinessObject</csvtargetVariableName>
-  </csvWfSynchRobotTemplateBegin>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>primaryBusinessObject</csvname>
-    <csvtype>wt.fc.WTObject</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>true</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom>primaryBusinessObject</csvinitializeFrom>
-    <csvcopyInto>primaryBusinessObject</csvcopyInto>
-    <csvdefaultValue></csvdefaultValue>
-    <csvpermissionList>0</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>augmentActivities</csvname>
-    <csvtype>java.lang.String</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>false</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom></csvinitializeFrom>
-    <csvcopyInto></csvcopyInto>
-    <csvdefaultValue></csvdefaultValue>
-    <csvpermissionList>-1</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>isAllActivties</csvname>
-    <csvtype>java.lang.String</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>false</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>false</csvresetable>
-    <csvinitializeFrom></csvinitializeFrom>
-    <csvcopyInto></csvcopyInto>
-    <csvdefaultValue>YES</csvdefaultValue>
-    <csvpermissionList>0</csvpermissionList>
-    <csvreadOnly>true</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>reviewObjs</csvname>
-    <csvtype>wt.fc.collections.WTArrayList</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>true</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom></csvinitializeFrom>
-    <csvcopyInto></csvcopyInto>
-    <csvdefaultValue></csvdefaultValue>
-    <csvpermissionList>-1</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>isEnabledECA</csvname>
-    <csvtype>boolean</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>false</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom></csvinitializeFrom>
-    <csvcopyInto></csvcopyInto>
-    <csvdefaultValue>false</csvdefaultValue>
-    <csvpermissionList>0</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>releasePartsArray</csvname>
-    <csvtype>wt.fc.collections.WTArrayList</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>false</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom></csvinitializeFrom>
-    <csvcopyInto></csvcopyInto>
-    <csvdefaultValue></csvdefaultValue>
-    <csvpermissionList>0</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
-    <csvname>syncOne</csvname>
-    <csvtype>boolean</csvtype>
-    <csvrequired>false</csvrequired>
-    <csvvisible>false</csvvisible>
-    <csvmutable>true</csvmutable>
-    <csvresetable>true</csvresetable>
-    <csvinitializeFrom></csvinitializeFrom>
-    <csvcopyInto></csvcopyInto>
-    <csvdefaultValue>false</csvdefaultValue>
-    <csvpermissionList>0</csvpermissionList>
-    <csvreadOnly>false</csvreadOnly>
-    <csvdisplayNames></csvdisplayNames>
-  </csvWfVariable>
-  <csvWfExpression handler="wt.workflow.definer.LoadWorkflow.addExpression">
-    <csvexpression>_SYNCH_EXPRESSION_</csvexpression>
-    <csvexprBody>try {@    if (new ext.appo.change.workflow.ECNWorkflowUtil().isRejected(primaryBusinessObject# self))@        result = &quot;REJECT&quot;;@    else result = null;@} catch (Exception e) {@    result = null;@    e.printStackTrace();@}</csvexprBody>
-    <csvcheckSyntax>false</csvcheckSyntax>
-  </csvWfExpression>
-  <csvWfExpression handler="wt.workflow.definer.LoadWorkflow.addExpression">
-    <csvexpression>_INITIAL_SYNCH_EXPRESSION_</csvexpression>
-    <csvexprBody>try {@    if (new ext.appo.change.workflow.ECNWorkflowUtil().isRejected(primaryBusinessObject# self))@        result = &quot;REJECT&quot;;@    else result = null;@} catch (Exception e) {@    result = null;@    e.printStackTrace();@}</csvexprBody>
-    <csvcheckSyntax>false</csvcheckSyntax>
-  </csvWfExpression>
-  <csvWfSynchRobotTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveSynchRobotTemplate"></csvWfSynchRobotTemplateEnd>
   <csvWfSynchRobotTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createSynchRobotTemplate">
     <csvxCoordinate>316</csvxCoordinate>
     <csvyCoordinate>122</csvyCoordinate>
     <csvrouterType>NONE</csvrouterType>
     <csvroutingEvents>OK/WAIT/</csvroutingEvents>
     <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfSynchRobotTemplate:22916573</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfSynchRobotTemplate:22954274</csvuniqueId>
     <csvname>同步ECA状态-已解决</csvname>
     <csvdescription>null</csvdescription>
     <csvcategory>DEFAULT</csvcategory>
@@ -3574,13 +3660,149 @@
     <csvcheckSyntax>false</csvcheckSyntax>
   </csvWfExpression>
   <csvWfSynchRobotTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveSynchRobotTemplate"></csvWfSynchRobotTemplateEnd>
+  <csvWfSynchRobotTemplateBegin handler="wt.workflow.definer.LoadWorkflow.createSynchRobotTemplate">
+    <csvxCoordinate>468</csvxCoordinate>
+    <csvyCoordinate>418</csvyCoordinate>
+    <csvrouterType>NONE</csvrouterType>
+    <csvroutingEvents>REJECT/</csvroutingEvents>
+    <csvautoRoutingExpression></csvautoRoutingExpression>
+    <csvuniqueId>wt.workflow.definer.WfSynchRobotTemplate:22954278</csvuniqueId>
+    <csvname>同步LINK状态-已驳回</csvname>
+    <csvdescription>null</csvdescription>
+    <csvcategory>DEFAULT</csvcategory>
+    <csvinstructions></csvinstructions>
+    <csviconName>wt/clients/images/syncrobt.gif</csviconName>
+    <csvduration>0</csvduration>
+    <csvprocessDuration>0</csvprocessDuration>
+    <csvstartDelay>0</csvstartDelay>
+    <csvstartProcessDelay>0</csvstartProcessDelay>
+    <csvnotifyBeforeDeadline>false</csvnotifyBeforeDeadline>
+    <csvtimeToDeadline>0</csvtimeToDeadline>
+    <csvnotifyAfterDeadline>false</csvnotifyAfterDeadline>
+    <csvtimePastDeadline>0</csvtimePastDeadline>
+    <csvresponsibleRole></csvresponsibleRole>
+    <csvhost>localhost</csvhost>
+    <csveventKey>*/wt.workflow.engine.WfCustomEvent/CORRELATION_LINK_CHANGE</csveventKey>
+    <csvtargetClass>null</csvtargetClass>
+    <csvsynchType>OBJECT_EVENT</csvsynchType>
+    <csvtargetVariableName>primaryBusinessObject</csvtargetVariableName>
+  </csvWfSynchRobotTemplateBegin>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>primaryBusinessObject</csvname>
+    <csvtype>wt.fc.WTObject</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>true</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom>primaryBusinessObject</csvinitializeFrom>
+    <csvcopyInto>primaryBusinessObject</csvcopyInto>
+    <csvdefaultValue></csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>augmentActivities</csvname>
+    <csvtype>java.lang.String</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>false</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom></csvinitializeFrom>
+    <csvcopyInto></csvcopyInto>
+    <csvdefaultValue></csvdefaultValue>
+    <csvpermissionList>-1</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>isAllActivties</csvname>
+    <csvtype>java.lang.String</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>false</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>false</csvresetable>
+    <csvinitializeFrom></csvinitializeFrom>
+    <csvcopyInto></csvcopyInto>
+    <csvdefaultValue>YES</csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>true</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>reviewObjs</csvname>
+    <csvtype>wt.fc.collections.WTArrayList</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>true</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom></csvinitializeFrom>
+    <csvcopyInto></csvcopyInto>
+    <csvdefaultValue></csvdefaultValue>
+    <csvpermissionList>-1</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>isEnabledECA</csvname>
+    <csvtype>boolean</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>false</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom></csvinitializeFrom>
+    <csvcopyInto></csvcopyInto>
+    <csvdefaultValue>false</csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>releasePartsArray</csvname>
+    <csvtype>wt.fc.collections.WTArrayList</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>false</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom></csvinitializeFrom>
+    <csvcopyInto></csvcopyInto>
+    <csvdefaultValue></csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfVariable handler="wt.workflow.definer.LoadWorkflow.addVariable">
+    <csvname>syncOne</csvname>
+    <csvtype>boolean</csvtype>
+    <csvrequired>false</csvrequired>
+    <csvvisible>false</csvvisible>
+    <csvmutable>true</csvmutable>
+    <csvresetable>true</csvresetable>
+    <csvinitializeFrom></csvinitializeFrom>
+    <csvcopyInto></csvcopyInto>
+    <csvdefaultValue>false</csvdefaultValue>
+    <csvpermissionList>0</csvpermissionList>
+    <csvreadOnly>false</csvreadOnly>
+    <csvdisplayNames></csvdisplayNames>
+  </csvWfVariable>
+  <csvWfExpression handler="wt.workflow.definer.LoadWorkflow.addExpression">
+    <csvexpression>_SYNCH_EXPRESSION_</csvexpression>
+    <csvexprBody>try {@    if (new ext.appo.change.workflow.ECNWorkflowUtil().isRejected(primaryBusinessObject# self))@        result = &quot;REJECT&quot;;@    else result = null;@} catch (Exception e) {@    result = null;@    e.printStackTrace();@}</csvexprBody>
+    <csvcheckSyntax>false</csvcheckSyntax>
+  </csvWfExpression>
+  <csvWfExpression handler="wt.workflow.definer.LoadWorkflow.addExpression">
+    <csvexpression>_INITIAL_SYNCH_EXPRESSION_</csvexpression>
+    <csvexprBody>try {@    if (new ext.appo.change.workflow.ECNWorkflowUtil().isRejected(primaryBusinessObject# self))@        result = &quot;REJECT&quot;;@    else result = null;@} catch (Exception e) {@    result = null;@    e.printStackTrace();@}</csvexprBody>
+    <csvcheckSyntax>false</csvcheckSyntax>
+  </csvWfExpression>
+  <csvWfSynchRobotTemplateEnd handler="wt.workflow.definer.LoadWorkflow.saveSynchRobotTemplate"></csvWfSynchRobotTemplateEnd>
   <csvWfConnectorTemplate handler="wt.workflow.definer.LoadWorkflow.createConnectorTemplate">
     <csvxCoordinate>928</csvxCoordinate>
     <csvyCoordinate>270</csvyCoordinate>
     <csvrouterType>CONDITIONAL</csvrouterType>
     <csvroutingEvents>Y/N/</csvroutingEvents>
     <csvautoRoutingExpression>if (ext.generic.workflow.util.ReviewActivityUtil.isNextActivity(augmentActivities# &quot;通知&quot;)) result = &quot;Y&quot;;@else result = &quot;N&quot;;</csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfConnectorTemplate:22916577</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfConnectorTemplate:22954282</csvuniqueId>
     <csvfunction>OR</csvfunction>
     <csvtype>DEFAULT</csvtype>
     <csvthreshold>0</csvthreshold>
@@ -3592,7 +3814,7 @@
     <csvrouterType>NONE</csvrouterType>
     <csvroutingEvents></csvroutingEvents>
     <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfConnectorTemplate:22916579</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfConnectorTemplate:22954284</csvuniqueId>
     <csvfunction>OR</csvfunction>
     <csvtype>DEFAULT</csvtype>
     <csvthreshold>0</csvthreshold>
@@ -3604,7 +3826,7 @@
     <csvrouterType>CONDITIONAL</csvrouterType>
     <csvroutingEvents>暂存/完成/</csvroutingEvents>
     <csvautoRoutingExpression>try {@    if (new ext.appo.change.workflow.ECNWorkflowUtil().isCache(primaryBusinessObject# self))@        result = &quot;暂存&quot;;@    else result = &quot;完成&quot;;@} catch (Exception e) {@    result = &quot;暂存&quot;;@    e.printStackTrace();@}</csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfConnectorTemplate:22916580</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfConnectorTemplate:22954285</csvuniqueId>
     <csvfunction>OR</csvfunction>
     <csvtype>DEFAULT</csvtype>
     <csvthreshold>0</csvthreshold>
@@ -3616,7 +3838,7 @@
     <csvrouterType>CONDITIONAL</csvrouterType>
     <csvroutingEvents>Y/N/</csvroutingEvents>
     <csvautoRoutingExpression>ext.appo.part.workflow.PartWorkflowUtil partwork = new ext.appo.part.workflow.PartWorkflowUtil();@if (partwork.checkcontainer(primaryBusinessObject# &quot;guangfeng&quot;) || partwork.checkcontainer(primaryBusinessObject)) {@    result = &quot;Y&quot;;@} else result = &quot;N&quot;;</csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfConnectorTemplate:22916582</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfConnectorTemplate:22954287</csvuniqueId>
     <csvfunction>OR</csvfunction>
     <csvtype>DEFAULT</csvtype>
     <csvthreshold>0</csvthreshold>
@@ -3628,7 +3850,7 @@
     <csvrouterType>CONDITIONAL</csvrouterType>
     <csvroutingEvents>Y/N/</csvroutingEvents>
     <csvautoRoutingExpression>if(ext.generic.workflow.util.ReviewActivityUtil.isNextActivity(augmentActivities#&quot;会签&quot;))@	result = &quot;Y&quot;;@else@	result = &quot;N&quot;;</csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfConnectorTemplate:22916584</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfConnectorTemplate:22954289</csvuniqueId>
     <csvfunction>OR</csvfunction>
     <csvtype>DEFAULT</csvtype>
     <csvthreshold>0</csvthreshold>
@@ -3640,7 +3862,7 @@
     <csvrouterType>CONDITIONAL</csvrouterType>
     <csvroutingEvents>Y/N/</csvroutingEvents>
     <csvautoRoutingExpression>if(ext.generic.workflow.util.ReviewActivityUtil.isNextActivity(augmentActivities#&quot;批准&quot;))@	result = &quot;Y&quot;;@else@	result = &quot;N&quot;;</csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfConnectorTemplate:22916586</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfConnectorTemplate:22954291</csvuniqueId>
     <csvfunction>OR</csvfunction>
     <csvtype>DEFAULT</csvtype>
     <csvthreshold>0</csvthreshold>
@@ -3652,7 +3874,7 @@
     <csvrouterType>CONDITIONAL</csvrouterType>
     <csvroutingEvents>维护CIS库/不维护CIS库/</csvroutingEvents>
     <csvautoRoutingExpression>try {@    if (new ext.appo.part.util.PartReleasedWorkFlow(primaryBusinessObject# self).isMaintainCisLibrary())@        result = &quot;维护CIS库&quot;;@    else result = &quot;不维护CIS库&quot;;@} catch (Exception e) {@    e.printStackTrace();@}</csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfConnectorTemplate:22916588</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfConnectorTemplate:22954293</csvuniqueId>
     <csvfunction>OR</csvfunction>
     <csvtype>DEFAULT</csvtype>
     <csvthreshold>0</csvthreshold>
@@ -3664,11 +3886,35 @@
     <csvrouterType>CONDITIONAL</csvrouterType>
     <csvroutingEvents>Y/N/</csvroutingEvents>
     <csvautoRoutingExpression>try {@    ext.appo.doc.uploadDoc.UploadAttachmentContent content = new ext.appo.doc.uploadDoc.UploadAttachmentContent(primaryBusinessObject# self);@    boolean isSuccess = content.isSendDataSuccess();@    if (isSuccess) {@        result = &quot;Y&quot;;@    } else {@        result = &quot;N&quot;;@    }@} catch (Exception e) {@    e.printStackTrace();@    result = &quot;N&quot;;@}</csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfConnectorTemplate:22916590</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfConnectorTemplate:22954295</csvuniqueId>
     <csvfunction>OR</csvfunction>
     <csvtype>DEFAULT</csvtype>
     <csvthreshold>0</csvthreshold>
     <csvterminateActivities>false</csvterminateActivities>
+  </csvWfConnectorTemplate>
+  <csvWfConnectorTemplate handler="wt.workflow.definer.LoadWorkflow.createConnectorTemplate">
+    <csvxCoordinate>629</csvxCoordinate>
+    <csvyCoordinate>716</csvyCoordinate>
+    <csvrouterType>CONDITIONAL</csvrouterType>
+    <csvroutingEvents>Y/N/</csvroutingEvents>
+    <csvautoRoutingExpression>if(ext.generic.workflow.util.ReviewActivityUtil.isNextActivity(augmentActivities#&quot;审核&quot;))@	result = &quot;Y&quot;;@else@	result = &quot;N&quot;;</csvautoRoutingExpression>
+    <csvuniqueId>wt.workflow.definer.WfConnectorTemplate:22954297</csvuniqueId>
+    <csvfunction>OR</csvfunction>
+    <csvtype>DEFAULT</csvtype>
+    <csvthreshold>0</csvthreshold>
+    <csvterminateActivities>false</csvterminateActivities>
+  </csvWfConnectorTemplate>
+  <csvWfConnectorTemplate handler="wt.workflow.definer.LoadWorkflow.createConnectorTemplate">
+    <csvxCoordinate>723</csvxCoordinate>
+    <csvyCoordinate>845</csvyCoordinate>
+    <csvrouterType>NONE</csvrouterType>
+    <csvroutingEvents></csvroutingEvents>
+    <csvautoRoutingExpression></csvautoRoutingExpression>
+    <csvuniqueId>wt.workflow.definer.WfConnectorTemplate:22954299</csvuniqueId>
+    <csvfunction>OR</csvfunction>
+    <csvtype>DEFAULT</csvtype>
+    <csvthreshold>0</csvthreshold>
+    <csvterminateActivities>true</csvterminateActivities>
   </csvWfConnectorTemplate>
   <csvWfConnectorTemplate handler="wt.workflow.definer.LoadWorkflow.createConnectorTemplate">
     <csvxCoordinate>1381</csvxCoordinate>
@@ -3676,19 +3922,19 @@
     <csvrouterType>NONE</csvrouterType>
     <csvroutingEvents></csvroutingEvents>
     <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfConnectorTemplate:22916592</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfConnectorTemplate:22954300</csvuniqueId>
     <csvfunction>AND</csvfunction>
     <csvtype>END</csvtype>
     <csvthreshold>0</csvthreshold>
     <csvterminateActivities>false</csvterminateActivities>
   </csvWfConnectorTemplate>
   <csvWfConnectorTemplate handler="wt.workflow.definer.LoadWorkflow.createConnectorTemplate">
-    <csvxCoordinate>773</csvxCoordinate>
-    <csvyCoordinate>716</csvyCoordinate>
+    <csvxCoordinate>468</csvxCoordinate>
+    <csvyCoordinate>929</csvyCoordinate>
     <csvrouterType>NONE</csvrouterType>
     <csvroutingEvents></csvroutingEvents>
     <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfConnectorTemplate:22916593</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfConnectorTemplate:22954301</csvuniqueId>
     <csvfunction>AND</csvfunction>
     <csvtype>END</csvtype>
     <csvthreshold>0</csvthreshold>
@@ -3700,115 +3946,15 @@
     <csvrouterType>NONE</csvrouterType>
     <csvroutingEvents></csvroutingEvents>
     <csvautoRoutingExpression></csvautoRoutingExpression>
-    <csvuniqueId>wt.workflow.definer.WfConnectorTemplate:22916594</csvuniqueId>
+    <csvuniqueId>wt.workflow.definer.WfConnectorTemplate:22954302</csvuniqueId>
     <csvfunction>OR</csvfunction>
     <csvtype>START</csvtype>
     <csvthreshold>0</csvthreshold>
     <csvterminateActivities>false</csvterminateActivities>
   </csvWfConnectorTemplate>
   <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfInternalMethodTemplate:22916563</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfConnectorTemplate:22916582</csvdestNode>
-    <csvbackLoop>false</csvbackLoop>
-  </csvWfNodeTemplateLinkBegin>
-  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
-    <csvevent>COMPLETE</csvevent>
-    <csvaction>FIRE</csvaction>
-  </csvWfEventActionPair>
-  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
-  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22916580</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfAssignedActivityTemplate:22916504</csvdestNode>
-    <csvbackLoop>false</csvbackLoop>
-  </csvWfNodeTemplateLinkBegin>
-  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
-    <csvevent>暂存</csvevent>
-    <csvaction>START</csvaction>
-  </csvWfEventActionPair>
-  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
-  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfInternalMethodTemplate:22916561</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfConnectorTemplate:22916577</csvdestNode>
-    <csvbackLoop>false</csvbackLoop>
-  </csvWfNodeTemplateLinkBegin>
-  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
-    <csvevent>COMPLETE</csvevent>
-    <csvaction>FIRE</csvaction>
-  </csvWfEventActionPair>
-  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
-  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfInternalMethodTemplate:22916565</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22916518</csvdestNode>
-    <csvbackLoop>false</csvbackLoop>
-  </csvWfNodeTemplateLinkBegin>
-  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
-    <csvevent>COMPLETE</csvevent>
-    <csvaction>START</csvaction>
-  </csvWfEventActionPair>
-  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
-  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfInternalMethodTemplate:22916567</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfConnectorTemplate:22916592</csvdestNode>
-    <csvbackLoop>false</csvbackLoop>
-  </csvWfNodeTemplateLinkBegin>
-  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
-    <csvevent>COMPLETE</csvevent>
-    <csvaction>FIRE</csvaction>
-  </csvWfEventActionPair>
-  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
-  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfExprRobotTemplate:22916518</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfSynchRobotTemplate:22916569</csvdestNode>
-    <csvbackLoop>false</csvbackLoop>
-  </csvWfNodeTemplateLinkBegin>
-  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
-    <csvevent>COMPLETE</csvevent>
-    <csvaction>START</csvaction>
-  </csvWfEventActionPair>
-  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
-  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22916582</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfConnectorTemplate:22916577</csvdestNode>
-    <csvbackLoop>false</csvbackLoop>
-  </csvWfNodeTemplateLinkBegin>
-  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
-    <csvevent>N</csvevent>
-    <csvaction>FIRE</csvaction>
-  </csvWfEventActionPair>
-  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
-  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfExprRobotTemplate:22916548</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfInternalMethodTemplate:22916555</csvdestNode>
-    <csvbackLoop>false</csvbackLoop>
-  </csvWfNodeTemplateLinkBegin>
-  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
-    <csvevent>COMPLETE</csvevent>
-    <csvaction>START</csvaction>
-  </csvWfEventActionPair>
-  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
-  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfAssignedActivityTemplate:22916504</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfInternalMethodTemplate:22916559</csvdestNode>
-    <csvbackLoop>false</csvbackLoop>
-  </csvWfNodeTemplateLinkBegin>
-  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
-    <csvevent>取消变更</csvevent>
-    <csvaction>START</csvaction>
-  </csvWfEventActionPair>
-  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
-  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22916577</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfConnectorTemplate:22916579</csvdestNode>
-    <csvbackLoop>false</csvbackLoop>
-  </csvWfNodeTemplateLinkBegin>
-  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
-    <csvevent>N</csvevent>
-    <csvaction>FIRE</csvaction>
-  </csvWfEventActionPair>
-  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
-  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22916579</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfInternalMethodTemplate:22916567</csvdestNode>
+    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22954299</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfInternalMethodTemplate:22954256</csvdestNode>
     <csvbackLoop>false</csvbackLoop>
   </csvWfNodeTemplateLinkBegin>
   <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
@@ -3817,28 +3963,8 @@
   </csvWfEventActionPair>
   <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
   <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfAssignedActivityTemplate:22914992</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22916530</csvdestNode>
-    <csvbackLoop>true</csvbackLoop>
-  </csvWfNodeTemplateLinkBegin>
-  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
-    <csvevent>驳回</csvevent>
-    <csvaction>START</csvaction>
-  </csvWfEventActionPair>
-  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
-  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfAssignedActivityTemplate:22914997</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22916530</csvdestNode>
-    <csvbackLoop>true</csvbackLoop>
-  </csvWfNodeTemplateLinkBegin>
-  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
-    <csvevent>驳回</csvevent>
-    <csvaction>START</csvaction>
-  </csvWfEventActionPair>
-  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
-  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfExprRobotTemplate:22916530</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22916536</csvdestNode>
+    <csvsourceNode>wt.workflow.definer.WfInternalMethodTemplate:22954256</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfAssignedActivityTemplate:22954195</csvdestNode>
     <csvbackLoop>true</csvbackLoop>
   </csvWfNodeTemplateLinkBegin>
   <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
@@ -3847,18 +3973,8 @@
   </csvWfEventActionPair>
   <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
   <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22916588</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22916521</csvdestNode>
-    <csvbackLoop>false</csvbackLoop>
-  </csvWfNodeTemplateLinkBegin>
-  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
-    <csvevent>不维护CIS库</csvevent>
-    <csvaction>START</csvaction>
-  </csvWfEventActionPair>
-  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
-  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfProxyTemplate:22916510</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22916521</csvdestNode>
+    <csvsourceNode>wt.workflow.definer.WfExprRobotTemplate:22954243</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfSynchRobotTemplate:22954274</csvdestNode>
     <csvbackLoop>false</csvbackLoop>
   </csvWfNodeTemplateLinkBegin>
   <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
@@ -3867,138 +3983,8 @@
   </csvWfEventActionPair>
   <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
   <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfExprRobotTemplate:22916521</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfInternalMethodTemplate:22916563</csvdestNode>
-    <csvbackLoop>false</csvbackLoop>
-  </csvWfNodeTemplateLinkBegin>
-  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
-    <csvevent>COMPLETE</csvevent>
-    <csvaction>START</csvaction>
-  </csvWfEventActionPair>
-  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
-  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfExprRobotTemplate:22916533</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfProxyTemplate:22916508</csvdestNode>
-    <csvbackLoop>false</csvbackLoop>
-  </csvWfNodeTemplateLinkBegin>
-  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
-    <csvevent>COMPLETE</csvevent>
-    <csvaction>START</csvaction>
-  </csvWfEventActionPair>
-  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
-  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22916580</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfInternalMethodTemplate:22916565</csvdestNode>
-    <csvbackLoop>false</csvbackLoop>
-  </csvWfNodeTemplateLinkBegin>
-  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
-    <csvevent>完成</csvevent>
-    <csvaction>START</csvaction>
-  </csvWfEventActionPair>
-  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
-  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfExprRobotTemplate:22916524</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22916527</csvdestNode>
-    <csvbackLoop>false</csvbackLoop>
-  </csvWfNodeTemplateLinkBegin>
-  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
-    <csvevent>COMPLETE</csvevent>
-    <csvaction>START</csvaction>
-  </csvWfEventActionPair>
-  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
-  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfInternalMethodTemplate:22916555</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22916524</csvdestNode>
-    <csvbackLoop>false</csvbackLoop>
-  </csvWfNodeTemplateLinkBegin>
-  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
-    <csvevent>COMPLETE</csvevent>
-    <csvaction>START</csvaction>
-  </csvWfEventActionPair>
-  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
-  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22916584</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfConnectorTemplate:22916586</csvdestNode>
-    <csvbackLoop>false</csvbackLoop>
-  </csvWfNodeTemplateLinkBegin>
-  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
-    <csvevent>N</csvevent>
-    <csvaction>FIRE</csvaction>
-  </csvWfEventActionPair>
-  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
-  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfAssignedActivityTemplate:22914992</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfInternalMethodTemplate:22916557</csvdestNode>
-    <csvbackLoop>false</csvbackLoop>
-  </csvWfNodeTemplateLinkBegin>
-  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
-    <csvevent>通过</csvevent>
-    <csvaction>START</csvaction>
-  </csvWfEventActionPair>
-  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
-  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfInternalMethodTemplate:22916559</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfConnectorTemplate:22916593</csvdestNode>
-    <csvbackLoop>false</csvbackLoop>
-  </csvWfNodeTemplateLinkBegin>
-  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
-    <csvevent>COMPLETE</csvevent>
-    <csvaction>FIRE</csvaction>
-  </csvWfEventActionPair>
-  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
-  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfInternalMethodTemplate:22916553</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfAssignedActivityTemplate:22916504</csvdestNode>
-    <csvbackLoop>false</csvbackLoop>
-  </csvWfNodeTemplateLinkBegin>
-  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
-    <csvevent>COMPLETE</csvevent>
-    <csvaction>START</csvaction>
-  </csvWfEventActionPair>
-  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
-  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfExprRobotTemplate:22916536</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfSynchRobotTemplate:22916573</csvdestNode>
-    <csvbackLoop>true</csvbackLoop>
-  </csvWfNodeTemplateLinkBegin>
-  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
-    <csvevent>COMPLETE</csvevent>
-    <csvaction>START</csvaction>
-  </csvWfEventActionPair>
-  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
-  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfSynchRobotTemplate:22916573</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22916536</csvdestNode>
-    <csvbackLoop>false</csvbackLoop>
-  </csvWfNodeTemplateLinkBegin>
-  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
-    <csvevent>WAIT</csvevent>
-    <csvaction>START</csvaction>
-  </csvWfEventActionPair>
-  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
-  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfSynchRobotTemplate:22916569</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfInternalMethodTemplate:22916553</csvdestNode>
-    <csvbackLoop>false</csvbackLoop>
-  </csvWfNodeTemplateLinkBegin>
-  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
-    <csvevent>REJECT</csvevent>
-    <csvaction>START</csvaction>
-  </csvWfEventActionPair>
-  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
-  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfExprRobotTemplate:22916512</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfSynchRobotTemplate:22916573</csvdestNode>
-    <csvbackLoop>false</csvbackLoop>
-  </csvWfNodeTemplateLinkBegin>
-  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
-    <csvevent>COMPLETE</csvevent>
-    <csvaction>START</csvaction>
-  </csvWfEventActionPair>
-  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
-  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22916594</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22916512</csvdestNode>
+    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22954302</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22954243</csvdestNode>
     <csvbackLoop>false</csvbackLoop>
   </csvWfNodeTemplateLinkBegin>
   <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
@@ -4007,8 +3993,8 @@
   </csvWfEventActionPair>
   <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
   <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22916582</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfInternalMethodTemplate:22916561</csvdestNode>
+    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22954287</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfInternalMethodTemplate:22954272</csvdestNode>
     <csvbackLoop>false</csvbackLoop>
   </csvWfNodeTemplateLinkBegin>
   <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
@@ -4017,8 +4003,8 @@
   </csvWfEventActionPair>
   <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
   <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22916588</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfAssignedActivityTemplate:22914995</csvdestNode>
+    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22954293</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfAssignedActivityTemplate:22954202</csvdestNode>
     <csvbackLoop>false</csvbackLoop>
   </csvWfNodeTemplateLinkBegin>
   <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
@@ -4027,8 +4013,8 @@
   </csvWfEventActionPair>
   <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
   <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22916590</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfConnectorTemplate:22916588</csvdestNode>
+    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22954295</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfConnectorTemplate:22954293</csvdestNode>
     <csvbackLoop>false</csvbackLoop>
   </csvWfNodeTemplateLinkBegin>
   <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
@@ -4037,8 +4023,8 @@
   </csvWfEventActionPair>
   <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
   <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22916590</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfAssignedActivityTemplate:22915000</csvdestNode>
+    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22954295</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfAssignedActivityTemplate:22954207</csvdestNode>
     <csvbackLoop>false</csvbackLoop>
   </csvWfNodeTemplateLinkBegin>
   <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
@@ -4047,8 +4033,8 @@
   </csvWfEventActionPair>
   <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
   <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfExprRobotTemplate:22916515</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfConnectorTemplate:22916590</csvdestNode>
+    <csvsourceNode>wt.workflow.definer.WfExprRobotTemplate:22954246</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfConnectorTemplate:22954295</csvdestNode>
     <csvbackLoop>false</csvbackLoop>
   </csvWfNodeTemplateLinkBegin>
   <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
@@ -4057,8 +4043,8 @@
   </csvWfEventActionPair>
   <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
   <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22916584</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfAssignedActivityTemplate:22914997</csvdestNode>
+    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22954289</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfAssignedActivityTemplate:22954204</csvdestNode>
     <csvbackLoop>false</csvbackLoop>
   </csvWfNodeTemplateLinkBegin>
   <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
@@ -4067,8 +4053,8 @@
   </csvWfEventActionPair>
   <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
   <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfAssignedActivityTemplate:22914997</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfConnectorTemplate:22916586</csvdestNode>
+    <csvsourceNode>wt.workflow.definer.WfAssignedActivityTemplate:22954204</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfConnectorTemplate:22954291</csvdestNode>
     <csvbackLoop>false</csvbackLoop>
   </csvWfNodeTemplateLinkBegin>
   <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
@@ -4077,8 +4063,8 @@
   </csvWfEventActionPair>
   <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
   <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22916586</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfAssignedActivityTemplate:22914992</csvdestNode>
+    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22954291</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfAssignedActivityTemplate:22954199</csvdestNode>
     <csvbackLoop>false</csvbackLoop>
   </csvWfNodeTemplateLinkBegin>
   <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
@@ -4087,8 +4073,8 @@
   </csvWfEventActionPair>
   <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
   <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfSynchRobotTemplate:22916573</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfConnectorTemplate:22916584</csvdestNode>
+    <csvsourceNode>wt.workflow.definer.WfSynchRobotTemplate:22954274</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfConnectorTemplate:22954289</csvdestNode>
     <csvbackLoop>false</csvbackLoop>
   </csvWfNodeTemplateLinkBegin>
   <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
@@ -4097,8 +4083,8 @@
   </csvWfEventActionPair>
   <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
   <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfAssignedActivityTemplate:22916502</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfInternalMethodTemplate:22916567</csvdestNode>
+    <csvsourceNode>wt.workflow.definer.WfAssignedActivityTemplate:22954191</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfInternalMethodTemplate:22954270</csvdestNode>
     <csvbackLoop>false</csvbackLoop>
   </csvWfNodeTemplateLinkBegin>
   <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
@@ -4107,8 +4093,8 @@
   </csvWfEventActionPair>
   <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
   <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfExprRobotTemplate:22916545</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22916548</csvdestNode>
+    <csvsourceNode>wt.workflow.definer.WfExprRobotTemplate:22954237</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22954240</csvdestNode>
     <csvbackLoop>false</csvbackLoop>
   </csvWfNodeTemplateLinkBegin>
   <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
@@ -4117,8 +4103,8 @@
   </csvWfEventActionPair>
   <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
   <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfInternalMethodTemplate:22916551</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfSynchRobotTemplate:22916569</csvdestNode>
+    <csvsourceNode>wt.workflow.definer.WfInternalMethodTemplate:22954262</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfSynchRobotTemplate:22954278</csvdestNode>
     <csvbackLoop>true</csvbackLoop>
   </csvWfNodeTemplateLinkBegin>
   <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
@@ -4127,8 +4113,8 @@
   </csvWfEventActionPair>
   <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
   <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfExprRobotTemplate:22916512</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfConnectorTemplate:22916580</csvdestNode>
+    <csvsourceNode>wt.workflow.definer.WfExprRobotTemplate:22954243</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfConnectorTemplate:22954285</csvdestNode>
     <csvbackLoop>false</csvbackLoop>
   </csvWfNodeTemplateLinkBegin>
   <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
@@ -4137,8 +4123,8 @@
   </csvWfEventActionPair>
   <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
   <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfInternalMethodTemplate:22916557</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22916545</csvdestNode>
+    <csvsourceNode>wt.workflow.definer.WfInternalMethodTemplate:22954266</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22954237</csvdestNode>
     <csvbackLoop>false</csvbackLoop>
   </csvWfNodeTemplateLinkBegin>
   <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
@@ -4147,8 +4133,8 @@
   </csvWfEventActionPair>
   <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
   <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfAssignedActivityTemplate:22914995</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfProxyTemplate:22916510</csvdestNode>
+    <csvsourceNode>wt.workflow.definer.WfAssignedActivityTemplate:22954202</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfProxyTemplate:22954211</csvdestNode>
     <csvbackLoop>false</csvbackLoop>
   </csvWfNodeTemplateLinkBegin>
   <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
@@ -4157,8 +4143,8 @@
   </csvWfEventActionPair>
   <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
   <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfAssignedActivityTemplate:22915000</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfConnectorTemplate:22916588</csvdestNode>
+    <csvsourceNode>wt.workflow.definer.WfAssignedActivityTemplate:22954207</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfConnectorTemplate:22954293</csvdestNode>
     <csvbackLoop>false</csvbackLoop>
   </csvWfNodeTemplateLinkBegin>
   <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
@@ -4167,8 +4153,8 @@
   </csvWfEventActionPair>
   <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
   <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22916586</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfInternalMethodTemplate:22916557</csvdestNode>
+    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22954291</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfInternalMethodTemplate:22954266</csvdestNode>
     <csvbackLoop>false</csvbackLoop>
   </csvWfNodeTemplateLinkBegin>
   <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
@@ -4177,8 +4163,348 @@
   </csvWfEventActionPair>
   <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
   <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfAssignedActivityTemplate:22916504</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22916539</csvdestNode>
+    <csvsourceNode>wt.workflow.definer.WfExprRobotTemplate:22954231</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22954234</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>COMPLETE</csvevent>
+    <csvaction>START</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfExprRobotTemplate:22954234</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfInternalMethodTemplate:22954262</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>COMPLETE</csvevent>
+    <csvaction>START</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfExprRobotTemplate:22954219</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22954225</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>COMPLETE</csvevent>
+    <csvaction>START</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfProxyTemplate:22954209</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22954246</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>COMPLETE</csvevent>
+    <csvaction>START</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22954282</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfAssignedActivityTemplate:22954191</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>Y</csvevent>
+    <csvaction>START</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfInternalMethodTemplate:22954252</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfConnectorTemplate:22954287</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>COMPLETE</csvevent>
+    <csvaction>FIRE</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22954285</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfAssignedActivityTemplate:22954195</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>暂存</csvevent>
+    <csvaction>START</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfInternalMethodTemplate:22954272</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfConnectorTemplate:22954282</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>COMPLETE</csvevent>
+    <csvaction>FIRE</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfInternalMethodTemplate:22954254</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22954249</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>COMPLETE</csvevent>
+    <csvaction>START</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfInternalMethodTemplate:22954270</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfConnectorTemplate:22954300</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>COMPLETE</csvevent>
+    <csvaction>FIRE</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfExprRobotTemplate:22954249</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfSynchRobotTemplate:22954278</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>COMPLETE</csvevent>
+    <csvaction>START</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22954287</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfConnectorTemplate:22954282</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>N</csvevent>
+    <csvaction>FIRE</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfExprRobotTemplate:22954240</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfInternalMethodTemplate:22954260</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>COMPLETE</csvevent>
+    <csvaction>START</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfAssignedActivityTemplate:22954195</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfInternalMethodTemplate:22954268</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>取消变更</csvevent>
+    <csvaction>START</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22954282</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfConnectorTemplate:22954284</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>N</csvevent>
+    <csvaction>FIRE</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22954284</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfInternalMethodTemplate:22954270</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>FIRE</csvevent>
+    <csvaction>START</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfAssignedActivityTemplate:22954199</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22954222</csvdestNode>
+    <csvbackLoop>true</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>驳回</csvevent>
+    <csvaction>START</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfAssignedActivityTemplate:22954204</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22954222</csvdestNode>
+    <csvbackLoop>true</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>驳回</csvevent>
+    <csvaction>START</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfExprRobotTemplate:22954222</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22954228</csvdestNode>
+    <csvbackLoop>true</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>COMPLETE</csvevent>
+    <csvaction>START</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22954293</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22954213</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>不维护CIS库</csvevent>
+    <csvaction>START</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfProxyTemplate:22954211</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22954213</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>COMPLETE</csvevent>
+    <csvaction>START</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfExprRobotTemplate:22954213</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfInternalMethodTemplate:22954252</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>COMPLETE</csvevent>
+    <csvaction>START</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfExprRobotTemplate:22954225</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfProxyTemplate:22954209</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>COMPLETE</csvevent>
+    <csvaction>START</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22954285</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfInternalMethodTemplate:22954254</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>完成</csvevent>
+    <csvaction>START</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfExprRobotTemplate:22954216</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22954219</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>COMPLETE</csvevent>
+    <csvaction>START</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfInternalMethodTemplate:22954260</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22954216</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>COMPLETE</csvevent>
+    <csvaction>START</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22954289</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfConnectorTemplate:22954291</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>N</csvevent>
+    <csvaction>FIRE</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfAssignedActivityTemplate:22954199</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfInternalMethodTemplate:22954266</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>通过</csvevent>
+    <csvaction>START</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfInternalMethodTemplate:22954268</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfConnectorTemplate:22954301</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>COMPLETE</csvevent>
+    <csvaction>FIRE</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfInternalMethodTemplate:22954258</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfAssignedActivityTemplate:22954195</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>COMPLETE</csvevent>
+    <csvaction>START</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfExprRobotTemplate:22954228</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfSynchRobotTemplate:22954274</csvdestNode>
+    <csvbackLoop>true</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>COMPLETE</csvevent>
+    <csvaction>START</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfSynchRobotTemplate:22954274</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22954228</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>WAIT</csvevent>
+    <csvaction>START</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfSynchRobotTemplate:22954278</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfInternalMethodTemplate:22954258</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>REJECT</csvevent>
+    <csvaction>START</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22954297</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22954231</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>N</csvevent>
+    <csvaction>START</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfAssignedActivityTemplate:22954195</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfInternalMethodTemplate:22954264</csvdestNode>
     <csvbackLoop>false</csvbackLoop>
   </csvWfNodeTemplateLinkBegin>
   <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
@@ -4187,52 +4513,42 @@
   </csvWfEventActionPair>
   <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
   <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfExprRobotTemplate:22916539</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22916542</csvdestNode>
+    <csvsourceNode>wt.workflow.definer.WfInternalMethodTemplate:22954264</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfConnectorTemplate:22954297</csvdestNode>
     <csvbackLoop>false</csvbackLoop>
   </csvWfNodeTemplateLinkBegin>
   <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
     <csvevent>COMPLETE</csvevent>
-    <csvaction>START</csvaction>
+    <csvaction>FIRE</csvaction>
   </csvWfEventActionPair>
   <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
   <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfExprRobotTemplate:22916542</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfInternalMethodTemplate:22916551</csvdestNode>
-    <csvbackLoop>false</csvbackLoop>
-  </csvWfNodeTemplateLinkBegin>
-  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
-    <csvevent>COMPLETE</csvevent>
-    <csvaction>START</csvaction>
-  </csvWfEventActionPair>
-  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
-  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfExprRobotTemplate:22916527</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22916533</csvdestNode>
-    <csvbackLoop>false</csvbackLoop>
-  </csvWfNodeTemplateLinkBegin>
-  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
-    <csvevent>COMPLETE</csvevent>
-    <csvaction>START</csvaction>
-  </csvWfEventActionPair>
-  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
-  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfProxyTemplate:22916508</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22916515</csvdestNode>
-    <csvbackLoop>false</csvbackLoop>
-  </csvWfNodeTemplateLinkBegin>
-  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
-    <csvevent>COMPLETE</csvevent>
-    <csvaction>START</csvaction>
-  </csvWfEventActionPair>
-  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
-  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
-    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22916577</csvsourceNode>
-    <csvdestNode>wt.workflow.definer.WfAssignedActivityTemplate:22916502</csvdestNode>
+    <csvsourceNode>wt.workflow.definer.WfConnectorTemplate:22954297</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfAssignedActivityTemplate:22954193</csvdestNode>
     <csvbackLoop>false</csvbackLoop>
   </csvWfNodeTemplateLinkBegin>
   <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
     <csvevent>Y</csvevent>
+    <csvaction>START</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfAssignedActivityTemplate:22954193</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfConnectorTemplate:22954299</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>驳回</csvevent>
+    <csvaction>FIRE</csvaction>
+  </csvWfEventActionPair>
+  <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
+  <csvWfNodeTemplateLinkBegin handler="wt.workflow.definer.LoadWorkflow.createNodeTemplateLink">
+    <csvsourceNode>wt.workflow.definer.WfAssignedActivityTemplate:22954193</csvsourceNode>
+    <csvdestNode>wt.workflow.definer.WfExprRobotTemplate:22954231</csvdestNode>
+    <csvbackLoop>false</csvbackLoop>
+  </csvWfNodeTemplateLinkBegin>
+  <csvWfEventActionPair handler="wt.workflow.definer.LoadWorkflow.addEventActionPair">
+    <csvevent>通过</csvevent>
     <csvaction>START</csvaction>
   </csvWfEventActionPair>
   <csvWfNodeTemplateLinkEnd handler="wt.workflow.definer.LoadWorkflow.saveNodeTemplateLink"></csvWfNodeTemplateLinkEnd>
