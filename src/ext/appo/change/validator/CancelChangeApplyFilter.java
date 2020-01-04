@@ -10,11 +10,15 @@ import org.apache.log4j.Logger;
 import wt.change2.WTChangeActivity2;
 import wt.change2.WTChangeOrder2;
 import wt.fc.Persistable;
+import wt.fc.QueryResult;
 import wt.fc.WTReference;
 import wt.log4j.LogR;
 import wt.org.WTPrincipal;
 import wt.org.WTUser;
 import wt.session.SessionHelper;
+import wt.workflow.engine.WfEngineHelper;
+import wt.workflow.engine.WfProcess;
+import wt.workflow.engine.WfState;
 
 import java.util.Collection;
 
@@ -42,8 +46,27 @@ public class CancelChangeApplyFilter extends DefaultSimpleValidationFilter {
                         WTChangeOrder2 changeOrder2 = (WTChangeOrder2) persistable;
                         Collection<WTChangeActivity2> activity2s = ModifyUtils.getChangeActivities(changeOrder2);
                         LOGGER.info("=====activity2s: " + activity2s);
+                        System.out.println("=====activity2s: " + activity2s);
                         if (activity2s.size() > 0) {
-                            status = UIValidationStatus.ENABLED;
+                            for (WTChangeActivity2 eca:activity2s){
+                                //ECA流程是否都在运行中
+                                QueryResult qr = WfEngineHelper.service.getAssociatedProcesses(eca, null, null);
+                                while (qr.hasMoreElements()) {
+                                    WfProcess process = (WfProcess) qr.nextElement();
+                                    if (process!=null){
+                                        String templateName = process.getTemplate().getName();
+                                        String state = String.valueOf(changeOrder2.getLifeCycleState());
+                                        //存在运行流程
+                                        if (process.getState().equals(WfState.OPEN_RUNNING)){
+                                            status = UIValidationStatus.ENABLED;
+                                            break;
+                                        }
+
+                                    }
+
+                                }
+                            }
+
                         }
                     }
                 }
