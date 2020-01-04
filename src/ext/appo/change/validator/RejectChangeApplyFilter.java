@@ -32,7 +32,7 @@ import wt.workflow.work.WorkItem;
 import java.util.*;
 
 /**
- * 驳回变更申请按钮过滤
+ * 驳回变更申请按钮过滤（只需判断所有流程节点在是否数据变更节点，无需判断责任人）
  */
 public class RejectChangeApplyFilter extends DefaultSimpleValidationFilter {
 
@@ -70,20 +70,25 @@ public class RejectChangeApplyFilter extends DefaultSimpleValidationFilter {
                                 System.out.println("eca=="+eca+"==activityName=="+activityName);
                                 if(!activityName.equals("数据更改")){
                                     return status;
-                                }else {
-                                    WTPrincipalReference owner = item.getOwnership().getOwner();
-                                    //数据更改 节点负责人
-                                    user=(WTUser)owner.getPrincipal();
-                                    //数据更改 节点工作负责人 需要等于ECO提交者
-                                    if (!user.getFullName().equals(creatorFullName)){
-                                        return status;
-                                    }
-
                                 }
+//                                else {
+//                                    WTPrincipalReference owner = item.getOwnership().getOwner();
+//                                    //数据更改 节点负责人
+//                                    user=(WTUser)owner.getPrincipal();
+//                                    //数据更改 节点工作负责人 需要等于ECO提交者
+//                                    if (!user.getFullName().equals(creatorFullName)){
+//                                        return status;
+//                                    }
+//
+//                                }
                             }
                         }
                         String current = ((WTUser) principal).getFullName();
-                        if (flag||(user!=null&&user.getFullName().equals(current))){
+//                        if (flag||(user!=null&&user.getFullName().equals(current))){
+//                            status = UIValidationStatus.ENABLED;
+//                        }
+                        //管理员或者是ECN提交者
+                        if (flag||creatorFullName.equals(current)){
                             status = UIValidationStatus.ENABLED;
                         }
 
