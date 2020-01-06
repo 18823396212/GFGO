@@ -110,6 +110,16 @@
             affectedParts=BomChangeReport.getAffectedInfo(ecn);
             bomChangeInfos=BomChangeReport.getBomChangeInfos(ecn);
         }
+    }else if (persistable instanceof WTChangeActivity2){
+        WTChangeActivity2 eca=(WTChangeActivity2)persistable;
+        if (eca!=null){
+            ecn=BomChangeReport.getECNbyECA(eca);
+        }
+        if (ecn!=null){
+            ecnInfo= BomChangeReport.getECNInfo(ecn);
+            affectedParts=BomChangeReport.getAffectedInfo(ecn);
+            bomChangeInfos=BomChangeReport.getBomChangeInfos(ecn);
+        }
     }
 
 %>
