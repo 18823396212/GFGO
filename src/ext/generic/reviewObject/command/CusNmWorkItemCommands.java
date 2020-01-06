@@ -172,6 +172,7 @@ public class CusNmWorkItemCommands extends NmWorkItemCommands implements Externa
 			if (FLOWNAME_5.equals(template) && (CONSTANTS_5.equals(activityName) || CONSTANTS_6.equals(activityName))) {
 				List<String> voteList = ModifyUtils.getVoteList(nmCommandBean);
 				LOGGER.info("=====checkAttribute.voteList: " + voteList);
+				List<String> approvalOpinionList=new ArrayList<>();//所有审批意见
 
 				Map<String, Map<String, String>> map = conversionParameter(nmCommandBean);
 				LOGGER.info("=====checkAttribute.map: " + map);
@@ -180,6 +181,7 @@ public class CusNmWorkItemCommands extends NmWorkItemCommands implements Externa
 					Map<String, String> attributeMap = map.get(oid);
 					LOGGER.info("=====checkAttribute.oid: " + oid + " >>>>>attributeMap: " + attributeMap);
 					String approvalOpinion = attributeMap.get(ATTRIBUTE_9) == null ? "" : attributeMap.get(ATTRIBUTE_9);
+					approvalOpinionList.add(approvalOpinion);
 					if (voteList.contains(CONSTANTS_11)) {
 						if (approvalOpinion.contains(CONSTANTS_8)) {
 							throw new WTException("受影响对象列表存在审批意见为「驳回」的数据，不允许通过！");
@@ -195,6 +197,20 @@ public class CusNmWorkItemCommands extends NmWorkItemCommands implements Externa
 						}
 					}
 				}
+				System.out.println("voteList=="+voteList);
+				if (voteList.contains(CONSTANTS_8)){
+					System.out.println("approvalOpinionList=="+approvalOpinionList);
+					voteList:if (approvalOpinionList!=null&&approvalOpinionList.size()>0){
+						for (int i = 0; i <approvalOpinionList.size() ; i++) {
+							if (approvalOpinionList.get(i).contains(CONSTANTS_8)){
+								//存在一个驳回项
+								break voteList;
+							}
+						}
+						throw new WTException("驳回时至少要有一个驳回项");
+					}
+				}
+
 			}
 		}
 	}
