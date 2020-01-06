@@ -7,6 +7,7 @@ import ext.appo.change.constants.ModifyConstants;
 import ext.appo.change.models.CorrelationObjectLink;
 import ext.appo.change.models.TransactionTask;
 import ext.appo.change.util.ModifyUtils;
+import ext.appo.ecn.common.util.ChangePartQueryUtils;
 import ext.appo.ecn.constants.ChangeConstants;
 import ext.appo.part.workflow.PartWorkflowUtil;
 import ext.com.workflow.WorkflowUtil;
@@ -18,10 +19,7 @@ import ext.pi.core.PICoreHelper;
 import ext.pi.core.PIWorkflowHelper;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import wt.change2.AffectedActivityData;
-import wt.change2.Changeable2;
-import wt.change2.WTChangeActivity2;
-import wt.change2.WTChangeOrder2;
+import wt.change2.*;
 import wt.doc.WTDocument;
 import wt.epm.EPMDocument;
 import wt.fc.*;
@@ -1345,4 +1343,247 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
         LOGGER.info("=====checkContainer.isok: " + isok);
         return isok;
     }
+
+    /***
+     * 产生对象批量设置状态为‘已发布’
+     *并返回所有产生对象及发布BOM下所有已发布子件(不是只返回发布的产生对象及发布BOM下所有已发布子件)
+     * @param wtObject
+     *            WTChangeOrder2
+     * @return
+     */
+    public static Collection<WTPart> setReleaseState(WTObject wtObject) {
+        Collection<WTPart> releasePartsArray = new HashSet<WTPart>();
+        if (wtObject == null || !(wtObject instanceof WTChangeOrder2)) {
+            return releasePartsArray;
+        }
+
+        try {
+            WTChangeOrder2 ecn = (WTChangeOrder2) wtObject;
+            // 获取ECN中所有ECA与受影响对象集合
+            Map<ChangeActivityIfc, Collection<Changeable2>> beforeInfoMap = getChangeablesBeforeInfo(ecn);
+            if (beforeInfoMap == null || beforeInfoMap.size() == 0) {
+                return releasePartsArray;
+            }
+            // 获取ECN中所有ECA与产生对象集合
+            Map<ChangeActivityIfc, Collection<Changeable2>> afterInfoMap = getChangeablesAfterInfo(ecn);
+            if (afterInfoMap == null || afterInfoMap.size() == 0) {
+                return releasePartsArray;
+            }
+
+            for (Map.Entry<ChangeActivityIfc, Collection<Changeable2>> beforeEntryMap : beforeInfoMap.entrySet()) {
+                ChangeActivityIfc eca = beforeEntryMap.getKey();
+                // 产生对象集合
+                Collection<Changeable2> afterInfoArray = afterInfoMap.get(eca);
+                for (Changeable2 afterObject : afterInfoArray) {
+                    if (afterObject instanceof WTPart) {
+                        //添加所有产生的对象
+                        releasePartsArray.add((WTPart) afterObject);
+                    }
+                }
+                // 受影响对象集合
+                Collection<Changeable2> beforeArray = beforeEntryMap.getValue();
+                for (Changeable2 changeable2 : beforeArray) {
+                    if (checkState((LifeCycleManaged) changeable2, ChangeConstants.RELEASED)) {
+                        for (Changeable2 afterObject : afterInfoArray) {
+                            if (getNumber(afterObject).equals(getNumber(changeable2))) {
+                                // 设置状态
+                                PICoreHelper.service.setLifeCycleState((LifeCycleManaged) afterObject,
+                                        ChangeConstants.RELEASED);
+                                if (afterObject instanceof WTPart) {
+                                    // 增加自动随签发布的逻辑，edit by cjt
+                                    WTPart part = (WTPart) afterObject;
+                                    // 获取部件下所有子件信息
+                                    Collection<WTPart> partMultiwallStructure = ChangePartQueryUtils
+                                            .getPartMultiwallStructure(part);
+                                    for (WTPart childpart : partMultiwallStructure) {
+                                        if (childpart.getState().toString()
+                                                .equalsIgnoreCase(ChangeConstants.ARCHIVED)) {
+                                            // 设置状态
+                                            PICoreHelper.service.setLifeCycleState((LifeCycleManaged) childpart,
+                                                    ChangeConstants.RELEASED);
+                                            if (!releasePartsArray.contains(childpart)) {
+                                                releasePartsArray.add(childpart);
+                                            }
+
+                                        }
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+
+        return releasePartsArray;
+    }
+
+    /***
+     * 获取ECN中所有ECA与受影响对象
+     *
+     * @param ecn
+     * @return
+     * @throws WTException
+     */
+    public static Map<ChangeActivityIfc, Collection<Changeable2>> getChangeablesBeforeInfo(WTChangeOrder2 ecn)
+            throws WTException {
+        Map<ChangeActivityIfc, Collection<Changeable2>> datasMap = new HashMap<ChangeActivityIfc, Collection<Changeable2>>();
+        if (ecn == null) {
+            return datasMap;
+        }
+
+        try {
+            // 获取ECN中所有ECA对象
+            Collection<ChangeActivityIfc> ecaArray = getChangeActivities(ecn);
+            for (ChangeActivityIfc changeActivityIfc : ecaArray) {
+                // 受影响对象集合
+                Collection<Changeable2> datasArray = new HashSet<Changeable2>();
+                // 获取ECA中所有受影响对象
+                QueryResult qr = ChangeHelper2.service.getChangeablesBefore(changeActivityIfc);
+                while (qr.hasMoreElements()) {
+                    Object object = qr.nextElement();
+                    if (object instanceof ObjectReference) {
+                        object = ((ObjectReference) object).getObject();
+                    }
+                    if (object instanceof Changeable2) {
+                        datasArray.add((Changeable2) object);
+                    }
+                }
+                datasMap.put(changeActivityIfc, datasArray);
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            throw new WTException(e.getLocalizedMessage());
+        }
+
+        return datasMap;
+    }
+
+    /***
+     * 获取ECN中所有ECA与产生对象
+     *
+     * @param ecn
+     * @return
+     * @throws WTException
+     */
+    public static Map<ChangeActivityIfc, Collection<Changeable2>> getChangeablesAfterInfo(WTChangeOrder2 ecn)
+            throws WTException {
+        Map<ChangeActivityIfc, Collection<Changeable2>> datasMap = new HashMap<ChangeActivityIfc, Collection<Changeable2>>();
+        if (ecn == null) {
+            return datasMap;
+        }
+
+        try {
+            // 获取ECN中所有ECA对象
+            Collection<ChangeActivityIfc> ecaArray = getChangeActivities(ecn);
+            for (ChangeActivityIfc changeActivityIfc : ecaArray) {
+                // 产生对象集合
+                Collection<Changeable2> datasArray = new HashSet<Changeable2>();
+                // 获取ECA中所有产生对象
+                QueryResult qr = ChangeHelper2.service.getChangeablesAfter(changeActivityIfc);
+                while (qr.hasMoreElements()) {
+                    Object object = qr.nextElement();
+                    if (object instanceof ObjectReference) {
+                        object = ((ObjectReference) object).getObject();
+                    }
+                    if (object instanceof Changeable2) {
+                        datasArray.add((Changeable2) object);
+                    }
+                }
+                datasMap.put(changeActivityIfc, datasArray);
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            throw new WTException(e.getLocalizedMessage());
+        }
+
+        return datasMap;
+    }
+
+
+    /***
+     * 判断对象状态是否符合要求
+     *
+     * @param lifecycleManaged
+     * @param state
+     * @return
+     */
+    public static Boolean checkState(LifeCycleManaged lifecycleManaged, String state) {
+        if (lifecycleManaged == null || PIStringUtils.isNull(state)) {
+            return false;
+        }
+
+        return lifecycleManaged.getLifeCycleState().toString().equalsIgnoreCase(state);
+    }
+
+    /***
+     * 获取对象编码
+     *
+     * @param persistable
+     * @return
+     */
+    public static String getNumber(Persistable persistable) {
+        if (persistable instanceof ObjectReference) {
+            persistable = ((ObjectReference) persistable).getObject();
+        }
+
+        String number = "";
+
+        if (persistable instanceof WTPart) {
+            number = ((WTPart) persistable).getNumber();
+        } else if (persistable instanceof EPMDocument) {
+            number = ((EPMDocument) persistable).getNumber();
+        } else if (persistable instanceof WTDocument) {
+            number = ((WTDocument) persistable).getNumber();
+        } else if (persistable instanceof WTChangeRequest2) {
+            number = ((WTChangeRequest2) persistable).getNumber();
+        } else if (persistable instanceof WTChangeOrder2) {
+            number = ((WTChangeOrder2) persistable).getNumber();
+        } else if (persistable instanceof WTChangeActivity2) {
+            number = ((WTChangeActivity2) persistable).getNumber();
+        }
+
+        return number;
+    }
+
+    /***
+     * 获取更改通告中所有更改任务
+     *
+     * @param changeOrder2
+     *            变更通告
+     * @return
+     * @throws WTException
+     */
+    public static Collection<ChangeActivityIfc> getChangeActivities(WTChangeOrder2 changeOrder2) throws WTException {
+        Collection<ChangeActivityIfc> datasArray = new HashSet<ChangeActivityIfc>();
+        if (changeOrder2 == null) {
+            return datasArray;
+        }
+
+        try {
+            // 获取更改通告中所有的受影响对象
+            QueryResult qr = ChangeHelper2.service.getChangeActivities(changeOrder2);
+            while (qr.hasMoreElements()) {
+                Object object = qr.nextElement();
+                if (object instanceof ObjectReference) {
+                    object = ((ObjectReference) object).getObject();
+                }
+                if (object instanceof WTChangeActivity2) {
+                    datasArray.add((WTChangeActivity2) object);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new WTException(e.getLocalizedMessage());
+        }
+
+        return datasArray;
+    }
+
 }
