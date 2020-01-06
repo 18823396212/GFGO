@@ -1001,7 +1001,6 @@ public class ECAWorkflowUtil implements ChangeConstants, ModifyConstants {
         if (!(pbo instanceof WTChangeActivity2)) return;
         Collection<Changeable2> befores = ModifyUtils.getChangeablesBefore((WTChangeActivity2) pbo);
         Collection<Changeable2> afters = ModifyUtils.getChangeablesAfter((WTChangeActivity2) pbo);
-        List<String> partlist=new ArrayList<>();
         for (Changeable2 before : befores) {
             if (before instanceof WTPart) {
                 WTPart beforePart = (WTPart) before;
@@ -1022,6 +1021,7 @@ public class ECAWorkflowUtil implements ChangeConstants, ModifyConstants {
                                 for (WTPart childPart : collection) {
                                     String childNumber = childPart.getNumber();
                                     if (childNumber.startsWith("X")) {
+                                        List<String> partlist=new ArrayList<>();
                                         QueryResult partqr = getParts(childNumber);
                                         while (partqr.hasMoreElements()) {
                                             WTPart oldpart = (WTPart) partqr.nextElement();
@@ -1032,11 +1032,12 @@ public class ECAWorkflowUtil implements ChangeConstants, ModifyConstants {
                                             }
 
                                         }
+                                        // 不存在有已发布的版本，
+                                        if (!partlist.contains(RELEASED)) {
+                                            MESSAGES.add("软件" + childNumber + "不存在已发布状态，不能添加到已发布的BOM" + afterPartNumber + "中，请先软件发布后再添加到BOM中！");
+                                        }
                                     }
-                                    // 不存在有已发布的版本，
-                                    if (!partlist.contains(RELEASED)) {
-                                        MESSAGES.add("软件" + childNumber + "不存在已发布状态，不能添加到已发布的BOM" + afterPartNumber + "中，请先软件发布后再添加到BOM中！");
-                                    }
+
                                 }
                             }
                         }
