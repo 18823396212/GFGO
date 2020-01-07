@@ -12,6 +12,10 @@
 <%@ page import="wt.org.WTPrincipal" %>
 <%@ page import="wt.pom.Transaction" %>
 <%@ page import="wt.session.SessionHelper" %>
+<%@ page import="wt.fc.QueryResult" %>
+<%@ page import="wt.workflow.engine.WfEngineHelper" %>
+<%@ page import="wt.workflow.engine.WfProcess" %>
+<%@ page import="ext.pi.core.PIWorkflowHelper" %>
 <%@page pageEncoding="UTF-8" %>
 <%
     WTPrincipal principal = SessionHelper.manager.getPrincipal();
@@ -44,9 +48,20 @@
                     System.out.println("=====ChangeActivity2: " + persistable);
                     if (persistable instanceof WTChangeActivity2) {
                         WTChangeActivity2 activity2 = (WTChangeActivity2) persistable;
-                        ModifyUtils.removeAffectedActivityData(activity2);
-                        ModifyUtils.removeChangeRecord(activity2);
-                        PersistenceServerHelper.manager.remove(activity2);
+                        //add by lzy at 20200107 start
+                        //先终止事务性任务进程
+                        QueryResult result = WfEngineHelper.service.getAssociatedProcesses(activity2, null, null);
+                        System.out.println("事务性任务流程=="+result);
+                        while (result.hasMoreElements()) {
+                            WfProcess process = (WfProcess) result.nextElement();
+                            System.out.println("process=="+process);
+                            PIWorkflowHelper.service.stop(process);
+                        }
+                        WTChangeActivity2 eca = (WTChangeActivity2) persistable;
+                        ModifyUtils.removeAffectedActivityData(eca);
+                        ModifyUtils.removeChangeRecord(eca);
+                        //add by lzy at 20200107 end
+                        PersistenceServerHelper.manager.remove(eca);
                     }
 
                     //移除ECN与所选事务性任务模型对象的Link
