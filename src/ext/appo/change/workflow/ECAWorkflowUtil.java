@@ -122,7 +122,7 @@ public class ECAWorkflowUtil implements ChangeConstants, ModifyConstants {
                         LOGGER.info("=====checkChildState.view: " + view);
 
                         if (parentView.equalsIgnoreCase("Design") && view.equalsIgnoreCase("Manufacturing")) {
-                            MESSAGES.add("子件「" + childNumber + "」为制造视图(Manufacturing)，不能加到设计视图(Design)「" + parentNumber + "」的BOM中！");
+//                            MESSAGES.add("子件「" + childNumber + "」为制造视图(Manufacturing)，不能加到设计视图(Design)「" + parentNumber + "」的BOM中！");
                         }
 
                         if (!state.equals(ARCHIVED) && !state.equals(RELEASED)) {
