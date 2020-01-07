@@ -1,3 +1,44 @@
+/**
+ * <pre>
+ * 修改记录：05
+ * 修改日期：2019-11-01 
+ * 修   改  人：毛兵义
+ * 关联活动：
+ * 修改内容：检查光峰的BOM归档发布时，结构中不能有小米定制的物料（除“激光产品库”“微投产品库”外）
+ * </pre>
+ */
+
+/**
+ * <pre>
+ * 修改记录：06
+ * 修改日期：2019-11-22 
+ * 修   改  人：毛兵义
+ * 关联活动：
+ * 修改内容：去掉设计视图中不能包含制造视图的限制
+ * </pre>
+ */
+
+/**
+ * <pre>
+ * 修改记录：07
+ * 修改日期：2019-12-20 
+ * 修   改  人：毛兵义
+ * 关联活动：
+ * 修改内容：D视图添加校验：分类为组件的下面不允许挂总成
+ * </pre>
+ */
+
+/**
+ * <pre>
+ * 修改记录：08
+ * 修改日期：2019-12-24 
+ * 修   改  人：毛兵义
+ * 关联活动：
+ * 修改内容：是否小米定制以前使用公司，现在直接根据产品库来去除峰米
+ * 修改内容：优选等级，新的BOM不能添加【禁选】的物料
+ * </pre>
+ */
+
 package ext.appo.part.workflow;
 
 import java.util.ArrayList;
@@ -114,7 +155,9 @@ import wt.team.Team;
 import wt.team.WTRoleHolder2;
 import wt.util.WTException;
 import wt.util.WTMessage;
+import wt.vc.VersionControlHelper;
 import wt.vc.config.LatestConfigSpec;
+import wt.vc.views.View;
 import wt.vc.wip.WorkInProgressException;
 import wt.vc.wip.WorkInProgressHelper;
 import wt.workflow.engine.WfActivity;
@@ -184,9 +227,8 @@ public class PartWorkflowUtil extends PartReleasedWorkFlow {
 	 * @return
 	 * @throws WTException
 	 */
-	private void checkSonStateInReviewlist(WTObject pbo) throws WTException {
+	public void checkSonStateInReviewlist(WTObject pbo) throws WTException {
 		// boolean stateIsOK = true;
-		String message = "";
 		WTUser previous = (WTUser) SessionHelper.manager.getPrincipal();
 		WTPart part = (WTPart) pbo;
 
@@ -200,7 +242,6 @@ public class PartWorkflowUtil extends PartReleasedWorkFlow {
 			AccessControlHelper.manager.addPermission((AdHocControlled) part, wtprincipalreference,
 					AccessPermission.MODIFY_IDENTITY, AdHocAccessKey.WNC_ACCESS_CONTROL);
 		} catch (WTException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		// 获取单层子件
@@ -211,7 +252,6 @@ public class PartWorkflowUtil extends PartReleasedWorkFlow {
 		try {
 			StartAppoPartArchiveIssueWF.getBomallchildpart(part, childpartList);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		SessionContext.setEffectivePrincipal(previous);
@@ -244,7 +284,6 @@ public class PartWorkflowUtil extends PartReleasedWorkFlow {
 				}
 			}
 		} catch (WTException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return reviewlist;
@@ -312,7 +351,6 @@ public class PartWorkflowUtil extends PartReleasedWorkFlow {
 					sb.append("在受影响对象中非最新版本，请使用最新版本进行变更。");
 				}
 			} catch (WTException e) {
-				// TODO Auto-generated catch block""
 				e.printStackTrace();
 			}
 		}
@@ -370,7 +408,6 @@ public class PartWorkflowUtil extends PartReleasedWorkFlow {
 					}
 				}
 			} catch (WTException e) {
-				// TODO Auto-generated catch block""
 				e.printStackTrace();
 			}
 
@@ -382,7 +419,7 @@ public class PartWorkflowUtil extends PartReleasedWorkFlow {
 	// 检查bom中子件的单位和物料的单位是否一致
 	public void CheckBOMUnit(ObjectReference self1) throws WTException {
 		StringBuilder errorMsg = new StringBuilder();
-		WTArrayList reviewlist = new WTArrayList();
+		// WTArrayList reviewlist = new WTArrayList();
 		// 获取随迁对象
 		WTArrayList reviewObjectByProcess = ReviewObjectAndWorkFlowLink.getReviewObjectByProcess(self1);
 		for (int i = 0; i < reviewObjectByProcess.size(); i++) {
@@ -522,7 +559,6 @@ public class PartWorkflowUtil extends PartReleasedWorkFlow {
 				productline = (String) PIAttributeHelper.service.getValue(ecn, "sscpx");
 				System.out.println("productline===" + productline);
 			} catch (PIException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			// 微投--40 激光电视--60
@@ -546,7 +582,6 @@ public class PartWorkflowUtil extends PartReleasedWorkFlow {
 				productline = (String) PIAttributeHelper.service.getValue(ecn, "sscpx");
 				System.out.println("productline===" + productline);
 			} catch (PIException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			// 微投--40 激光电视--60
@@ -591,18 +626,57 @@ public class PartWorkflowUtil extends PartReleasedWorkFlow {
 			Team processTeam = WorkflowUtil.getTeam(ecn);
 			// 流程实例所有角色
 			Vector processRoleVector = processTeam.getRoles();
-			a:for (Object o : processRoleVector) {
-				Role processRole = (Role) o;
+			a: for (int i = 0; i < processRoleVector.size(); i++) {
+				Role processRole = (Role) processRoleVector.get(i);
+				if ("Normalizer".equals(processRole.toString()) || "Assessor".equals(processRole.toString())
+						|| "Signer".equals(processRole.toString()) || "Receiver".equals(processRole.toString())
+						|| "Approver".equals(processRole.toString())) {
+
+					Enumeration enumPrin = processTeam.getPrincipalTarget(processRole);// 会签者
+
+					while (enumPrin.hasMoreElements()) {
+						WTPrincipalReference tempPrinRef = (WTPrincipalReference) enumPrin.nextElement();
+						WTPrincipal principal = tempPrinRef.getPrincipal();
+						if (principal instanceof WTUser) {
+							WTUser user = (WTUser) principal;
+							if (userSet != null && userSet.size() > 0 && !userSet.contains(user)) {
+								result.append("用户" + user.getFullName() + "不在" + container.getContainerName()
+										+ "团队中，请另外选择人员或通知业务管理员设置用户权限！");
+								break a;
+							}
+						}
+					}
+				}
+			}
+		} else if (pbo instanceof WTPart) {
+			WTPart part = (WTPart) pbo;
+
+			WTContainer container = part.getContainer();
+
+			ContainerTeam containerTeam = ContainerTeamHelper.service
+					.getContainerTeam((ContainerTeamManaged) container);
+			Set<WTUser> userSet = getAllMembers(containerTeam);
+
+			Team processTeam = WorkflowUtil.getTeam(part);
+			// 流程实例所有角色
+			Vector processRoleVector = processTeam.getRoles();
+			a: for (int i = 0; i < processRoleVector.size(); i++) {
+				Role processRole = (Role) processRoleVector.get(i);
 				Enumeration enumPrin = processTeam.getPrincipalTarget(processRole);// 会签者
 
-				while (enumPrin.hasMoreElements()) {
-					WTPrincipalReference tempPrinRef = (WTPrincipalReference) enumPrin.nextElement();
-					WTPrincipal principal = tempPrinRef.getPrincipal();
-					if (principal instanceof WTUser) {
-						WTUser user = (WTUser) principal;
-						if (userSet != null && userSet.size() > 0 && !userSet.contains(user)) {
-							result.append("用户").append(user.getFullName()).append("不在").append(container.getContainerName()).append("团队中，请另外选择人员或通知业务管理员设置用户权限！");
-							break a;
+				if ("Normalizer".equals(processRole.toString()) || "Assessor".equals(processRole.toString())
+						|| "Signer".equals(processRole.toString()) || "Receiver".equals(processRole.toString())
+						|| "Approver".equals(processRole.toString())) {
+					while (enumPrin.hasMoreElements()) {
+						WTPrincipalReference tempPrinRef = (WTPrincipalReference) enumPrin.nextElement();
+						WTPrincipal principal = tempPrinRef.getPrincipal();
+						if (principal instanceof WTUser) {
+							WTUser user = (WTUser) principal;
+							if (userSet != null && userSet.size() > 0 && !userSet.contains(user)) {
+								result.append("用户" + user.getFullName() + "不在" + container.getContainerName()
+										+ "团队中，请另外选择人员或通知业务管理员设置用户权限！");
+								break a;
+							}
 						}
 					}
 				}
@@ -676,6 +750,13 @@ public class PartWorkflowUtil extends PartReleasedWorkFlow {
 			if (pbo instanceof WTChangeOrder2) {
 				WTChangeOrder2 ecn = (WTChangeOrder2) pbo;
 				Team processTeam = WorkflowUtil.getTeam(ecn);
+				if (processTeam != null) {
+					processTeam.addPrincipal(addrole, wtprincipal);
+					System.out.println("end add people success");
+				}
+			} else if (pbo instanceof WTPart) {
+				WTPart wtPart = (WTPart) pbo;
+				Team processTeam = WorkflowUtil.getTeam(wtPart);
 				if (processTeam != null) {
 					processTeam.addPrincipal(addrole, wtprincipal);
 					System.out.println("end add people success");
@@ -893,7 +974,6 @@ public class PartWorkflowUtil extends PartReleasedWorkFlow {
 				}
 
 			} catch (WTException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} // 获取容器的人
 
@@ -973,7 +1053,6 @@ public class PartWorkflowUtil extends PartReleasedWorkFlow {
 				}
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 			throw new WTException(e.getLocalizedMessage());
 		}
@@ -1305,6 +1384,67 @@ public class PartWorkflowUtil extends PartReleasedWorkFlow {
 	}
 
 	/**
+	 * D视图添加校验：分类为组件的下面不允许挂总成
+	 * 
+	 * @param part
+	 * @throws WTException
+	 */
+	public void checkSonHistoryversionDesign(WTPart part) throws WTException {
+		View view = (View) part.getView().getObject();
+		StringBuffer message = new StringBuffer();
+		if (view != null && "Design".equals(view.getName())) {
+			WTUser previous = (WTUser) SessionHelper.manager.getPrincipal();
+			try {
+				WTPrincipal wtadministrator = SessionHelper.manager.getAdministrator();
+				// 取得当前用户
+				SessionContext.setEffectivePrincipal(wtadministrator);
+
+				String clsParent = (String) PIAttributeHelper.service.getValue(part, "Classification");
+				System.out.println("clsParent ====" + clsParent);
+				if (clsParent.startsWith("appo_bcp01") || clsParent.startsWith("appo_bcp10")
+						|| clsParent.startsWith("appo_bcp13") || clsParent.startsWith("appo_bcp05")
+						|| clsParent.startsWith("appo_bcp20") || clsParent.startsWith("appo_bcp14")
+						|| clsParent.startsWith("appo_bcp06") || clsParent.startsWith("appo_bcp04")) {
+					// 获取所有子件
+					ArrayList<WTPart> childpartList = new ArrayList<WTPart>();
+					StartAppoPartArchiveIssueWF.getBomallchildpart(part, childpartList);
+
+					for (int i = 0; i < childpartList.size(); i++) {
+						WTPart son = (WTPart) childpartList.get(i);
+
+						System.out.println("part container name====" + part.getContainerName());
+						if (!part.getContainerName().startsWith("微投产品库")
+								&& !part.getContainerName().startsWith("激光电视产品库")) {
+							// 检出子件是否有总成
+							String cls = (String) PIAttributeHelper.service.getValue(son, "Classification");
+							System.out.println("cls ====" + cls);
+							if (cls.startsWith("appo_bcp17") || cls.startsWith("appo_bcp21")
+									|| cls.startsWith("appo_bcp22") || cls.startsWith("appo_bcp24")
+									|| cls.startsWith("appo_bcp11") || cls.startsWith("appo_bcp25")
+									|| cls.startsWith("appo_bcp19") || cls.startsWith("appo_bcp16")) {
+								if (message.toString() != null && message.toString().length() > 0) {
+									message.append("\n");
+								}
+								message.append("设计视图组件【" + part.getNumber() + "】，不能引用总成的子件【" + son.getNumber() + "】.");
+							}
+						}
+					}
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				SessionContext.setEffectivePrincipal(previous);
+			}
+
+		}
+
+		if (message.toString() != null && message.toString().length() > 0) {
+			throw new WTException(message.toString());
+		}
+	}
+
+	/**
 	 * 检查子类状态
 	 * 
 	 * @author HYJ&NJH
@@ -1330,8 +1470,7 @@ public class PartWorkflowUtil extends PartReleasedWorkFlow {
 					.getReference(previous);
 			AccessControlHelper.manager.addPermission((AdHocControlled) part, wtprincipalreference,
 					AccessPermission.MODIFY_IDENTITY, AdHocAccessKey.WNC_ACCESS_CONTROL);
-		} catch (WTException e1) {
-			// TODO Auto-generated catch block
+		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 		// 获取单层子件
@@ -1341,7 +1480,6 @@ public class PartWorkflowUtil extends PartReleasedWorkFlow {
 		try {
 			StartAppoPartArchiveIssueWF.getBomallchildpart(part, childpartList);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println("childpartList.size()====" + childpartList.size());
@@ -1354,20 +1492,19 @@ public class PartWorkflowUtil extends PartReleasedWorkFlow {
 			WTPart son = (WTPart) childpartList.get(i);
 			String stateVal = son.getLifeCycleState().toString();
 
-			if (part.getVersionIdentifier().getValue().startsWith("A")) {
-				System.out.println("part container name====" + part.getContainerName());
-				if (!part.getContainerName().startsWith("微投产品库") && !part.getContainerName().startsWith("激光电视产品库")) {
-					// 检出子件是否有总成
-					String cls = (String) PIAttributeHelper.service.getValue(son, "Classification");
-					System.out.println("cls ====" + cls);
-					if (cls.startsWith("appo_bcp17") || cls.startsWith("appo_bcp21") || cls.startsWith("appo_bcp22")
-							|| cls.startsWith("appo_bcp24") || cls.startsWith("appo_bcp11")
-							|| cls.startsWith("appo_bcp25") || cls.startsWith("appo_bcp19")
-							|| cls.startsWith("appo_bcp16")) {
-						throw new WTException("制造BOM(Manufacturing)下面不能直接引用设计虚拟件，如“硬件总成”等！");
-					}
+			// if (part.getVersionIdentifier().getValue().startsWith("A")) {
+			System.out.println("part container name====" + part.getContainerName());
+			if (!part.getContainerName().startsWith("微投产品库") && !part.getContainerName().startsWith("激光电视产品库")) {
+				// 检出子件是否有总成
+				String cls = (String) PIAttributeHelper.service.getValue(son, "Classification");
+				System.out.println("cls ====" + cls);
+				if (cls.startsWith("appo_bcp17") || cls.startsWith("appo_bcp21") || cls.startsWith("appo_bcp22")
+						|| cls.startsWith("appo_bcp24") || cls.startsWith("appo_bcp11") || cls.startsWith("appo_bcp25")
+						|| cls.startsWith("appo_bcp19") || cls.startsWith("appo_bcp16")) {
+					throw new WTException("制造BOM【" + part.getNumber() + "】不能引用总成的子件【" + son.getNumber() + "】.");
 				}
 			}
+			// }
 			if (stateVal.equals("ARCHIVED") || stateVal.equals("RELEASED")) {
 			} else {
 				QueryResult partqr = getParts(son.getNumber());
@@ -1492,7 +1629,6 @@ public class PartWorkflowUtil extends PartReleasedWorkFlow {
 			AccessControlHelper.manager.addPermission((AdHocControlled) part, wtprincipalreference,
 					AccessPermission.MODIFY_IDENTITY, AdHocAccessKey.WNC_ACCESS_CONTROL);
 		} catch (WTException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		// 获取单层子件
@@ -1502,7 +1638,6 @@ public class PartWorkflowUtil extends PartReleasedWorkFlow {
 		try {
 			StartAppoPartArchiveIssueWF.getBomallchildpart(part, childpartList);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println("childpartList.size()====" + childpartList.size());
@@ -1611,7 +1746,8 @@ public class PartWorkflowUtil extends PartReleasedWorkFlow {
 			String state = part.getLifeCycleState().toString();
 			String view = part.getViewName();
 			if (parentView.equalsIgnoreCase("Design") && view.equalsIgnoreCase("Manufacturing")) {
-				throw new WTException("子件:" + part.getNumber() + ",为制造视图(Manufacturing)，不能加到设计视图的bom中,无法启动设计部件归档流程!");
+				// throw new WTException("子件:" + part.getNumber() +
+				// ",为制造视图(Manufacturing)，不能加到设计视图的bom中,无法启动设计部件归档流程!");
 			}
 			System.out.println("state========" + state);
 			if ((!state.equals(ChangeConstants.ARCHIVED)) && (!state.equals(ChangeConstants.RELEASED))) {
@@ -1700,7 +1836,8 @@ public class PartWorkflowUtil extends PartReleasedWorkFlow {
 			String state = part.getLifeCycleState().toString();
 			String view = part.getViewName();
 			if (parentView.equalsIgnoreCase("Design") && view.equalsIgnoreCase("Manufacturing")) {
-				throw new WTException("子件:" + part.getNumber() + ",为制造视图(Manufacturing)，不能加到设计视图的bom中,无法启动设计部件归档流程!");
+				// throw new WTException("子件:" + part.getNumber() +
+				// ",为制造视图(Manufacturing)，不能加到设计视图的bom中,无法启动设计部件归档流程!");
 			}
 			System.out.println("state========" + state);
 			if ((!state.equals(ChangeConstants.ARCHIVED)) && (!state.equals(ChangeConstants.RELEASED))) {
@@ -1778,7 +1915,6 @@ public class PartWorkflowUtil extends PartReleasedWorkFlow {
 		try {
 			qr = WTPartHelper.service.getUsesWTPartMasters(part);
 		} catch (WTException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		if (qr != null) {
@@ -1847,7 +1983,6 @@ public class PartWorkflowUtil extends PartReleasedWorkFlow {
 
 			}
 		} catch (WTException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -1972,12 +2107,17 @@ public class PartWorkflowUtil extends PartReleasedWorkFlow {
 
 			if (part.getNumber().startsWith("X")) {
 
-				Object valueObject = PIAttributeHelper.service.getValue(part.getContainer(), "ssgs");
-				String company = valueObject == null ? "" : (String) valueObject;
+				// Object valueObject =
+				// PIAttributeHelper.service.getValue(part.getContainer(),
+				// "ssgs");
+				// String company = valueObject == null ? "" : (String)
+				// valueObject;
+				// System.out.println("p company==" + company);
 
-				System.out.println("p company==" + company);
+				String containerName = part.getContainerName();
+				if (!"激光电视产品库".equals(containerName) && !"微投产品库".equals(containerName)) {
 
-				if ("APPO".equals(company)) {
+					// if ("APPO".equals(company)) {
 
 					String nodeHierarchy = "";// 获取分类全路径
 					// 获取分类内部值
@@ -2033,13 +2173,174 @@ public class PartWorkflowUtil extends PartReleasedWorkFlow {
 
 	public String getPartSSGS(WTObject pbo) throws PIException {
 		String company = "APPO";
-		if (pbo instanceof wt.part.WTPart) {
-			wt.part.WTPart part = (wt.part.WTPart) pbo;
+		if (pbo instanceof WTPart) {
+			WTPart part = (WTPart) pbo;
 			part.getNumber().startsWith("E");
-			Object valueObject = ext.pi.core.PIAttributeHelper.service.getValue(part.getContainer(), "ssgs");
+			Object valueObject = PIAttributeHelper.service.getValue(part, "ssgs");
 			company = valueObject == null ? "" : (String) valueObject;
 		}
 		return company;
+	}
+
+	/**
+	 * 检查光峰的BOM归档发布时，结构中不能有小米定制的物料（除“激光产品库”“微投产品库”外）
+	 * 
+	 * @param pbo
+	 * @throws WTException
+	 */
+	public void checkMICustomizeorNot(WTObject pbo) throws WTException {
+		boolean enforce = SessionServerHelper.manager.setAccessEnforced(false);
+
+		try {
+			if (pbo == null || !(pbo instanceof WTPart)) {
+				return;
+			}
+			WTPart parentPart = (WTPart) pbo;
+			String containerName = parentPart.getContainerName();
+			if (!"激光电视产品库".equals(containerName) && !"微投产品库".equals(containerName)) {
+
+				// 查询第一层结构信息
+				WTList wtList = new WTArrayList();
+				wtList.add(parentPart);
+				QueryResult queryResult = ChangePartQueryUtils.getPartsFirstStructure(wtList, new LatestConfigSpec());
+				while (queryResult.hasMoreElements()) {
+					Persistable[] persistables = (Persistable[]) queryResult.nextElement();
+					// 子件对象
+					Object object = persistables[1];
+					if (object instanceof WTPart) {
+						WTPart childPart = (WTPart) object;
+						Object valueObject = PIAttributeHelper.service.getValue(childPart,
+								"MI_Customize_orNot");
+						String MICustomizeorNot = valueObject == null ? "" : (String) valueObject;
+						if ("是".equals(MICustomizeorNot)) {
+							throw new WTException("BOM编码"
+									+ (parentPart.getNumber() + "的子件" + childPart.getNumber() + "是小米定制物料，请删除！"));
+						}
+					}
+				}
+			}
+		} finally {
+			SessionServerHelper.manager.setAccessEnforced(enforce);
+		}
+	}
+
+	/**
+	 * 检查光峰的BOM归档发布时，结构中不能【新增】优选等级为“禁选”的物料
+	 * 
+	 * @param pbo
+	 * @throws WTException
+	 */
+	public void checkPartYxdj(WTObject pbo) throws WTException {
+
+		boolean enforce = SessionServerHelper.manager.setAccessEnforced(false);
+
+		try {
+
+			if (pbo == null || !(pbo instanceof WTPart)) {
+				return;
+			}
+			WTPart parentPart = (WTPart) pbo;
+
+			String version = parentPart.getVersionInfo().getIdentifier().getValue();
+
+			WTPart prioParentPart = getPrioPart(parentPart, parentPart.getViewName());
+			Set<WTPartMaster> prioParentPartSet = getMonolayerPart(prioParentPart);
+
+			// 查询第一层结构信息
+			WTList wtList = new WTArrayList();
+			wtList.add(parentPart);
+			QueryResult queryResult = ChangePartQueryUtils.getPartsFirstStructure(wtList, new LatestConfigSpec());
+			while (queryResult.hasMoreElements()) {
+				Persistable[] persistables = (Persistable[]) queryResult.nextElement();
+				// 子件对象
+				Object object = persistables[1];
+				if (object instanceof WTPart) {
+					WTPart childPart = (WTPart) object;
+					Object valueObject = PIAttributeHelper.service.getValue(childPart, "yxdj");
+					String yxdj = valueObject == null ? "" : (String) valueObject;
+					if ("禁选".equals(yxdj) && "A".equals(version)) {
+						throw new WTException(
+								"BOM编码" + (parentPart.getNumber() + "的子件" + childPart.getNumber() + "优选等级是【禁选】，请删除！"));
+					} else if ("禁选".equals(yxdj) && !checkPrioBOMHavePart(prioParentPartSet, childPart)) {
+						throw new WTException(
+								"BOM编码" + (parentPart.getNumber() + "的子件" + childPart.getNumber() + "优选等级是【禁选】，请删除！"));
+					}
+				}
+			}
+		} finally {
+			SessionServerHelper.manager.setAccessEnforced(enforce);
+		}
+	}
+
+	/**
+	 * 检查上一个版本的BOM中是否存在当前的子件
+	 * 
+	 * @param prioParentPartSet
+	 * @param childPart
+	 * @return
+	 */
+	private static boolean checkPrioBOMHavePart(Set<WTPartMaster> prioParentPartSet, WTPart childPart) {
+		boolean result = false;
+
+		if (prioParentPartSet != null && prioParentPartSet.size() > 0) {
+
+			for (WTPartMaster master : prioParentPartSet) {
+				if (childPart.getNumber().equals(master.getNumber())) {
+					return true;
+				}
+			}
+
+		}
+
+		return result;
+	}
+
+	/**
+	 * 获取上一个同视图的版本
+	 * 
+	 * @param part
+	 * @param viewName
+	 * @return
+	 * @throws WTException
+	 */
+	private static WTPart getPrioPart(WTPart part, String viewName) throws WTException {
+		// 获取所有大版本的最新小版本
+		QueryResult queryResult = VersionControlHelper.service.allVersionsOf(part.getMaster());
+		String version = part.getVersionInfo().getIdentifier().getValue();
+		System.out.println("version====" + version + "  viewName==" + viewName);
+		while (queryResult.hasMoreElements()) {
+			WTPart wtpart = (WTPart) queryResult.nextElement();
+			String version2 = wtpart.getVersionInfo().getIdentifier().getValue();
+			String view = wtpart.getViewName();
+
+			System.out.println("version2====" + version2 + "  view==" + view);
+			if (view.equals(viewName) && !version2.equals(version)) {
+				return wtpart;
+			}
+		}
+		return null;
+	}
+
+	private static Set<WTPartMaster> getMonolayerPart(WTPart part) {
+		Set<WTPartMaster> setPart = new HashSet<WTPartMaster>();
+		if (part != null) {
+
+			try {
+				QueryResult qr = WTPartHelper.service.getUsesWTPartMasters(part);
+				if (qr != null && qr.size() > 0) {
+					//
+					while (qr.hasMoreElements()) {
+						WTPartUsageLink links = (WTPartUsageLink) qr.nextElement();
+						WTPartMaster masterChild = links.getUses();
+
+						setPart.add(masterChild);
+					}
+				}
+			} catch (WTException e) {
+				e.printStackTrace();
+			}
+		}
+		return setPart;
 	}
 
 }
