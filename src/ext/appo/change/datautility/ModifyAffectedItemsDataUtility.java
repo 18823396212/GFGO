@@ -10,6 +10,7 @@ import com.ptc.core.lwc.common.view.EnumerationMembershipReadView;
 import com.ptc.core.lwc.common.view.PropertyHolderHelper;
 import com.ptc.core.lwc.common.view.PropertyValueReadView;
 import com.ptc.core.lwc.server.TypeDefinitionServiceHelper;
+import com.ptc.netmarkets.util.beans.HTTPRequestData;
 import com.ptc.netmarkets.util.beans.NmCommandBean;
 import com.ptc.windchill.enterprise.change2.dataUtilities.ChangeLinkAttributeDataUtility;
 import com.ptc.windchill.enterprise.changeable.ChangeableObjectBean;
@@ -21,6 +22,7 @@ import ext.appo.ecn.common.util.ChangePartQueryUtils;
 import ext.appo.ecn.common.util.ChangeUtils;
 import ext.appo.ecn.constants.ChangeConstants;
 import ext.appo.ecn.util.AffectedItemsUtil;
+import ext.appo.util.StringUtil;
 import ext.generic.borrow.common.BorrowOrderConstants;
 import ext.generic.integration.erp.bean.InventoryPrice;
 import ext.generic.integration.erp.common.CommonPDMUtil;
@@ -44,6 +46,7 @@ import wt.session.SessionContext;
 import wt.session.SessionHelper;
 import wt.util.WTException;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -130,7 +133,26 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
                     }
                     GUIComponentArray gui_array = new GUIComponentArray();
                     TextBox textBox = generateTextBox(paramModelContext, paramObject, paramString, value);
-                    textBox.setEditable(false);
+                    //add by xiebowen at 2020/1/8  start
+                    HTTPRequestData requestData = nmCommandBean.getRequestData();
+                    HashMap<String, Object> parameterMap1 = requestData.getParameterMap();
+                    Object changeMode = parameterMap1.get("changeMode");
+                    String mode = "";
+                    if (changeMode instanceof String){
+                        mode = (String)changeMode;
+                    }else if (changeMode instanceof String[]){
+                        mode = ((String[])changeMode)[0];
+                    }
+                    if ("EDIT".equalsIgnoreCase(mode)){
+                        if (value==null){
+                            textBox.setEditable(false);
+                        }
+                    }else {
+                        if (value!=null){
+                            textBox.setEditable(false);
+                        }
+                    }
+                    //add by xiebowen at 2020/1/8  end
                     textBox.setWidth(50);
                     textBox.setRequired(false);
                     gui_array.addGUIComponent(textBox);
