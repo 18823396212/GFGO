@@ -148,12 +148,12 @@ public class TransactionalTaskDataUtility extends AbstractDataUtility implements
                 }
                 component.setValue(Timestamp.valueOf((new SimpleDateFormat(ChangeConstants.SIMPLE_DATE_FORMAT)).format((new SimpleDateFormat(ChangeConstants.SIMPLE_DATE_FORMAT_02)).parse((String) value))));
             } else {
-                //component.setValue(Timestamp.valueOf(format.format(new Date())));
-                //期望完成时间默认推迟一周
-                Calendar curr = Calendar.getInstance();
-                curr.set(Calendar.DAY_OF_MONTH, curr.get(Calendar.DAY_OF_MONTH) + 7);
-                Date date = curr.getTime();
-                component.setValue(Timestamp.valueOf(format.format(date)));
+                component.setValue(Timestamp.valueOf(format.format(new Date())));
+//                //期望完成时间默认推迟一周
+//                Calendar curr = Calendar.getInstance();
+//                curr.set(Calendar.DAY_OF_MONTH, curr.get(Calendar.DAY_OF_MONTH) + 7);
+//                Date date = curr.getTime();
+//                component.setValue(Timestamp.valueOf(format.format(date)));
             }
         } catch (Exception e) {
             e.printStackTrace();
