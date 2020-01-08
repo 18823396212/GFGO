@@ -134,16 +134,6 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
                     GUIComponentArray gui_array = new GUIComponentArray();
                     TextBox textBox = generateTextBox(paramModelContext, paramObject, paramString, value);
                     //add by xiebowen at 2020/1/8  start
-                    HTTPRequestData requestData = nmCommandBean.getRequestData();
-                    HashMap<String, Object> parameterMap1 = requestData.getParameterMap();
-                    Object changeMode = parameterMap1.get("changeMode");
-                    String mode = "";
-                    if (changeMode instanceof String){
-                        mode = (String)changeMode;
-                    }else if (changeMode instanceof String[]){
-                        mode = ((String[])changeMode)[0];
-                    }
-
                     if (flag){
                         //路由已创建或已完成不能编辑
                         textBox.setEditable(false);
@@ -154,6 +144,15 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
                         }
                     }
 
+//                    HTTPRequestData requestData = nmCommandBean.getRequestData();
+//                    HashMap<String, Object> parameterMap1 = requestData.getParameterMap();
+//                    Object changeMode = parameterMap1.get("changeMode");
+//                    String mode = "";
+//                    if (changeMode instanceof String){
+//                        mode = (String)changeMode;
+//                    }else if (changeMode instanceof String[]){
+//                        mode = ((String[])changeMode)[0];
+//                    }
 //                    if ("EDIT".equalsIgnoreCase(mode)){
 //                        if (value==null){
 //                            textBox.setEditable(false);
