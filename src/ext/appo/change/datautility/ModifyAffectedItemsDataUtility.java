@@ -143,15 +143,26 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
                     }else if (changeMode instanceof String[]){
                         mode = ((String[])changeMode)[0];
                     }
-                    if ("EDIT".equalsIgnoreCase(mode)){
-                        if (value==null){
-                            textBox.setEditable(false);
-                        }
-                    }else {
+
+                    if (flag){
+                        //路由已创建或已完成不能编辑
+                        textBox.setEditable(false);
+                    }else{
+                        //其他路由有值不能编辑，没值可编辑
                         if (value!=null){
                             textBox.setEditable(false);
                         }
                     }
+
+//                    if ("EDIT".equalsIgnoreCase(mode)){
+//                        if (value==null){
+//                            textBox.setEditable(false);
+//                        }
+//                    }else {
+//                        if (value!=null){
+//                            textBox.setEditable(false);
+//                        }
+//                    }
                     //add by xiebowen at 2020/1/8  end
                     textBox.setWidth(50);
                     textBox.setRequired(false);
