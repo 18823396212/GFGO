@@ -112,10 +112,9 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
             collectionOne();
             //收集子件对应的上层父件编码集合
             collectionTwo();
-            //add by lzy at 20191227 start
             //收集ECA受影响对象集合
-//            collectionThree();
-            //add by lzy at 20191227 end
+            collectionThree();
+
             checkEnvProtection(ORDER2);
 
             //add by lzy at 20191213 start
