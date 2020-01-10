@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Set;
 
 import ext.appo.ecn.common.util.ChangeUtils;
-import ext.pi.core.PICoreHelper;
 import org.apache.log4j.Logger;
 
 import com.ptc.core.components.beans.ObjectBean;
@@ -53,7 +52,6 @@ import wt.access.AdHocAccessKey;
 import wt.access.AdHocControlled;
 import wt.admin.AdminDomainRef;
 import wt.change2.ChangeHelper2;
-import wt.change2.Changeable2;
 import wt.change2.WTChangeActivity2;
 import wt.change2.WTChangeOrder2;
 import wt.doc.DocumentVersion;
@@ -102,7 +100,6 @@ import wt.team.TeamReference;
 import wt.type.TypedUtility;
 import wt.util.WTException;
 import wt.vc.VersionControlHelper;
-import wt.vc.Versioned;
 import wt.workflow.definer.WfDefinerHelper;
 import wt.workflow.definer.WfProcessTemplate;
 import wt.workflow.definer.WfProcessTemplateMaster;
@@ -111,8 +108,6 @@ import wt.workflow.engine.WfEngineHelper;
 import wt.workflow.engine.WfEngineServerHelper;
 import wt.workflow.engine.WfProcess;
 import wt.workflow.engine.WfState;
-
-import static ext.appo.change.constants.ModifyConstants.LINKTYPE_1;
 
 /**
  * @author HYJ&NJH 四合一流程启动入口处理类
@@ -176,7 +171,7 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 								Boolean flag=isRunningNewEcnWorkflow(part);
 								System.out.println("flag=="+flag);
 								if(!flag){
-								//add by lzy at 20191213 end
+									//add by lzy at 20191213 end
 									String wfShortName = getWFShortName(viewName, stateVal);
 
 									WorkFlowBase workFlowBase = new WorkFlowBase();
@@ -196,13 +191,12 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 									else if (wfShortName.equals(MR)) {
 										doOperation = startMRWF(nmCommandBean, doOperation, part, workFlowBase);
 									}
-								//add by lzy at 20191213 start
+									//add by lzy at 20191213 start
 								}else{
 									doOperation = setFeedbackMessage(doOperation, nmCommandBean, false,
 											"当前部件存在于ECN流程中,无法启动流程!");
 								}
 								//add by lzy at 20191213 end
-
 							} else {
 								doOperation = setFeedbackMessage(doOperation, nmCommandBean, false,
 										"当前部件不存在'视图'，无法启动流程!");
@@ -232,7 +226,7 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 	}
 
 	private FormResult startMRWF(NmCommandBean nmCommandBean, FormResult doOperation, WTPart part,
-			WorkFlowBase workFlowBase) throws PIException, WTException {
+								 WorkFlowBase workFlowBase) throws PIException, WTException {
 		// 只有产品和半成品才能发布
 		if (part.getNumber().startsWith("A") || part.getNumber().startsWith("B") || part.getNumber().startsWith("X")) {
 			// 校验子件状态
@@ -247,7 +241,11 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 						doOperation = setFeedbackMessage(doOperation, nmCommandBean, true, "启动工程部件发布流程成功!");
 
 					} else {
-						doOperation = setFeedbackMessage(doOperation, nmCommandBean, false, "启动工程部件发布流程失败!");
+						if (workFlowBase.isRelatedRunningProcess(part))
+							doOperation = setFeedbackMessage(doOperation, nmCommandBean, false,
+									"当前部件存在于其它流程中,无法启动工程部件发布流程!");
+						else
+							doOperation = setFeedbackMessage(doOperation, nmCommandBean, false, "启动工程部件发布流程失败!");
 
 					}
 				} else {
@@ -264,7 +262,7 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 	}
 
 	private FormResult startMAWF(NmCommandBean nmCommandBean, FormResult doOperation, WTPart part,
-			WorkFlowBase workFlowBase) throws PIException, WTException {
+								 WorkFlowBase workFlowBase) throws PIException, WTException {
 		// 校验子件状态
 		String message = checkSonHistoryversion(part);
 		// 检查属性完整性
@@ -277,7 +275,11 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 					doOperation = setFeedbackMessage(doOperation, nmCommandBean, true, "启动工程部件归档流程成功!");
 
 				} else {
-					doOperation = setFeedbackMessage(doOperation, nmCommandBean, false, "启动工程部件归档流程失败!");
+					if (workFlowBase.isRelatedRunningProcess(part))
+						doOperation = setFeedbackMessage(doOperation, nmCommandBean, false,
+								"当前部件存在于其它流程中,无法启动工程部件归档流程!");
+					else
+						doOperation = setFeedbackMessage(doOperation, nmCommandBean, false, "启动工程部件归档流程失败!");
 				}
 			} else {
 				doOperation = setFeedbackMessage(doOperation, nmCommandBean, false, "当前部件存在于其它流程中,无法启动工程部件归档流程!");
@@ -289,7 +291,7 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 	}
 
 	private FormResult startDRWF(NmCommandBean nmCommandBean, FormResult doOperation, WTPart part,
-			WorkFlowBase workFlowBase) throws PIException, WTException {
+								 WorkFlowBase workFlowBase) throws PIException, WTException {
 		// 只有产品和半成品才能发布
 		if (part.getNumber().startsWith("A") || part.getNumber().startsWith("B") || part.getNumber().startsWith("X")) {
 			// 校验子件状态
@@ -304,7 +306,11 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 						doOperation = setFeedbackMessage(doOperation, nmCommandBean, true, "启动设计部件发布流程成功!");
 
 					} else {
-						doOperation = setFeedbackMessage(doOperation, nmCommandBean, false, "启动设计部件发布流程失败!");
+						if (workFlowBase.isRelatedRunningProcess(part))
+							doOperation = setFeedbackMessage(doOperation, nmCommandBean, false,
+									"当前部件存在于其它流程中,无法启动设计部件发布流程!");
+						else
+							doOperation = setFeedbackMessage(doOperation, nmCommandBean, false, "启动设计部件发布流程失败!");
 					}
 				} else {
 					doOperation = setFeedbackMessage(doOperation, nmCommandBean, false, "当前部件存在于其它流程中,无法启动设计部件发布流程!");
@@ -319,7 +325,7 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 	}
 
 	private FormResult startDAWF(NmCommandBean nmCommandBean, FormResult doOperation, WTPart part,
-			WorkFlowBase workFlowBase) throws PIException, WTException {
+								 WorkFlowBase workFlowBase) throws PIException, WTException {
 		// 校验子件状态
 		String message = checkSonState(part, true);
 		// 检查属性完整性
@@ -333,7 +339,11 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 					doOperation = setFeedbackMessage(doOperation, nmCommandBean, true, "启动设计部件归档流程成功!");
 
 				} else {
-					doOperation = setFeedbackMessage(doOperation, nmCommandBean, false, "启动设计部件归档流程失败!");
+					if (workFlowBase.isRelatedRunningProcess(part))
+						doOperation = setFeedbackMessage(doOperation, nmCommandBean, false,
+								"当前部件存在于其它流程中,无法启动设计部件归档流程!");
+					else
+						doOperation = setFeedbackMessage(doOperation, nmCommandBean, false, "启动设计部件归档流程失败!");
 				}
 			} else {
 				doOperation = setFeedbackMessage(doOperation, nmCommandBean, false, "当前部件存在于其它流程中,无法启动设计部件归档流程!");
@@ -503,7 +513,7 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 
 	/**
 	 * 判断部件是不是最新版本
-	 * 
+	 *
 	 * @param oldObj
 	 *            当前对象
 	 * @return boolean
@@ -522,7 +532,7 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 
 	/**
 	 * 判断是否修改者
-	 * 
+	 *
 	 * @param pbo
 	 *            pbo
 	 * @return boolean
@@ -541,7 +551,7 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 
 	/**
 	 * 判断pbo是否在其他流程中运行，归档流程需过滤eca流程
-	 * 
+	 *
 	 * @author HYJ&NJH
 	 * @param pbo
 	 * @param isArchive
@@ -553,16 +563,23 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 		boolean processok = false;
 		NmOid nmOid = NmOid.newNmOid(PersistenceHelper.getObjectIdentifier(pbo));
 		QueryResult qr = NmWorkflowHelper.service.getRoutingHistoryData(nmOid);
+
+		String version = pbo.getVersionInfo().getIdentifier().getValue() + "."
+				+ pbo.getIterationInfo().getIdentifier().getValue();// 物料版本
+		System.out.println("number=" + pbo.getNumber() + "  version=" + version);
 		// 获取所有开启的流程模板名称
 		Set<String> set = new HashSet<>();
 		while (qr.hasMoreElements()) {
 			WfProcess process = (WfProcess) qr.nextElement();
+
+			System.out.println("process===" + process.getName());
+
 			String templateName = process.getTemplate().getName();
 			if (process.getState()
 					.equals(WfState.OPEN_RUNNING) /*
-													 * && templateName.contains(
-													 * "GenericPartWF")
-													 */ ) {
+			 * && templateName.contains(
+			 * "GenericPartWF")
+			 */ ) {
 				set.add(templateName);
 			}
 		}
@@ -602,7 +619,7 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 
 	/**
 	 * 检查子类状态
-	 * 
+	 *
 	 * @author HYJ&NJH
 	 * @param part
 	 * @param isArchive
@@ -688,7 +705,7 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 
 	/**
 	 * 检查子类状态
-	 * 
+	 *
 	 * @author HYJ&NJH
 	 * @param part
 	 * @param isArchive
@@ -777,7 +794,7 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 	 * <p>
 	 * 当对象部件是已归档状态、M视图时，点击按钮后触发工程部件发布流程启动条件校验，符合条件后启动工程部件发布流程。
 	 * </p>
-	 * 
+	 *
 	 * @author HYJ&NJH
 	 * @param viewName
 	 * @param stateVal
@@ -806,7 +823,7 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 
 	/**
 	 * 设置回显信息
-	 * 
+	 *
 	 * @author HYJ&NJH
 	 * @param doOperation
 	 * @param nmCommandBean
@@ -818,7 +835,7 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 	 * @throws WTException
 	 */
 	public FormResult setFeedbackMessage(FormResult doOperation, NmCommandBean nmCommandBean, boolean flag,
-			String message) throws WTException {
+										 String message) throws WTException {
 
 		FeedbackType type = FeedbackType.FAILURE;
 		if (flag) {
@@ -835,7 +852,7 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 
 	/**
 	 * 通过名称查询工作流模板的最新版本
-	 * 
+	 *
 	 * @param name
 	 * @return
 	 * @throws WTException
@@ -865,7 +882,7 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 
 	/***
 	 * 启动ERP发布流程
-	 * 
+	 *
 	 * @param processTemplate
 	 *            ERP发布流程模板
 	 * @param primaryBusinessObject
@@ -876,7 +893,7 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 	 */
 	@SuppressWarnings({ "deprecation" })
 	public WfProcess startWfProcess(WfProcessTemplate processTemplate, WTObject primaryBusinessObject,
-			WTArrayList releaseArray) {
+									WTArrayList releaseArray) {
 		if (primaryBusinessObject == null) {
 			return null;
 		}
@@ -953,7 +970,7 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 
 	/***
 	 * 获取工作流进程相关的额生命周期模板
-	 * 
+	 *
 	 * @param primaryBusinessObject
 	 * @return
 	 */
@@ -968,7 +985,7 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 
 	/***
 	 * 获取工作流进程所属的上下文容器
-	 * 
+	 *
 	 * @param primaryBusinessObject
 	 * @return
 	 * @throws WTException
@@ -991,7 +1008,7 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 
 	/**
 	 * 获取工作流进程的团队
-	 * 
+	 *
 	 * @param primaryBusinessObject
 	 * @param processConfig
 	 * @return
@@ -1008,7 +1025,7 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 
 	/**
 	 * 设置流程变量
-	 * 
+	 *
 	 * @param newProcess
 	 * @param releaseArray
 	 * @return
@@ -1029,7 +1046,7 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 
 	/***
 	 * 检查用户在指定库中对某种类型的某种状态是否具有相应权限
-	 * 
+	 *
 	 * @param principal
 	 *            用户
 	 * @param type
@@ -1044,7 +1061,7 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 	 * @throws WTException
 	 */
 	public Boolean isOperability(WTPrincipal principal, String type, AdminDomainRef adminDomainRef, State state,
-			AccessPermission accessPermission) throws WTException {
+								 AccessPermission accessPermission) throws WTException {
 		if (PIStringUtils.isNull(type) || adminDomainRef == null || accessPermission == null) {
 			return false;
 		}
@@ -1064,7 +1081,7 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 
 	/***
 	 * 获取类型定义
-	 * 
+	 *
 	 * @param paramString
 	 * @return
 	 * @throws WTException
@@ -1104,7 +1121,9 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 		return type;
 	}
 
+
 	/**
+	 * add by lzy
 	 * 判断pbo所有大版本的最新小版本是否在新ECN流程APPO_ECNWF中运行
 	 * @param pbo
 	 * @return
@@ -1139,8 +1158,5 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 
 		return flag;
 	}
-
-
-
 
 }
