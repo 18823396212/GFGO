@@ -54,7 +54,7 @@ public interface ModifyConstants {
     String SEPARATOR_2 = "_col_";
 
     //常量
-    String CONSTANTS_1 = "cacheButton";//缓存按钮
+    String CONSTANTS_1 = "cacheButton";//缓存按钮（完成按钮）
     String CONSTANTS_2 = "修改变更申请";//工作流节点名称
     String CONSTANTS_3 = "CORRELATION_LINK_CHANGE";
     String CONSTANTS_4 = "";
@@ -65,7 +65,7 @@ public interface ModifyConstants {
     String CONSTANTS_9 = "其他情况";
     String CONSTANTS_10 = "同意";
     String CONSTANTS_11 = "通过";
-
+    String CONSTANTS_12 = "newCacheButton";//暂存按钮
     /**
      * ECN与受影响对象链接
      */
