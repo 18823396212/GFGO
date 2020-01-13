@@ -1,16 +1,14 @@
 package ext.appo.ecn.pdf;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.ptc.core.lwc.server.LWCNormalizedObject;
 import com.ptc.windchill.enterprise.change2.ChangeTaskRoleParticipantHelper;
 
+import ext.appo.change.ModifyHelper;
+import ext.appo.change.models.CorrelationObjectLink;
+import ext.appo.change.models.TransactionTask;
+import ext.appo.change.util.ModifyUtils;
 import ext.appo.ecn.beans.ChangeTaskBean;
 import ext.appo.ecn.common.util.ChangePartQueryUtils;
 import ext.appo.ecn.common.util.ChangeUtils;
@@ -18,6 +16,8 @@ import ext.appo.ecn.constants.ChangeConstants;
 import ext.lang.PIStringUtils;
 import ext.pi.core.PIAttributeHelper;
 import ext.pi.core.PICoreHelper;
+import org.apache.bcel.generic.IF_ACMPEQ;
+import org.apache.commons.lang.StringUtils;
 import wt.change2.AffectedActivityData;
 import wt.change2.ChangeActivityIfc;
 import wt.change2.ChangeHelper2;
@@ -45,12 +45,11 @@ import wt.session.SessionHelper;
 import wt.session.SessionServerHelper;
 import wt.team.Team;
 import wt.util.WTException;
-import wt.workflow.engine.WfActivity;
-import wt.workflow.engine.WfBlock;
-import wt.workflow.engine.WfConnector;
-import wt.workflow.engine.WfProcess;
+import wt.workflow.engine.*;
 import wt.workflow.work.WorkItem;
 import wt.workflow.work.WorkflowHelper;
+
+import static ext.appo.change.constants.ModifyConstants.*;
 
 public class PdfUtil {
 	public static final String SIMPLE_DATE_FORMAT = "yyyy-MM-dd";
@@ -104,13 +103,45 @@ public class PdfUtil {
 		try {
 
 			Collection<Persistable> returnArray = new HashSet<Persistable>();
-			Map<ChangeActivityIfc, Collection<Changeable2>> ecaDatasMap = getChangeablesBeforeInfo(ecn);
-			for (ChangeActivityIfc ca : ecaDatasMap.keySet()) {
-				Collection<Changeable2> cl = ecaDatasMap.get(ca);
-				for (Persistable per : cl) {
-					returnArray.add(per);
+			//add by lzy at 20200110 start
+			String templateName="";
+			Map<ChangeActivityIfc, Collection<Changeable2>> ecaDatasMap =new HashMap<>();
+			QueryResult result = WfEngineHelper.service.getAssociatedProcesses(ecn, null, null);
+			while (result.hasMoreElements()) {
+				WfProcess process = (WfProcess) result.nextElement();
+				if (process != null) {
+					templateName = process.getTemplate().getName();
 				}
 			}
+			//受影响对象
+			if ("APPO_ECNWF".equals(templateName)){
+//				Set<CorrelationObjectLink> links = ModifyHelper.service.queryCorrelationObjectLinks(ecn, LINKTYPE_1);
+//				for (CorrelationObjectLink link : links) {
+//					Persistable persistable = link.getPersistable();
+//					returnArray.add(persistable);
+//				}
+				Set<Persistable> Persistables=ModifyHelper.service.queryPersistable(ecn, LINKTYPE_1);
+				for (Persistable persistable : Persistables) {
+					returnArray.add(persistable);
+				}
+			}else{
+				ecaDatasMap = getChangeablesBeforeInfo(ecn);
+				for (ChangeActivityIfc ca : ecaDatasMap.keySet()) {
+					Collection<Changeable2> cl = ecaDatasMap.get(ca);
+					for (Persistable per : cl) {
+						returnArray.add(per);
+					}
+				}
+			}
+			//add by lzy at 20200110 end
+
+//			Map<ChangeActivityIfc, Collection<Changeable2>> ecaDatasMap = getChangeablesBeforeInfo(ecn);
+//			for (ChangeActivityIfc ca : ecaDatasMap.keySet()) {
+//				Collection<Changeable2> cl = ecaDatasMap.get(ca);
+//				for (Persistable per : cl) {
+//					returnArray.add(per);
+//				}
+//			}
 
 			if (!returnArray.isEmpty()) {
 				List<AffectedItemBean> aibs = new ArrayList<>();
@@ -319,17 +350,56 @@ public class PdfUtil {
 				bean.setAibs(aibs);
 			}
 
-			Collection<WTPart> datasArray = getEndItemsByChangeOrder2(ecn);
-			if (!datasArray.isEmpty()) {
+			//add by lzy at 20200110 start
+			//受影响产品
+			if ("APPO_ECNWF".equals(templateName)){
+//				Set<CorrelationObjectLink> links = ModifyHelper.service.queryCorrelationObjectLinks(ecn, LINKTYPE_1);
+//				for (CorrelationObjectLink link : links) {
+//					Persistable persistable = link.getPersistable();
+//				}
+				Set<Persistable> Persistables=ModifyHelper.service.queryPersistable(ecn, LINKTYPE_1);
 				List<AffectedProductBean> apbs = new ArrayList<>();
-				for (WTPart part : datasArray) {
-					AffectedProductBean apb = new AffectedProductBean(part);
-					apbs.add(apb);
+				for (Persistable persistable : Persistables) {
+					if (persistable instanceof WTPart){
+						AffectedProductBean apb = new AffectedProductBean((WTPart) persistable);
+						apbs.add(apb);
+					}
 				}
 				bean.setApbs(apbs);
+			}else{
+				Collection<WTPart> datasArray = getEndItemsByChangeOrder2(ecn);
+				if (!datasArray.isEmpty()) {
+					List<AffectedProductBean> apbs = new ArrayList<>();
+					for (WTPart part : datasArray) {
+						AffectedProductBean apb = new AffectedProductBean(part);
+						apbs.add(apb);
+					}
+					bean.setApbs(apbs);
+				}
 			}
+			//add by lzy at 20200110 end
 
-			Collection<ChangeTaskBean> generateChangeTaskBeans = generateChangeTaskBeans(ecn);
+//			Collection<WTPart> datasArray = getEndItemsByChangeOrder2(ecn);
+//			if (!datasArray.isEmpty()) {
+//				List<AffectedProductBean> apbs = new ArrayList<>();
+//				for (WTPart part : datasArray) {
+//					AffectedProductBean apb = new AffectedProductBean(part);
+//					apbs.add(apb);
+//				}
+//				bean.setApbs(apbs);
+//			}
+
+			//add by lzy at 20200110 start
+			//事务性任务
+			Collection<ChangeTaskBean> generateChangeTaskBeans;
+			if ("APPO_ECNWF".equals(templateName)){
+				generateChangeTaskBeans=getChangeTaskBeans(ecn);
+			}else{
+				generateChangeTaskBeans=generateChangeTaskBeans(ecn);
+			}
+			//add by lzy at 20200110 end
+
+//			Collection<ChangeTaskBean> generateChangeTaskBeans = generateChangeTaskBeans(ecn);
 
 			if (!generateChangeTaskBeans.isEmpty()) {
 				List<Map<String, String>> list = new ArrayList<>();
@@ -614,5 +684,35 @@ public class PdfUtil {
 
 		return datasMap;
 	}
+
+
+	/***
+	 * 将新ECN流程APPO_ECNWF中所有事务性任务转换为ChangeTaskBean对象
+	 *
+	 * @param params
+	 * @return
+	 * @throws WTException
+	 */
+	public static Collection<ChangeTaskBean> getChangeTaskBeans(WTChangeOrder2 eco) throws WTException {
+		Collection<ChangeTaskBean> datasArray = new HashSet<ChangeTaskBean>();
+		Set<CorrelationObjectLink> links = ModifyHelper.service.queryCorrelationObjectLinks(eco, LINKTYPE_3);
+		for (CorrelationObjectLink link : links) {
+			Persistable persistable = link.getPersistable();
+			if (persistable instanceof TransactionTask) {
+				TransactionTask task = (TransactionTask) persistable;
+
+				ChangeTaskBean changeTaskBean = new ChangeTaskBean();
+				changeTaskBean.setChangeTheme(task.getChangeTheme());
+				changeTaskBean.setChangeDescribe(task.getChangeDescribe());
+				changeTaskBean.setResponsible(task.getResponsible());
+				changeTaskBean.setChangeActivity2(String.valueOf(task.getPersistInfo().getObjectIdentifier().getId()));
+				changeTaskBean.setNeedDate(task.getNeedDate());
+				datasArray.add(changeTaskBean);
+			}
+		}
+
+		return datasArray;
+	}
+
 
 }
