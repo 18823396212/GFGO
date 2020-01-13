@@ -83,6 +83,20 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
     }
 
     /**
+     * 新暂存按钮
+     * @throws WTException
+     */
+    public void newCacheButton() throws WTException {
+        if (NMCOMMANDBEAN != null && ORDER2 != null) {
+            /*
+             * 9.0、至少一条受影响对象，必填项验证。
+             * 9.1、检查受影响对象是否存在未结束的ECN，有则不允许创建。
+             */
+            checkFives();
+        }
+    }
+
+    /**
      * 暂存按钮
      * @throws WTException
      */
@@ -690,6 +704,121 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
         //检查受影响对象列表中是否存在已修订的对象
         checkRevised();
     }
+
+    /**
+     * 9.0、至少一条受影响对象，必填项验证。
+     * 9.1、检查受影响对象是否存在未结束的ECN，有则不允许创建。
+     */
+    private void checkFives() throws WTException {
+        //9.0、至少一条受影响对象，必填项验证。
+        if (PAGEDATAMAP.isEmpty()) {
+            MESSAGES.add("受影响对象列表不能为空！");
+        }
+
+        //9.1、检查受影响对象是否存在未结束的ECN（包含的ECA非取消状态、以及暂存状态的ECN），有则不允许创建。(已取消)
+        //9.1、检查受影响对象是否存在未结束的ECN（无需判断ECA状态、以及暂存状态的ECN），有则不允许创建。
+        for (Persistable persistable : PAGEDATAMAP.keySet()) {
+            if (persistable instanceof WTPart) {
+                WTPart part = (WTPart) persistable;
+                String number = part.getNumber();
+                LOGGER.info(">>>>>>>>>>part:" + number);
+
+                boolean flog = true;
+                //先检查每个大版本的最新小版本是否有关联的ECA、ECN非「已取消」「已解决」状态
+                QueryResult queryResult = VersionControlHelper.service.allVersionsOf(part.getMaster());//获取所有大版本的最新小版本
+                while (queryResult.hasMoreElements()) {
+                    WTPart oldPart = (WTPart) queryResult.nextElement();
+
+                    boolean flag = false;
+                    //获取对象所有关联的ECA对象
+                    QueryResult result = ChangeHelper2.service.getAffectingChangeActivities(oldPart);
+                    LOGGER.info(">>>>>>>>>>result size:" + result.size());
+                    while (result.hasMoreElements()) {
+                        WTChangeActivity2 changeActivity2 = (WTChangeActivity2) result.nextElement();
+                        LOGGER.info(">>>>>>>>>>changeActivity2:" + changeActivity2.getNumber());
+
+                        WTChangeOrder2 changeOrder2 = ChangeUtils.getEcnByEca(changeActivity2);
+                        LOGGER.info(">>>>>>>>>>changeOrder2:" + changeOrder2.getNumber());
+                        if (!ORDER2.getNumber().startsWith(changeOrder2.getNumber())) {
+//                            //判断关联的ECA是否非「已取消」「已解决」状态
+//                            if ((!ChangeUtils.checkState(changeActivity2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeActivity2, ChangeConstants.RESOLVED))) {
+//                                MESSAGES.add("物料: " + number + " 存在未解决的ECA: " + changeActivity2.getNumber() + " 不能同时提交两个ECA！");
+//                                flag = true;
+//                                flog = false;
+//                                break;
+//                            }
+//
+//                            //判断关联的ECN是否非「已取消」「已解决」状态
+//                            if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))) {
+//                                MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
+//                                flag = true;
+//                                flog = false;
+//                                break;
+//                            }
+                            //add by lzy at 20191130 start
+                            //判断关联的ECN是否非「已取消」「已解决」状态,用户所选"类型"为「替换」的部件则无需判断
+                            if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))) {
+                                if (!LVERSIONPART.contains(part)) {
+                                    break;
+                                } else {
+                                    MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
+                                    flag = true;
+                                    flog = false;
+                                    break;
+                                }
+                            }
+                            //add by lzy at 20191130 end
+                        }
+                    }
+                    if (flag) break;
+                }
+
+                //再检查「暂存」的情况，遍历所有大版本的最新小版本检查是否关联非「已取消」「已解决」状态的ECN
+                if (flog) {
+                    boolean flag = false;
+                    QueryResult result = VersionControlHelper.service.allVersionsOf(part.getMaster());//获取所有大版本的最新小版本
+                    while (result.hasMoreElements()) {
+                        WTPart oldPart = (WTPart) result.nextElement();
+                        String branchId = String.valueOf(PICoreHelper.service.getBranchId(oldPart));
+                        LOGGER.info(">>>>>>>>>>checkTwo.branchId: " + branchId);
+
+                        Set<WTChangeOrder2> order2s = ModifyHelper.service.queryWTChangeOrder2(branchId, ModifyConstants.LINKTYPE_1);
+                        LOGGER.info(">>>>>>>>>>checkTwo.order2s: " + order2s);
+                        for (WTChangeOrder2 changeOrder2 : order2s) {
+                            LOGGER.info(">>>>>>>>>>checkTwo.changeOrder2:" + changeOrder2.getNumber());
+                            if (!ORDER2.getNumber().startsWith(changeOrder2.getNumber())) {
+                                //判断关联的ECN是否非「已取消」「已解决」状态
+//                                if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))) {
+//                                    MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
+//                                    flag = true;
+//                                    break;
+//                                }
+                                //add by lzy at 20191130 start
+                                //判断关联的ECN是否非「已取消」「已解决」状态,用户所选"类型"为「替换」的部件则无需判断
+                                if ((!ChangeUtils.checkState(changeOrder2, ChangeConstants.CANCELLED)) && (!ChangeUtils.checkState(changeOrder2, ChangeConstants.RESOLVED))) {
+                                    if (!LVERSIONPART.contains(part)) {
+                                        break;
+                                    } else {
+                                        MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
+                                        flag = true;
+                                        break;
+                                    }
+                                }
+                                //add by lzy at 20191130 end
+
+
+                            }
+                        }
+                        if (flag) break;
+                    }
+                }
+            }
+        }
+    }
+
+
+
+
 
     /**
      * 检查受影响对象列表中是否存在已修订的对象

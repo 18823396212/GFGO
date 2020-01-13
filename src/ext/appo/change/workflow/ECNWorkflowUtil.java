@@ -239,7 +239,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
     public boolean isCache(WTObject pbo, ObjectReference self) throws WTException {
         String actionName = ModifyUtils.getValue(pbo, ATTRIBUTE_6);
         LOGGER.info("=====isCache.actionName: " + actionName);
-        if (CONSTANTS_1.equals(actionName)) {
+        if (CONSTANTS_1.equals(actionName)||CONSTANTS_12.equals(actionName)) {
             return true;
         }
         return false;
@@ -1584,6 +1584,23 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
         }
 
         return datasArray;
+    }
+
+    /**
+     * 提交时第一校验
+     * 校验ECN是暂存按钮操作还是完成按钮操作
+     * @param pbo
+     * @param self
+     * @throws WTException
+     */
+    public void checkECNActionName(WTObject pbo, ObjectReference self) throws WTException {
+        if (pbo instanceof WTChangeOrder2) {
+            WTChangeOrder2 changeOrder2 = (WTChangeOrder2) pbo;
+            String actionName = ModifyUtils.getValue(changeOrder2, ATTRIBUTE_6);
+            if (CONSTANTS_12.equals(actionName)){
+                throw new WTException("当前ECN为暂存操作，请先到变更申请页面操作下变更申请编辑点击完成按钮完成校验");
+            }
+        }
     }
 
 }
