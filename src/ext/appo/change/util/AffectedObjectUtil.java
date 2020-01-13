@@ -358,7 +358,10 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
                 if (ModifyUtils.specificNode(part, VALUE_2) || ModifyUtils.specificNode(part, VALUE_3)) {
                     Set<String> result = PICollectionUtils.intersect(parentInfoArray, AFFECTEDPARTNUMBER);
                     if (parentInfoArray.size() > 0 && result.size() < 1) {
-                        MESSAGES.add(part.getDisplayIdentity() + " PCB部件上层父件必须至少收集一个！");
+//                        MESSAGES.add(part.getDisplayIdentity() + " PCB部件上层父件必须至少收集一个！");
+                        //add by lzy at 20200113 start
+                        MESSAGES.add(part.getDisplayIdentity() + " PCB升级，PCBA也需要升级，请收集上层PCBA！");
+                        //add by lzy at 20200113 end
                     }
                 }
                 //用户所选"类型"为「替换」的部件
