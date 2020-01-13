@@ -29,8 +29,11 @@
 
     JSONArray removeVid = new JSONArray();
     Map<Persistable, CorrelationObjectLink> resultMap = new HashMap<>();
-    StringBuffer messages = new StringBuffer("存在以下受影响对象不允许移除：\n");
-
+    //add by lzy at 20200113 start
+//    StringBuffer messages = new StringBuffer("存在以下受影响对象不允许移除：\n");
+    StringBuffer messages = new StringBuffer("当前数据(");
+    //add by lzy at 20200113 end
+    System.out.println("=====messages.length()2: " + messages.length());
     //检查所选数据是否可以移除
     if (StringUtils.isNotEmpty(ecnVid) && StringUtils.isNotEmpty(selectOid)) {
         JSONArray selects = new JSONArray(selectOid);
@@ -61,9 +64,13 @@
             resultMap.put(persistable, link);
         }
     }
-
-    if (messages.length() > 16) {
-        out.write(messages.toString());
+    System.out.println("=====messages.length(): " + messages.length());
+//    if (messages.length() > 16) {
+//        out.write(messages.toString());
+    //add by lzy at 20200113 start
+    if (messages.length() > 5) {
+        out.write(messages.toString()+")已在审签流程中,不能移除!");
+    //add by lzy at 20200113 end
     } else {
         Transaction tx = null;
         try {

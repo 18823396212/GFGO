@@ -92,7 +92,10 @@
         var params = "oid=" + oid + "&selectOid=" + JSON.stringify(oidArray);
         var url = "netmarkets/jsp/ext/appo/change/request/removeAffectedLink.jsp";
         var result = ajaxRequest(url, params);
-        if (result.indexOf("存在以下受影响对象不允许移除：") !== -1) {
+        //add by lzy at 20200113 start
+        if (result.indexOf("当前数据(") !== -1) {
+        // if (result.indexOf("存在以下受影响对象不允许移除：") !== -1) {
+        //add by lzy at 20200113 end
             alert(result.trim());
         } else {
             // 移除数据
