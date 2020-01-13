@@ -9,7 +9,7 @@
 <fmt:setBundle basename="ext.appo.ecn.resource.changeNoticeActionsRB"/>
 <fmt:message var="tableLabel" key="changeNotice.oneKeySetup.title"/>
 
-<jca:wizard  buttonList="affectedItemsWizardButtons" title="${tableLabel}">
+<jca:wizard  buttonList="oneKeySetupButtons" title="${tableLabel}">
     <jca:wizardStep action="oneKeySetupStep" type="changeNotice" label="${tableLabel}"/>
 </jca:wizard>
 

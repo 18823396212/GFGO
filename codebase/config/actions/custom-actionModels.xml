@@ -1219,8 +1219,31 @@
         <action name="sumaChangeTree" type="suma"/>
         <action name="associatedChangeIssues" type="changeTask"/>
     </model>
+	
+	
+	<model name="partInfoRelatedItemsTab" resourceBundle="com.ptc.core.ui.navigationRB">
+     <action name="relatedPartsDocuments" type="part"/>
+     <action name="relatedPartsReferences" type="part"/>
+     <action name="relatedPartsCADDocuments" type="part"/>
+     <action name="alternates" type="part"/>
+     <action name="substitutes" type="part"/>
+  <action name="substitutesFor" type="part"/> 
+     <action name="relatedMPMProcessPlans" type="part"/>
+     <action name="relatedPartsEnterpriseData" type="enterprisedata"/>
+     <action name="relatedPartsLists" type="part"/>
+     <action name="missingObjectsTable" type="persistedCollectable" />
+     <action name="relatedDesignSolution" type="part"/>                <!-- Design Solutions -->
+     <action name="distributionList" type="tgt"/>
+    </model>
 
     <!--modify by wangtong at 20191024 start-->
     <include href="config/actions/modify-actionModels.xml"/>
     <!--modify by wangtong at 20191024 end-->
+    <!--modify by lzy at 20200108 start-->
+    <!-- 一键设置完成及取消按钮 oneKeySetup-->
+    <model name="oneKeySetupButtons">
+        <action name="addButton" type="modify"/>
+        <action name="clientButton" type="modify"/>
+    </model>
+    <!--modify by lzy at 20200108 end-->
 </actionmodels>

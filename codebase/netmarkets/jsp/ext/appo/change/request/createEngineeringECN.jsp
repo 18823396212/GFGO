@@ -26,7 +26,8 @@
 <fmt:message var="createTitle" key="changeNotice.createEngineeringChangeOrder.title"/>
 
 <!-- buttonList="CustomWizardButtonsWithSubmitPrompt" -->
-<jca:wizard helpSelectorKey="change_createChangeNotice" buttonList="DefaultWizardButtonsWithSubmitPrompt" formProcessorController="com.ptc.windchill.enterprise.change2.forms.controllers.ChangeTaskTemplatedFormProcessorController" wizardSelectedOnly="true" title="${createTitle}">
+<%--<jca:wizard helpSelectorKey="change_createChangeNotice" buttonList="DefaultWizardButtonsWithSubmitPrompt" formProcessorController="com.ptc.windchill.enterprise.change2.forms.controllers.ChangeTaskTemplatedFormProcessorController" wizardSelectedOnly="true" title="${createTitle}">--%>
+<jca:wizard helpSelectorKey="change_createChangeNotice" buttonList="CustomWizardButtonsWithSubmitPrompt" formProcessorController="com.ptc.windchill.enterprise.change2.forms.controllers.ChangeTaskTemplatedFormProcessorController" wizardSelectedOnly="true" title="${createTitle}">
     <jca:wizardStep action="createChangeOrderStep" type="modify"/>
 </jca:wizard>
 

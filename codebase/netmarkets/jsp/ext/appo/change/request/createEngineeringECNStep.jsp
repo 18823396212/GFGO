@@ -56,6 +56,16 @@
 <!--modify by wangtong at 20191024 end-->
 
 <SCRIPT LANGUAGE="JavaScript">
+    //一键设置回填期望完成时间、责任人
+    function addOneKeySetup(completiontime,userPicker){
+        // 保存数据
+        saveChangeTaskArrayByOneKeySetup(completiontime,userPicker);
+
+        // 重新加载数据表
+        PTC.jca.table.Utils.reload('ext.appo.change.mvc.builder.AffectedEndItemsTableBuilder', "", true);
+    }
+
+
     // 受影响对象列表‘收集对象’及‘添加受影响对象’按钮调用
     function addCollectItemsForAffectedEndItems(itemsOid) {
         // 保存数据
@@ -322,7 +332,20 @@
                 columnArray['InventoryDispose'] = '';
             }
             if (tableRow.hasOwnProperty('CompletionTime')) {
-                columnArray['CompletionTime'] = tableRow['CompletionTime'].gui.comparable;
+                //add by lzy at 20200113 start
+                var completionTimeValue=tableRow['CompletionTime'].gui.comparable;
+                for (var j = 0; j < inputFormArray.length; j++) {
+                    var inputForm = inputFormArray[j];
+                    if (inputForm.type === 'text') {
+                        if ((inputForm.name.indexOf('CompletionTime') > -1) && (inputForm.name.indexOf(tableRow.oid) > -1)) {
+                            completionTimeValue = inputForm.value;
+                            break;
+                        }
+                    }
+                }
+                columnArray['CompletionTime'] = completionTimeValue;
+                //add by lzy at 20200113 end
+                // columnArray['CompletionTime'] = tableRow['CompletionTime'].gui.comparable;
             } else {
                 columnArray['CompletionTime'] = '';
             }
@@ -442,6 +465,11 @@
             document.getElementById("routingName").value = "cacheButton";
         };
         //add by tongwang 20191023 end
+        //add by lzy at 20200110 start
+        document.getElementById("PJL_wizard_cache").onclick = function () {
+            document.getElementById("routingName").value = "newCacheButton";
+        };
+        //add by lzy at 20200110 end
     });
 
     function submitSaveData() {
@@ -451,6 +479,194 @@
     }
 
     setUserSubmitFunction(submitSaveData);
+
+
+    // 保存受影响列表客制化字段信息（一键设置功能保存）
+    function saveChangeTaskArrayByOneKeySetup(completiontime,userPicker) {
+        // 获取页面所有input控件
+        var inputFormArray = document.getElementsByTagName("input");
+        // 用于存储所有数据
+        var tableRowArry = [];
+        // 获取‘受影响对象’表单中存储的数据
+        var tableRows = PTC.jca.table.Utils.getTableRows("ext.appo.change.mvc.builder.AffectedItemsTableBuilder").items;
+        for (var i = 0; i < tableRows.length; i++) {
+            var tableRow = tableRows[i].data;
+            var columnArray = {};
+            columnArray['oid'] = tableRow.oid;
+            columnArray['aadDescription'] = tableRow.aadDescription.gui.comparable;
+            if (tableRow.hasOwnProperty('ArticleInventory')) {
+                columnArray['ArticleInventory'] = tableRow['ArticleInventory'].gui.comparable;
+            } else {
+                columnArray['ArticleInventory'] = '';
+            }
+            if (tableRow.hasOwnProperty('CentralWarehouseInventory')) {
+                columnArray['CentralWarehouseInventory'] = tableRow['CentralWarehouseInventory'].gui.comparable;
+            } else {
+                columnArray['CentralWarehouseInventory'] = '';
+            }
+            if (tableRow.hasOwnProperty('PassageInventory')) {
+                columnArray['PassageInventory'] = tableRow['PassageInventory'].gui.comparable;
+            } else {
+                columnArray['PassageInventory'] = '';
+            }
+            if (tableRow.hasOwnProperty('ResponsiblePerson')) {
+                var responsiblePersonValue = tableRow['ResponsiblePerson'].gui.comparable;
+                if (responsiblePersonValue.length === 0) {
+                    for (var j = 0; j < inputFormArray.length; j++) {
+                        var inputForm = inputFormArray[j];
+                        if (inputForm.type === 'text') {
+                            if ((inputForm.id.indexOf('ResponsiblePerson') > -1) && (inputForm.id.indexOf(tableRow.oid) > -1)) {
+                                responsiblePersonValue = inputForm.value;
+                                break;
+                            }
+                        }
+                    }
+                }
+                //add by lzy at 20200109 start
+                var gui=JSON.stringify(tableRow['ResponsiblePerson'].gui);
+                var isEdit=gui.indexOf('disabled');//isEdit为-1表示不存在该字符，即是可编辑状态
+                if(userPicker!=null&&userPicker!=""&&isEdit==-1){
+                    responsiblePersonValue=userPicker;
+                }
+                //add by lzy at 20200109 end
+                columnArray['ResponsiblePerson'] = responsiblePersonValue;
+            } else {
+                columnArray['ResponsiblePerson'] = '';
+            }
+            if (tableRow.hasOwnProperty('ArticleDispose')) {
+                var articleDispose = tableRow['ArticleDispose'].gui.comparable;
+                if (articleDispose.indexOf('[') > -1) {
+                    columnArray['ArticleDispose'] = articleDispose.substring(articleDispose.lastIndexOf('[') + 1, articleDispose.length - 1);
+                } else {
+                    columnArray['ArticleDispose'] = articleDispose;
+                }
+            } else {
+                columnArray['ArticleDispose'] = '';
+            }
+            if (tableRow.hasOwnProperty('PassageDispose')) {
+                var passageDispose = tableRow['PassageDispose'].gui.comparable
+                if (passageDispose.indexOf('[') > -1) {
+                    columnArray['PassageDispose'] = passageDispose.substring(passageDispose.lastIndexOf('[') + 1, passageDispose.length - 1);
+                } else {
+                    columnArray['PassageDispose'] = passageDispose;
+                }
+            } else {
+                columnArray['PassageDispose'] = '';
+            }
+            if (tableRow.hasOwnProperty('InventoryDispose')) {
+                var inventoryDispose = tableRow['InventoryDispose'].gui.comparable;
+                if (inventoryDispose.indexOf('[') > -1) {
+                    columnArray['InventoryDispose'] = inventoryDispose.substring(inventoryDispose.lastIndexOf('[') + 1, inventoryDispose.length - 1);
+                } else {
+                    columnArray['InventoryDispose'] = inventoryDispose;
+                }
+            } else {
+                columnArray['InventoryDispose'] = '';
+            }
+            if (tableRow.hasOwnProperty('CompletionTime')) {
+                //add by lzy at 20200109 start
+                var completionTimeValue = tableRow['CompletionTime'].gui.comparable;
+                if (completionTimeValue.length === 0) {
+                    for (var j = 0; j < inputFormArray.length; j++) {
+                        var inputForm = inputFormArray[j];
+                        if (inputForm.type === 'text') {
+                            if ((inputForm.name.indexOf('CompletionTime') > -1) && (inputForm.name.indexOf(tableRow.oid) > -1)) {
+                                completionTimeValue = inputForm.value;
+                                break;
+                            }
+                        }
+                    }
+                }
+                var gui=JSON.stringify(tableRow['CompletionTime'].gui);
+                var isEdit=gui.indexOf('disabled');//isEdit为-1表示不存在该字符，即是可编辑状态
+                if(completiontime!=null&&completiontime!=""&&isEdit==-1){
+                    completionTimeValue =completiontime;
+                }
+                columnArray['CompletionTime'] = date(completionTimeValue);
+                //add by lzy at 20200109 end
+            } else {
+                columnArray['CompletionTime'] = '';
+            }
+            if (tableRow.hasOwnProperty('ChangeType')) {
+                var changeType = tableRow['ChangeType'].gui.comparable;
+                if (changeType.indexOf('[') > -1) {
+                    columnArray['ChangeType'] = changeType.substring(changeType.lastIndexOf('[') + 1, changeType.length - 1);
+                } else {
+                    columnArray['ChangeType'] = changeType;
+                }
+            } else {
+                columnArray['ChangeType'] = '';
+            }
+            if (tableRow.hasOwnProperty('ProductDispose')) {
+                var productDispose = tableRow['ProductDispose'].gui.comparable;
+                if (productDispose.indexOf('[') > -1) {
+                    columnArray['ProductDispose'] = productDispose.substring(productDispose.lastIndexOf('[') + 1, productDispose.length - 1);
+                } else {
+                    columnArray['ProductDispose'] = productDispose;
+                }
+            } else {
+                columnArray['ProductDispose'] = '';
+            }
+
+            //add by tongwang 20191023 start
+            if (tableRow.hasOwnProperty('ChangeObjectType')) {
+                var changeObjectType = tableRow['ChangeObjectType'].gui.comparable;
+                if (changeObjectType.indexOf('[') > -1) {
+                    columnArray['ChangeObjectType'] = changeObjectType.substring(changeObjectType.lastIndexOf('[') + 1, changeObjectType.length - 1);
+                } else {
+                    columnArray['ChangeObjectType'] = changeObjectType;
+                }
+            } else {
+                columnArray['ChangeObjectType'] = '';
+            }
+            columnArray['CollectionNumber'] = tableRow.CollectionNumber.gui.comparable;
+            //add by tongwang 20191023 end
+
+            tableRowArry[i] = columnArray;
+        }
+        document.getElementById("changeTaskArray").value = JSON.stringify(tableRowArry);
+        // 受影响对象表单中'责任人'，'期望完成时间'回填
+        setTimeout(function () {
+            responsiblePersonWriteBack();
+            completionTimeWriteBack();
+        }, 50);
+
+    }
+
+    // 受影响对象表单中'期望完成时间'回填
+    function completionTimeWriteBack() {
+        if (document.getElementById("changeTaskArray")) {
+            // 获取页面所有input控件
+            var inputFormArray = document.getElementsByTagName("input");
+            // 获取原有数据
+            var changeTaskArray = eval("(" + document.getElementById("changeTaskArray").value + ")");
+            if (changeTaskArray.length > 0) {
+                for (var j = 0; j < inputFormArray.length; j++) {
+                    var inputForm = inputFormArray[j];
+                    if (inputForm.type === 'text') {
+                        if (inputForm.name.indexOf('CompletionTime')>-1) {
+                            for (var i = 0; i < changeTaskArray.length; i++) {
+                                var datasArray = changeTaskArray[i];
+                                if (inputForm.name.indexOf(datasArray['oid'])>-1) {
+                                    inputForm.value = datasArray['CompletionTime'];
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    //日期格式转换 转换成yyyy-MM-dd
+    function date (date) {
+        var nowdate = date.substring(0,10);
+        return nowdate;
+    }
+
+
 </SCRIPT>
 
 <%@ include file="/netmarkets/jsp/util/end.jspf" %>

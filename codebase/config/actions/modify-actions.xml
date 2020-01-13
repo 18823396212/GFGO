@@ -70,6 +70,17 @@
         <includeFilter name="RejectChangeApplyFilter"/>
         </action>
         <!--add by xiebowen at 2019/12/30  end-->
+        <!--add by lzy at 20200108  start-->
+        <!-- 一键设置页面页面‘确定’按钮 -->
+        <action name="addButton">
+            <command onClick="oneKeySetup()"/>
+        </action>
+        <!-- 一键设置页面‘取消’按钮 -->
+        <action name="clientButton">
+            <command onClick="window.close();"/>
+        </action>
+        <!--add by lzy at 20200108 end-->
+
     </objecttype>
 
 </listofactions>
