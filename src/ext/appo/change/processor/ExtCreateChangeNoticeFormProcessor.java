@@ -85,7 +85,35 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
                     linkAffectedItems(changeOrder2, affectedObjectUtil.PAGEDATAMAP, activity2Util.BRANCHIDMAP);
                 }
                 PIAttributeHelper.service.forceUpdateSoftAttribute(changeOrder2, ATTRIBUTE_6, routingName);
-            } else {
+            }
+            //add by lzy at 20200110 start
+            else if (CONSTANTS_12.equals(routingName)) {
+                /**
+                 * 新暂存按钮
+                 * 9.0、至少一条受影响对象，必填项验证。
+                 * 9.1、检查受影响对象是否存在未结束的ECN，有则不允许创建。
+                 */
+//                affectedObjectUtil.newCacheButton();
+                //校验 任务主题 是否重复
+//                transactionUtil.check();
+
+//                messages.addAll(affectedObjectUtil.MESSAGES);
+//                messages.addAll(transactionUtil.MESSAGES);
+                if (messages.size() > 0) {
+                    throw new WTException(compoundMessage(messages));
+                } else {
+                    ChangeActivity2Util activity2Util = new ChangeActivity2Util(changeOrder2, affectedObjectUtil.PAGEDATAMAP, affectedObjectUtil.CONSTRUCTRELATION);
+
+                    //更新受影响对象的IBA属性
+                    activity2Util.cacheButton();
+
+                    //新增ChangeOrder2与受影响对象的关系
+                    linkAffectedItems(changeOrder2, affectedObjectUtil.PAGEDATAMAP, activity2Util.BRANCHIDMAP);
+                }
+                PIAttributeHelper.service.forceUpdateSoftAttribute(changeOrder2, ATTRIBUTE_6, routingName);
+            }
+            //add by lzy at 20200110 end
+            else {
                 /*
                  * 8.0、至少一条受影响对象，必填项验证。
                  * 8.1、检查受影响对象是否存在未结束的ECN（包含的ECA非取消状态），有则不允许创建。
