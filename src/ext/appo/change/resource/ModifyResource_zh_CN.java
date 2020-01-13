@@ -1,6 +1,7 @@
 package ext.appo.change.resource;
 
 import wt.util.resource.RBEntry;
+import wt.util.resource.RBPseudo;
 import wt.util.resource.RBUUID;
 import wt.util.resource.WTListResourceBundle;
 
@@ -93,5 +94,19 @@ public class ModifyResource_zh_CN extends WTListResourceBundle {
     @RBEntry("批量退回变更修改")
     public static final String MY_CUSTOM_37 = "modify.rejectChangeApply.tooltip";
     //add by xiebowen at 2019/12/30  end
+    //add by lzy at 20200109 start
+    @RBEntry("确定(<u class='mnemonic'>O</u>)")
+    public static final String ADDBUTTON = "modify.addButton.description";
 
+    @RBEntry("o")
+    @RBPseudo(false)
+    public static final String ADDBUTTONHOTKEY = "modify.addButton.hotkey";
+
+    @RBEntry("取消")
+    public static final String CLIENTBUTTON = "modify.clientButton.description";
+
+    @RBEntry("c")
+    @RBPseudo(false)
+    public static final String CLIENTBUTTONHOTKEY = "modify.clientButton.hotkey";
+    //add by lzy at 20200109 end
 }
