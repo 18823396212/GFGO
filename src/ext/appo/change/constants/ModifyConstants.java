@@ -62,7 +62,7 @@ public interface ModifyConstants {
     String CONSTANTS_6 = "批准";
     String CONSTANTS_7 = "other";
     String CONSTANTS_8 = "驳回";
-    String CONSTANTS_9 = "其他情况";
+    String CONSTANTS_9 = "其他情况(例如：影响分析不全面，遗漏个别受影响对象)";
     String CONSTANTS_10 = "同意";
     String CONSTANTS_11 = "通过";
     String CONSTANTS_12 = "newCacheButton";//暂存按钮
