@@ -629,30 +629,8 @@ public class ECAWorkflowUtil implements ChangeConstants, ModifyConstants {
         StringBuffer result = new StringBuffer();
         if (pbo instanceof WTChangeActivity2) {
             WTChangeActivity2 activity2 = (WTChangeActivity2) pbo;
-            WTContainer container = activity2.getContainer();
-            ContainerTeam containerTeam = ContainerTeamHelper.service.getContainerTeam((ContainerTeamManaged) container);
-            Set<WTUser> userSet = PartWorkflowUtil.getAllMembers(containerTeam);
-            Team processTeam = WorkflowUtil.getTeam(activity2);
-            // 流程实例所有角色
-            Vector processRoleVector = processTeam.getRoles();
-            a:for (Object o : processRoleVector) {
-                Role processRole = (Role) o;
-                Enumeration enumPrin = processTeam.getPrincipalTarget(processRole);// 会签者
-                while (enumPrin.hasMoreElements()) {
-                    WTPrincipalReference tempPrinRef = (WTPrincipalReference) enumPrin.nextElement();
-                    WTPrincipal principal = tempPrinRef.getPrincipal();
-                    if (principal instanceof WTUser) {
-                        WTUser user = (WTUser) principal;
-                        if (userSet != null && userSet.size() > 0 && !userSet.contains(user)) {
-                            result.append("用户").append(user.getFullName()).append("不在").append(container.getContainerName()).append("团队中，请另外选择人员或通知业务管理员设置用户权限！");
-                            break a;
-                        }
-                    }
-                }
-            }
-        }
-        if (result.length() > 0) {
-            throw new WTException(result.toString());
+            PartWorkflowUtil partWorkflowUtil = new PartWorkflowUtil();
+            partWorkflowUtil.checkECNUserPermission(pbo);
         }
     }
 
@@ -868,17 +846,17 @@ public class ECAWorkflowUtil implements ChangeConstants, ModifyConstants {
         PartWorkflowUtil partWorkflowUtil = new PartWorkflowUtil();
         //pbo为ECA，获取产生对象的随机一个部件作为pbo
         LOGGER.info("=====checkSoftTypeSetRole.pbo: " + pbo);
-        if (pbo instanceof WTChangeActivity2) {
-            Collection<Changeable2> collection = ModifyUtils.getChangeablesAfter((WTChangeActivity2) pbo);
-            LOGGER.info("=====checkSoftTypeSetRole.collection: " + collection);
-            for (Changeable2 changeable2 : collection) {
-                LOGGER.info("=====checkSoftTypeSetRole.changeable2: " + changeable2);
-                if (changeable2 instanceof WTPart) {
-                    pbo = (WTPart) changeable2;
-                    break;
-                }
-            }
-        }
+//        if (pbo instanceof WTChangeActivity2) {
+//            Collection<Changeable2> collection = ModifyUtils.getChangeablesAfter((WTChangeActivity2) pbo);
+//            LOGGER.info("=====checkSoftTypeSetRole.collection: " + collection);
+//            for (Changeable2 changeable2 : collection) {
+//                LOGGER.info("=====checkSoftTypeSetRole.changeable2: " + changeable2);
+//                if (changeable2 instanceof WTPart) {
+//                    pbo = (WTPart) changeable2;
+//                    break;
+//                }
+//            }
+//        }
         PartWorkflowUtil partUtil=new PartWorkflowUtil();
         partUtil.checkSoftTypeSetRole(pbo,self,processName,username,containerNames);
 
