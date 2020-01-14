@@ -317,17 +317,25 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                     //删除修订版本
                     SandboxHelper.service.removeObjects(new WTHashSet(collection));
                 }
-                //add by lzy at 20200104 start
+                //add by lzy at 20200114 start
                 Set<CorrelationObjectLink> transactionLinks = ModifyHelper.service.queryCorrelationObjectLinks(changeOrder2, LINKTYPE_3);
                 for (CorrelationObjectLink link : transactionLinks) {
-                    Persistable persistable = link.getPersistable();
-                    if (persistable instanceof TransactionTask) {
-                        TransactionTask task = (TransactionTask) persistable;
-                        PersistenceServerHelper.manager.remove(link);
-                        PersistenceServerHelper.manager.remove(task);
+                    Persistable persistable = ModifyUtils.getPersistable(link.getEcaIdentifier());
+                    LOGGER.info("=====cancelRoute.persistable: " + persistable);
+                    if (persistable instanceof WTChangeActivity2) {
+                        WTChangeActivity2 activity2 = (WTChangeActivity2) persistable;
+                        //终止进程
+                        QueryResult result = WfEngineHelper.service.getAssociatedProcesses(activity2, null, null);
+                        while (result.hasMoreElements()) {
+                            WfProcess process = (WfProcess) result.nextElement();
+                            LOGGER.info(">>>>>>>>>>process:" + process);
+                            //终止进程
+                            PIWorkflowHelper.service.stop(process);
+                        }
+                        PersistenceServerHelper.manager.remove(activity2);
                     }
                 }
-                //add by lzy at 20200104 end
+                //add by lzy at 20200114 end
             } else {
                 for (WTChangeActivity2 activity2 : unfinished) {
                     MESSAGES.add("变更申请「" + changeOrder2.getNumber() + "」关联的更改任务「" + activity2.getNumber() + "」已完成或未完成或未取消，不允许取消变更！");
@@ -542,7 +550,10 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
 //                        add by lzy at 20191209 end
 
                         //修订受影响对象，并添加到产生对象列表
-                        WTCollection collection = ModifyUtils.revise(vector, reviseMap);
+                        //add by lzy at 20200114 start
+//                        WTCollection collection = ModifyUtils.revise(vector, reviseMap);
+                        WTCollection collection = ModifyUtils.revise(vector, reviseMap,eca);
+                        //add by lzy at 20200114 end
                         LOGGER.info(">>>>>>>>>>createChangeActivity2.collection:" + collection);
                         ModifyUtils.AddChangeRecord2(eca, collection);
 

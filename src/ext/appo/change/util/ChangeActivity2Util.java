@@ -187,7 +187,10 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
                     else if (PIStringUtils.isNotNull(attributeValue) && attributeValue.contains(VALUE_4)) {
                         eca = (WTChangeActivity2) PICoreHelper.service.setLifeCycleState(eca, OPEN);
                         //修订受影响对象，并添加到产生对象列表
-                        WTCollection collection = ModifyUtils.revise(vector, reviseMap);
+                        //add by lzy at 20200114 start
+//                        WTCollection collection = ModifyUtils.revise(vector, reviseMap);
+                        WTCollection collection = ModifyUtils.revise(vector, reviseMap,eca);
+                        //add by lzy at 20200114 end
                         LOGGER.info(">>>>>>>>>>createChangeActivity2.collection:" + collection);
                         ModifyUtils.AddChangeRecord2(eca, collection);
 

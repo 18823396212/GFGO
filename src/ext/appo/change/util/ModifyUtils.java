@@ -815,6 +815,63 @@ public class ModifyUtils implements ChangeConstants {
         return collection;
     }
 
+
+    /**
+     * 20200114
+     * 修订(新)
+     * @param vector
+     * @param reviseMap
+     * @return
+     * @throws WTException
+     */
+    public static WTCollection revise(Vector<Changeable2> vector, Map<String, Changeable2> reviseMap,WTChangeActivity2 eca) throws WTException {
+        WTCollection collection = new WTArrayList();
+        if (vector == null || vector.size() < 1) return collection;
+
+        LOGGER.info(">>>>>>>>>>revise.reviseMap:" + reviseMap);
+        if (reviseMap != null) {
+            Collection<Changeable2> changeable2s =getChangeablesBefore(eca);
+            for (Changeable2 changeable2:changeable2s){
+                if (changeable2 instanceof ObjectReference) {
+                    ObjectReference objectReference = (ObjectReference) changeable2;
+                    changeable2 = (Changeable2) objectReference.getObject();
+                }
+
+                String number = getNumber(changeable2);
+                LOGGER.info(">>>>>>>>>>revise.number:" + number);
+                if (reviseMap.containsKey(number)) {
+                    collection.add(reviseMap.get(number));
+                }else{
+                    changeable2s.add(changeable2);
+                }
+            }
+            // 修订对象
+            WTCollection wtCollection = PICoreHelper.service.revise(new WTArrayList(changeable2s), false);
+            collection.addAll(wtCollection);
+            for (Object object:wtCollection){
+                if (object instanceof ObjectReference) {
+                    object = ((ObjectReference) object).getObject();
+                }
+                if (object instanceof Changeable2) {
+                    Changeable2 changeable2=(Changeable2) object;
+                    String number = getNumber(changeable2);
+                    reviseMap.put(number,changeable2);
+                }
+            }
+
+        } else {
+            Collection<Changeable2> changeable2s =getChangeablesBefore(eca);
+            for (Changeable2 changeable2:changeable2s){
+                changeable2s.add(changeable2);
+            }
+            // 修订对象
+            WTCollection wtCollection = PICoreHelper.service.revise(new WTArrayList(changeable2s), false);
+            collection.addAll(wtCollection);
+        }
+        return collection;
+    }
+
+
     /***
      * 添加对象到ECA产生对象
      * @param eca
