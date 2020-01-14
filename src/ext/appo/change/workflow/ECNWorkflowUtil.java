@@ -247,7 +247,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
 
     /**
      * 2.3 当选中“取消变更”，点击完成任务时
-     * 2.3.1、需要判断是否所有子流程都处于实施状态（或者已取消状态）。
+     * 2.3.1、需要判断是否所有子流程都处于实施状态（或者已取消状态）。（修改：子流程存在已完成状态也不能取消变更）
      * 2.3.2、若路由选择“取消变更”，需要恢复所有变更对象到变更前版本。
      * @param pbo
      * @param self
@@ -285,10 +285,14 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                             }
                         }
                     }
-                     //add by lzy at 20200103 end
-                    if (!ROUTING_2.equals(routing) && !ROUTING_3.equals(routing)) {
+                     //add by lzy at 20200103 start
+                    if (!ROUTING_2.equals(routing)) {
                         unfinished.add(activity2);
                     }
+                    //add by lzy at 2200103 end
+//                    if (!ROUTING_2.equals(routing) && !ROUTING_3.equals(routing)) {
+//                        unfinished.add(activity2);
+//                    }
                 }
             }
             if (unfinished.isEmpty()) {
@@ -326,7 +330,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                 //add by lzy at 20200104 end
             } else {
                 for (WTChangeActivity2 activity2 : unfinished) {
-                    MESSAGES.add("变更申请「" + changeOrder2.getNumber() + "」关联的更改任务「" + activity2.getNumber() + "」未完成或未取消，不允许取消变更！");
+                    MESSAGES.add("变更申请「" + changeOrder2.getNumber() + "」关联的更改任务「" + activity2.getNumber() + "」已完成或未完成或未取消，不允许取消变更！");
                 }
                 compoundMessage();
             }
@@ -1598,7 +1602,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
             WTChangeOrder2 changeOrder2 = (WTChangeOrder2) pbo;
             String actionName = ModifyUtils.getValue(changeOrder2, ATTRIBUTE_6);
             if (CONSTANTS_12.equals(actionName)){
-                throw new WTException("当前ECN为暂存操作，请先到变更申请页面操作下变更申请编辑点击完成按钮完成校验");
+                throw new WTException("变更申请表单未提交，请先进入【变更申请表单页面】，检查表单数据是否填写完整，再点击【完成】进行提交!");
             }
         }
     }
