@@ -112,7 +112,8 @@ public class AffectedTableBuilder extends AbstractComponentBuilder implements Ch
         }*/
 
         ColumnConfig columnconfig = componentconfigfactory.newColumnConfig("number", true);
-        columnconfig.setAutoSize(true);
+//        columnconfig.setAutoSize(true);
+        columnconfig.setWidth(80);
         tableConfig.addComponent(columnconfig);
 
         columnconfig = componentconfigfactory.newColumnConfig("name", true);
