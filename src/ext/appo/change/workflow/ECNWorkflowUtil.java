@@ -842,7 +842,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
     }
 
     /**
-     * 检查受影响对象是否为最新大版本
+     * 检查受影响对象是否为最新版本
      * @param pbo
      * @param self
      * @throws WTException
@@ -861,14 +861,26 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                     Changeable2 changeable2 = (Changeable2) entryMap.getKey();
                     if (changeable2 instanceof WTPart) {
                         WTPart part = (WTPart) changeable2;
+//                        WTPart newParentPart = (WTPart) AffectedMaterialsUtil
+//                                .getLatestVersionByMaster(part.getMaster());
+//                        if (part.getViewName() != null
+//                                && part.getViewName().equals(newParentPart.getViewName())) {
+//                            if (!AffectedMaterialsUtil.getOidByObject(part)
+//                                    .equals(AffectedMaterialsUtil.getOidByObject(newParentPart))
+//                                    || !part.isLatestIteration()) {
+//                                System.out.println("old version");
+//                                parts.add(part.getNumber());
+//                            }
+//                        }
+
                         String view=part.getViewName();
                         String number=part.getNumber();
-                        String version=part.getVersionInfo().getIdentifier().getValue();
+                        String version=part.getVersionInfo().getIdentifier().getValue() + "." + part.getIterationInfo().getIdentifier().getValue();
                         Vector latestVector=getAllLatestWTParts(view,number);
                         if (latestVector!=null&&latestVector.size()>0) {
                             WTPart newPart = (WTPart) latestVector.get(0);
                             if (newPart != null) {
-                                String newVersion = newPart.getVersionInfo().getIdentifier().getValue();
+                                String newVersion = newPart.getVersionInfo().getIdentifier().getValue() + "." + newPart.getIterationInfo().getIdentifier().getValue();
                                 System.out.println("version=="+version+"==newVersion=="+newVersion);
                                 if (!version.equals(newVersion)){
                                     parts.add(number);
@@ -878,8 +890,15 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                         for (Persistable persistable : entryMap.getValue()) {
                             if (persistable instanceof WTDocument) {
                                 WTDocument doc = (WTDocument) persistable;
-                                String docVersion=doc.getVersionInfo().getIdentifier().getValue();
-//                                WTDocument newDoc =(WTDocument) VersionControlHelper.service.getLatestIteration(doc, false);
+//                                WTDocument neWtDocument = (WTDocument) AffectedMaterialsUtil
+//                                        .getLatestVersionByMaster((WTDocumentMaster) document.getMaster());
+//
+//                                if (!AffectedMaterialsUtil.getOidByObject(document)
+//                                        .equals(AffectedMaterialsUtil.getOidByObject(neWtDocument))
+//                                        || !document.isLatestIteration()) {
+//                                    docs.add(document.getNumber());
+//                                }
+                                String docVersion=doc.getVersionInfo().getIdentifier().getValue() + "." + doc.getIterationInfo().getIdentifier().getValue();
                                 QueryResult qrVersions = VersionControlHelper.service.allVersionsOf(doc.getMaster());
                                 WTDocument newDoc=new WTDocument();
                                 while (qrVersions.hasMoreElements()) {
@@ -887,7 +906,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                                     break;
                                 }
                                 if (newDoc!=null){
-                                    String newVersion = newDoc.getVersionInfo().getIdentifier().getValue();
+                                    String newVersion = newDoc.getVersionInfo().getIdentifier().getValue() + "." + newDoc.getIterationInfo().getIdentifier().getValue();;
                                     System.out.println("docVersion=="+docVersion+"==newVersion=="+newVersion);
                                     if (!docVersion.equals(newVersion)){
                                         docs.add(doc.getNumber());
