@@ -681,6 +681,39 @@ public class PartWorkflowUtil extends PartReleasedWorkFlow {
 					}
 				}
 			}
+		} else if (pbo instanceof WTChangeActivity2) {
+			WTChangeActivity2 wta = (WTChangeActivity2) pbo;
+
+			WTContainer container = wta.getContainer();
+
+			ContainerTeam containerTeam = ContainerTeamHelper.service
+					.getContainerTeam((ContainerTeamManaged) container);
+			Set<WTUser> userSet = getAllMembers(containerTeam);
+
+			Team processTeam = WorkflowUtil.getTeam(wta);
+			// 流程实例所有角色
+			Vector processRoleVector = processTeam.getRoles();
+			a: for (int i = 0; i < processRoleVector.size(); i++) {
+				Role processRole = (Role) processRoleVector.get(i);
+				Enumeration enumPrin = processTeam.getPrincipalTarget(processRole);// 会签者
+
+				if ("Normalizer".equals(processRole.toString()) || "Assessor".equals(processRole.toString())
+						|| "Signer".equals(processRole.toString()) || "Receiver".equals(processRole.toString())
+						|| "Approver".equals(processRole.toString())) {
+					while (enumPrin.hasMoreElements()) {
+						WTPrincipalReference tempPrinRef = (WTPrincipalReference) enumPrin.nextElement();
+						WTPrincipal principal = tempPrinRef.getPrincipal();
+						if (principal instanceof WTUser) {
+							WTUser user = (WTUser) principal;
+							if (userSet != null && userSet.size() > 0 && !userSet.contains(user)) {
+								result.append("用户" + user.getFullName() + "不在" + container.getContainerName()
+										+ "团队中，请另外选择人员或通知业务管理员设置用户权限！");
+								break a;
+							}
+						}
+					}
+				}
+			}
 		}
 
 		return result.toString();
@@ -884,6 +917,36 @@ public class PartWorkflowUtil extends PartReleasedWorkFlow {
 				}
 			}
 		}
+		if (pbo instanceof WTChangeActivity2) {
+			WTChangeActivity2 doc = (WTChangeActivity2) pbo;
+			Team processTeam = WorkflowUtil.getTeam(doc);
+			if (processTeam != null) {
+				Enumeration enumPrin = processTeam.getPrincipalTarget(role);// 会签者
+
+				while (enumPrin.hasMoreElements()) {
+					WTPrincipalReference tempPrinRef = (WTPrincipalReference) enumPrin.nextElement();
+					WTPrincipal principal = tempPrinRef.getPrincipal();
+					System.out.println("principal name===" + principal.getName());
+					isrole = checkifRole(pbo, rolename, principal);
+					System.out.println("is role===" + isrole);
+					if (isrole) {
+						break;
+					}
+				}
+				if (!isrole && reviewname.equalsIgnoreCase("Signer")) {
+					throw new WTException("会签者/会签节点必须选择:" + selectrole.getShortDescription() + "角色");
+				}
+				if (!isrole && reviewname.equalsIgnoreCase("Receiver")) {
+					throw new WTException("接收者/通知节点必须选择:" + selectrole.getShortDescription() + "角色");
+				}
+				if (!isrole && reviewname.equalsIgnoreCase("Approver")) {
+					throw new WTException("批准者/批准节点必须选择:" + selectrole.getShortDescription() + "角色");
+				}
+				if (!isrole && reviewname.equalsIgnoreCase("Receiver")) {
+					throw new WTException("审核者/审核节点必须选择:" + selectrole.getShortDescription() + "角色");
+				}
+			}
+		}
 
 	}
 
@@ -940,6 +1003,10 @@ public class PartWorkflowUtil extends PartReleasedWorkFlow {
 		}
 		if (pbo instanceof WTDocument) {
 			WTDocument object = (WTDocument) pbo;
+			container = object.getContainer();
+		}
+		if (pbo instanceof WTChangeActivity2) {
+			WTChangeActivity2 object = (WTChangeActivity2) pbo;
 			container = object.getContainer();
 		}
 		if (container != null) {
@@ -2156,7 +2223,8 @@ public class PartWorkflowUtil extends PartReleasedWorkFlow {
 								}
 							}
 						}
-					} else if (nodeHierarchy.contains("appo_rj05") || nodeHierarchy.contains("appo_rj07")) {
+					} else if (nodeHierarchy.contains("appo_rj05") || nodeHierarchy.contains("appo_rj07")
+							|| nodeHierarchy.contains("appo_rj08")) {
 						if (processName != null && processName.contains("GenericPartWF")) {
 							CheckTeam(pbo, "manufacturing_representative", "Receiver");
 						} else if (processName != null && processName.contains("APPO_ReleasedPartWF")) {
