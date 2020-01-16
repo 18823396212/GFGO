@@ -310,7 +310,9 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                     while (result.hasMoreElements()) {
                         WfProcess process = (WfProcess) result.nextElement();
                         LOGGER.info(">>>>>>>>>>syncExpression.process:" + process);
-                        PersistenceServerHelper.manager.remove(process);
+                        //终止进程
+                        PIWorkflowHelper.service.stop(process);
+//                        PersistenceServerHelper.manager.remove(process);
                     }
                     //删除ECA
                     PersistenceServerHelper.manager.remove(activity2);
@@ -344,6 +346,9 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
             }
         }
     }
+
+
+
 
     /**
      * 2.4 当选中“提交”，点击完成任务时
