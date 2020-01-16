@@ -7,6 +7,7 @@ import ext.appo.change.models.CorrelationObjectLink;
 import ext.appo.ecn.common.util.ChangeUtils;
 import ext.appo.ecn.constants.ChangeConstants;
 import ext.appo.ecn.pdf.PdfUtil;
+import ext.appo.ecn.util.AffectedMaterialsUtil;
 import ext.appo.part.filter.StandardPartsRevise;
 import ext.appo.part.util.EffecitveBaselineUtil;
 import ext.lang.PICollectionUtils;
@@ -23,6 +24,7 @@ import org.json.JSONObject;
 import wt.change2.*;
 import wt.configurablelink.ConfigurableDescribeLink;
 import wt.doc.WTDocument;
+import wt.doc.WTDocumentMaster;
 import wt.enterprise.Master;
 import wt.enterprise.RevisionControlled;
 import wt.epm.EPMDocument;
@@ -141,6 +143,10 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
             //add by lzy at 20200103 start
             checkProductStatus();
             //add by lzy at 20200103 end
+            //add by lzy at 20200116 start
+            //检查受影响对象列表中受影响对象是否为最新版本
+            checkAffectObjectVesion();
+            //add by lzy at 20200116 end
 
             //校验需要收集上层对象的部件是否满足收集条件
             checkOne();
@@ -404,7 +410,7 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
                 WTPart part = (WTPart) persistable;
                 String number = part.getNumber();
                 LOGGER.info(">>>>>>>>>>part:" + number);
-
+                Set<String> ecns=new HashSet<>();
                 boolean flog = true;
                 //先检查每个大版本的最新小版本是否有关联的ECA、ECN非「已取消」「已解决」状态
                 QueryResult queryResult = VersionControlHelper.service.allVersionsOf(part.getMaster());//获取所有大版本的最新小版本
@@ -435,17 +441,17 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
                                 if (!LVERSIONPART.contains(part)){
                                     break;
                                 }else{
-                                    MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
-                                    flag = true;
-                                    flog = false;
-                                    break;
+//                                    MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
+//                                    flag = true;
+//                                    flog = false;
+//                                    break;
+                                    ecns.add(changeOrder2.getNumber());
                                 }
                             }
                             //add by lzy at 20191130 end
-
                         }
                     }
-                    if (flag) break;
+//                    if (flag) break;
                 }
 
                 //再检查「暂存」的情况，遍历所有大版本的最新小版本检查是否关联非「已取消」「已解决」状态的ECN
@@ -474,20 +480,28 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
                                     if (!LVERSIONPART.contains(part)){
                                         break;
                                     }else{
-                                        MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
-                                        flag = true;
-                                        break;
+//                                        MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + changeOrder2.getNumber() + " 不能同时提交两个ECN！");
+//                                        flag = true;
+//                                        break;
+                                        ecns.add(changeOrder2.getNumber());
                                     }
 
                                 }
                                 //add by lzy at 20191130 end
                             }
                         }
-                        if (flag) break;
+//                        if (flag) break;
                     }
+                }
+                if (ecns!=null&&ecns.size()>0){
+                    String ecnStr="";
+                    for (String ecn:ecns) ecnStr+=ecn+",";
+                    if (ecnStr.length()>0) ecnStr=ecnStr.substring(0,ecnStr.length()-1);
+                    MESSAGES.add("物料: " + number + " 存在未解决的ECN: " + ecnStr + " 不能同时提交多个ECN！");
                 }
             }
         }
+
 
         //8.2、检查受影响对象的状态必须是已归档及已发布。
         StringBuilder messages = new StringBuilder();
@@ -1115,6 +1129,67 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
         }
 
         return isSpecificNode;
+    }
+
+
+    /**
+     * 检查受影响对象列表中受影响对象是否为最新版本
+     * @param pbo
+     * @param self
+     * @throws WTException
+     */
+    public void checkAffectObjectVesion() throws WTException {
+        Set<String> parts=new HashSet();//物料
+        Set<String> docs=new HashSet();//文档
+        String str="";
+        for (Persistable persistable : PAGEDATAMAP.keySet()) {
+            if (persistable instanceof WTPart) {
+                WTPart part = (WTPart) persistable;
+                String view=part.getViewName();
+                String number=part.getNumber();
+                String version=part.getVersionInfo().getIdentifier().getValue() + "." + part.getIterationInfo().getIdentifier().getValue();
+                Vector latestVector=getAllLatestWTParts(view,number);
+                if (latestVector!=null&&latestVector.size()>0) {
+                    WTPart newPart = (WTPart) latestVector.get(0);
+                    if (newPart != null) {
+                        String newVersion = newPart.getVersionInfo().getIdentifier().getValue() + "." + newPart.getIterationInfo().getIdentifier().getValue();
+                        System.out.println("version=="+version+"==newVersion=="+newVersion);
+                        if (!version.equals(newVersion)){
+                            parts.add(number);
+                        }
+                    }
+                }
+            }
+            if (persistable instanceof WTDocument) {
+                WTDocument doc = (WTDocument) persistable;
+                String docVersion=doc.getVersionInfo().getIdentifier().getValue() + "." + doc.getIterationInfo().getIdentifier().getValue();
+                QueryResult qrVersions = VersionControlHelper.service.allVersionsOf(doc.getMaster());
+                WTDocument newDoc=new WTDocument();
+                while (qrVersions.hasMoreElements()) {
+                    newDoc=(WTDocument) qrVersions.nextElement();
+                    break;
+                }
+                if (newDoc!=null){
+                    String newVersion = newDoc.getVersionInfo().getIdentifier().getValue() + "." + newDoc.getIterationInfo().getIdentifier().getValue();;
+                    System.out.println("docVersion=="+docVersion+"==newVersion=="+newVersion);
+                    if (!docVersion.equals(newVersion)){
+                        docs.add(doc.getNumber());
+                    }
+                }
+            }
+        }
+        if ((parts!= null && parts.size() > 0)||(docs!= null && docs.size() > 0)) {
+            for (String partNumber:parts){
+                str=str+"物料"+partNumber+",";
+            }
+            for (String docNumber:docs){
+                str=str+"文档"+docNumber+",";
+            }
+            str=str+"不是最新版本！";
+            throw new WTException(str);
+        }
+
+
     }
 
 
