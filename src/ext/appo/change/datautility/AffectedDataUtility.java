@@ -27,6 +27,7 @@ import wt.change2.AffectedActivityData;
 import wt.change2.ChangeActivityIfc;
 import wt.change2.Changeable2;
 import wt.change2.WTChangeOrder2;
+import wt.doc.WTDocument;
 import wt.fc.Persistable;
 import wt.log4j.LogR;
 import wt.org.WTUser;
@@ -55,8 +56,8 @@ public class AffectedDataUtility extends ChangeLinkAttributeDataUtility implemen
             if (paramString.contains(ARTICLEINVENTORY_COMPID) || paramString.contains(CENTRALWAREHOUSEINVENTORY_COMPID) || paramString.contains(PASSAGEINVENTORY_COMPID)) {
                 if (paramObject instanceof WTPart) {
                     GUIComponentArray gui_array = new GUIComponentArray();
-                    //gui_array.addGUIComponent(generateTextDisplayComponent(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, paramString)));
-                    gui_array.addGUIComponent(generateTextDisplayComponent(paramModelContext, paramObject, paramString, null));
+                    gui_array.addGUIComponent(generateTextDisplayComponent(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, paramString)));
+//                    gui_array.addGUIComponent(generateTextDisplayComponent(paramModelContext, paramObject, paramString, null));
                     return gui_array;
                 }
             } else if (paramString.contains(ARTICLEDISPOSE_COMPID) || paramString.contains(INVENTORYDISPOSE_COMPID) || paramString.contains(PASSAGEDISPOSE_COMPID) || paramString.contains(PRODUCTDISPOSE_COMPID) || paramString.contains(AADDESCRIPTION_COMPID)) {
@@ -64,16 +65,37 @@ public class AffectedDataUtility extends ChangeLinkAttributeDataUtility implemen
                 gui_array.addGUIComponent(generateTextDisplayComponent(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, paramString)));
                 return gui_array;
             } else if (paramString.contains(ATTRIBUTE_9)) {
-                GUIComponentArray gui_array = new GUIComponentArray();
-                ComboBox comboBox = generateComboBox(paramModelContext, paramObject, paramString, getApprovalOpinion(paramModelContext, paramObject));
-                gui_array.addGUIComponent(comboBox);
-                return gui_array;
+                //add by lzy at 20200116 start
+                if (paramObject instanceof WTDocument) {
+                    return "";
+                }else{
+                    GUIComponentArray gui_array = new GUIComponentArray();
+                    ComboBox comboBox = generateComboBox(paramModelContext, paramObject, paramString, getApprovalOpinion(paramModelContext, paramObject));
+                    gui_array.addGUIComponent(comboBox);
+                    return gui_array;
+                }
+                //add by lzy at 20200116 end
+//                    GUIComponentArray gui_array = new GUIComponentArray();
+//                    ComboBox comboBox = generateComboBox(paramModelContext, paramObject, paramString, getApprovalOpinion(paramModelContext, paramObject));
+//                    gui_array.addGUIComponent(comboBox);
+//                    return gui_array;
+
             } else if (paramString.contains(ATTRIBUTE_10)) {
-                GUIComponentArray gui_array = new GUIComponentArray();
-                TextBox textBox = generateTextBox(paramModelContext, paramObject, paramString, getRemark(paramModelContext, paramObject));
-                textBox.setRequired(false);
-                gui_array.addGUIComponent(textBox);
-                return gui_array;
+                //add by lzy at 20200116 start
+                if (paramObject instanceof WTDocument) {
+                    return "";
+                }else{
+                    GUIComponentArray gui_array = new GUIComponentArray();
+                    TextBox textBox = generateTextBox(paramModelContext, paramObject, paramString, getRemark(paramModelContext, paramObject));
+                    textBox.setRequired(false);
+                    gui_array.addGUIComponent(textBox);
+                    return gui_array;
+                }
+//                GUIComponentArray gui_array = new GUIComponentArray();
+//                TextBox textBox = generateTextBox(paramModelContext, paramObject, paramString, getRemark(paramModelContext, paramObject));
+//                textBox.setRequired(false);
+//                gui_array.addGUIComponent(textBox);
+//                return gui_array;
             }
         } catch (Exception e) {
             throw new WTException(e.getStackTrace());
