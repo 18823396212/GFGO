@@ -1145,9 +1145,9 @@ public class StartAppoPartArchiveIssueWF extends DefaultObjectFormProcessor {
 					WfProcess process = (WfProcess) qr.nextElement();
 					String templateName = process.getTemplate().getName();
 					String state = String.valueOf(changeOrder2.getLifeCycleState());
-					//存在运行,不是已取消、已解决的新ECN流程APPO_ECNWF
+					//不是已取消、已解决的新ECN流程APPO_ECNWF
 					if (templateName.equals("APPO_ECNWF")) {
-						if (process.getState().equals(WfState.OPEN_RUNNING) || (!state.equals("CANCELLED") && !state.equals("RESOLVED"))) {
+						if (!state.equals("CANCELLED") && !state.equals("RESOLVED")) {
 							flag = true;
 							break all;
 						}
