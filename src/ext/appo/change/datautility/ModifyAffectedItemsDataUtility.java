@@ -30,6 +30,7 @@ import ext.generic.integration.erp.ibatis.InventoryPriceIbatis;
 import ext.lang.PIStringUtils;
 import ext.pi.core.PIAttributeHelper;
 import ext.pi.core.PICoreHelper;
+import ext.pi.core.PIWorkflowHelper;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -37,6 +38,7 @@ import wt.change2.*;
 import wt.enterprise.RevisionControlled;
 import wt.fc.Persistable;
 import wt.fc.PersistenceHelper;
+import wt.fc.QueryResult;
 import wt.fc.ReferenceFactory;
 import wt.lifecycle.LifeCycleManaged;
 import wt.log4j.LogR;
@@ -45,6 +47,8 @@ import wt.part.WTPart;
 import wt.session.SessionContext;
 import wt.session.SessionHelper;
 import wt.util.WTException;
+import wt.workflow.engine.WfProcess;
+import wt.workflow.work.WorkItem;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
@@ -68,6 +72,29 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
             LOGGER.info("=====bool: " + bool);
             Object actionObject = nmCommandBean.getActionOid().getRefObject();
             LOGGER.info("=====actionObject: " + actionObject);
+            if (actionObject instanceof WorkItem) {
+                //在流程中
+                WorkItem workItem = (WorkItem) actionObject;
+                WfProcess wfprocess = PIWorkflowHelper.service.getParentProcess(workItem);
+                Object[] objects = wfprocess.getContext().getObjects();
+                if (objects.length > 0) {
+                    objects:
+                    for (int i = 0; i < objects.length; i++) {
+                        if (objects[i] instanceof WTChangeActivity2) { //eca
+                            WTChangeActivity2 eca = (WTChangeActivity2) objects[i];
+                            QueryResult ecaqr = ChangeHelper2.service.getChangeOrder(eca);
+                            while (ecaqr.hasMoreElements()) {
+                                Object ecn = ecaqr.nextElement();
+                                if (ecn instanceof WTChangeOrder2) {
+                                    actionObject = (WTChangeOrder2) ecn;
+                                    break objects;
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
             String ecnVid = String.valueOf(PICoreHelper.service.getBranchId(actionObject));
             String branchId = String.valueOf(PICoreHelper.service.getBranchId(paramObject));
             LOGGER.info("=====ecnVid: " + ecnVid + " >>>>>branchId: " + branchId);
@@ -80,8 +107,8 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
                 if (paramString.contains(ARTICLEINVENTORY_COMPID) || paramString.contains(CENTRALWAREHOUSEINVENTORY_COMPID) || paramString.contains(PASSAGEINVENTORY_COMPID)) {
                     if (paramObject instanceof WTPart) {
                         GUIComponentArray gui_array = new GUIComponentArray();
-                        //gui_array.addGUIComponent(generateTextDisplayComponent(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString)));
-                        gui_array.addGUIComponent(generateTextDisplayComponent(paramModelContext, paramObject, paramString, null));
+                        gui_array.addGUIComponent(generateTextDisplayComponent(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString)));
+//                        gui_array.addGUIComponent(generateTextDisplayComponent(paramModelContext, paramObject, paramString, null));
                         return gui_array;
                     }
                 } else if (paramString.contains(ARTICLEDISPOSE_COMPID) || paramString.contains(INVENTORYDISPOSE_COMPID) || paramString.contains(PASSAGEDISPOSE_COMPID) || paramString.contains(PRODUCTDISPOSE_COMPID) || paramString.contains(CHANGETYPE_COMPID) || paramString.contains(ATTRIBUTE_7)) {
@@ -483,6 +510,45 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
                             }
                         }
                         //add by tongwang 20191023 end
+                        //add by lzy at 20200117 start
+                        else if (object instanceof WorkItem) {
+                            //在流程中
+                            WTChangeOrder2 changeOrder2 = new WTChangeOrder2();
+                            WorkItem workItem = (WorkItem) object;
+                            WfProcess wfprocess = PIWorkflowHelper.service.getParentProcess(workItem);
+                            Object[] objects = wfprocess.getContext().getObjects();
+                            if (objects.length > 0) {
+                                objects:for (int i = 0; i < objects.length; i++) {
+                                    if (objects[i] instanceof WTChangeActivity2) { //eca
+                                        WTChangeActivity2 eca = (WTChangeActivity2) objects[i];
+                                        QueryResult ecaqr = ChangeHelper2.service.getChangeOrder(eca);
+                                        while (ecaqr.hasMoreElements()) {
+                                            Object ecn = ecaqr.nextElement();
+                                            if (ecn instanceof WTChangeOrder2) {
+                                                changeOrder2 = (WTChangeOrder2) ecn;
+                                                break objects;
+                                            }
+                                        }
+
+                                    }
+                                }
+                            }
+                            Collection<ChangeActivityIfc> changeActivities = ChangeUtils.getChangeActivities(changeOrder2);
+                            for (ChangeActivityIfc changeActivityIfc : changeActivities) {
+                                AffectedActivityData affectedActivityData = ChangeUtils.getAffectedActivity(changeActivityIfc, changeable2);
+                                if (affectedActivityData != null) {
+                                    return affectedActivityData.getDescription();
+                                }
+                            }
+                            //从Link上获取属性
+                            String ecnVid = String.valueOf(PICoreHelper.service.getBranchId(changeOrder2));
+                            String branchId = String.valueOf(PICoreHelper.service.getBranchId(changeable2));
+                            CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, branchId, ModifyConstants.LINKTYPE_1);
+                            if (link != null) {
+                                return link.getAadDescription();
+                            }
+                        }
+                        //add by lzy at 20200117 end
                     }
                 }
             } else {
@@ -675,8 +741,46 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
                     }
                 }
             }
-        }
+            //add by lzy at 20200117 start
+            else if (object instanceof WorkItem) {
+                WTChangeOrder2 changeOrder2 = new WTChangeOrder2();
+                WorkItem workItem = (WorkItem) object;
+                WfProcess wfprocess = PIWorkflowHelper.service.getParentProcess(workItem);
+                Object[] objects = wfprocess.getContext().getObjects();
+                if (objects.length > 0) {
+                    objects:for (int i = 0; i < objects.length; i++) {
+                        if (objects[i] instanceof WTChangeActivity2) { //eca
+                            WTChangeActivity2 eca = (WTChangeActivity2) objects[i];
+                            QueryResult ecaqr = ChangeHelper2.service.getChangeOrder(eca);
+                            while (ecaqr.hasMoreElements()) {
+                                Object ecn = ecaqr.nextElement();
+                                if (ecn instanceof WTChangeOrder2) {
+                                    changeOrder2 = (WTChangeOrder2) ecn;
+                                    break objects;
+                                }
+                            }
 
+                        }
+                    }
+                }
+                // 获取所有受影响对象
+                Collection<Changeable2> changeablesBefore = ChangeUtils.getChangeablesBefore(changeOrder2);
+                for (Changeable2 changeable2 : changeablesBefore) {
+                    if (changeable2 instanceof WTPart) {
+                        for (WTPart childPart : childArray) {
+                            if (ChangeUtils.getNumber(changeable2).equals(childPart.getNumber())) {
+                                if (returnStr.length() > 0) {
+                                    returnStr.append(USER_KEYWORD);
+                                }
+                                returnStr.append(childPart.getNumber());
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            //add by lzy at 20200117 end
+        }
         return returnStr.toString();
     }
 }
