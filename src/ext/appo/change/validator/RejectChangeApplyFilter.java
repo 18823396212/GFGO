@@ -32,7 +32,7 @@ import wt.workflow.work.WorkItem;
 import java.util.*;
 
 /**
- * 驳回变更申请按钮过滤（只需判断所有流程节点在是否数据变更节点，无需判断责任人）
+ * 驳回变更申请按钮过滤（只需判断所有流程节点在是否数据变更节点，无需判断责任人；ecn流程不能是已解决或已取消）
  */
 public class RejectChangeApplyFilter extends DefaultSimpleValidationFilter {
 
@@ -50,27 +50,29 @@ public class RejectChangeApplyFilter extends DefaultSimpleValidationFilter {
                     WTPrincipal principal = SessionHelper.manager.getPrincipal();
                     LOGGER.info("=====principal: " + principal.getName());
                     WTChangeOrder2 changeOrder2 = (WTChangeOrder2) persistable;
-                    boolean flag = PIPrincipalHelper.service.isOrganizationAdministrator((WTUser) principal);
-                    String creatorFullName = changeOrder2.getCreatorFullName();
-                    LOGGER.info("=====flag: " + flag);
-                    Collection<WTChangeActivity2> activity2s = ModifyUtils.getChangeActivities(changeOrder2);
-                    LOGGER.info("=====activity2s: " + activity2s);
-                    System.out.println("=====activity2s: " + activity2s);
-                    WTUser user = null;
-                    if (activity2s.size() > 0) {
-                        for (WTChangeActivity2 eca:activity2s){
-                            //过滤事务性任务eca
-                            if (PICoreHelper.service.isType(eca, ChangeConstants.TRANSACTIONAL_CHANGEACTIVITY2)) continue;
+                    String state = String.valueOf(changeOrder2.getLifeCycleState());
+                    if(!state.equals("CANCELLED") && !state.equals("RESOLVED")){
+                        boolean flag = PIPrincipalHelper.service.isOrganizationAdministrator((WTUser) principal);
+                        String creatorFullName = changeOrder2.getCreatorFullName();
+                        LOGGER.info("=====flag: " + flag);
+                        Collection<WTChangeActivity2> activity2s = ModifyUtils.getChangeActivities(changeOrder2);
+                        LOGGER.info("=====activity2s: " + activity2s);
+                        System.out.println("=====activity2s: " + activity2s);
+//                        WTUser user = null;
+                        if (activity2s.size() > 0) {
+                            for (WTChangeActivity2 eca:activity2s){
+                                //过滤事务性任务eca
+                                if (PICoreHelper.service.isType(eca, ChangeConstants.TRANSACTIONAL_CHANGEACTIVITY2)) continue;
 
-                            QueryResult qr = wt.workflow.work.WorkflowHelper.service.getWorkItems(eca);
-                            while (qr.hasMoreElements()) {
-                                WorkItem item = (WorkItem) qr.nextElement();
-                                WfAssignedActivity activity = (WfAssignedActivity) item.getSource().getObject();
-                                String activityName = activity.getName();
-                                System.out.println("eca=="+eca+"==activityName=="+activityName);
-                                if(!activityName.equals("数据更改")){
-                                    return status;
-                                }
+                                QueryResult qr = wt.workflow.work.WorkflowHelper.service.getWorkItems(eca);
+                                while (qr.hasMoreElements()) {
+                                    WorkItem item = (WorkItem) qr.nextElement();
+                                    WfAssignedActivity activity = (WfAssignedActivity) item.getSource().getObject();
+                                    String activityName = activity.getName();
+                                    System.out.println("eca=="+eca+"==activityName=="+activityName);
+                                    if(!activityName.equals("数据更改")){
+                                        return status;
+                                    }
 //                                else {
 //                                    WTPrincipalReference owner = item.getOwnership().getOwner();
 //                                    //数据更改 节点负责人
@@ -81,19 +83,18 @@ public class RejectChangeApplyFilter extends DefaultSimpleValidationFilter {
 //                                    }
 //
 //                                }
+                                }
                             }
-                        }
-                        String current = ((WTUser) principal).getFullName();
+                            String current = ((WTUser) principal).getFullName();
 //                        if (flag||(user!=null&&user.getFullName().equals(current))){
 //                            status = UIValidationStatus.ENABLED;
 //                        }
-                        //管理员或者是ECN提交者
-                        if (flag||creatorFullName.equals(current)){
-                            status = UIValidationStatus.ENABLED;
+                            //管理员或者是ECN提交者
+                            if (flag||creatorFullName.equals(current)){
+                                status = UIValidationStatus.ENABLED;
+                            }
                         }
-
                     }
-
                 }
             }
         } catch (Exception e) {
