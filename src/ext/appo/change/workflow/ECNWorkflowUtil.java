@@ -320,21 +320,40 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                     SandboxHelper.service.removeObjects(new WTHashSet(collection));
                 }
                 //add by lzy at 20200114 start
-                Set<CorrelationObjectLink> transactionLinks = ModifyHelper.service.queryCorrelationObjectLinks(changeOrder2, LINKTYPE_3);
-                for (CorrelationObjectLink link : transactionLinks) {
-                    Persistable persistable = ModifyUtils.getPersistable(link.getEcaIdentifier());
-                    LOGGER.info("=====cancelRoute.persistable: " + persistable);
-                    if (persistable instanceof WTChangeActivity2) {
-                        WTChangeActivity2 activity2 = (WTChangeActivity2) persistable;
-                        //终止进程
+                Collection<WTChangeActivity2> wtChangeActivity2s = ModifyUtils.getChangeActivities(changeOrder2);
+                LOGGER.info("=====wtChangeActivity2s: " + wtChangeActivity2s);
+                for (WTChangeActivity2 activity2 : wtChangeActivity2s) {
+                    //更新Link的路由为「已驳回」并清空ECA的Id
+                    if (PICoreHelper.service.isTypeOrSubType(activity2, TYPE_3)) {
+                        TransactionTask task = ModifyHelper.service.queryTransactionTask(changeOrder2, activity2, "");
+                        ModifyHelper.service.updateTransactionTask(task, "");
+                        CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(changeOrder2, task);
+                        if (link != null) {
+                            ModifyHelper.service.updateCorrelationObjectLink(link, link.getEcaIdentifier(), link.getAadDescription(), ROUTING_2);
+                        }
+                        //获取所有需要回退版本的对象
+                        Collection<Persistable> collection = ModifyUtils.getRollbackObject(activity2);//获取ECA关联的产生对象
+                        LOGGER.info("=====activity2: " + activity2.getNumber() + " >>>>>collection: " + collection);
+                        //移除受影响对象
+                        ModifyUtils.removeAffectedActivityData(activity2);
+                        //移除产生对象
+                        ModifyUtils.removeChangeRecord(activity2);
+                        //删除进程
                         QueryResult result = WfEngineHelper.service.getAssociatedProcesses(activity2, null, null);
+                        LOGGER.info(">>>>>>>>>>activity2:" + activity2.getNumber() + " >>>>>result: " + result.size());
                         while (result.hasMoreElements()) {
                             WfProcess process = (WfProcess) result.nextElement();
                             LOGGER.info(">>>>>>>>>>process:" + process);
+                            //add by lzy at 20191207 start
                             //终止进程
                             PIWorkflowHelper.service.stop(process);
+    //                        PersistenceServerHelper.manager.remove(process);
+    //                        //add by lzy at 20191207 end
                         }
+                        //删除ECA
                         PersistenceServerHelper.manager.remove(activity2);
+                        //删除修订版本
+                        SandboxHelper.service.removeObjects(new WTHashSet(collection));
                     }
                 }
                 //add by lzy at 20200114 end
