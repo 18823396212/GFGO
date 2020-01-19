@@ -34,6 +34,11 @@
     //add by lzy at 20191213 end
     并将方法isRunningNewEcnWorkflow复制到服务器对应文件上
 
+    ext.appo.ecn.constants.ChangeConstants.java
+    复制以上文件含以下标签的内容到服务器对应文件对应位置上（正常情况可以直接覆盖，覆盖之前对比一下两个文件出标签外的其他内容是否一致）
+     //add by tongwang 20191023 start
+     //add by tongwang 20191023 end
+
 3.注册xconf文件
     执行xconfmanager -p
 
