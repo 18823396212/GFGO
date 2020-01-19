@@ -1,4 +1,4 @@
-
+<%@ page pageEncoding="UTF-8" %>
 <%@ taglib prefix="jca" uri="http://www.ptc.com/windchill/taglib/components"%>
 <%@ taglib uri="http://www.ptc.com/windchill/taglib/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -9,7 +9,7 @@
 <fmt:setBundle basename="ext.appo.ecn.resource.changeNoticeActionsRB"/>
 <fmt:message var="tableLabel" key="changeNotice.oneKeySetup.title"/>
 
-<jca:wizard  buttonList="oneKeySetupButtons" title="${tableLabel}">
+<jca:wizard  buttonList="oneKeySetupButtons" title="一键设置(只有勾选的选项才生效)">
     <jca:wizardStep action="oneKeySetupStep" type="changeNotice" label="${tableLabel}"/>
 </jca:wizard>
 

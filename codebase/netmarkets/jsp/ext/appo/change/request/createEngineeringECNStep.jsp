@@ -57,9 +57,9 @@
 
 <SCRIPT LANGUAGE="JavaScript">
     //一键设置回填期望完成时间、责任人
-    function addOneKeySetup(completiontime,userPicker){
+    function addOneKeySetup(completiontime,userPicker,articleDispose_result,passageDispose_result,inventoryDispose_result,productDispose_result,changeType_result,aadDescription_result){
         // 保存数据
-        saveChangeTaskArrayByOneKeySetup(completiontime,userPicker);
+        saveChangeTaskArrayByOneKeySetup(completiontime,userPicker,articleDispose_result,passageDispose_result,inventoryDispose_result,productDispose_result,changeType_result,aadDescription_result);
 
         // 重新加载数据表
         PTC.jca.table.Utils.reload('ext.appo.change.mvc.builder.AffectedEndItemsTableBuilder', "", true);
@@ -258,6 +258,10 @@
 
     // 保存受影响列表客制化字段信息
     function saveChangeTaskArray() {
+        //add by lzy at 20200119 start
+        // 获取页面所有select控件
+        var selectArray = document.getElementsByTagName("select");
+        //add by lzy at 20200119 end
         // 获取页面所有input控件
         var inputFormArray = document.getElementsByTagName("input");
         // 用于存储所有数据
@@ -268,7 +272,21 @@
             var tableRow = tableRows[i].data;
             var columnArray = {};
             columnArray['oid'] = tableRow.oid;
-            columnArray['aadDescription'] = tableRow.aadDescription.gui.comparable;
+            //add by lzy at 20200119 start
+            if (tableRow.hasOwnProperty('aadDescription')) {
+                var aadDescription = tableRow['aadDescription'].gui.comparable;
+                //add by lzy at 20200118 start
+                for (var j = 0; j < inputFormArray.length; j++) {
+                    var inputForm = inputFormArray[j];
+                    if ((inputForm.name.indexOf('aadDescription') > -1) && (inputForm.name.indexOf(tableRow.oid) > -1)) {
+                        aadDescription = inputForm.value;
+                        break;
+                    }
+                }
+                columnArray['aadDescription'] = aadDescription;
+            }
+            //add by lzy at 20200118 end
+            // columnArray['aadDescription'] = tableRow.aadDescription.gui.comparable;
             if (tableRow.hasOwnProperty('ArticleInventory')) {
                 columnArray['ArticleInventory'] = tableRow['ArticleInventory'].gui.comparable;
             } else {
@@ -303,44 +321,72 @@
             }
             if (tableRow.hasOwnProperty('ArticleDispose')) {
                 var articleDispose = tableRow['ArticleDispose'].gui.comparable;
-                if (articleDispose.indexOf('[') > -1) {
-                    columnArray['ArticleDispose'] = articleDispose.substring(articleDispose.lastIndexOf('[') + 1, articleDispose.length - 1);
-                } else {
-                    columnArray['ArticleDispose'] = articleDispose;
+                //add by lzy at 20200118 start
+                for (var j = 0; j < selectArray.length; j++) {
+                    var select = selectArray[j];
+                    if ((select.name.indexOf('ArticleDispose') > -1) && (select.name.indexOf(tableRow.oid) > -1)) {
+                        articleDispose = select.value;
+                        break;
+                    }
                 }
+                columnArray['ArticleDispose'] = articleDispose;
+                //add by lzy at 20200118 end
+                // if (articleDispose.indexOf('[') > -1) {
+                //     columnArray['ArticleDispose'] = articleDispose.substring(articleDispose.lastIndexOf('[') + 1, articleDispose.length - 1);
+                // } else {
+                //     columnArray['ArticleDispose'] = articleDispose;
+                // }
             } else {
                 columnArray['ArticleDispose'] = '';
             }
             if (tableRow.hasOwnProperty('PassageDispose')) {
                 var passageDispose = tableRow['PassageDispose'].gui.comparable
-                if (passageDispose.indexOf('[') > -1) {
-                    columnArray['PassageDispose'] = passageDispose.substring(passageDispose.lastIndexOf('[') + 1, passageDispose.length - 1);
-                } else {
-                    columnArray['PassageDispose'] = passageDispose;
+                //add by lzy at 20200118 start
+                for (var j = 0; j < selectArray.length; j++) {
+                    var select = selectArray[j];
+                    if ((select.name.indexOf('PassageDispose') > -1) && (select.name.indexOf(tableRow.oid) > -1)) {
+                        passageDispose = select.value;
+                        break;
+                    }
                 }
+                columnArray['PassageDispose'] = passageDispose;
+                //add by lzy at 20200118 end
+                // if (passageDispose.indexOf('[') > -1) {
+                //     columnArray['PassageDispose'] = passageDispose.substring(passageDispose.lastIndexOf('[') + 1, passageDispose.length - 1);
+                // } else {
+                //     columnArray['PassageDispose'] = passageDispose;
+                // }
             } else {
                 columnArray['PassageDispose'] = '';
             }
             if (tableRow.hasOwnProperty('InventoryDispose')) {
                 var inventoryDispose = tableRow['InventoryDispose'].gui.comparable;
-                if (inventoryDispose.indexOf('[') > -1) {
-                    columnArray['InventoryDispose'] = inventoryDispose.substring(inventoryDispose.lastIndexOf('[') + 1, inventoryDispose.length - 1);
-                } else {
-                    columnArray['InventoryDispose'] = inventoryDispose;
+                //add by lzy at 20200118 start
+                for (var j = 0; j < selectArray.length; j++) {
+                    var select = selectArray[j];
+                    if ((select.name.indexOf('InventoryDispose') > -1) && (select.name.indexOf(tableRow.oid) > -1)) {
+                        inventoryDispose = select.value;
+                        break;
+                    }
                 }
+                columnArray['InventoryDispose'] = inventoryDispose;
+                //add by lzy at 20200118 end
+                // if (inventoryDispose.indexOf('[') > -1) {
+                //     columnArray['InventoryDispose'] = inventoryDispose.substring(inventoryDispose.lastIndexOf('[') + 1, inventoryDispose.length - 1);
+                // } else {
+                //     columnArray['InventoryDispose'] = inventoryDispose;
+                // }
             } else {
                 columnArray['InventoryDispose'] = '';
             }
             if (tableRow.hasOwnProperty('CompletionTime')) {
                 //add by lzy at 20200113 start
                 var completionTimeValue=tableRow['CompletionTime'].gui.comparable;
-                for (var j = 0; j < inputFormArray.length; j++) {
-                    var inputForm = inputFormArray[j];
-                    if (inputForm.type === 'text') {
-                        if ((inputForm.name.indexOf('CompletionTime') > -1) && (inputForm.name.indexOf(tableRow.oid) > -1)) {
-                            completionTimeValue = inputForm.value;
-                            break;
-                        }
+                for (var j = 0; j < selectArray.length; j++) {
+                    var select = selectArray[j];
+                    if ((select.name.indexOf('CompletionTime') > -1) && (select.name.indexOf(tableRow.oid) > -1)) {
+                        completionTimeValue = select.value;
+                        break;
                     }
                 }
                 columnArray['CompletionTime'] = completionTimeValue;
@@ -351,21 +397,41 @@
             }
             if (tableRow.hasOwnProperty('ChangeType')) {
                 var changeType = tableRow['ChangeType'].gui.comparable;
-                if (changeType.indexOf('[') > -1) {
-                    columnArray['ChangeType'] = changeType.substring(changeType.lastIndexOf('[') + 1, changeType.length - 1);
-                } else {
-                    columnArray['ChangeType'] = changeType;
+                //add by lzy at 20200118 start
+                for (var j = 0; j < selectArray.length; j++) {
+                    var select = selectArray[j];
+                    if ((select.name.indexOf('ChangeType') > -1) && (select.name.indexOf(tableRow.oid) > -1)) {
+                        changeType = select.value;
+                        break;
+                    }
                 }
+                columnArray['ChangeType'] = changeType;
+                //add by lzy at 20200118 end
+                // if (changeType.indexOf('[') > -1) {
+                //     columnArray['ChangeType'] = changeType.substring(changeType.lastIndexOf('[') + 1, changeType.length - 1);
+                // } else {
+                //     columnArray['ChangeType'] = changeType;
+                // }
             } else {
                 columnArray['ChangeType'] = '';
             }
             if (tableRow.hasOwnProperty('ProductDispose')) {
                 var productDispose = tableRow['ProductDispose'].gui.comparable;
-                if (productDispose.indexOf('[') > -1) {
-                    columnArray['ProductDispose'] = productDispose.substring(productDispose.lastIndexOf('[') + 1, productDispose.length - 1);
-                } else {
-                    columnArray['ProductDispose'] = productDispose;
+                //add by lzy at 20200118 start
+                for (var j = 0; j < selectArray.length; j++) {
+                    var select = selectArray[j];
+                    if ((select.name.indexOf('ProductDispose') > -1) && (select.name.indexOf(tableRow.oid) > -1)) {
+                        productDispose = select.value;
+                        break;
+                    }
                 }
+                columnArray['ProductDispose'] = productDispose;
+                //add by lzy at 20200118 end
+                // if (productDispose.indexOf('[') > -1) {
+                //     columnArray['ProductDispose'] = productDispose.substring(productDispose.lastIndexOf('[') + 1, productDispose.length - 1);
+                // } else {
+                //     columnArray['ProductDispose'] = productDispose;
+                // }
             } else {
                 columnArray['ProductDispose'] = '';
             }
@@ -482,7 +548,7 @@
 
 
     // 保存受影响列表客制化字段信息（一键设置功能保存）
-    function saveChangeTaskArrayByOneKeySetup(completiontime,userPicker) {
+    function saveChangeTaskArrayByOneKeySetup(completiontime,userPicker,articleDispose_result,passageDispose_result,inventoryDispose_result,productDispose_result,changeType_result,aadDescription_result) {
         // 获取页面所有input控件
         var inputFormArray = document.getElementsByTagName("input");
         // 用于存储所有数据
@@ -493,7 +559,18 @@
             var tableRow = tableRows[i].data;
             var columnArray = {};
             columnArray['oid'] = tableRow.oid;
-            columnArray['aadDescription'] = tableRow.aadDescription.gui.comparable;
+            //add by lzy at 20200119 start
+            if (tableRow.hasOwnProperty('aadDescription')) {
+                var gui = JSON.stringify(tableRow['aadDescription'].gui);
+                var isEdit = gui.indexOf('disabled');//isEdit为-1表示不存在该字符，即是可编辑状态
+                if (aadDescription_result != null && aadDescription_result != "" && isEdit == -1) {
+                    columnArray['aadDescription'] = aadDescription_result;
+                } else {
+                    columnArray['aadDescription'] = tableRow['aadDescription'].gui.comparable;
+                }
+            }
+            //add by lzy at 20200119 end
+            // columnArray['aadDescription'] = tableRow.aadDescription.gui.comparable;
             if (tableRow.hasOwnProperty('ArticleInventory')) {
                 columnArray['ArticleInventory'] = tableRow['ArticleInventory'].gui.comparable;
             } else {
@@ -535,31 +612,71 @@
             }
             if (tableRow.hasOwnProperty('ArticleDispose')) {
                 var articleDispose = tableRow['ArticleDispose'].gui.comparable;
-                if (articleDispose.indexOf('[') > -1) {
-                    columnArray['ArticleDispose'] = articleDispose.substring(articleDispose.lastIndexOf('[') + 1, articleDispose.length - 1);
-                } else {
-                    columnArray['ArticleDispose'] = articleDispose;
+                //add by lzy at 20200118 start
+                var gui=JSON.stringify(tableRow['ArticleDispose'].gui);
+                var isEdit=gui.indexOf('disabled');//isEdit为-1表示不存在该字符，即是可编辑状态
+                if(articleDispose_result!=null&&articleDispose_result!=""&&isEdit==-1) {
+                    columnArray['ArticleDispose'] = articleDispose_result;
+                }else{
+                    if (articleDispose.indexOf('[') > -1) {
+                        columnArray['ArticleDispose'] = articleDispose.substring(articleDispose.lastIndexOf('[') + 1, articleDispose.length - 1);
+                    } else {
+                        columnArray['ArticleDispose'] = articleDispose;
+                    }
                 }
+                //add by lzy at 20200118 end
+                // if (articleDispose.indexOf('[') > -1) {
+                //     columnArray['ArticleDispose'] = articleDispose.substring(articleDispose.lastIndexOf('[') + 1, articleDispose.length - 1);
+                // } else {
+                //     columnArray['ArticleDispose'] = articleDispose;
+                // }
             } else {
                 columnArray['ArticleDispose'] = '';
             }
             if (tableRow.hasOwnProperty('PassageDispose')) {
                 var passageDispose = tableRow['PassageDispose'].gui.comparable
-                if (passageDispose.indexOf('[') > -1) {
-                    columnArray['PassageDispose'] = passageDispose.substring(passageDispose.lastIndexOf('[') + 1, passageDispose.length - 1);
-                } else {
-                    columnArray['PassageDispose'] = passageDispose;
+                //add by lzy at 20200118 start
+                var gui=JSON.stringify(tableRow['PassageDispose'].gui);
+                var isEdit=gui.indexOf('disabled');//isEdit为-1表示不存在该字符，即是可编辑状态
+                if(passageDispose_result!=null&&passageDispose_result!=""&&isEdit==-1){
+                    columnArray['PassageDispose']=passageDispose_result;
+                }else{
+                    if (passageDispose.indexOf('[') > -1) {
+                        columnArray['PassageDispose'] = passageDispose.substring(passageDispose.lastIndexOf('[') + 1, passageDispose.length - 1);
+                    } else {
+                        columnArray['PassageDispose'] = passageDispose;
+                    }
                 }
+                //add by lzy at 20200118 end
+
+                // if (passageDispose.indexOf('[') > -1) {
+                //     // columnArray['PassageDispose'] = passageDispose.substring(passageDispose.lastIndexOf('[') + 1, passageDispose.length - 1);
+                // } else {
+                //     columnArray['PassageDispose'] = passageDispose;
+                // }
             } else {
                 columnArray['PassageDispose'] = '';
             }
             if (tableRow.hasOwnProperty('InventoryDispose')) {
                 var inventoryDispose = tableRow['InventoryDispose'].gui.comparable;
-                if (inventoryDispose.indexOf('[') > -1) {
-                    columnArray['InventoryDispose'] = inventoryDispose.substring(inventoryDispose.lastIndexOf('[') + 1, inventoryDispose.length - 1);
-                } else {
-                    columnArray['InventoryDispose'] = inventoryDispose;
+                //add by lzy at 20200118 start
+                var gui=JSON.stringify(tableRow['InventoryDispose'].gui);
+                var isEdit=gui.indexOf('disabled');//isEdit为-1表示不存在该字符，即是可编辑状态
+                if(inventoryDispose_result!=null&&inventoryDispose_result!=""&&isEdit==-1){
+                    columnArray['InventoryDispose']=inventoryDispose_result;
+                }else{
+                    if (inventoryDispose.indexOf('[') > -1) {
+                        columnArray['InventoryDispose'] = inventoryDispose.substring(inventoryDispose.lastIndexOf('[') + 1, inventoryDispose.length - 1);
+                    } else {
+                        columnArray['InventoryDispose'] = inventoryDispose;
+                    }
                 }
+                //add by lzy at 20200118 end
+                // if (inventoryDispose.indexOf('[') > -1) {
+                //     columnArray['InventoryDispose'] = inventoryDispose.substring(inventoryDispose.lastIndexOf('[') + 1, inventoryDispose.length - 1);
+                // } else {
+                //     columnArray['InventoryDispose'] = inventoryDispose;
+                // }
             } else {
                 columnArray['InventoryDispose'] = '';
             }
@@ -589,21 +706,52 @@
             }
             if (tableRow.hasOwnProperty('ChangeType')) {
                 var changeType = tableRow['ChangeType'].gui.comparable;
-                if (changeType.indexOf('[') > -1) {
-                    columnArray['ChangeType'] = changeType.substring(changeType.lastIndexOf('[') + 1, changeType.length - 1);
-                } else {
-                    columnArray['ChangeType'] = changeType;
+                //add by lzy at 20200118 start
+                var gui=JSON.stringify(tableRow['ChangeType'].gui);
+                var isEdit=gui.indexOf('disabled');//isEdit为-1表示不存在该字符，即是可编辑状态
+                if(changeType_result!=null&&changeType_result!=""&&isEdit==-1){
+                    columnArray['ChangeType']=changeType_result;
+                }else{
+                    if (changeType.indexOf('[') > -1) {
+                        var changeTypeValue=changeType.substring(changeType.lastIndexOf('[') + 1, changeType.length - 1);
+                        if (changeTypeValue.indexOf(";")>-1){
+                            columnArray['ChangeType'] =changeTypeValue;
+                        }else{
+                            columnArray['ChangeType'] =changeTypeValue+";"+changeTypeValue;
+                        }
+                    } else {
+                        columnArray['ChangeType'] = changeType;
+                    }
                 }
+                //add by lzy at 20200118 end
+                // if (changeType.indexOf('[') > -1) {
+                //     columnArray['ChangeType'] = changeType.substring(changeType.lastIndexOf('[') + 1, changeType.length - 1);
+                // } else {
+                //     columnArray['ChangeType'] = changeType;
+                // }
             } else {
                 columnArray['ChangeType'] = '';
             }
             if (tableRow.hasOwnProperty('ProductDispose')) {
                 var productDispose = tableRow['ProductDispose'].gui.comparable;
-                if (productDispose.indexOf('[') > -1) {
-                    columnArray['ProductDispose'] = productDispose.substring(productDispose.lastIndexOf('[') + 1, productDispose.length - 1);
-                } else {
-                    columnArray['ProductDispose'] = productDispose;
+                //add by lzy at 20200118 start
+                var gui=JSON.stringify(tableRow['ProductDispose'].gui);
+                var isEdit=gui.indexOf('disabled');//isEdit为-1表示不存在该字符，即是可编辑状态
+                if(productDispose_result!=null&&productDispose_result!=""&&isEdit==-1){
+                    columnArray['ProductDispose']=productDispose_result;
+                }else{
+                    if (productDispose.indexOf('[') > -1) {
+                        columnArray['ProductDispose'] = productDispose.substring(productDispose.lastIndexOf('[') + 1, productDispose.length - 1);
+                    } else {
+                        columnArray['ProductDispose'] = productDispose;
+                    }
                 }
+                //add by lzy at 20200118 end
+                // if (productDispose.indexOf('[') > -1) {
+                //     columnArray['ProductDispose'] = productDispose.substring(productDispose.lastIndexOf('[') + 1, productDispose.length - 1);
+                // } else {
+                //     columnArray['ProductDispose'] = productDispose;
+                // }
             } else {
                 columnArray['ProductDispose'] = '';
             }
@@ -625,10 +773,12 @@
             tableRowArry[i] = columnArray;
         }
         document.getElementById("changeTaskArray").value = JSON.stringify(tableRowArry);
-        // 受影响对象表单中'责任人'，'期望完成时间'回填
+        // 受影响对象表单中'责任人'，'期望完成时间',受影响对象表单中'在制处理措施','在途处理措施'，'库存处理措施'，'已出货成品处理措施'，'类型'回填
         setTimeout(function () {
             responsiblePersonWriteBack();
             completionTimeWriteBack();
+            disposeWriteBack();
+            aadDescriptionWriteBack();
         }, 50);
 
     }
@@ -658,7 +808,86 @@
             }
         }
     }
-
+    // 受影响对象表单中'更改详细描述'回填
+    function aadDescriptionWriteBack() {
+        if (document.getElementById("changeTaskArray")) {
+            // 获取页面所有input控件
+            var inputFormArray = document.getElementsByTagName("input");
+            // 获取原有数据
+            var changeTaskArray = eval("(" + document.getElementById("changeTaskArray").value + ")");
+            if (changeTaskArray.length > 0) {
+                for (var j = 0; j < inputFormArray.length; j++) {
+                    var inputForm = inputFormArray[j];
+                    if (inputForm.type === 'text') {
+                        if (inputForm.name.indexOf('aadDescription')>-1) {
+                            for (var i = 0; i < changeTaskArray.length; i++) {
+                                var datasArray = changeTaskArray[i];
+                                if (inputForm.name.indexOf(datasArray['oid'])>-1) {
+                                    inputForm.value = datasArray['aadDescription'];
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    // 受影响对象表单中'在制处理措施','在途处理措施'，'库存处理措施'，'已出货成品处理措施'，'类型'回填
+    function disposeWriteBack() {
+        if (document.getElementById("changeTaskArray")) {
+            // 获取页面所有select控件
+            var inputFormArray = document.getElementsByTagName("select");
+            // 获取原有数据
+            var changeTaskArray = eval("(" + document.getElementById("changeTaskArray").value + ")");
+            if (changeTaskArray.length > 0) {
+                for (var j = 0; j < inputFormArray.length; j++) {
+                    var inputForm = inputFormArray[j];
+                    if (inputForm.name.indexOf('ArticleDispose')>-1) {
+                        for (var i = 0; i < changeTaskArray.length; i++) {
+                            var datasArray = changeTaskArray[i];
+                            if (inputForm.name.indexOf(datasArray['oid'])>-1) {
+                                inputForm.value = datasArray['ArticleDispose'];
+                                break;
+                            }
+                        }
+                    }else if (inputForm.name.indexOf('PassageDispose')>-1){
+                        for (var i = 0; i < changeTaskArray.length; i++) {
+                            var datasArray = changeTaskArray[i];
+                            if (inputForm.name.indexOf(datasArray['oid'])>-1) {
+                                inputForm.value = datasArray['PassageDispose'];
+                                break;
+                            }
+                        }
+                    }else if (inputForm.name.indexOf('InventoryDispose')>-1){
+                        for (var i = 0; i < changeTaskArray.length; i++) {
+                            var datasArray = changeTaskArray[i];
+                            if (inputForm.name.indexOf(datasArray['oid'])>-1) {
+                                inputForm.value = datasArray['InventoryDispose'];
+                                break;
+                            }
+                        }
+                    }else if (inputForm.name.indexOf('ProductDispose')>-1){
+                        for (var i = 0; i < changeTaskArray.length; i++) {
+                            var datasArray = changeTaskArray[i];
+                            if (inputForm.name.indexOf(datasArray['oid'])>-1) {
+                                inputForm.value = datasArray['ProductDispose'];
+                                break;
+                            }
+                        }
+                    }else if (inputForm.name.indexOf('ChangeType')>-1){
+                        for (var i = 0; i < changeTaskArray.length; i++) {
+                            var datasArray = changeTaskArray[i];
+                            if (inputForm.name.indexOf(datasArray['oid'])>-1) {
+                                inputForm.value = datasArray['ChangeType'];
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     //日期格式转换 转换成yyyy-MM-dd
     function date (date) {
