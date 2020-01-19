@@ -164,6 +164,51 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
             checkThree();
         }
     }
+    /**
+     * 完成按钮(编辑ECN完成按钮，无需校验受影响对象是否最新版本)
+     * @throws WTException
+     */
+    public void editOkButton() throws WTException {
+        if (NMCOMMANDBEAN != null && ORDER2 != null) {
+            /*
+             * 收集部件关联的文档集合
+             * 收集需要收集上层父件集合
+             */
+            collectionOne();
+            //收集子件对应的上层父件编码集合
+            collectionTwo();
+            //收集ECA受影响对象集合
+            collectionThree();
+
+            checkEnvProtection(ORDER2);
+
+            //add by lzy at 20191213 start
+//            checkObjectVesionNew();
+            checkStandardPartsRevise();
+            //add by lzy at 20191213 end
+            //add by lzy at 20191227 start
+            checkHasBom();
+            //add by lzy at 20191227 end
+            //add by lzy at 20200103 start
+            checkProductStatus();
+            //add by lzy at 20200103 end
+
+            //校验需要收集上层对象的部件是否满足收集条件
+            checkOne();
+            /*
+             * 8.0、至少一条受影响对象，必填项验证。
+             * 8.1、检查受影响对象是否存在未结束的ECN（包含的ECA非取消状态），有则不允许创建。(已取消)
+             * 8.1、检查受影响对象是否存在未结束的ECN（无需判断ECA状态），有则不允许创建。
+             * 8.2、检查受影响对象的状态必须是已归档及已发布。
+             * 8.3、检查受影响对象不能为标准件。
+             * 8.4、A“ECN和完成功能” ，提交的时候校验图纸是否收集，如果没有收集，要给提交人提示“xx部件未收集图纸，请收集图纸！”
+             * 检查受影响对象列表中是否存在已修订的对象
+             */
+            checkTwo();
+            //检查是否存在单独进行变更的说明文档
+            checkThree();
+        }
+    }
 
     /***
      * 获取页面中受影响对象列表数据，以及属性集合
