@@ -1661,4 +1661,44 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
         }
     }
 
+
+    /**
+     * 给流程节点角色删除固定人员(删除陈乔蓉00873|光峰)
+     * 删除用户为空抛出异常
+     * @param pbo
+     * @param rolename
+     * @param principalname
+     * @throws WTException
+     */
+    public void delTeamRole(WTObject pbo, String rolename, String principalname) throws WTException {
+        Role role = Role.toRole(rolename);
+        WTPrincipal wtprincipal = PartWorkflowUtil.getUserFromName(principalname);
+        if (wtprincipal != null) {
+            LOGGER.info("=====addTeamRole.wtprincipal: " + wtprincipal.getName());
+            if (pbo instanceof WTChangeOrder2) {
+                WTChangeOrder2 ecn = (WTChangeOrder2) pbo;
+                Team processTeam = WorkflowUtil.getTeam(ecn);
+                if (processTeam != null) {
+                    Set<String> principalnameSet=new HashSet<>();
+                    //如果ECN流程存在2个以上节点人员，删除固定人员
+                    Enumeration enumPrin =processTeam.getPrincipalTarget(role);
+                    while (enumPrin.hasMoreElements()){
+                        WTPrincipalReference tempPrinRef = (WTPrincipalReference) enumPrin.nextElement();
+                        WTPrincipal principal = tempPrinRef.getPrincipal();
+                        principalnameSet.add(principal.getName());
+                    }
+                    if (principalnameSet.size()>1){
+                        for (String value:principalnameSet){
+                            if (value.contains(principalname)){
+                                processTeam.deletePrincipalTarget(role,wtprincipal);
+                            }
+                        }
+
+                    }
+
+                }
+            }
+        }
+    }
+
 }
