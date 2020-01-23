@@ -33,10 +33,7 @@ import wt.access.AccessControlHelper;
 import wt.access.AccessPermission;
 import wt.access.AdHocAccessKey;
 import wt.access.AdHocControlled;
-import wt.change2.ChangeActivityIfc;
-import wt.change2.Changeable2;
-import wt.change2.WTChangeActivity2;
-import wt.change2.WTChangeOrder2;
+import wt.change2.*;
 import wt.doc.WTDocument;
 import wt.fc.*;
 import wt.fc.collections.WTArrayList;
@@ -74,6 +71,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class ECAWorkflowUtil implements ChangeConstants, ModifyConstants {
@@ -612,6 +610,13 @@ public class ECAWorkflowUtil implements ChangeConstants, ModifyConstants {
             }else if (pbo instanceof WTPart) {
                 WTPart wtPart = (WTPart) pbo;
                 Team processTeam = WorkflowUtil.getTeam(wtPart);
+                if (processTeam != null) {
+                    processTeam.addPrincipal(role, wtprincipal);
+                    System.out.println("end add people success");
+                }
+            }else if (pbo instanceof WTChangeActivity2) {
+                WTChangeActivity2 eca = (WTChangeActivity2) pbo;
+                Team processTeam = WorkflowUtil.getTeam(eca);
                 if (processTeam != null) {
                     processTeam.addPrincipal(role, wtprincipal);
                     System.out.println("end add people success");
@@ -1490,6 +1495,83 @@ public class ECAWorkflowUtil implements ChangeConstants, ModifyConstants {
         }
 
         return result;
+    }
+
+    //初始化流程角色：相同对象的ECA流程节点人从先前的ECA中获取
+    public void initTeamRole(WTObject pbo) {
+        if (pbo instanceof WTChangeActivity2) {
+            try {
+                WTChangeActivity2 eca = (WTChangeActivity2) pbo;
+                //通过eca获取ecn
+                WTChangeOrder2 ecn = new WTChangeOrder2();
+                QueryResult ecaqr = null;
+                ecaqr = ChangeHelper2.service.getChangeOrder(eca);
+                while (ecaqr.hasMoreElements()) {
+                    Object object = ecaqr.nextElement();
+                    if (object instanceof WTChangeOrder2) {
+                        ecn = (WTChangeOrder2) object;
+                        break;
+                    }
+                }
+                if (ecn != null) {
+                    WTChangeActivity2 beforeEca = null;
+                    //获取其他ECA
+                    QueryResult qr = ChangeHelper2.service.getChangeActivities(ecn);
+                    while (qr.hasMoreElements()) {
+                        Object object = qr.nextElement();
+                        if (object != null) {
+                            if (object instanceof WTChangeActivity2) {
+                                WTChangeActivity2 wtChangeActivity2 = (WTChangeActivity2) object;
+                                if (wtChangeActivity2.getName().equals(eca.getName()) && eca != wtChangeActivity2) {
+                                    beforeEca = wtChangeActivity2;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (beforeEca != null) {
+                        Team processTeam = WorkflowUtil.getTeam(beforeEca);
+                        if (processTeam != null) {
+                            if (processTeam != null) {
+                                List<String> rolenames = new ArrayList<>();
+                                rolenames.add("Assignee");//数据更改
+                                rolenames.add("Corrector");//校对者
+                                rolenames.add("Normalizer");//标准化审查者
+                                rolenames.add("Receiver");//审核者
+                                rolenames.add("Signer");//会签者
+                                rolenames.add("Approver");//批准者
+                                rolenames.add("Receiver");//接收者
+                                //给当前ECA角色设置以前ECA的角色
+                                addTeamRoleByBefore(eca, processTeam, rolenames);
+                            }
+                        }
+                    }
+                }
+            } catch (WTException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    //给当前ECA角色设置以前ECA的角色
+    public  static void addTeamRoleByBefore(WTChangeActivity2 eca,Team processTeam,List<String> rolenames){
+        if (rolenames!=null&&rolenames.size()>0){
+            try{
+                PartWorkflowUtil partwork = new PartWorkflowUtil();
+                for (int i = 0; i <rolenames.size() ; i++) {
+                    Role role = Role.toRole(rolenames.get(i));
+                    Enumeration enumPrin = processTeam.getPrincipalTarget(role);
+                    while (enumPrin.hasMoreElements()) {
+                        WTPrincipalReference tempPrinRef = (WTPrincipalReference) enumPrin.nextElement();
+                        WTPrincipal principal = tempPrinRef.getPrincipal();
+                        String principalname=principal.getName();
+                        partwork.AddTeamRole(eca,rolenames.get(i),principalname);
+                    }
+                }
+            } catch (WTException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }
