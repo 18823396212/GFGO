@@ -9,7 +9,7 @@
 <fmt:setBundle basename="ext.appo.ecn.resource.changeNoticeActionsRB"/>
 <fmt:message var="tableLabel" key="changeNotice.oneKeySetup.title"/>
 
-<jca:wizard  buttonList="oneKeySetupButtons" title="一键设置(只有勾选的选项才生效)">
+<jca:wizard  buttonList="oneKeySetupButtons" title="一键设置(请勾选需要一键设置的类型【勾选的选项才会做一键设置】！)">
     <jca:wizardStep action="oneKeySetupStep" type="changeNotice" label="${tableLabel}"/>
 </jca:wizard>
 

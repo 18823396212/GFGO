@@ -238,7 +238,7 @@
     <input type="checkbox"id="userPicker" name="userPicker"/>
     <span style="margin-right: 53px;">责任人:</span>
     <span class="span_value">
-        <wctags:userPicker id="userPicker" pickerTitle="搜索负责人" label="" readOnlyPickerTextBox="false"/>
+        <wctags:userPicker id="userPicker" pickerTitle="搜索负责人" label="" readOnlyPickerTextBox="true"/>
     </span>
 </div>
 <br/>
@@ -296,6 +296,12 @@
         // alert("completiontime=="+completiontime+"==userPicker=="+userPicker+"==articleDispose=="+articleDispose
         // +"==passageDispose=="+passageDispose+"==inventoryDispose=="+inventoryDispose+"==productDispose=="+productDispose
         // +"==changeType=="+changeType+"==aadDescription=="+aadDescription);
+
+        if (completiontime_isChoose==false&&userPicker_isChoose==false&&articleDispose_isChoose==false&&passageDispose_isChoose==false
+        &&inventoryDispose_isChoose==false&&productDispose_isChoose==false&&changeType_isChoose==false&&aadDescription_isChoose==false){
+            alert("请至少选择一项数据进行一键设置");
+            return false;
+        }
 
         window.opener.addOneKeySetup(completiontime,userPicker,articleDispose,passageDispose,inventoryDispose,productDispose,changeType,aadDescription);
         window.close();
