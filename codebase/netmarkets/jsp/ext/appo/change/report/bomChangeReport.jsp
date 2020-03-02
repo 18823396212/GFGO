@@ -180,31 +180,31 @@
             <th class="th_datalist" scope="col" colspan="2">
                 <p>名称</p>
             </th>
-            <th class="th_datalist" scope="col" colspan="2">
+            <th class="th_datalist" scope="col" colspan="1">
                 <p>版本</p>
             </th>
-            <th class="th_datalist" scope="col" colspan="2">
+            <th class="th_datalist" scope="col" colspan="1">
                 <p>状态</p>
             </th>
-            <th class="th_datalist" scope="col" colspan="2">
+            <th class="th_datalist" scope="col" colspan="1">
                 <p>在制数量</p>
             </th>
             <th class="th_datalist" scope="col" colspan="2">
                 <p>在制处理措施</p>
             </th>
-            <th class="th_datalist" scope="col" colspan="2">
+            <th class="th_datalist" scope="col" colspan="1">
                 <p>在途数量</p>
             </th>
             <th class="th_datalist" scope="col" colspan="2">
                 <p>在途处理措施</p>
             </th>
-            <th class="th_datalist" scope="col" colspan="2">
+            <th class="th_datalist" scope="col" colspan="1">
                 <p>库存数量</p>
             </th>
             <th class="th_datalist" scope="col" colspan="2">
                 <p>库存处理措施</p>
             </th>
-            <th class="th_datalist" scope="col" colspan="3">
+            <th class="th_datalist" scope="col" colspan="1">
                 <p>已出货成品处理措施</p>
             </th>
             <th class="th_datalist" scope="col" colspan="2">
@@ -213,7 +213,7 @@
             <th class="th_datalist" scope="col" colspan="2">
                 <p>完成时间</p>
             </th>
-            <th class="th_datalist" scope="col" colspan="4">
+            <th class="th_datalist" scope="col" colspan="5">
                 <p>更改详细描述</p>
             </th>
         </tr>
@@ -234,18 +234,18 @@
             <td  style="text-align: center" colspan="1"><%=i+1%></td>
             <td colspan="2"><p><%=bean.getEffectObjectNumber()%></p></td>
             <td colspan="2"><p><%=bean.getEffectObjectName()%></p></td>
-            <td colspan="2"><p><%=bean.getEffectObjectVersion()%></p></td>
-            <td colspan="2"><p><%=bean.getEffectObjectState()%></p></td>
-            <td colspan="2"><p><%=bean.getInProcessQuantities()%></p></td>
+            <td colspan="1"><p><%=bean.getEffectObjectVersion()%></p></td>
+            <td colspan="1"><p><%=bean.getEffectObjectState()%></p></td>
+            <td colspan="1"><p><%=bean.getInProcessQuantities()%></p></td>
             <td colspan="2"><p><%=bean.getProcessingMeasures()%></p></td>
-            <td colspan="2"><p><%=bean.getOnthewayQuantity()%></p></td>
+            <td colspan="1"><p><%=bean.getOnthewayQuantity()%></p></td>
             <td colspan="2"><p><%=bean.getOnthewayTreatmentMeasure()%></p></td>
-            <td colspan="2"><p><%=bean.getStockQuantity()%></p></td>
+            <td colspan="1"><p><%=bean.getStockQuantity()%></p></td>
             <td colspan="2"><p><%=bean.getStockTreatmentMeasure()%></p></td>
-            <td colspan="3"><p><%=bean.getFinishedHandleMeasures()%></p></td>
+            <td colspan="1"><p><%=bean.getFinishedHandleMeasures()%></p></td>
             <td colspan="2"><p><%=bean.getChangeType()%></p></td>
             <td colspan="2"><p><%=bean.getExpectDate()%></p></td>
-            <td colspan="4"><p><%=bean.getChangeDetailedDescription()%></p></td>
+            <td colspan="5"><p><%=bean.getChangeDetailedDescription()%></p></td>
         </tr>
                 <%} %>
 

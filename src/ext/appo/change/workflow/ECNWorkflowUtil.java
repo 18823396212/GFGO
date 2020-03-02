@@ -6,6 +6,7 @@ import ext.appo.change.ModifyHelper;
 import ext.appo.change.constants.ModifyConstants;
 import ext.appo.change.models.CorrelationObjectLink;
 import ext.appo.change.models.TransactionTask;
+import ext.appo.change.report.BomChangeReport;
 import ext.appo.change.util.ModifyUtils;
 import ext.appo.ecn.common.util.ChangePartQueryUtils;
 import ext.appo.ecn.constants.ChangeConstants;
@@ -1699,6 +1700,38 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                 }
             }
         }
+    }
+
+    /**
+     * 变更阶段：DR4 or 量产后，或者受影响产品中包含 已发布状态的产品，会签人员必须选择工程代表
+     * @param pbo
+     * @param rolename
+     * @param principalname
+     * @throws WTException
+     */
+    public void checkChangePhase(WTObject pbo, String rolename, String principalname) throws WTException {
+        if (pbo instanceof WTChangeOrder2) {
+            WTChangeOrder2 ecn = (WTChangeOrder2) pbo;
+            String changePhase= BomChangeReport.getChangeAtt(ecn,"bgjd");//变更阶段
+            Set<Persistable> affectedProducts=ModifyHelper.service.queryPersistable(ecn, LINKTYPE_2);
+            Boolean isReleased=false;
+            //是否包含已发布状态产品
+            for (Persistable persistable:affectedProducts){
+                if (persistable instanceof WTPart){
+                    WTPart part=(WTPart)persistable;
+                    String state=part.getState().toString();
+                    if (state.contains("RELEASED")){
+                        isReleased=true;
+                        break;
+                    }
+                }
+            }
+            if (changePhase.contains("DR4")||changePhase.contains("量产后")||isReleased){
+                PartWorkflowUtil partWorkflowUtil=new PartWorkflowUtil();
+                partWorkflowUtil.CheckTeam(pbo, "engineering_manager", "Signer");//工程代表
+            }
+        }
+
     }
 
 }

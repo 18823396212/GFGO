@@ -14,7 +14,7 @@
 <style type="text/css">
     .tb{
         /*width:100%;*/
-        width:2000px;
+        width:3000px;
         table-layout:fixed;
         border-collapse:collapse;
         line-height: 30px;
@@ -43,6 +43,16 @@
     }
     #tb_affectedObject tr:hover{
         background-color: #FBF1D4;
+    }
+
+    .mui-ellipsis {
+        display: -webkit-box;
+        overflow: hidden;
+        white-space: normal!important;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+        -webkit-line-clamp: 10;
+        -webkit-box-orient: vertical;
     }
 
 </style>
@@ -150,7 +160,7 @@
             <th class="th_datalist" scope="col" colspan="2">
                 <p>是否变更图纸</p>
             </th>
-            <th class="th_datalist" scope="col" colspan="2">
+            <th class="th_datalist" scope="col" colspan="6">
                 <p>变更说明</p>
             </th>
             <th class="th_datalist" scope="col" colspan="2">
@@ -188,8 +198,8 @@
             </th>
         </tr>
         <tr id="">
-            <td  style="text-align: center" colspan="1"><%=1%></td>
-            <td colspan="2"><p><%=partUpdateInfoBean.getEcnNumber()%></p></td>
+            <td style="text-align: center" colspan="1"><%=1%></td>
+            <td colspan="2"><p><a href="app/#ptc1/tcomp/infoPage?oid=VR%3Awt.change2.WTChangeOrder2%3A<%=partUpdateInfoBean.getEcn().getBranchIdentifier()%>&u8=1"><%=partUpdateInfoBean.getEcnNumber()%></a></p></td>
             <td colspan="2"><p><%=partUpdateInfoBean.getEcnCreator()%></p></td>
             <td colspan="3"><p><%=partUpdateInfoBean.getEcnStartTime()%></p></td>
             <td colspan="2"><p><%=partUpdateInfoBean.getProductType()%></p></td>
@@ -198,7 +208,7 @@
             <td colspan="2"><p><%=partUpdateInfoBean.getChangeReason()%></p></td>
             <td colspan="2"><p><%=partUpdateInfoBean.getChangePhase()%></p></td>
             <td colspan="2"><p><%=partUpdateInfoBean.getIsChangeDrawing()%></p></td>
-            <td colspan="2"><p><%=partUpdateInfoBean.getChangeDescription()%></p></td>
+            <td colspan="6"><p class="mui-ellipsis" id="mui-ellipsis" onclick="showAll()"><%=partUpdateInfoBean.getChangeDescription()%></p></td>
             <td colspan="2"><p><%=partUpdateInfoBean.getEffectObjectState()%></p></td>
             <td colspan="2"><p><%=partUpdateInfoBean.getInProcessQuantities()%></p></td>
             <td colspan="2"><p><%=partUpdateInfoBean.getProcessingMeasures()%></p></td>
@@ -499,6 +509,10 @@
             e.src= collapseImageUrl;
             document.getElementById("div_"+e.id).style.display="block";
         }
+    }
+    //去除变更说明css显示全部内容
+    function showAll(){
+        document.getElementById("mui-ellipsis").className="";
     }
 
 </script>

@@ -1,12 +1,17 @@
 package ext.appo.change.beans;
 
+import wt.change2.WTChangeOrder2;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 public class PartUpdateInfoBean implements Serializable {
 
+
     //ECN信息
+    //ECN
+    private WTChangeOrder2 ecn;
     //ECN编码
     private String ecnNumber = "";
     //变更申请人
@@ -155,6 +160,10 @@ public class PartUpdateInfoBean implements Serializable {
         return expectDate;
     }
 
+    public WTChangeOrder2 getEcn() {
+        return ecn;
+    }
+
     public void setEcnNumber(String ecnNumber) {
         this.ecnNumber = ecnNumber;
     }
@@ -251,6 +260,9 @@ public class PartUpdateInfoBean implements Serializable {
         this.expectDate = expectDate;
     }
 
+    public void setEcn(WTChangeOrder2 ecn) {
+        this.ecn = ecn;
+    }
 
     @Override
     public String toString() {

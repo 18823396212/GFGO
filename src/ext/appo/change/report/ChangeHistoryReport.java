@@ -73,7 +73,7 @@ public class ChangeHistoryReport {
                     changeVersion.put("after",producePart.getVersionIdentifier().getValue());
                 }
                 if (ecnInfo!=null&&affectedInfo!=null){
-
+                    partUpdateInfo.setEcn(ecn);
                     partUpdateInfo.setEcnNumber(ecnInfo.getEcnNumber());
                     partUpdateInfo.setEcnCreator(ecnInfo.getEcnCreator());
                     partUpdateInfo.setEcnStartTime(ecnInfo.getEcnStartTime());

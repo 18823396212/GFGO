@@ -7,7 +7,7 @@
             <ruleName>APPO_BOMCHANGE_RULE</ruleName>
             <ruleSpecification>
                 <![CDATA[
-                    <AttributeValues objType="com.pisx.BOMChangeActivity2">
+                    <AttributeValues objType="com.plm.BOMChangeActivity2">
 
                         <!-- set the cabinet -->
                         <AttrValue id="cabinet.id" algorithm="com.ptc.core.foundation.folder.server.impl.FolderPathAttributeAlgorithm">
@@ -89,6 +89,6 @@
             </ruleSpecification>
             <ruleType type="INIT"/>
         </EngineRule>
-        <logicalId>com.pisx.BOMChangeActivity2</logicalId>
+        <logicalId>com.plm.BOMChangeActivity2</logicalId>
     </TypeBasedRule>
 </OrganizationConfig>

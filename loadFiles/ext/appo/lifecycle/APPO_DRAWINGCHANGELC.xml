@@ -4,7 +4,7 @@
   <csvLifeCycleTemplateBegin handler="wt.lifecycle.LoadLifeCycle.createLifeCycleTemplate">
     <csvname>APPO_DRAWINGCHANGELC</csvname>
     <csvdescription>Life Cycle for the Change Activity.Change Activity is available on the Implementation Plan tab of the Change Notice.</csvdescription>
-    <csvsupportedClass>wt.change2.WTChangeActivity2|com.pisx.DrawingsChangeActivity2</csvsupportedClass>
+    <csvsupportedClass>wt.change2.WTChangeActivity2|com.plm.DrawingsChangeActivity2</csvsupportedClass>
     <csvfolderLocation>/System</csvfolderLocation>
     <csvenabled>true</csvenabled>
     <csvrouting>false</csvrouting>

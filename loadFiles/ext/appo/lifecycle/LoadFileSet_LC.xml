@@ -6,8 +6,8 @@ windchill wt.load.LoadFileSet -file loadFiles/ext/appo/lifecycle/LoadFileSet_LC.
 <loadFileList containerPath="/">
 
 	<!-- load lifecycle templates -->
-	<loadFile filename="ext/appo/lifecycle/APPO_ECNLC.xml" containerPath="/wt.inf.container.OrgContainer=PISX"/>
-	<loadFile filename="ext/appo/lifecycle/APPO_BOMCHANGELC.xml" containerPath="/wt.inf.container.OrgContainer=PISX"/>
-	<loadFile filename="ext/appo/lifecycle/APPO_DRAWINGCHANGELC.xml" containerPath="/wt.inf.container.OrgContainer=PISX"/>
+	<loadFile filename="ext/appo/lifecycle/APPO_ECNLC.xml" containerPath="/wt.inf.container.OrgContainer=APPO"/>
+	<loadFile filename="ext/appo/lifecycle/APPO_BOMCHANGELC.xml" containerPath="/wt.inf.container.OrgContainer=APPO"/>
+	<loadFile filename="ext/appo/lifecycle/APPO_DRAWINGCHANGELC.xml" containerPath="/wt.inf.container.OrgContainer=APPO"/>
 
 </loadFileList>

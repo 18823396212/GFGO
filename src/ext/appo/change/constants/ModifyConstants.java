@@ -20,9 +20,9 @@ public interface ModifyConstants {
     String ATTRIBUTE_12 = "CollectionNumber";//收集对象
 
     //类型定义
-    String TYPE_1 = "com.pisx.BOMChangeActivity2";//BOM变更ECA
-    String TYPE_2 = "com.pisx.DrawingsChangeActivity2";//图纸变更ECA
-    String TYPE_3 = "com.pisx.TransactionalChangeActivity2";//事务性任务
+    String TYPE_1 = "com.plm.BOMChangeActivity2";//BOM变更ECA
+    String TYPE_2 = "com.plm.DrawingsChangeActivity2";//图纸变更ECA
+    String TYPE_3 = "com.plm.TransactionalChangeActivity2";//事务性任务
 
     //生命周期状态
     String STATE_1 = "INWORK";//正在工作

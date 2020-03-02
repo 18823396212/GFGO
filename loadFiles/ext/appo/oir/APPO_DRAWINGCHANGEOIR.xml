@@ -7,7 +7,7 @@
             <ruleName>APPO_DRAWINGCHANGE_RULE</ruleName>
             <ruleSpecification>
                 <![CDATA[
-                    <AttributeValues objType="com.pisx.DrawingsChangeActivity2">
+                    <AttributeValues objType="com.plm.DrawingsChangeActivity2">
 
                         <!-- set the cabinet -->
                         <AttrValue id="cabinet.id" algorithm="com.ptc.core.foundation.folder.server.impl.FolderPathAttributeAlgorithm">
@@ -89,6 +89,6 @@
             </ruleSpecification>
             <ruleType type="INIT"/>
         </EngineRule>
-        <logicalId>com.pisx.DrawingsChangeActivity2</logicalId>
+        <logicalId>com.plm.DrawingsChangeActivity2</logicalId>
     </TypeBasedRule>
 </OrganizationConfig>
