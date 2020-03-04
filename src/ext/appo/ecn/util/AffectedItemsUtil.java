@@ -781,6 +781,38 @@ public class AffectedItemsUtil {
             rs.close();
 //                pstmt.close();
 //                conn.close();
+
+            //add by lzy at 20200303 start
+            //查询不到数据，查询版本为null的数据
+            if(!rs.next()){
+                PreparedStatement pstmt2 = null;
+                Connection conn2 = null;
+                try{
+                    conn2 = getConn();
+                    conn2.setAutoCommit(false);//设置不自动提交
+                    String sql2 = "select sum(ZZNUM) AS ZZNUM,sum(ZTNUM) AS ZTNUM,sum(KCNUM) AS KCNUM from EXT_STOCK_TAB where WTPARTNUMBER='" + number + "' and VERSIONINFO is null";
+                    pstmt2 = conn2.prepareStatement(sql2);
+                    ResultSet rs2 = pstmt2.executeQuery();
+                    while (rs2.next()) {
+                        resultList.add(rs2.getString("ZZNUM"));
+                        resultList.add(rs2.getString("KCNUM"));
+                        resultList.add(rs2.getString("ZTNUM"));
+                    }
+                    rs2.close();
+                }catch (Exception e){
+                    e.printStackTrace();
+                    try {
+                        conn.rollback();//回滚此次链接的所有操作
+                    } catch (SQLException e1) {
+                        e1.printStackTrace();
+                    }
+                }finally {
+                    pstmt2.close();
+                    conn2.close();
+                }
+            }
+            //add by lzy at 20200303 end
+
         } catch (Exception e) {
             e.printStackTrace();
             try {
@@ -865,6 +897,78 @@ public class AffectedItemsUtil {
             rs.close();
 //                pstmt.close();
 //                conn.close();
+
+            //add by lzy at 20200304 start
+            //查询不到数据，查询版本为null的数据
+            if(!rs.next()){
+                PreparedStatement pstmt2 = null;
+                Connection conn2 = null;
+                try{
+                    conn2 = getConn();
+                    conn2.setAutoCommit(false);//设置不自动提交
+                    String sql2 = "SELECT nvl(a.WTPARTNUMBER, b.WTPARTNUMBER) AS WTPARTNUMBER, nvl(a.VERSIONINFO, b.VERSIONINFO) AS VERSIONINFO, a.AVERAGECOST \n" +
+                            ", a.SUPPLYCYCLE, a.MOQ, a.MPQ, nvl(a.CINVPERSON, b.CINVPERSON) AS CINVPERSON, nvl(a.CPURPERSON, b.CPURPERSON) AS CPURPERSON,  \n" +
+                            "a.DRELEASEDATE, nvl(a.COMPANY, b.COMPANY) AS COMPANY,a.FCURRENCYNANE,b.ZZNUM, b.ZTNUM, b.KCNUM \n" +
+                            "FROM ( \n" +
+                            "SELECT * \n" +
+                            "FROM ( \n" +
+                            "SELECT * \n" +
+                            "FROM ( \n" +
+                            "SELECT T.*, ROW_NUMBER() OVER (PARTITION BY T.WTPARTNUMBER, T.VERSIONINFO,T.COMPANYID ORDER BY T.DRELEASEDATE DESC) AS FLAG \n" +
+                            "FROM EXT_INVENTORYPRICE_TAB T \n" +
+                            ") TMP \n" +
+                            "WHERE TMP.FLAG = 1 \n" +
+                            ") \n" +
+                            "WHERE WTPARTNUMBER = '"+number+"' \n" +
+                            "AND VERSIONINFO IS NULL \n" +
+                            ") a \n" +
+                            "FULL JOIN ( \n" +
+                            "SELECT * \n" +
+                            "FROM EXT_STOCK_TAB \n" +
+                            "WHERE WTPARTNUMBER = '"+number+"' \n" +
+                            "AND VERSIONINFO IS NULL \n" +
+                            ") b \n" +
+                            "ON a.WTPARTNUMBER = b.WTPARTNUMBER  \n" +
+                            "AND a.COMPANYID = b.COMPANYID";
+                    pstmt2 = conn2.prepareStatement(sql2);
+                    ResultSet rs2 = pstmt2.executeQuery();
+                    while (rs2.next()) {
+                        //去除多余的0和.
+                        String price=rs2.getString("AVERAGECOST")==null?"0":rs.getString("AVERAGECOST");
+                        price=subZeroAndDot(price.isEmpty()?"0":price.trim());
+
+                        InventoryPrice inventoryPrice=new InventoryPrice();
+                        inventoryPrice.setItem_id(rs2.getString("WTPARTNUMBER"));//物料编码
+                        inventoryPrice.setiAveragecost(price+rs.getString("FCURRENCYNANE"));//物料成本
+                        inventoryPrice.setiSupplycycle(rs2.getString("SUPPLYCYCLE"));//供货周期
+                        inventoryPrice.setiMoq(rs2.getString("MOQ"));//最小订单量
+                        inventoryPrice.setiMpq(rs2.getString("MPQ"));//最小包装数量
+                        inventoryPrice.setCpurPerson(rs2.getString("CPURPERSON"));//采购员
+                        inventoryPrice.setCinvPerson(rs2.getString("CINVPERSON"));//计划员
+                        inventoryPrice.setiQuantity(rs2.getString("KCNUM"));//库存数量
+                        inventoryPrice.setfTransinquantity(rs2.getString("ZTNUM"));//在途
+                        inventoryPrice.setfInquantity(rs2.getString("ZZNUM"));//在制
+                        inventoryPrice.setDreleaseDate(rs2.getString("DRELEASEDATE"));//ERP更新时间
+                        inventoryPrice.setmVersion(rs2.getString("VERSIONINFO"));//版本
+                        inventoryPrice.setCompany(rs2.getString("COMPANY"));//所属公司
+
+                        resultList.add(inventoryPrice);
+                    }
+                    rs2.close();
+                }catch (Exception e){
+                    e.printStackTrace();
+                    try {
+                        conn.rollback();//回滚此次链接的所有操作
+                    } catch (SQLException e1) {
+                        e1.printStackTrace();
+                    }
+                }finally {
+                    pstmt2.close();
+                    conn2.close();
+                }
+            }
+            //add by lzy at 20200304 end
+
         } catch (Exception e) {
             e.printStackTrace();
             try {
