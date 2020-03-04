@@ -784,7 +784,7 @@ public class AffectedItemsUtil {
 
             //add by lzy at 20200303 start
             //查询不到数据，查询版本为null的数据
-            if(!rs.next()){
+            if(resultList.isEmpty()){
                 PreparedStatement pstmt2 = null;
                 Connection conn2 = null;
                 try{
@@ -900,7 +900,7 @@ public class AffectedItemsUtil {
 
             //add by lzy at 20200304 start
             //查询不到数据，查询版本为null的数据
-            if(!rs.next()){
+            if(resultList.isEmpty()){
                 PreparedStatement pstmt2 = null;
                 Connection conn2 = null;
                 try{
@@ -934,12 +934,12 @@ public class AffectedItemsUtil {
                     ResultSet rs2 = pstmt2.executeQuery();
                     while (rs2.next()) {
                         //去除多余的0和.
-                        String price=rs2.getString("AVERAGECOST")==null?"0":rs.getString("AVERAGECOST");
+                        String price=rs2.getString("AVERAGECOST")==null?"0":rs2.getString("AVERAGECOST");
                         price=subZeroAndDot(price.isEmpty()?"0":price.trim());
 
                         InventoryPrice inventoryPrice=new InventoryPrice();
                         inventoryPrice.setItem_id(rs2.getString("WTPARTNUMBER"));//物料编码
-                        inventoryPrice.setiAveragecost(price+rs.getString("FCURRENCYNANE"));//物料成本
+                        inventoryPrice.setiAveragecost(price+rs2.getString("FCURRENCYNANE"));//物料成本
                         inventoryPrice.setiSupplycycle(rs2.getString("SUPPLYCYCLE"));//供货周期
                         inventoryPrice.setiMoq(rs2.getString("MOQ"));//最小订单量
                         inventoryPrice.setiMpq(rs2.getString("MPQ"));//最小包装数量
