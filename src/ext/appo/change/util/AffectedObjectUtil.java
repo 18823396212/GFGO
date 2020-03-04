@@ -73,6 +73,10 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
     private Set<WTPart> AFFECTEDPART = new HashSet<>();//ECN受影响对象-部件集合
     private Set<Persistable> AFFECTEDDOC = new HashSet<>();//ECN受影响对象-文档集合
     private Set<Persistable> DISSOCIATEDOC = new HashSet<>();//ECN受影响对象-需要单独走ECA的文档集合（游离）
+    //add by lzy at 20200304 start
+    private Set<WTPart> COLLECTIONPART = new HashSet<>();//ECN受影响对象-收集对象集合（部件）
+    //add by lzy at 20200304 end
+
     public Set<String> MESSAGES = new HashSet<>();
 
     public AffectedObjectUtil(NmCommandBean nmcommandBean, WTChangeOrder2 changeOrder2) throws WTException {
@@ -278,6 +282,15 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
                                         //add by lzy at 20191227 end
                                     }
                                 }
+
+                                //add by lzy at 20200304 start
+                                //收集对象
+                                if (attributesMap.containsKey(ATTRIBUTE_12)) {
+                                    String collectionPart = attributesMap.get(ATTRIBUTE_12);
+                                    if (collectionPart!=null&&!collectionPart.isEmpty()) COLLECTIONPART.add(part);
+                                }
+                                //add by lzy at 20200304 end
+
                             }
                             if (persistable instanceof WTDocument) {
                                 AFFECTEDDOCNUMBER.add(ModifyUtils.getNumber(persistable));
@@ -935,18 +948,25 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
             String cls = (String) PIAttributeHelper.service.getValue(part, "Classification");
             String state=part.getState().toString();
             String number=part.getNumber();
-            // PCBA归档状态，没有被bom使用过的
-            if (cls.contains("appo_bcp01")&& !isbyuse(part)&& state.endsWith("ARCHIVED")){
-                MESSAGES.add("物料："+number+"是归档状态下未进BOM的PCBA，请通过修订升版！");
+            //add by lzy at 20200304 start
+            //收集进来的部件不需进行校验
+            if(!COLLECTIONPART.contains(part)){
+                //add by lzy at 20200304 end
+                // PCBA归档状态，没有被bom使用过的
+                if (cls.contains("appo_bcp01")&& !isbyuse(part)&& state.endsWith("ARCHIVED")){
+                    MESSAGES.add("物料："+number+"是归档状态下未进BOM的PCBA，请通过修订升版！");
+                }
+                //归档状态的软件
+                if (number.startsWith("X")&&state.endsWith("ARCHIVED")) {
+                    MESSAGES.add("物料："+number+"是归档状态的软件，请通过修订升版！");
+                }
+                //非A、B、X开头成品、半成品、软件归档状态物料,没有被bom使用到
+                if (!number.startsWith("A")&&!number.startsWith("B")&&!number.startsWith("X")&&!isbyuse(part)&&state.endsWith("ARCHIVED")){
+                    MESSAGES.add("物料："+number+"是归档状态下未进BOM的定制件，请通过修订升版！");
+                }
+                //add by lzy at 20200304 start
             }
-            //归档状态的软件
-            if (number.startsWith("X")&&state.endsWith("ARCHIVED")) {
-                MESSAGES.add("物料："+number+"是归档状态的软件，请通过修订升版！");
-            }
-            //非A、B、X开头成品、半成品、软件归档状态物料,没有被bom使用到
-            if (!number.startsWith("A")&&!number.startsWith("B")&&!number.startsWith("X")&&!isbyuse(part)&&state.endsWith("ARCHIVED")){
-                MESSAGES.add("物料："+number+"是归档状态下未进BOM的定制件，请通过修订升版！");
-            }
+            //add by lzy at 20200304 end
 
         }
 
