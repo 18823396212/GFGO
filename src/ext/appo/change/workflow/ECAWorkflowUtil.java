@@ -24,10 +24,7 @@ import ext.generic.integration.cis.util.SQLServerUtil;
 import ext.generic.integration.erp.common.CommonPDMUtil;
 import ext.lang.PIStringUtils;
 import ext.pi.PIException;
-import ext.pi.core.PIAttributeHelper;
-import ext.pi.core.PIClassificationHelper;
-import ext.pi.core.PICoreHelper;
-import ext.pi.core.PIPartHelper;
+import ext.pi.core.*;
 import org.apache.log4j.Logger;
 import wt.access.AccessControlHelper;
 import wt.access.AccessPermission;
@@ -1573,5 +1570,63 @@ public class ECAWorkflowUtil implements ChangeConstants, ModifyConstants {
             }
         }
     }
+
+//    /**
+//     * @param pbo
+//     * 授权对象
+//     * @param user
+//     * 授权用户
+//     * @param authority
+//     * 权限 完全控制(-1)、读取(0)、下载(10)、修改(1)、修改标识符(16)、修订(7)、删除(5)
+//     * @throws WTException
+//     */
+//    public static void grantPersistablePermissions(WTObject pbo,int authority) throws WTException{
+//        if (pbo instanceof WTChangeActivity2) {
+//            WTChangeActivity2 eca=(WTChangeActivity2)pbo;
+//            WTUser creator = (WTUser)eca.getCreator().getPrincipal();//节点负责人
+//            try {
+//                AccessPermission accessPermission = AccessPermission.toAccessPermission(authority+"") ;
+//                if(accessPermission == null){
+//                    throw new WTException("赋予权限：" + authority + " 不存在!") ;
+//                }
+//                PIAccessHelper.service.grantPersistablePermissions(eca,WTPrincipalReference.newWTPrincipalReference(creator), accessPermission, true);
+//            } catch (Exception e) {
+//                // TODO: handle exception
+//                e.printStackTrace();
+//                throw new WTException(e.getLocalizedMessage()) ;
+//            }
+//        }
+//    }
+//
+//    /**
+//     * 收回权限
+//     * @param pbo
+//     * 授权对象
+//     * @param authority
+//     * 权限 完全控制(-1)、读取(0)、下载(10)、修改(1)、修改标识符(16)、修订(7)、删除(5)
+//     * @throws WTException
+//     */
+//    public static void revokePersistablePermissions(WTObject pbo,int authority) throws WTException{
+//        if (pbo instanceof WTChangeActivity2) {
+//            WTChangeActivity2 eca=(WTChangeActivity2)pbo;
+//            WTUser creator = (WTUser)eca.getCreator().getPrincipal();//节点负责人
+//            try {
+//                AccessPermission accessPermission = AccessPermission.toAccessPermission(authority+"") ;
+//                if(accessPermission == null){
+//                    throw new WTException("收回权限：" + authority + " 不存在!") ;
+//                }
+//                AdHocControlled adhoccontrolled = ( AdHocControlled ) eca;
+//                PIAccessHelper.service.removePersistablePermissions(eca,WTPrincipalReference.newWTPrincipalReference(creator), accessPermission, true);
+//                //赋读取(0)
+//                AccessPermission accessPermission2 = AccessPermission.toAccessPermission("0") ;
+//                PIAccessHelper.service.grantPersistablePermissions(eca,WTPrincipalReference.newWTPrincipalReference(creator), accessPermission2, true);
+//            } catch (Exception e) {
+//                // TODO: handle exception
+//                e.printStackTrace();
+//                throw new WTException(e.getLocalizedMessage()) ;
+//            }
+//        }
+//
+//    }
 
 }
