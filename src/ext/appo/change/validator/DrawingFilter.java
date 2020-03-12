@@ -25,7 +25,7 @@ import wt.workflow.work.WorkItem;
 import java.util.Collection;
 
 /**
- * ECA子流程已完成则不显示产生对象按钮
+ * ECA子流程已完成则不显示产生对象按钮（节点必须为【数据更改】）
  */
 public class DrawingFilter extends DefaultSimpleValidationFilter {
 
@@ -42,7 +42,9 @@ public class DrawingFilter extends DefaultSimpleValidationFilter {
                 if (persistable instanceof WorkItem) {
                     WorkItem workItem=(WorkItem)persistable;
                     WfAssignmentState state = workItem.getStatus();
-                    if (!state.equals(WfAssignmentState.COMPLETED)) {
+                    WfAssignedActivity activity = (WfAssignedActivity) workItem.getSource().getObject();
+                    String activityName = activity.getName();
+                    if (!state.equals(WfAssignmentState.COMPLETED)&&activityName.equals("数据更改")) {
                         status = UIValidationStatus.ENABLED;
                     }
                 }
