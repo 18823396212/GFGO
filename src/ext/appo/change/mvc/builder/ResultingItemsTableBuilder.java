@@ -1,5 +1,6 @@
 package ext.appo.change.mvc.builder;
 
+import com.ptc.core.components.beans.CreateAndEditWizBean;
 import com.ptc.jca.mvc.components.JcaComponentParams;
 import com.ptc.jca.mvc.components.JcaTableConfig;
 import com.ptc.mvc.components.*;
@@ -9,14 +10,21 @@ import com.ptc.netmarkets.util.beans.NmHelperBean;
 import com.ptc.windchill.enterprise.change2.mvc.builders.tables.AbstractAffectedAndResultingItemsTableBuilder;
 import ext.appo.change.util.AffectedObjectUtil;
 import ext.appo.change.util.ModifyUtils;
+import ext.lang.PIStringUtils;
 import ext.pi.core.PIWorkflowHelper;
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import wt.change2.ChangeHelper2;
 import wt.change2.Changeable2;
 import wt.change2.WTChangeActivity2;
 import wt.change2.WTChangeOrder2;
+import wt.doc.WTDocument;
 import wt.fc.Persistable;
 import wt.fc.QueryResult;
+import wt.fc.ReferenceFactory;
+import wt.fc.collections.WTArrayList;
+import wt.fc.collections.WTCollection;
 import wt.log4j.LogR;
 import wt.session.SessionContext;
 import wt.session.SessionHelper;
@@ -34,7 +42,6 @@ public class ResultingItemsTableBuilder extends AbstractAffectedAndResultingItem
 
     private static final Logger log = LogR.getLogger(ResultingItemsTableBuilder.class.getName());
     private static final String TABLE_ID = "ext.appo.change.mvc.builder.ResultingItemsTableBuilder";
-    ClientMessageSource messageChange2ClientResource = getMessageSource("ext.appo.ecn.resource.changeNoticeActionsRB");
 
     @Override
     public Object buildComponentData(ComponentConfig paramComponentConfig, ComponentParams paramComponentParams) throws Exception {
@@ -93,6 +100,86 @@ public class ResultingItemsTableBuilder extends AbstractAffectedAndResultingItem
 
                     }
                 }
+
+                // 获取新增数据
+                String selectOids = request.getParameter("selectOids");
+                WTArrayList arrayList=new WTArrayList();
+                if (PIStringUtils.isNotNull(selectOids)) {
+                    JSONArray jsonArray = new JSONArray(selectOids);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        String oid = jsonArray.getString(i);
+                        if ((new ReferenceFactory()).getReference(oid).getObject() instanceof WTDocument) {
+                            WTDocument doc = (WTDocument) (new ReferenceFactory()).getReference(oid).getObject();
+                            arrayList.add(doc);
+                            result.add(doc);
+                        }
+                        if (object instanceof WorkItem) {
+                            //在流程中
+                            WorkItem workItem = (WorkItem) object;
+                            WfProcess wfprocess = PIWorkflowHelper.service.getParentProcess(workItem);
+                            Object[] objects = wfprocess.getContext().getObjects();
+                            WTChangeActivity2 eca=null;
+                            if (objects.length > 0) {
+                                for (int y = 0; y < objects.length; y++) {
+                                    if (objects[y] instanceof WTChangeActivity2) { //eca
+                                        eca = (WTChangeActivity2) objects[y];
+                                        break;
+                                    }
+                                }
+                                if (eca!=null){
+                                    //添加至ECA产生对象
+                                    ModifyUtils.AddChangeRecord2(eca,arrayList);
+                                }
+
+                            }
+                        }
+
+                    }
+                }
+
+                //add by lzy at 20200310 start
+                // 获取删除数据
+                String deleteOids = request.getParameter("deleteOids");
+                Collection<Persistable> collection=new HashSet<>();
+                if (PIStringUtils.isNotNull(deleteOids)) {
+                    JSONArray jsonArray = new JSONArray(deleteOids);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        String oid = jsonArray.getString(i);
+                        if ((new ReferenceFactory()).getReference(oid).getObject() instanceof WTDocument) {
+                            WTDocument doc = (WTDocument) (new ReferenceFactory()).getReference(oid).getObject();
+                            collection.add(doc);
+                            result.remove(doc);
+                        }
+                        if (object instanceof WorkItem) {
+                            //在流程中
+                            WorkItem workItem = (WorkItem) object;
+                            WfProcess wfprocess = PIWorkflowHelper.service.getParentProcess(workItem);
+                            Object[] objects = wfprocess.getContext().getObjects();
+                            WTChangeActivity2 eca=null;
+                            if (objects.length > 0) {
+                                for (int y = 0; y < objects.length; y++) {
+                                    if (objects[y] instanceof WTChangeActivity2) { //eca
+                                        eca = (WTChangeActivity2) objects[y];
+                                        break;
+                                    }
+                                }
+                                if (eca!=null){
+                                    //移除对应ECA产生对象
+                                    for (Persistable persistable:collection){
+                                        if (persistable instanceof WTDocument){
+                                            ModifyUtils.deleteChangeRecord(eca, (WTDocument) persistable);
+                                        }
+                                    }
+
+                                }
+
+                            }
+                        }
+
+                    }
+                }
+
+                //add by lzy at 20200310 end
             } else {
                 result.addAll(pageDataMap.keySet());
             }
@@ -113,6 +200,14 @@ public class ResultingItemsTableBuilder extends AbstractAffectedAndResultingItem
         tableConfig.setId(TABLE_ID);
         tableConfig.setSelectable(true);
         tableConfig.setShowCount(true);
+
+//        NmHelperBean localNmHelperBean = ((JcaComponentParams) paramComponentParams).getHelperBean();
+//        NmCommandBean localNmCommandBean = localNmHelperBean.getNmCommandBean();
+//        boolean bool = CreateAndEditWizBean.isCreateEditWizard(localNmCommandBean);
+//        if (bool) {
+//            tableConfig.setActionModel("resultingItems_table_actions");
+//        }
+        tableConfig.setActionModel("resultingItems_table_actions");
 
         ColumnConfig columnconfig = componentconfigfactory.newColumnConfig("type_icon", true);
         columnconfig.setAutoSize(true);

@@ -17,5 +17,9 @@
        	<!-- add by xiebowen at 2019/12/30 start-->
        	<Option serviceClass="ext.appo.change.validator.RejectChangeApplyFilter" selector="RejectChangeApplyFilter" requestor="null" />
        	<!-- add by xiebowen at 2019/12/30 start-->
+
+       	<!-- add by lzy at 20200310 start-->
+         <Option serviceClass="ext.appo.change.validator.DrawingFilter" selector="DrawingFilter" requestor="null" />
+         <!-- add by lzy at 20200310 end-->
     </Service>
 </Configuration>

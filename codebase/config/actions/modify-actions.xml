@@ -81,6 +81,19 @@
         </action>
         <!--add by lzy at 20200108 end-->
 
+        <!--    add by lzy at 20200310 start-->
+        <!--  收集图纸-->
+        <action name="collectDrawing" selectRequired="true">
+            <command onClick="collectDrawing()" windowType="no_content"/>
+            <includeFilter name="DrawingFilter"/>
+        </action>
+        <!--  移除图纸-->
+        <action name="removeDrawing">
+            <command onClick="removeDrawing()" windowType="no_content"/>
+            <includeFilter name="DrawingFilter"/>
+        </action>
+        <!--    add by lzy at 20200310 end-->
+
     </objecttype>
 
 </listofactions>

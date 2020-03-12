@@ -18,4 +18,11 @@
         <action name="applyTeamTeamplate" type="modify" shortcut="true"/>
     </model>
 
+    <!--    add by lzy at 20200310 start-->
+    <model name="resultingItems_table_actions">
+        <action name="collectDrawing" type="modify" shortcut="true"/>
+        <action name="removeDrawing" type="modify" shortcut="true"/>
+    </model>
+    <!--    add by lzy at 20200310 end-->
+
 </actionmodels>

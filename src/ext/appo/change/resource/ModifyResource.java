@@ -110,4 +110,24 @@ public class ModifyResource extends WTListResourceBundle {
     public static final String CLIENTBUTTONHOTKEY = "reviewObject.clientButton.hotkey";
     //add by lzy at 20200109 end
 
+    //add by lzy at 20200310  start
+    @RBEntry("Collect Drawing")
+    public static final String MY_CUSTOM_38 = "modify.collectDrawing.description";
+    @RBEntry("Collect Drawing")
+    public static final String MY_CUSTOM_39 = "modify.collectDrawing.title";
+    @RBEntry("Collect Drawing")
+    public static final String MY_CUSTOM_40 = "modify.collectDrawing.tooltip";
+    @RBEntry("collect.gif")
+    public static final String MY_CUSTOM_41 = "modify.collectDrawing.icon";
+
+    @RBEntry("Remove Drawing")
+    public static final String MY_CUSTOM_42 = "modify.removeDrawing.description";
+    @RBEntry("Remove Drawing")
+    public static final String MY_CUSTOM_43 = "modify.removeDrawing.title";
+    @RBEntry("Remove Drawing")
+    public static final String MY_CUSTOM_44 = "modify.removeDrawing.tooltip";
+    @RBEntry("remove16x16.gif")
+    public static final String MY_CUSTOM_45 = "modify.removeDrawing.icon";
+    //add by lzy at 20200310  end
+
 }
