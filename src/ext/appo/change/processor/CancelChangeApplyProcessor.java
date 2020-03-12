@@ -22,6 +22,8 @@ import wt.lifecycle.LifeCycleHelper;
 import wt.lifecycle.State;
 import wt.log4j.LogR;
 import wt.sandbox.SandboxHelper;
+import wt.session.SessionContext;
+import wt.session.SessionHelper;
 import wt.session.SessionServerHelper;
 import wt.util.WTException;
 import wt.workflow.engine.WfEngineHelper;
@@ -41,7 +43,10 @@ public class CancelChangeApplyProcessor extends DefaultObjectFormProcessor imple
     public FormResult doOperation(NmCommandBean nmCommandBean, List<ObjectBean> list) throws WTException {
         FormResult formResult = new FormResult();
         formResult.setStatus(FormProcessingStatus.SUCCESS);
-        boolean flag = SessionServerHelper.manager.setAccessEnforced(false);
+//        boolean flag = SessionServerHelper.manager.setAccessEnforced(false);
+        SessionContext previous = SessionContext.newContext();
+        // 当前用户设置为管理员，用于忽略权限
+        SessionHelper.manager.setAdministrator();
         try {
             Object object = nmCommandBean.getActionOid().getRefObject();
             LOGGER.info("=====object: " + object);
@@ -108,7 +113,8 @@ public class CancelChangeApplyProcessor extends DefaultObjectFormProcessor imple
         } catch (Exception e) {
             throw new WTException(e.getStackTrace());
         } finally {
-            SessionServerHelper.manager.setAccessEnforced(flag);
+//            SessionServerHelper.manager.setAccessEnforced(flag);
+            SessionContext.setContext(previous);
         }
         setRefreshFormResult(nmCommandBean, formResult);
         return formResult;
