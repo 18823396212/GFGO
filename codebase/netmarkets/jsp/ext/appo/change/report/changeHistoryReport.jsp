@@ -14,7 +14,7 @@
 <style type="text/css">
     .tb{
         /*width:100%;*/
-        width:3000px;
+        width:2000px;
         table-layout:fixed;
         border-collapse:collapse;
         line-height: 30px;
@@ -53,6 +53,18 @@
         word-wrap: break-word;
         -webkit-line-clamp: 10;
         -webkit-box-orient: vertical;
+    }
+
+    .td_center{
+        text-align: center;
+    }
+
+    .td_right{
+        text-align: right;
+    }
+
+    .change{
+        border: 1px black solid;
     }
 
 </style>
@@ -200,25 +212,25 @@
         <tr id="">
             <td style="text-align: center" colspan="1"><%=1%></td>
             <td colspan="2"><p><a href="app/#ptc1/tcomp/infoPage?oid=VR%3Awt.change2.WTChangeOrder2%3A<%=partUpdateInfoBean.getEcn().getBranchIdentifier()%>&u8=1"><%=partUpdateInfoBean.getEcnNumber()%></a></p></td>
-            <td colspan="2"><p><%=partUpdateInfoBean.getEcnCreator()%></p></td>
-            <td colspan="3"><p><%=partUpdateInfoBean.getEcnStartTime()%></p></td>
-            <td colspan="2"><p><%=partUpdateInfoBean.getProductType()%></p></td>
-            <td colspan="2"><p><%=partUpdateInfoBean.getProjectName()%></p></td>
-            <td colspan="2"><p><%=partUpdateInfoBean.getChangeType()%></p></td>
-            <td colspan="2"><p><%=partUpdateInfoBean.getChangeReason()%></p></td>
-            <td colspan="2"><p><%=partUpdateInfoBean.getChangePhase()%></p></td>
-            <td colspan="2"><p><%=partUpdateInfoBean.getIsChangeDrawing()%></p></td>
+            <td class="td_center" colspan="2"><p><%=partUpdateInfoBean.getEcnCreator()%></p></td>
+            <td class="td_center"colspan="3"><p><%=partUpdateInfoBean.getEcnStartTime()%></p></td>
+            <td class="td_center" colspan="2"><p><%=partUpdateInfoBean.getProductType()%></p></td>
+            <td class="td_center" colspan="2"><p><%=partUpdateInfoBean.getProjectName()%></p></td>
+            <td class="td_center" colspan="2"><p><%=partUpdateInfoBean.getChangeType()%></p></td>
+            <td class="td_center" colspan="2"><p><%=partUpdateInfoBean.getChangeReason()%></p></td>
+            <td class="td_center" colspan="2"><p><%=partUpdateInfoBean.getChangePhase()%></p></td>
+            <td class="td_center" colspan="2"><p><%=partUpdateInfoBean.getIsChangeDrawing()%></p></td>
             <td colspan="6"><p class="mui-ellipsis" id="mui-ellipsis" onclick="showAll()"><%=partUpdateInfoBean.getChangeDescription()%></p></td>
-            <td colspan="2"><p><%=partUpdateInfoBean.getEffectObjectState()%></p></td>
-            <td colspan="2"><p><%=partUpdateInfoBean.getInProcessQuantities()%></p></td>
-            <td colspan="2"><p><%=partUpdateInfoBean.getProcessingMeasures()%></p></td>
-            <td colspan="2"><p><%=partUpdateInfoBean.getOnthewayQuantity()%></p></td>
-            <td colspan="2"><p><%=partUpdateInfoBean.getOnthewayTreatmentMeasure()%></p></td>
-            <td colspan="2"><p><%=partUpdateInfoBean.getStockQuantity()%></p></td>
-            <td colspan="2"><p><%=partUpdateInfoBean.getStockTreatmentMeasure()%></p></td>
-            <td colspan="3"><p><%=partUpdateInfoBean.getFinishedHandleMeasures()%></p></td>
-            <td colspan="2"><p><%=partUpdateInfoBean.getEffectObjectChangeType()%></p></td>
-            <td colspan="2"><p><%=partUpdateInfoBean.getExpectDate()%></p></td>
+            <td class="td_center" colspan="2"><p><%=partUpdateInfoBean.getEffectObjectState()%></p></td>
+            <td class="td_right" colspan="2"><p><%=partUpdateInfoBean.getInProcessQuantities()%></p></td>
+            <td class="td_center" colspan="2"><p><%=partUpdateInfoBean.getProcessingMeasures()%></p></td>
+            <td class="td_right" colspan="2"><p><%=partUpdateInfoBean.getOnthewayQuantity()%></p></td>
+            <td class="td_center" colspan="2"><p><%=partUpdateInfoBean.getOnthewayTreatmentMeasure()%></p></td>
+            <td class="td_right" colspan="2"><p><%=partUpdateInfoBean.getStockQuantity()%></p></td>
+            <td class="td_center" colspan="2"><p><%=partUpdateInfoBean.getStockTreatmentMeasure()%></p></td>
+            <td class="td_center" colspan="3"><p><%=partUpdateInfoBean.getFinishedHandleMeasures()%></p></td>
+            <td class="td_center" colspan="2"><p><%=partUpdateInfoBean.getEffectObjectChangeType()%></p></td>
+            <td class="td_center" colspan="2"><p><%=partUpdateInfoBean.getExpectDate()%></p></td>
             <td colspan="4"><p><%=partUpdateInfoBean.getChangeDetailedDescription()%></p></td>
         </tr>
     </table>
@@ -242,32 +254,33 @@
                 if (bomChangeInfoBeans!=null&&bomChangeInfoBeans.size()>0){
                     %>
         <br />
-        <table  class="tb" border="1">
+        <table class="tb" border="0">
             <tr>
-                <th class="th_datalist" scope="col" colspan="1">
+                <th class="th_datalist change" scope="col" colspan="1">
                     <p>序号</p>
                 </th>
-                <th class="th_datalist" scope="col" colspan="2">
+                <th class="th_datalist change" scope="col" colspan="2">
                     <p>变更类型</p>
                 </th>
-                <th class="th_datalist" scope="col" colspan="2">
+                <th class="th_datalist change" scope="col" colspan="2">
                     <p>物料编码</p>
                 </th>
-                <th class="th_datalist" scope="col" colspan="2">
+                <th class="th_datalist change" scope="col" colspan="2">
                     <p>名称</p>
                 </th>
-                <th class="th_datalist" scope="col" colspan="2">
+                <th class="th_datalist change" scope="col" colspan="3">
                     <p>规格</p>
                 </th>
-                <th class="th_datalist" scope="col" colspan="2">
+                <th class="th_datalist change" scope="col" colspan="4">
                     <p>位号</p>
                 </th>
-                <th class="th_datalist" scope="col" colspan="2">
+                <th class="th_datalist change" scope="col" colspan="2">
                     <p>数量</p>
                 </th>
-                <th class="th_datalist" scope="col" colspan="2">
+                <th class="th_datalist change" scope="col" colspan="2">
                     <p>替代料</p>
                 </th>
+                <th scope="col" colspan="8" style="border: none"></th>
             </tr>
 
         <%
@@ -276,7 +289,7 @@
                         BOMChangeInfoBean bean = bomChangeInfoBeans.get(j);
                         %>
             <tr>
-                <td style="text-align: center" colspan="1"><%=j+1%></td>
+                <td class="change" style="text-align: center" colspan="1"><%=j+1%></td>
                 <%
                     Set changeTypeList=bean.getChangeType();
                     if (changeTypeList.contains(BomChangeConstants.TYPE_1)&&changeTypeList.contains(BomChangeConstants.TYPE_2)){
@@ -315,16 +328,16 @@
                         parentSpecification=bean.getParentSpecification();
                     }
                 %>
-                <td colspan="2"><p><%=typeName%></p></td>
-                <td colspan="2"><p><%=bean.getNumber()%></p></td>
-                <td colspan="2"><p><%=bean.getName()%></p></td>
+                <td class="change" colspan="2"><p><%=typeName%></p></td>
+                <td class="change" colspan="2"><p><%=bean.getNumber()%></p></td>
+                <td class="change" colspan="2"><p><%=bean.getName()%></p></td>
                 <%
                     //规格描述
                     if (parentSpecification!=null&&parentSpecification.size()>0){
                         String before=parentSpecification.get("before");
                         String after=parentSpecification.get("after");
                 %>
-                <td style="text-align: center" colspan="2">
+                <td class="change" style="text-align: center" colspan="3">
                     <div>
                         <p style="border-bottom: 1px solid #DDDDDD;">变更前：<%=before%></p>
                         <p>变更后：<%=after%></p></div>
@@ -332,7 +345,7 @@
                 <%
                 }else{
                 %>
-                <td colspan="2"><p><%=bean.getSpecification()%></p></td>
+                <td class="change" colspan="3"><p><%=bean.getSpecification()%></p></td>
                 <%
                     }
 
@@ -341,17 +354,17 @@
                         if(typeName.contains(BomChangeConstants.TYPE_1)||typeName.contains(BomChangeConstants.TYPE_7)){
                             String after=placeNumber.get("after");
                 %>
-                <td style="text-align: center" colspan="2"><p><%=after%></p></td>
+                <td class="change" style="text-align: center" colspan="4"><p><%=after%></p></td>
                 <%
                 }else if(typeName.contains(BomChangeConstants.TYPE_3)||typeName.contains(BomChangeConstants.TYPE_8)){
                 %>
-                <td colspan="2"></td>
+                <td class="change" colspan="4"></td>
                 <%
                 }else{
                     String before=placeNumber.get("before");
                     String after=placeNumber.get("after");
                 %>
-                <td style="text-align: center" colspan="2">
+                <td class="change" style="text-align: center" colspan="4">
                     <div>
                         <p style="border-bottom: 1px solid #DDDDDD;">变更前：<%=before%></p>
                         <p>变更后：<%=after%></p></div>
@@ -361,7 +374,7 @@
 
                 }else{
                 %>
-                <td colspan="2"></td>
+                <td class="change" colspan="4"></td>
                 <%
                     }
                 %>
@@ -371,17 +384,17 @@
                         if(typeName.contains(BomChangeConstants.TYPE_1)||typeName.contains(BomChangeConstants.TYPE_7)){
                             String after=quantit.get("after");
                 %>
-                <td style="text-align: center" colspan="2"><p><%=after%></p></td>
+                <td class="change" style="text-align: center" colspan="2"><p><%=after%></p></td>
                 <%
                 }else if(typeName.contains(BomChangeConstants.TYPE_3)||typeName.contains(BomChangeConstants.TYPE_8)){
                 %>
-                <td colspan="2"></td>
+                <td class="change" colspan="2"></td>
                 <%
                 }else{
                     String before=quantit.get("before");
                     String after=quantit.get("after");
                 %>
-                <td style="text-align: center" colspan="2">
+                <td class="change" style="text-align: center" colspan="2">
                     <div>
                         <p style="border-bottom: 1px solid #DDDDDD;">变更前：<%=before%></p>
                         <p>变更后：<%=after%></p></div>
@@ -391,7 +404,7 @@
 
                 }else{
                 %>
-                <td colspan="2"></td>
+                <td class="change" colspan="2"></td>
                 <%
                     }
                 %>
@@ -424,7 +437,7 @@
                             }
 
                 %>
-                <td colspan="2"><div>
+                <td class="change" colspan="2"><div>
                     <p style="border-bottom: 1px solid #DDDDDD;">新增替代料：<%=add%></p>
                     <p>删除替代料：<%=delete%></p>
                 </div></td>
@@ -454,7 +467,7 @@
                     }
 
                 %>
-                <td colspan="2"><p><%=replacePartNumber%></p></td>
+                <td class="change" colspan="2"><p><%=replacePartNumber%></p></td>
                 <%
 
                     }
@@ -462,11 +475,12 @@
                 }else{
 
                 %>
-                <td colspan="2"></td>
+                <td class="change" colspan="2"></td>
                 <%
                     }
                 %>
 
+                <td colspan="8"></td>
             </tr>
 
             <%

@@ -15,6 +15,9 @@
 <%@ page import="wt.fc.QueryResult" %>
 <%@ page import="wt.change2.ChangeHelper2" %>
 <%@ page import="wt.part.WTPart" %>
+<%@ page import="ext.generic.reviewObject.model.ProcessReviewObjectLinkHelper" %>
+<%@ page import="ext.generic.reviewObject.model.ProcessReviewObjectLink" %>
+<%@ page import="wt.fc.WTObject" %>
 
 <style type="text/css">
     .tb{
@@ -49,6 +52,14 @@
         background-color: #FBF1D4;
     }
 
+    .td_center{
+        text-align: center;
+    }
+
+    .td_right{
+        text-align: right;
+    }
+
 </style>
 
 <head>
@@ -74,6 +85,7 @@
     List<AffectedParentPartsBean> affectedParts=new ArrayList<>();
     Map<String,List<BOMChangeInfoBean>> bomChangeInfos=new HashMap<>();
     String currentaffectedObject="";
+
     if (persistable instanceof WorkItem){
         WorkItem workItem=(WorkItem)persistable;
         wfprocess = PIWorkflowHelper.service.getParentProcess(workItem);
@@ -103,6 +115,7 @@
                 }
             }
         }
+
     }else if (persistable instanceof WTChangeOrder2){
         ecn=(WTChangeOrder2)persistable;
         if (ecn!=null){
@@ -123,6 +136,7 @@
     }
 
 %>
+
 <body width="100%">
 <input type="hidden" id="expandImageUrl" value="<%=expandImageUrl%>">
 <input type="hidden" id="collapseImageUrl" value="<%=collapseImageUrl%>">
@@ -231,20 +245,20 @@
 
         %>
         <tr id="<%=bean.getEffectObjectNumber()%>" onclick="showBomChange(this)">
-            <td  style="text-align: center" colspan="1"><%=i+1%></td>
-            <td colspan="2"><p><%=bean.getEffectObjectNumber()%></p></td>
-            <td colspan="2"><p><%=bean.getEffectObjectName()%></p></td>
-            <td colspan="1"><p><%=bean.getEffectObjectVersion()%></p></td>
-            <td colspan="1"><p><%=bean.getEffectObjectState()%></p></td>
-            <td colspan="1"><p><%=bean.getInProcessQuantities()%></p></td>
-            <td colspan="2"><p><%=bean.getProcessingMeasures()%></p></td>
-            <td colspan="1"><p><%=bean.getOnthewayQuantity()%></p></td>
-            <td colspan="2"><p><%=bean.getOnthewayTreatmentMeasure()%></p></td>
-            <td colspan="1"><p><%=bean.getStockQuantity()%></p></td>
-            <td colspan="2"><p><%=bean.getStockTreatmentMeasure()%></p></td>
-            <td colspan="1"><p><%=bean.getFinishedHandleMeasures()%></p></td>
-            <td colspan="2"><p><%=bean.getChangeType()%></p></td>
-            <td colspan="2"><p><%=bean.getExpectDate()%></p></td>
+            <td class="td_center" style="text-align: center" colspan="1"><%=i+1%></td>
+            <td class="td_center" colspan="2"><p><%=bean.getEffectObjectNumber()%></p></td>
+            <td class="td_center" colspan="2"><p><%=bean.getEffectObjectName()%></p></td>
+            <td class="td_center" colspan="1"><p><%=bean.getEffectObjectVersion()%></p></td>
+            <td class="td_center" colspan="1"><p><%=bean.getEffectObjectState()%></p></td>
+            <td class="td_right" colspan="1"><p><%=bean.getInProcessQuantities()%></p></td>
+            <td class="td_center" colspan="2"><p><%=bean.getProcessingMeasures()%></p></td>
+            <td class="td_right" colspan="1"><p><%=bean.getOnthewayQuantity()%></p></td>
+            <td class="td_center" colspan="2"><p><%=bean.getOnthewayTreatmentMeasure()%></p></td>
+            <td class="td_right" colspan="1"><p><%=bean.getStockQuantity()%></p></td>
+            <td class="td_center" colspan="2"><p><%=bean.getStockTreatmentMeasure()%></p></td>
+            <td class="td_center" colspan="1"><p><%=bean.getFinishedHandleMeasures()%></p></td>
+            <td class="td_center" colspan="2"><p><%=bean.getChangeType()%></p></td>
+            <td class="td_center" colspan="2"><p><%=bean.getExpectDate()%></p></td>
             <td colspan="5"><p><%=bean.getChangeDetailedDescription()%></p></td>
         </tr>
                 <%} %>
@@ -283,7 +297,7 @@
             <th class="th_datalist" scope="col" colspan="2">
                 <p>名称</p>
             </th>
-            <th class="th_datalist" scope="col" colspan="2">
+            <th class="th_datalist" scope="col" colspan="6">
                 <p>规格</p>
             </th>
             <th class="th_datalist" scope="col" colspan="2">
@@ -351,7 +365,7 @@
                     String before=parentSpecification.get("before");
                     String after=parentSpecification.get("after");
                 %>
-                <td style="text-align: center" colspan="2">
+                <td style="text-align: center" colspan="6">
                     <div>
                         <p style="border-bottom: 1px solid #DDDDDD;">变更前：<%=before%></p>
                         <p>变更后：<%=after%></p></div>
@@ -359,7 +373,7 @@
                 <%
                 }else{
                 %>
-                <td colspan="2"><p><%=bean.getSpecification()%></p></td>
+                <td colspan="6"><p><%=bean.getSpecification()%></p></td>
                 <%
                 }
 
