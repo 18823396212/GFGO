@@ -53,7 +53,7 @@ public class CollectDrawingUtil {
                     //是否为说明文档,必须是正在工作的说明文档
                     if (!PartDocHelper.isReferenceDocument(document)){
                         String state = document.getState().toString();
-                        if (state.equals("INWORK")) {
+                        if (state.equals("INWORK")||state.equals("REWORK")) {
                             collectDrawingArray.put(PersistenceHelper.getObjectIdentifier(document).toString());
                         }
                     }
