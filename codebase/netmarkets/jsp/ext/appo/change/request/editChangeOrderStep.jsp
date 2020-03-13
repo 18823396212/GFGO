@@ -48,6 +48,8 @@
         saveChangeTaskArray();
         // 重新加载数据表
         PTC.jca.table.Utils.reload('ext.appo.change.mvc.builder.AffectedItemsTableBuilder', {selectOids: JSON.stringify(itemsOid)}, true);
+        // 保存数据
+        saveChangeTaskArray();
     }
 
     // 受影响对象表单中'责任人'回填
@@ -277,7 +279,7 @@
                 }
                 columnArray['aadDescription'] = aadDescription;
             }
-                //add by lzy at 20200118 end
+            //add by lzy at 20200118 end
             // columnArray['aadDescription'] = tableRow.aadDescription.gui.comparable;
             if (tableRow.hasOwnProperty('ArticleInventory')) {
                 columnArray['ArticleInventory'] = tableRow['ArticleInventory'].gui.comparable;
@@ -321,6 +323,14 @@
                         break;
                     }
                 }
+
+                if (articleDispose.indexOf('[') > -1){
+                    articleDispose.substring(articleDispose.lastIndexOf('[') + 1, articleDispose.length - 1);
+                }
+                if (articleDispose.indexOf(']') > -1){
+                    articleDispose.substring(0, articleDispose.indexOf(']') - 1);
+                }
+
                 columnArray['ArticleDispose'] = articleDispose;
                 //add by lzy at 20200118 end
                 // if (articleDispose.indexOf('[') > -1) {
@@ -341,6 +351,14 @@
                         break;
                     }
                 }
+
+                if (passageDispose.indexOf('[') > -1){
+                    passageDispose.substring(passageDispose.lastIndexOf('[') + 1, passageDispose.length - 1);
+                }
+                if (passageDispose.indexOf(']') > -1){
+                    passageDispose.substring(0, passageDispose.indexOf(']') - 1);
+                }
+
                 columnArray['PassageDispose'] = passageDispose;
                 //add by lzy at 20200118 end
                 // if (passageDispose.indexOf('[') > -1) {
@@ -361,6 +379,14 @@
                         break;
                     }
                 }
+
+                if (inventoryDispose.indexOf('[') > -1){
+                    inventoryDispose.substring(inventoryDispose.lastIndexOf('[') + 1, inventoryDispose.length - 1);
+                }
+                if (inventoryDispose.indexOf(']') > -1){
+                    inventoryDispose.substring(0, inventoryDispose.indexOf(']') - 1);
+                }
+
                 columnArray['InventoryDispose'] = inventoryDispose;
                 //add by lzy at 20200118 end
                 // if (inventoryDispose.indexOf('[') > -1) {
@@ -397,6 +423,14 @@
                         break;
                     }
                 }
+
+                if (changeType.indexOf('[') > -1){
+                    changeType.substring(changeType.lastIndexOf('[') + 1, changeType.length - 1);
+                }
+                if (changeType.indexOf(']') > -1){
+                    changeType.substring(0, changeType.indexOf(']') - 1);
+                }
+
                 columnArray['ChangeType'] = changeType;
                 //add by lzy at 20200118 end
                 // if (changeType.indexOf('[') > -1) {
@@ -417,6 +451,14 @@
                         break;
                     }
                 }
+
+                if (productDispose.indexOf('[') > -1){
+                    productDispose.substring(productDispose.lastIndexOf('[') + 1, productDispose.length - 1);
+                }
+                if (productDispose.indexOf(']') > -1){
+                    productDispose.substring(0, productDispose.indexOf(']') - 1);
+                }
+
                 columnArray['ProductDispose'] = productDispose;
                 //add by lzy at 20200118 end
                 // if (productDispose.indexOf('[') > -1) {
@@ -431,11 +473,13 @@
             //add by tongwang 20191023 start
             if (tableRow.hasOwnProperty('ChangeObjectType')) {
                 var changeObjectType = tableRow['ChangeObjectType'].gui.comparable;
-                if (changeObjectType.indexOf('[') > -1) {
-                    columnArray['ChangeObjectType'] = changeObjectType.substring(changeObjectType.lastIndexOf('[') + 1, changeObjectType.length - 1);
-                } else {
-                    columnArray['ChangeObjectType'] = changeObjectType;
+                if (changeObjectType.indexOf('[') > -1){
+                    changeObjectType.substring(changeObjectType.lastIndexOf('[') + 1, changeObjectType.length - 1);
                 }
+                if (changeObjectType.indexOf(']') > -1){
+                    changeObjectType.substring(0, changeObjectType.indexOf(']') - 1);
+                }
+                columnArray['ChangeObjectType'] = changeObjectType;
             } else {
                 columnArray['ChangeObjectType'] = '';
             }
@@ -610,11 +654,14 @@
                 if(articleDispose_result!=null&&articleDispose_result!=""&&isEdit==-1) {
                     columnArray['ArticleDispose'] = articleDispose_result;
                 }else{
-                    if (articleDispose.indexOf('[') > -1) {
-                        columnArray['ArticleDispose'] = articleDispose.substring(articleDispose.lastIndexOf('[') + 1, articleDispose.length - 1);
-                    } else {
-                        columnArray['ArticleDispose'] = articleDispose;
+                    if (articleDispose.indexOf('[') > -1){
+                        articleDispose.substring(articleDispose.lastIndexOf('[') + 1, articleDispose.length - 1);
                     }
+                    if (articleDispose.indexOf(']') > -1){
+                        articleDispose.substring(0, articleDispose.indexOf(']') - 1);
+                    }
+
+                    columnArray['ArticleDispose'] = articleDispose;
                 }
                 //add by lzy at 20200118 end
                 // if (articleDispose.indexOf('[') > -1) {
@@ -633,11 +680,13 @@
                 if(passageDispose_result!=null&&passageDispose_result!=""&&isEdit==-1){
                     columnArray['PassageDispose']=passageDispose_result;
                 }else{
-                    if (passageDispose.indexOf('[') > -1) {
-                        columnArray['PassageDispose'] = passageDispose.substring(passageDispose.lastIndexOf('[') + 1, passageDispose.length - 1);
-                    } else {
-                        columnArray['PassageDispose'] = passageDispose;
+                    if (passageDispose.indexOf('[') > -1){
+                        passageDispose.substring(passageDispose.lastIndexOf('[') + 1, passageDispose.length - 1);
                     }
+                    if (passageDispose.indexOf(']') > -1){
+                        passageDispose.substring(0, passageDispose.indexOf(']') - 1);
+                    }
+                    columnArray['PassageDispose'] = passageDispose;
                 }
                 //add by lzy at 20200118 end
 
@@ -657,11 +706,14 @@
                 if(inventoryDispose_result!=null&&inventoryDispose_result!=""&&isEdit==-1){
                     columnArray['InventoryDispose']=inventoryDispose_result;
                 }else{
-                    if (inventoryDispose.indexOf('[') > -1) {
-                        columnArray['InventoryDispose'] = inventoryDispose.substring(inventoryDispose.lastIndexOf('[') + 1, inventoryDispose.length - 1);
-                    } else {
-                        columnArray['InventoryDispose'] = inventoryDispose;
+                    if (inventoryDispose.indexOf('[') > -1){
+                        inventoryDispose.substring(inventoryDispose.lastIndexOf('[') + 1, inventoryDispose.length - 1);
                     }
+                    if (inventoryDispose.indexOf(']') > -1){
+                        inventoryDispose.substring(0, inventoryDispose.indexOf(']') - 1);
+                    }
+                    columnArray['InventoryDispose'] = inventoryDispose;
+
                 }
                 //add by lzy at 20200118 end
                 // if (inventoryDispose.indexOf('[') > -1) {
@@ -698,15 +750,20 @@
             }
             if (tableRow.hasOwnProperty('ChangeType')) {
                 var changeType = tableRow['ChangeType'].gui.comparable;
-                console.log("changeType=="+changeType)
                 //add by lzy at 20200118 start
                 var gui=JSON.stringify(tableRow['ChangeType'].gui);
                 var isEdit=gui.indexOf('disabled');//isEdit为-1表示不存在该字符，即是可编辑状态
                 if(changeType_result!=null&&changeType_result!=""&&isEdit==-1){
                     columnArray['ChangeType']=changeType_result;
                 }else{
-                    if (changeType.indexOf('[') > -1) {
-                        var changeTypeValue=changeType.substring(changeType.lastIndexOf('[') + 1, changeType.length - 1);
+                    if (changeType.indexOf('[') > -1||changeType.indexOf(']')> -1) {
+                        var changeTypeValue="";
+                        if(changeType.indexOf('[') > -1){
+                            changeTypeValue=changeType.substring(changeType.lastIndexOf('[') + 1, changeType.length - 1);
+                        }
+                        if(changeType.indexOf(']') > -1){
+                            changeTypeValue=changeType.substring(0, changeType.indexOf(']') - 1);
+                        }
                         if (changeTypeValue.indexOf(";")>-1){
                             columnArray['ChangeType'] =changeTypeValue;
                         }else{
@@ -734,10 +791,13 @@
                     columnArray['ProductDispose']=productDispose_result;
                 }else{
                     if (productDispose.indexOf('[') > -1) {
-                        columnArray['ProductDispose'] = productDispose.substring(productDispose.lastIndexOf('[') + 1, productDispose.length - 1);
-                    } else {
-                        columnArray['ProductDispose'] = productDispose;
+                        productDispose = productDispose.substring(productDispose.lastIndexOf('[') + 1, productDispose.length - 1);
                     }
+                    if (productDispose.indexOf(']') > -1) {
+                        productDispose = productDispose.substring( 0, productDispose.indexOf(']') - 1);
+                    }
+                    columnArray['ProductDispose'] = productDispose;
+
                 }
                 //add by lzy at 20200118 end
                 // if (productDispose.indexOf('[') > -1) {
@@ -753,10 +813,12 @@
             if (tableRow.hasOwnProperty('ChangeObjectType')) {
                 var changeObjectType = tableRow['ChangeObjectType'].gui.comparable;
                 if (changeObjectType.indexOf('[') > -1) {
-                    columnArray['ChangeObjectType'] = changeObjectType.substring(changeObjectType.lastIndexOf('[') + 1, changeObjectType.length - 1);
-                } else {
-                    columnArray['ChangeObjectType'] = changeObjectType;
+                    changeObjectType = changeObjectType.substring(changeObjectType.lastIndexOf('[') + 1, changeObjectType.length - 1);
                 }
+                if (changeObjectType.indexOf(']') > -1) {
+                    changeObjectType = changeObjectType.substring( 0 , changeObjectType.indexOf(']') - 1);
+                }
+                columnArray['ChangeObjectType'] = changeObjectType;
             } else {
                 columnArray['ChangeObjectType'] = '';
             }
