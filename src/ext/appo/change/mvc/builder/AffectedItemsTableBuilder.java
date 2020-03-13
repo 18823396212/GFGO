@@ -28,6 +28,7 @@ import wt.log4j.LogR;
 import wt.session.SessionContext;
 import wt.session.SessionHelper;
 import wt.util.WTException;
+import wt.workflow.engine.WfEngineHelper;
 import wt.workflow.engine.WfProcess;
 import wt.workflow.work.WorkItem;
 
@@ -246,7 +247,28 @@ public class AffectedItemsTableBuilder extends AbstractComponentBuilder implemen
 
         columnconfig = componentconfigfactory.newColumnConfig("CollectionNumber", true);
         columnconfig.setLabel("收集对象");
-        columnconfig.setDataUtilityId("ModifyAffectedItemsDataUtility");
+
+        //add by lzy at 20200312 start
+        String dataUtilityId="ModifyAffectedItemsDataUtility";
+        Object object = localNmCommandBean.getActionOid().getRefObject();// 获取操作对象
+        if (object instanceof WTChangeOrder2) {
+            WTChangeOrder2 ecn=(WTChangeOrder2)object;
+            String templateName="";
+            QueryResult result = WfEngineHelper.service.getAssociatedProcesses(ecn, null, null);
+            while (result.hasMoreElements()) {
+                WfProcess process = (WfProcess) result.nextElement();
+                if (process != null) {
+                    templateName = process.getTemplate().getName();
+                }
+            }
+            //不是新流程ECN则使用原来的DataUtilityId
+            if (!"APPO_ECNWF".equals(templateName)){
+                dataUtilityId="customizationDataUtility";
+            }
+        }
+        columnconfig.setDataUtilityId(dataUtilityId);
+        //add by lzy at 20200312 end
+//        columnconfig.setDataUtilityId("ModifyAffectedItemsDataUtility");
         columnconfig.setWidth(60);
         tableConfig.addComponent(columnconfig);
 
