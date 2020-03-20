@@ -258,7 +258,16 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
                             }
                             if (persistable != null) {
                                 PAGEDATAMAP.put(persistable, attributesMap);
-                                NUMBERS.add(ModifyUtils.getNumber(persistable) + SEPARATOR_1 + ModifyUtils.getVersion(persistable));
+                                //add by lzy at 20200320 start
+                                if (persistable instanceof WTPart){
+                                    NUMBERS.add(ModifyUtils.getNumber(persistable) + SEPARATOR_1 + ModifyUtils.getVersion(persistable)+SEPARATOR_1+((WTPart) persistable).getViewName());
+                                }else {
+                                    //add by lzy at 20200320 end
+                                    NUMBERS.add(ModifyUtils.getNumber(persistable) + SEPARATOR_1 + ModifyUtils.getVersion(persistable));
+                                    //add by lzy at 20200320 start
+                                }
+                                //add by lzy at 20200320 end
+
                             }
                             if (persistable instanceof WTPart) {
                                 WTPart part = (WTPart) persistable;
@@ -911,6 +920,12 @@ public class AffectedObjectUtil implements ChangeConstants, ModifyConstants {
                 String number = ModifyUtils.getNumber(changeable2) + SEPARATOR_1 + ModifyUtils.getVersion(changeable2);
                 LOGGER.info(">>>>>>>>>>checkRevised.number: " + number);
                 if (SEPARATOR_1.equals(number)) continue;
+                //add by lzy at 20200320 start
+                if (changeable2 instanceof WTPart){
+                    number=number+SEPARATOR_1+((WTPart) changeable2).getViewName();
+                }
+                //add by lzy at 20200320 end
+
                 if (NUMBERS.contains(number)) {
                     MESSAGES.add("受影响对象「" + number + "」已存在当前变更申请关联的变更任务「" + activity2.getNumber() + "」的产生对象中！");
                 }
