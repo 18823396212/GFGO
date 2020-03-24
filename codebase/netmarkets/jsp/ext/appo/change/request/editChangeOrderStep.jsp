@@ -31,13 +31,20 @@
 <!--modify by wangtong at 20191024 end-->
 
 <SCRIPT LANGUAGE="JavaScript">
-    //一键设置回填期望完成时间、责任人
+    //一键设置
     function addOneKeySetup(completiontime,userPicker,articleDispose_result,passageDispose_result,inventoryDispose_result,productDispose_result,changeType_result,aadDescription_result){
-        // 保存数据
-        saveChangeTaskArrayByOneKeySetup(completiontime,userPicker,articleDispose_result,passageDispose_result,inventoryDispose_result,productDispose_result,changeType_result,aadDescription_result);
+        // //修改、保存数据
+        // saveChangeTaskArrayByOneKeySetup(completiontime,userPicker,articleDispose_result,passageDispose_result,inventoryDispose_result,productDispose_result,changeType_result,aadDescription_result);
+        // // 重新加载数据表
+        // PTC.jca.table.Utils.reload('ext.appo.change.mvc.builder.AffectedEndItemsTableBuilder', "", true);
 
+        // 保存数据
+        saveChangeTaskArray();
         // 重新加载数据表
-        PTC.jca.table.Utils.reload('ext.appo.change.mvc.builder.AffectedEndItemsTableBuilder', "", true);
+        PTC.jca.table.Utils.reload('ext.appo.change.mvc.builder.AffectedItemsTableBuilder', {completiontime: completiontime,userPicker: userPicker,articleDispose_result: articleDispose_result,
+            passageDispose_result: passageDispose_result,inventoryDispose_result: inventoryDispose_result,productDispose_result: productDispose_result,changeType_result: changeType_result,aadDescription_result: aadDescription_result}, true);
+        // 保存数据
+        saveChangeTaskArray();
     }
 
 
@@ -252,10 +259,10 @@
 
     // 保存受影响列表客制化字段信息
     function saveChangeTaskArray() {
-        //add by lzy at 20200119 start
-        // 获取页面所有select控件
-        var selectArray = document.getElementsByTagName("select");
-        //add by lzy at 20200119 end
+        // //add by lzy at 20200119 start
+        // // 获取页面所有select控件
+        // var selectArray = document.getElementsByTagName("select");
+        // //add by lzy at 20200119 end
         // 获取页面所有input控件
         var inputFormArray = document.getElementsByTagName("input");
         // 用于存储所有数据
@@ -298,16 +305,42 @@
             }
             if (tableRow.hasOwnProperty('ResponsiblePerson')) {
                 var responsiblePersonValue = tableRow['ResponsiblePerson'].gui.comparable;
+
+                // if (str!=null&&str.trim()!=""){
+                //     responsiblePersonValue=str;
+                // }else{
+                //     if (responsiblePersonValue.length === 0) {
+                //         for (var j = 0; j < inputFormArray.length; j++) {
+                //             var inputForm = inputFormArray[j];
+                //             if (inputForm.type === 'text') {
+                //                 if (inputForm.id.indexOf('ResponsiblePerson') > -1 && inputForm.id.indexOf(tableRow.oid) > -1) {
+                //                     responsiblePersonValue = inputForm.value;
+                //                     break;
+                //                 }
+                //             }
+                //         }
+                //     }
+                // }
                 if (responsiblePersonValue.length === 0) {
                     for (var j = 0; j < inputFormArray.length; j++) {
                         var inputForm = inputFormArray[j];
                         if (inputForm.type === 'text') {
-                            if ((inputForm.id.indexOf('ResponsiblePerson') > -1) && (inputForm.id.indexOf(tableRow.oid) > -1)) {
+                            if (inputForm.id.indexOf('ResponsiblePerson') > -1 && inputForm.id.indexOf(tableRow.oid) > -1) {
                                 responsiblePersonValue = inputForm.value;
                                 break;
                             }
                         }
                     }
+                }
+                if (responsiblePersonValue.length === 0){
+                    var str= JSON.stringify(tableRow['ResponsiblePerson'].gui);
+                    if (str.indexOf("value")>-1){
+                        str=str.substring(str.indexOf("value")+8,str.length-1);
+                    }
+                    if (str.indexOf("\"")>-1){
+                        str=str.substring(0,str.indexOf("\"")-1);
+                    }
+                    responsiblePersonValue=str;
                 }
                 columnArray['ResponsiblePerson'] = responsiblePersonValue;
             } else {
@@ -316,19 +349,19 @@
             if (tableRow.hasOwnProperty('ArticleDispose')) {
                 var articleDispose = tableRow['ArticleDispose'].gui.comparable;
                 //add by lzy at 20200118 start
-                for (var j = 0; j < selectArray.length; j++) {
-                    var select = selectArray[j];
-                    if ((select.name.indexOf('ArticleDispose') > -1) && (select.name.indexOf(tableRow.oid) > -1)) {
-                        articleDispose = select.value;
-                        break;
-                    }
-                }
+                // for (var j = 0; j < selectArray.length; j++) {
+                //     var select = selectArray[j];
+                //     if ((select.name.indexOf('ArticleDispose') > -1) && (select.name.indexOf(tableRow.oid) > -1)) {
+                //         articleDispose = select.value;
+                //         break;
+                //     }
+                // }
 
                 if (articleDispose.indexOf('[') > -1){
-                    articleDispose.substring(articleDispose.lastIndexOf('[') + 1, articleDispose.length - 1);
+                    articleDispose=articleDispose.substring(articleDispose.lastIndexOf('[') + 1, articleDispose.length - 1);
                 }
                 if (articleDispose.indexOf(']') > -1){
-                    articleDispose.substring(0, articleDispose.indexOf(']') - 1);
+                    articleDispose=articleDispose.substring(0, articleDispose.indexOf(']') - 1);
                 }
 
                 columnArray['ArticleDispose'] = articleDispose;
@@ -344,19 +377,19 @@
             if (tableRow.hasOwnProperty('PassageDispose')) {
                 var passageDispose = tableRow['PassageDispose'].gui.comparable
                 //add by lzy at 20200118 start
-                for (var j = 0; j < selectArray.length; j++) {
-                    var select = selectArray[j];
-                    if ((select.name.indexOf('PassageDispose') > -1) && (select.name.indexOf(tableRow.oid) > -1)) {
-                        passageDispose = select.value;
-                        break;
-                    }
-                }
+                // for (var j = 0; j < selectArray.length; j++) {
+                //     var select = selectArray[j];
+                //     if ((select.name.indexOf('PassageDispose') > -1) && (select.name.indexOf(tableRow.oid) > -1)) {
+                //         passageDispose = select.value;
+                //         break;
+                //     }
+                // }
 
                 if (passageDispose.indexOf('[') > -1){
-                    passageDispose.substring(passageDispose.lastIndexOf('[') + 1, passageDispose.length - 1);
+                    passageDispose=passageDispose.substring(passageDispose.lastIndexOf('[') + 1, passageDispose.length - 1);
                 }
                 if (passageDispose.indexOf(']') > -1){
-                    passageDispose.substring(0, passageDispose.indexOf(']') - 1);
+                    passageDispose=passageDispose.substring(0, passageDispose.indexOf(']') - 1);
                 }
 
                 columnArray['PassageDispose'] = passageDispose;
@@ -372,19 +405,19 @@
             if (tableRow.hasOwnProperty('InventoryDispose')) {
                 var inventoryDispose = tableRow['InventoryDispose'].gui.comparable;
                 //add by lzy at 20200118 start
-                for (var j = 0; j < selectArray.length; j++) {
-                    var select = selectArray[j];
-                    if ((select.name.indexOf('InventoryDispose') > -1) && (select.name.indexOf(tableRow.oid) > -1)) {
-                        inventoryDispose = select.value;
-                        break;
-                    }
-                }
+                // for (var j = 0; j < selectArray.length; j++) {
+                //     var select = selectArray[j];
+                //     if ((select.name.indexOf('InventoryDispose') > -1) && (select.name.indexOf(tableRow.oid) > -1)) {
+                //         inventoryDispose = select.value;
+                //         break;
+                //     }
+                // }
 
                 if (inventoryDispose.indexOf('[') > -1){
-                    inventoryDispose.substring(inventoryDispose.lastIndexOf('[') + 1, inventoryDispose.length - 1);
+                    inventoryDispose=inventoryDispose.substring(inventoryDispose.lastIndexOf('[') + 1, inventoryDispose.length - 1);
                 }
                 if (inventoryDispose.indexOf(']') > -1){
-                    inventoryDispose.substring(0, inventoryDispose.indexOf(']') - 1);
+                    inventoryDispose=inventoryDispose.substring(0, inventoryDispose.indexOf(']') - 1);
                 }
 
                 columnArray['InventoryDispose'] = inventoryDispose;
@@ -400,13 +433,13 @@
             if (tableRow.hasOwnProperty('CompletionTime')) {
                 //add by lzy at 20200113 start
                 var completionTimeValue=tableRow['CompletionTime'].gui.comparable;
-                for (var j = 0; j < selectArray.length; j++) {
-                    var select = selectArray[j];
-                    if ((select.name.indexOf('CompletionTime') > -1) && (select.name.indexOf(tableRow.oid) > -1)) {
-                        completionTimeValue = select.value;
-                        break;
-                    }
-                }
+                // for (var j = 0; j < selectArray.length; j++) {
+                //     var select = selectArray[j];
+                //     if ((select.name.indexOf('CompletionTime') > -1) && (select.name.indexOf(tableRow.oid) > -1)) {
+                //         completionTimeValue = select.value;
+                //         break;
+                //     }
+                // }
                 columnArray['CompletionTime'] = completionTimeValue;
                 //add by lzy at 20200113 end
                 // columnArray['CompletionTime'] = tableRow['CompletionTime'].gui.comparable;
@@ -416,19 +449,19 @@
             if (tableRow.hasOwnProperty('ChangeType')) {
                 var changeType = tableRow['ChangeType'].gui.comparable;
                 //add by lzy at 20200118 start
-                for (var j = 0; j < selectArray.length; j++) {
-                    var select = selectArray[j];
-                    if ((select.name.indexOf('ChangeType') > -1) && (select.name.indexOf(tableRow.oid) > -1)) {
-                        changeType = select.value;
-                        break;
-                    }
-                }
+                // for (var j = 0; j < selectArray.length; j++) {
+                //     var select = selectArray[j];
+                //     if ((select.name.indexOf('ChangeType') > -1) && (select.name.indexOf(tableRow.oid) > -1)) {
+                //         changeType = select.value;
+                //         break;
+                //     }
+                // }
 
                 if (changeType.indexOf('[') > -1){
-                    changeType.substring(changeType.lastIndexOf('[') + 1, changeType.length - 1);
+                    changeType=changeType.substring(changeType.lastIndexOf('[') + 1, changeType.length - 1);
                 }
                 if (changeType.indexOf(']') > -1){
-                    changeType.substring(0, changeType.indexOf(']') - 1);
+                    changeType=changeType.substring(0, changeType.indexOf(']') - 1);
                 }
 
                 columnArray['ChangeType'] = changeType;
@@ -444,19 +477,19 @@
             if (tableRow.hasOwnProperty('ProductDispose')) {
                 var productDispose = tableRow['ProductDispose'].gui.comparable;
                 //add by lzy at 20200118 start
-                for (var j = 0; j < selectArray.length; j++) {
-                    var select = selectArray[j];
-                    if ((select.name.indexOf('ProductDispose') > -1) && (select.name.indexOf(tableRow.oid) > -1)) {
-                        productDispose = select.value;
-                        break;
-                    }
-                }
+                // for (var j = 0; j < selectArray.length; j++) {
+                //     var select = selectArray[j];
+                //     if ((select.name.indexOf('ProductDispose') > -1) && (select.name.indexOf(tableRow.oid) > -1)) {
+                //         productDispose = select.value;
+                //         break;
+                //     }
+                // }
 
                 if (productDispose.indexOf('[') > -1){
-                    productDispose.substring(productDispose.lastIndexOf('[') + 1, productDispose.length - 1);
+                    productDispose=productDispose.substring(productDispose.lastIndexOf('[') + 1, productDispose.length - 1);
                 }
                 if (productDispose.indexOf(']') > -1){
-                    productDispose.substring(0, productDispose.indexOf(']') - 1);
+                    productDispose=productDispose.substring(0, productDispose.indexOf(']') - 1);
                 }
 
                 columnArray['ProductDispose'] = productDispose;
@@ -474,10 +507,10 @@
             if (tableRow.hasOwnProperty('ChangeObjectType')) {
                 var changeObjectType = tableRow['ChangeObjectType'].gui.comparable;
                 if (changeObjectType.indexOf('[') > -1){
-                    changeObjectType.substring(changeObjectType.lastIndexOf('[') + 1, changeObjectType.length - 1);
+                    changeObjectType=changeObjectType.substring(changeObjectType.lastIndexOf('[') + 1, changeObjectType.length - 1);
                 }
                 if (changeObjectType.indexOf(']') > -1){
-                    changeObjectType.substring(0, changeObjectType.indexOf(']') - 1);
+                    changeObjectType=changeObjectType.substring(0, changeObjectType.indexOf(']') - 1);
                 }
                 columnArray['ChangeObjectType'] = changeObjectType;
             } else {
@@ -655,10 +688,10 @@
                     columnArray['ArticleDispose'] = articleDispose_result;
                 }else{
                     if (articleDispose.indexOf('[') > -1){
-                        articleDispose.substring(articleDispose.lastIndexOf('[') + 1, articleDispose.length - 1);
+                        articleDispose=articleDispose.substring(articleDispose.lastIndexOf('[') + 1, articleDispose.length - 1);
                     }
                     if (articleDispose.indexOf(']') > -1){
-                        articleDispose.substring(0, articleDispose.indexOf(']') - 1);
+                        articleDispose=articleDispose.substring(0, articleDispose.indexOf(']') - 1);
                     }
 
                     columnArray['ArticleDispose'] = articleDispose;
@@ -681,10 +714,10 @@
                     columnArray['PassageDispose']=passageDispose_result;
                 }else{
                     if (passageDispose.indexOf('[') > -1){
-                        passageDispose.substring(passageDispose.lastIndexOf('[') + 1, passageDispose.length - 1);
+                        passageDispose=passageDispose.substring(passageDispose.lastIndexOf('[') + 1, passageDispose.length - 1);
                     }
                     if (passageDispose.indexOf(']') > -1){
-                        passageDispose.substring(0, passageDispose.indexOf(']') - 1);
+                        passageDispose=passageDispose.substring(0, passageDispose.indexOf(']') - 1);
                     }
                     columnArray['PassageDispose'] = passageDispose;
                 }
@@ -707,10 +740,10 @@
                     columnArray['InventoryDispose']=inventoryDispose_result;
                 }else{
                     if (inventoryDispose.indexOf('[') > -1){
-                        inventoryDispose.substring(inventoryDispose.lastIndexOf('[') + 1, inventoryDispose.length - 1);
+                        inventoryDispose=inventoryDispose.substring(inventoryDispose.lastIndexOf('[') + 1, inventoryDispose.length - 1);
                     }
                     if (inventoryDispose.indexOf(']') > -1){
-                        inventoryDispose.substring(0, inventoryDispose.indexOf(']') - 1);
+                        inventoryDispose=inventoryDispose.substring(0, inventoryDispose.indexOf(']') - 1);
                     }
                     columnArray['InventoryDispose'] = inventoryDispose;
 

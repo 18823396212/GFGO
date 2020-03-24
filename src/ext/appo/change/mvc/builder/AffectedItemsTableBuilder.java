@@ -131,6 +131,27 @@ public class AffectedItemsTableBuilder extends AbstractComponentBuilder implemen
                 }
             }
             commandbean.getParameterMap().put("collectionObjectMap", collectionMap);
+
+            //add by lzy at 20200316 start
+            //获取一键设置修改数据
+            String completiontime = request.getParameter("completiontime");//期望完成时间
+            String userPicker = request.getParameter("userPicker");//责任人
+            String articleDispose = request.getParameter("articleDispose_result");//在制处理措施
+            String passageDispose = request.getParameter("passageDispose_result");//在途处理措施
+            String inventoryDispose = request.getParameter("inventoryDispose_result");//库存处理措施
+            String productDispose = request.getParameter("productDispose_result");//已出货成品处理措施
+            String changeType = request.getParameter("changeType_result");//类型
+            String aadDescription = request.getParameter("aadDescription_result");//更改详细描述
+            commandbean.getParameterMap().put("completiontime", completiontime);
+            commandbean.getParameterMap().put("userPicker", userPicker);
+            commandbean.getParameterMap().put("articleDispose", articleDispose);
+            commandbean.getParameterMap().put("passageDispose", passageDispose);
+            commandbean.getParameterMap().put("inventoryDispose", inventoryDispose);
+            commandbean.getParameterMap().put("productDispose", productDispose);
+            commandbean.getParameterMap().put("changeType", changeType);
+            commandbean.getParameterMap().put("aadDescription", aadDescription);
+            //add by lzy at 20200316 end
+
         } finally {
             SessionContext.setContext(previous);
         }

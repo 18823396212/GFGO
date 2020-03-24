@@ -114,7 +114,57 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
                 } else if (paramString.contains(ARTICLEDISPOSE_COMPID) || paramString.contains(INVENTORYDISPOSE_COMPID) || paramString.contains(PASSAGEDISPOSE_COMPID) || paramString.contains(PRODUCTDISPOSE_COMPID) || paramString.contains(CHANGETYPE_COMPID) || paramString.contains(ATTRIBUTE_7)) {
                     if (paramObject instanceof WTPart) {
                         GUIComponentArray gui_array = new GUIComponentArray();
-                        ComboBox comboBox = generateComboBox(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString));
+
+                        //add by lzy at 20200316 start
+                        ComboBox comboBox = new ComboBox();
+                        HashMap<String, Object> parameterMap = nmCommandBean.getParameterMap();
+                        Object articleDisposeObj = parameterMap.get("articleDispose");
+                        Object passageDisposeObj = parameterMap.get("passageDispose");
+                        Object inventoryDisposeObj = parameterMap.get("inventoryDispose");
+                        Object productDisposeObj = parameterMap.get("productDispose");
+                        Object changeTypeObj = parameterMap.get("changeType");
+                        String  articleDispose= (String) articleDisposeObj;//在制处理措施
+                        String  passageDispose= (String) passageDisposeObj;//在途处理措施
+                        String  inventoryDispose= (String) inventoryDisposeObj;//库存处理措施
+                        String  productDispose= (String) productDisposeObj;//已出货成品处理措施
+                        String  changeType= (String) changeTypeObj;//类型
+                        if (paramString.contains(ARTICLEDISPOSE_COMPID)){
+                            if (!flag&&articleDispose!=null&&!articleDispose.isEmpty()){
+                                comboBox = generateComboBox(paramModelContext, paramObject, paramString,articleDispose);
+                            }else{
+                                comboBox = generateComboBox(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString));
+                            }
+                        }
+                        if (paramString.contains(PASSAGEDISPOSE_COMPID)){
+                            if (!flag&&passageDispose!=null&&!passageDispose.isEmpty()){
+                                comboBox = generateComboBox(paramModelContext, paramObject, paramString,passageDispose);
+                            }else{
+                                comboBox = generateComboBox(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString));
+                            }
+                        }
+                        if (paramString.contains(INVENTORYDISPOSE_COMPID)){
+                            if (!flag&&inventoryDispose!=null&&!inventoryDispose.isEmpty()){
+                                comboBox = generateComboBox(paramModelContext, paramObject, paramString,inventoryDispose);
+                            }else{
+                                comboBox = generateComboBox(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString));
+                            }
+                        }
+                        if (paramString.contains(PRODUCTDISPOSE_COMPID)){
+                            if (!flag&&productDispose!=null&&!productDispose.isEmpty()){
+                                comboBox = generateComboBox(paramModelContext, paramObject, paramString,productDispose);
+                            }else{
+                                comboBox = generateComboBox(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString));
+                            }
+                        }
+                        if (paramString.contains(CHANGETYPE_COMPID)){
+                            if (!flag&&changeType!=null&&!changeType.isEmpty()){
+                                comboBox = generateComboBox(paramModelContext, paramObject, paramString,changeType);
+                            }else{
+                                comboBox = generateComboBox(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString));
+                            }
+                        }
+                        //add by lzy at 20200316 end
+//                        ComboBox comboBox = generateComboBox(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString));
                         if (flag) comboBox.setEditable(false);
                         gui_array.addGUIComponent(comboBox);
                         return gui_array;
@@ -123,13 +173,37 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
                     }
                 } else if (paramString.contains(COMPLETIONTIME_COMPID)) {
                     GUIComponentArray gui_array = new GUIComponentArray();
-                    DateInputComponent dateInputComponent = generateDateInputComponent(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString));
+
+                    //add by lzy at 20200316 start
+                    DateInputComponent dateInputComponent=new DateInputComponent();
+                    HashMap<String, Object> parameterMap = nmCommandBean.getParameterMap();
+                    Object completiontimeObj = parameterMap.get("completiontime");
+                    String completiontime= (String) completiontimeObj;//期望完成时间
+                    if (!flag&&completiontime!=null&&!completiontime.isEmpty()){
+                        dateInputComponent = generateDateInputComponent(paramModelContext, paramObject, paramString, completiontime);
+                    }else{
+                        dateInputComponent = generateDateInputComponent(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString));
+                    }
+                    //add by lzy at 20200316 end
+//                    DateInputComponent dateInputComponent = generateDateInputComponent(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString));
                     if (flag) dateInputComponent.setEditable(false);
                     gui_array.addGUIComponent(dateInputComponent);
                     return gui_array;
                 } else if (paramString.contains(AADDESCRIPTION_COMPID)) {
                     GUIComponentArray gui_array = new GUIComponentArray();
-                    TextBox textBox = generateTextBox(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString));
+
+                    //add by lzy at 20200316 start
+                    TextBox textBox = new TextBox();
+                    HashMap<String, Object> parameterMap = nmCommandBean.getParameterMap();
+                    Object aadDescriptionObj = parameterMap.get("aadDescription");
+                    String aadDescription= (String) aadDescriptionObj;//更改详细描述
+                    if (!flag&&aadDescription!=null&&!aadDescription.isEmpty()){
+                        textBox = generateTextBox(paramModelContext, paramObject, paramString, aadDescription);
+                    }else{
+                        textBox = generateTextBox(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString));
+                    }
+                    //add by lzy at 20200316 end
+//                    TextBox textBox = generateTextBox(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString));
                     if (flag) textBox.setEditable(false);
                     gui_array.addGUIComponent(textBox);
                     return gui_array;

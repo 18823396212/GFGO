@@ -1,5 +1,7 @@
 package ext.appo.erp.util;
 
+import com.ptc.netmarkets.model.NmOid;
+import com.ptc.netmarkets.workflow.NmWorkflowHelper;
 import com.ptc.windchill.enterprise.part.commands.AlternatesSubstitutesCommand;
 import ext.appo.ecn.pdf.PdfUtil;
 import ext.appo.erp.bean.BomCompareBean;
@@ -22,6 +24,8 @@ import wt.query.SearchCondition;
 import wt.util.WTException;
 import wt.vc.VersionControlHelper;
 import wt.vc.config.LatestConfigSpec;
+import wt.workflow.engine.WfProcess;
+import wt.workflow.engine.WfState;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -402,37 +406,87 @@ public class BomUtil {
             String childState=childPart.getLifeCycleState().toString();
 //            System.out.println("子件状态："+childState);
 
-            if (childState.equals(ERPConstants.RELEASED)||childState.equals(ERPConstants.ARCHIVED)){
+            //add by lzy at 20200324 start
+            if (childState.equals(ERPConstants.ARCHIVED)){
+                //已归档,是否在ECN流程中
+                Boolean isEcnWorkflow=isRunningEcnWorkflow(childPart);
+                if (isEcnWorkflow){
+                    //物料发布状态是否为"PDM发布成功"
+                    String isSend=getIBAvalue(childPart, "partReleaseStatus");
+                    if (isSend.contains("PDM发布成功")){
+                        //取当前版本
+                        bomInfo.setVersion(childVersion);//子件大版本
+                    }else{
+                        //取上个版本或A版本
+                        String EnglishLetter="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                        String strsub="A";
+                        if (EnglishLetter.contains(childVersion)){
+                            int index=EnglishLetter.indexOf(childVersion);
+                            if (index>0){
+                                strsub=EnglishLetter.substring(index-1,index);
+                            }
+                        }
+                        bomInfo.setVersion(strsub);//子件大版本
+                    }
+                }else{
+                    //取当前版本
+                    bomInfo.setVersion(childVersion);//子件大版本
+                }
+            }else if (childState.equals(ERPConstants.RELEASED)){
+                //已发布，取当前版本
                 bomInfo.setVersion(childVersion);//子件大版本
             }else{
-                //物料存在ECA
-                if (ErpUtil.isHaveECA(childPart)) {
-                    //存在，取前一个版本
+                //其他状态,物料发布状态是否为"PDM发布成功"
+                String isSend=getIBAvalue(childPart, "partReleaseStatus");
+                if (isSend.contains("PDM发布成功")){
+                    //取当前版本
+                    bomInfo.setVersion(childVersion);//子件大版本
+                }else{
+                    //取上个版本或A版本
                     String EnglishLetter="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-                    String strsub="";
+                    String strsub="A";
                     if (EnglishLetter.contains(childVersion)){
                         int index=EnglishLetter.indexOf(childVersion);
                         if (index>0){
-//                        System.out.println("顺序："+index);
                             strsub=EnglishLetter.substring(index-1,index);
-//                        System.out.println("截取前一字母："+strsub);
-                        }else{
-                            strsub="A";
-//                        System.out.println("没找到前一字母："+strsub);
                         }
-                    }else{
-                        strsub="A";
-//                          System.out.println("没找到前一字母："+strsub);
                     }
                     bomInfo.setVersion(strsub);//子件大版本
-                    System.out.println("子项物料"+childPart.getNumber()+"发的版本==="+strsub);
-                }else{
-                    //不存在eca取当前版本
-                    bomInfo.setVersion(childVersion);//子件大版本
-                    System.out.println("子项物料"+childPart.getNumber()+"发的版本==="+childVersion);
                 }
 
             }
+            //add by lzy at 20200324 end
+//            if (childState.equals(ERPConstants.RELEASED)||childState.equals(ERPConstants.ARCHIVED)){
+//                bomInfo.setVersion(childVersion);//子件大版本
+//            }else{
+//                //物料存在ECA
+//                if (ErpUtil.isHaveECA(childPart)) {
+//                    //存在，取前一个版本
+//                    String EnglishLetter="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+//                    String strsub="";
+//                    if (EnglishLetter.contains(childVersion)){
+//                        int index=EnglishLetter.indexOf(childVersion);
+//                        if (index>0){
+////                        System.out.println("顺序："+index);
+//                            strsub=EnglishLetter.substring(index-1,index);
+////                        System.out.println("截取前一字母："+strsub);
+//                        }else{
+//                            strsub="A";
+////                        System.out.println("没找到前一字母："+strsub);
+//                        }
+//                    }else{
+//                        strsub="A";
+////                          System.out.println("没找到前一字母："+strsub);
+//                    }
+//                    bomInfo.setVersion(strsub);//子件大版本
+//                    System.out.println("子项物料"+childPart.getNumber()+"发的版本==="+strsub);
+//                }else{
+//                    //不存在eca取当前版本
+//                    bomInfo.setVersion(childVersion);//子件大版本
+//                    System.out.println("子项物料"+childPart.getNumber()+"发的版本==="+childVersion);
+//                }
+//
+//            }
 
             bomInfo.setShuliang(linkSum);
             bomInfo.setSfxnj(sfxnj);
@@ -1299,6 +1353,28 @@ public class BomUtil {
         String uuidStr = str.replace("-", "");
         System.out.println("uuidStr:"+uuidStr);
         return uuidStr;
+    }
+
+
+    /**
+     * 判断pbo是否在ECN流程中运行
+     * @param pbo
+     * @return
+     * @throws WTException
+     */
+    private static boolean isRunningEcnWorkflow(WTPart pbo) throws WTException{
+        boolean processok = false;
+        NmOid nmOid = NmOid.newNmOid(PersistenceHelper.getObjectIdentifier(pbo));
+        QueryResult qr = NmWorkflowHelper.service.getRoutingHistoryData(nmOid);
+        while(qr.hasMoreElements()){
+            WfProcess process = (WfProcess)qr.nextElement();
+            String templateName = process.getTemplate().getName();
+            if (process.getState().equals(WfState.OPEN_RUNNING) && templateName.contains("ECNWF")) {
+                processok = true;
+                break;
+            }
+        }
+        return processok;
     }
 
 }

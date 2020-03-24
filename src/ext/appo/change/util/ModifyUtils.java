@@ -840,7 +840,18 @@ public class ModifyUtils implements ChangeConstants {
                 String number = getNumber(changeable2);
                 LOGGER.info(">>>>>>>>>>revise.number:" + number);
                 if (reviseMap.containsKey(number)) {
-                    collection.add(reviseMap.get(number));
+                    //add by lzy at 20200320 start
+                    //部件视图相同才加
+                    if (reviseMap.get(number) instanceof WTPart&&changeable2 instanceof WTPart){
+                        WTPart part=(WTPart)reviseMap.get(number);
+                        WTPart wtPart=(WTPart)changeable2;
+                        if (part.getViewName().contains(wtPart.getViewName())){
+                            //add by lzy at 20200320 end
+                            collection.add(reviseMap.get(number));
+                            //add by lzy at 20200320 start
+                        }
+                    }
+                    //add by lzy at 20200320 end
                 }else{
                     changeable2s.add(changeable2);
                 }
