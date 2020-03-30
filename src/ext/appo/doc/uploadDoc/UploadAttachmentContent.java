@@ -7,6 +7,7 @@ import com.ptc.core.lwc.common.view.PropertyHolderHelper;
 import com.ptc.core.lwc.server.TypeDefinitionServiceHelper;
 import com.ptc.core.meta.common.TypeIdentifier;
 import com.ptc.core.meta.server.TypeIdentifierUtility;
+import ext.appo.ecn.common.util.ChangeUtils;
 import ext.appo.ecn.pdf.PdfUtil;
 import ext.com.iba.IBAUtil;
 import ext.com.workflow.WorkflowUtil;
@@ -14,6 +15,9 @@ import ext.generic.reviewObject.model.ProcessReviewObjectLink;
 import ext.generic.reviewObject.model.ProcessReviewObjectLinkHelper;
 import ext.generic.workflow.WorkFlowBase;
 import wt.access.NotAuthorizedException;
+import wt.change2.ChangeActivityIfc;
+import wt.change2.Changeable2;
+import wt.change2.WTChangeOrder2;
 import wt.content.*;
 import wt.doc.WTDocument;
 import wt.enterprise.Master;
@@ -34,6 +38,7 @@ import wt.util.WTException;
 import wt.util.WTProperties;
 import wt.vc.OneOffVersioned;
 import wt.vc.VersionControlHelper;
+import wt.workflow.definer.WfProcessTemplate;
 import wt.workflow.engine.WfProcess;
 
 import java.beans.PropertyVetoException;
@@ -1655,7 +1660,31 @@ public class UploadAttachmentContent extends WorkFlowBase {
         WTArrayList list = new WTArrayList();
         wfprocess = WorkflowUtil.getProcess(this.self);
         ProcessReviewObjectLink link = null;
-        if (wfprocess != null) {
+        //add by lzy at20200126 start
+        WfProcessTemplate wfprocesstemplate = (WfProcessTemplate) wfprocess.getTemplate().getObject();
+        String templateName = wfprocesstemplate.getName();
+        // 判断是否是ECN流程
+
+        if(templateName!=null&&templateName.equals("APPO_ECNWF")) {
+            if (pbo instanceof WTChangeOrder2) { //ecn
+                WTChangeOrder2 ecn = (WTChangeOrder2) pbo;
+                // 获取ECN中所有ECA与受影响对象集合
+                Map<ChangeActivityIfc, Collection<Changeable2>> beforeInfoMap = ChangeUtils.getChangeablesBeforeInfo(ecn);
+                // 获取ECN中所有ECA与产生对象集合
+                Map<ChangeActivityIfc, Collection<Changeable2>> afterInfoMap = ChangeUtils.getChangeablesAfterInfo(ecn);
+                if (beforeInfoMap != null && beforeInfoMap.size() > 0 && afterInfoMap != null && afterInfoMap.size() > 0) {
+                    for (Map.Entry<ChangeActivityIfc, Collection<Changeable2>> beforeEntryMap : beforeInfoMap.entrySet()) {
+                        ChangeActivityIfc eca = beforeEntryMap.getKey();
+                        // 产生对象集合
+                        Collection<Changeable2> afterInfoArray = afterInfoMap.get(eca);
+                        for (Changeable2 afterObject : afterInfoArray) {
+                            //添加所有产生的对象
+                            list.add(afterObject);
+                        }
+                    }
+                }
+            }
+        } else {
             QueryResult queryresult = ProcessReviewObjectLinkHelper.service.getProcessReviewObjectLinkByRoleA(wfprocess);
             while (queryresult != null && queryresult.hasMoreElements()) {
                 link = (ProcessReviewObjectLink) queryresult.nextElement();
@@ -1663,6 +1692,15 @@ public class UploadAttachmentContent extends WorkFlowBase {
                 list.add(obj);
             }
         }
+        //add by lzy at20200126 end
+//        if (wfprocess != null) {
+//            QueryResult queryresult = ProcessReviewObjectLinkHelper.service.getProcessReviewObjectLinkByRoleA(wfprocess);
+//            while (queryresult != null && queryresult.hasMoreElements()) {
+//                link = (ProcessReviewObjectLink) queryresult.nextElement();
+//                WTObject obj = (WTObject) link.getRoleBObject();
+//                list.add(obj);
+//            }
+//        }
         return list;
 
     }
