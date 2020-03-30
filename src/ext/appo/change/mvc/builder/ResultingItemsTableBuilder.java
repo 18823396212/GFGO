@@ -72,7 +72,8 @@ public class ResultingItemsTableBuilder extends AbstractAffectedAndResultingItem
 
                     }else if (object instanceof WorkItem) {
                         //在流程中
-                        WTChangeOrder2 changeOrder2 = new WTChangeOrder2();
+                        Collection<Changeable2> changeable2Set=new HashSet<>();
+//                        WTChangeOrder2 changeOrder2 = new WTChangeOrder2();
                         WorkItem workItem = (WorkItem) object;
                         WfProcess wfprocess = PIWorkflowHelper.service.getParentProcess(workItem);
                         Object[] objects = wfprocess.getContext().getObjects();
@@ -80,23 +81,29 @@ public class ResultingItemsTableBuilder extends AbstractAffectedAndResultingItem
                             objects:for (int i = 0; i < objects.length; i++) {
                                 if (objects[i] instanceof WTChangeActivity2) { //eca
                                     WTChangeActivity2 eca = (WTChangeActivity2) objects[i];
-                                    QueryResult ecaqr = ChangeHelper2.service.getChangeOrder(eca);
-                                    while (ecaqr.hasMoreElements()) {
-                                        Object ecn = ecaqr.nextElement();
-                                        if (ecn instanceof WTChangeOrder2) {
-                                            changeOrder2 = (WTChangeOrder2) ecn;
-                                            break objects;
-                                        }
+
+                                    Collection<Changeable2> changeable2s =ModifyUtils.getChangeablesAfter(eca);
+                                    for (Changeable2 changeable2:changeable2s){
+                                        changeable2Set.add(changeable2);
                                     }
+//                                    QueryResult ecaqr = ChangeHelper2.service.getChangeOrder(eca);
+//                                    while (ecaqr.hasMoreElements()) {
+//                                        Object ecn = ecaqr.nextElement();
+//                                        if (ecn instanceof WTChangeOrder2) {
+//                                            changeOrder2 = (WTChangeOrder2) ecn;
+//                                            break objects;
+//                                        }
+//                                    }
 
                                 }
                             }
                         }
-                        // 获取ECN中所有产生对象
-                        Map<WTChangeActivity2, Collection<Changeable2>> dataMap = ModifyUtils.getChangeablesAfter(changeOrder2);
-                        for (Map.Entry<WTChangeActivity2, Collection<Changeable2>> entry : dataMap.entrySet()) {
-                            result.addAll(entry.getValue());
-                        }
+                        result.addAll(changeable2Set);
+//                        // 获取ECN中所有产生对象
+//                        Map<WTChangeActivity2, Collection<Changeable2>> dataMap = ModifyUtils.getChangeablesAfter(changeOrder2);
+//                        for (Map.Entry<WTChangeActivity2, Collection<Changeable2>> entry : dataMap.entrySet()) {
+//                            result.addAll(entry.getValue());
+//                        }
 
                     }
                 }
