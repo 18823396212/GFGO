@@ -15,9 +15,6 @@
 <%@ page import="wt.fc.QueryResult" %>
 <%@ page import="wt.change2.ChangeHelper2" %>
 <%@ page import="wt.part.WTPart" %>
-<%@ page import="ext.generic.reviewObject.model.ProcessReviewObjectLinkHelper" %>
-<%@ page import="ext.generic.reviewObject.model.ProcessReviewObjectLink" %>
-<%@ page import="wt.fc.WTObject" %>
 
 <style type="text/css">
     .tb{
