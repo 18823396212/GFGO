@@ -879,7 +879,17 @@ public class AffectedItemsUtil {
 
                 InventoryPrice inventoryPrice=new InventoryPrice();
                 inventoryPrice.setItem_id(rs.getString("WTPARTNUMBER"));//物料编码
-                inventoryPrice.setiAveragecost(price+rs.getString("FCURRENCYNANE"));//物料成本
+                if (price==null||price=="0"){
+                    inventoryPrice.setiAveragecost("0");
+                }else{
+                    if (rs.getString("FCURRENCYNANE")!=null){
+                        inventoryPrice.setiAveragecost(price+rs.getString("FCURRENCYNANE"));//物料成本
+                    }else{
+                        inventoryPrice.setiAveragecost(price);//物料成本
+                    }
+
+                }
+//                        inventoryPrice.setiAveragecost(price+rs.getString("FCURRENCYNANE"));//物料成本
                 inventoryPrice.setiSupplycycle(rs.getString("SUPPLYCYCLE"));//供货周期
                 inventoryPrice.setiMoq(rs.getString("MOQ"));//最小订单量
                 inventoryPrice.setiMpq(rs.getString("MPQ"));//最小包装数量
@@ -939,7 +949,17 @@ public class AffectedItemsUtil {
 
                         InventoryPrice inventoryPrice=new InventoryPrice();
                         inventoryPrice.setItem_id(rs2.getString("WTPARTNUMBER"));//物料编码
-                        inventoryPrice.setiAveragecost(price+rs2.getString("FCURRENCYNANE"));//物料成本
+                        if (price==null||price=="0"){
+                            inventoryPrice.setiAveragecost("0");
+                        }else{
+                            if (rs2.getString("FCURRENCYNANE")!=null){
+                                inventoryPrice.setiAveragecost(price+rs2.getString("FCURRENCYNANE"));//物料成本
+                            }else{
+                                inventoryPrice.setiAveragecost(price);//物料成本
+                            }
+
+                        }
+//                        inventoryPrice.setiAveragecost(price+rs2.getString("FCURRENCYNANE"));//物料成本
                         inventoryPrice.setiSupplycycle(rs2.getString("SUPPLYCYCLE"));//供货周期
                         inventoryPrice.setiMoq(rs2.getString("MOQ"));//最小订单量
                         inventoryPrice.setiMpq(rs2.getString("MPQ"));//最小包装数量
