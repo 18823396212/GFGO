@@ -117,6 +117,9 @@
         <action name="manualSendPartDcc" type="sendDcc"/>    <!-- 手工发送DCC -->
         <action name="itemStageControl" type="partItemStageControl"/><!-- 产品阶段状态控制流程 -->
         <action name="standardPartAttrChangeProcessor" type="partAttrChangeProcessor"/><!-- 标准件属性变更流程 -->
+        <!--add by lzy at 20200408 start-->
+        <action name="exportChangeHistory" type="changeHistory"/><!-- 导出变更履历 -->
+        <!--add by lzy at 20200408 end-->
         <action name="separator" type="separator"/>                     <!-- ===================================== -->
         <action name="copy" type="object"/>                             <!-- Copy -->
         <action name="WFSAVEAS" type="pdmObject"/>                      <!-- Save As -->
@@ -551,9 +554,9 @@
         <action name="sysnavTab" type="sysnav"/>
         <!--<action   name="wtObjectBaselinelink" type="querylink"/> --><!-- Add Kwang : 文档相关基线 -->
         <action name="docRelationPart" type="partProductNamingNotice"/>
-<!--        &lt;!&ndash;modify by wangtong at 20191024 start&ndash;&gt;-->
-<!--        <action name="changeHistory" type="modify"/>    &lt;!&ndash; Add Twang : 变更履历 &ndash;&gt;-->
-<!--        &lt;!&ndash;modify by wangtong at 20191024 end&ndash;&gt;-->
+        <!--        &lt;!&ndash;modify by wangtong at 20191024 start&ndash;&gt;-->
+        <!--        <action name="changeHistory" type="modify"/>    &lt;!&ndash; Add Twang : 变更履历 &ndash;&gt;-->
+        <!--        &lt;!&ndash;modify by wangtong at 20191024 end&ndash;&gt;-->
     </model>
 
     <model name="cadInfoPageTabSet">
@@ -1219,21 +1222,21 @@
         <action name="sumaChangeTree" type="suma"/>
         <action name="associatedChangeIssues" type="changeTask"/>
     </model>
-	
-	
-	<model name="partInfoRelatedItemsTab" resourceBundle="com.ptc.core.ui.navigationRB">
-     <action name="relatedPartsDocuments" type="part"/>
-     <action name="relatedPartsReferences" type="part"/>
-     <action name="relatedPartsCADDocuments" type="part"/>
-     <action name="alternates" type="part"/>
-     <action name="substitutes" type="part"/>
-  <action name="substitutesFor" type="part"/> 
-     <action name="relatedMPMProcessPlans" type="part"/>
-     <action name="relatedPartsEnterpriseData" type="enterprisedata"/>
-     <action name="relatedPartsLists" type="part"/>
-     <action name="missingObjectsTable" type="persistedCollectable" />
-     <action name="relatedDesignSolution" type="part"/>                <!-- Design Solutions -->
-     <action name="distributionList" type="tgt"/>
+
+
+    <model name="partInfoRelatedItemsTab" resourceBundle="com.ptc.core.ui.navigationRB">
+        <action name="relatedPartsDocuments" type="part"/>
+        <action name="relatedPartsReferences" type="part"/>
+        <action name="relatedPartsCADDocuments" type="part"/>
+        <action name="alternates" type="part"/>
+        <action name="substitutes" type="part"/>
+        <action name="substitutesFor" type="part"/>
+        <action name="relatedMPMProcessPlans" type="part"/>
+        <action name="relatedPartsEnterpriseData" type="enterprisedata"/>
+        <action name="relatedPartsLists" type="part"/>
+        <action name="missingObjectsTable" type="persistedCollectable"/>
+        <action name="relatedDesignSolution" type="part"/>                <!-- Design Solutions -->
+        <action name="distributionList" type="tgt"/>
     </model>
 
     <!--modify by wangtong at 20191024 start-->
@@ -1246,4 +1249,13 @@
         <action name="clientButton" type="modify"/>
     </model>
     <!--modify by lzy at 20200108 end-->
+
+    <!--add by lzy at 20200409 start-->
+    <model name="changeTask.table.create_startup">
+        <description>actions for ext.appo.change.mvc.builder.ChangeTaskTableBuilder</description>
+        <action name="startupChangeTask" type="modify" shortcut="true"/>
+        <action name="addChangeTask" type="modify" shortcut="true"/>
+    </model>
+    <!--add by lzy at 20200409 end-->
+
 </actionmodels>

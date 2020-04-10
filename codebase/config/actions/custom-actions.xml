@@ -793,6 +793,14 @@
         </action>
     </objecttype>
 
+    <!--add by lzy at 20200408 start-->
+    <objecttype name="changeHistory" resourceBundle="ext.appo.change.resource.ModifyResource">
+        <action name="exportChangeHistory" ajax="component">
+            <command method="execute" url="netmarkets/jsp/ext/appo/change/report/exportChangeHistoryReport.jsp" windowType="popup"/>
+        </action>
+    </objecttype>
+    <!--add by lzy at 20200408 end-->
+
     <!--modify by wangtong at 20191024 start-->
     <include href="config/actions/modify-actions.xml"/>
     <!--modify by wangtong at 20191024 end-->
