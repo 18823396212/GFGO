@@ -290,14 +290,14 @@ public class ChangeActivity2Util implements ChangeConstants, ModifyConstants {
                     //value = value.replaceFirst("BOM变更;", "").replaceFirst("图纸变更;", "");
                     value = value.replaceFirst("BOM变更升版;", "").replaceFirst("图纸变更升版;", "").replaceFirst("替换;", "");
                     //modify by xiebowen at 2019/12/25  start
-//                //add by lzy at 20200401 start
-//                if (RESPONSIBLEPERSON_COMPID.equals(key)){
-//                    WTUser user= PreferenceUtilityForExpImp.getUser(value);
-//                    if (user!=null){
-//                        value=user.getFullName();
-//                    }
-//                }
-//                //add by lzy at 20200401 end
+                //add by lzy at 20200401 start
+                if (RESPONSIBLEPERSON_COMPID.equals(key)){
+                    WTUser user= PreferenceUtilityForExpImp.getUser(value);
+                    if (user!=null){
+                        value=user.getFullName();
+                    }
+                }
+                //add by lzy at 20200401 end
 
                 attributesMap.put(ibaEntryMap.getKey(), value);
             }
