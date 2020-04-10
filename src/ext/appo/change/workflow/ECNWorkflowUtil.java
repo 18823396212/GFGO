@@ -1,7 +1,23 @@
 package ext.appo.change.workflow;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+
 import com.ptc.windchill.enterprise.team.server.TeamCCHelper;
 import com.ptc.windchill.pdmlink.change.server.impl.WorkflowProcessHelper;
+
 import ext.appo.change.ModifyHelper;
 import ext.appo.change.constants.ModifyConstants;
 import ext.appo.change.models.CorrelationObjectLink;
@@ -11,22 +27,29 @@ import ext.appo.change.util.ModifyUtils;
 import ext.appo.ecn.common.util.ChangePartQueryUtils;
 import ext.appo.ecn.constants.ChangeConstants;
 import ext.appo.part.workflow.PartWorkflowUtil;
-import ext.appo.util.excel.AppoExcelUtil;
 import ext.com.workflow.WorkflowUtil;
-import ext.generic.reviewObject.model.ProcessReviewObjectLink;
-import ext.generic.reviewObject.model.ProcessReviewObjectLinkHelper;
 import ext.lang.PIStringUtils;
 import ext.pi.PIException;
 import ext.pi.core.PIAttributeHelper;
 import ext.pi.core.PIClassificationHelper;
 import ext.pi.core.PICoreHelper;
 import ext.pi.core.PIWorkflowHelper;
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-import wt.change2.*;
+import wt.change2.AffectedActivityData;
+import wt.change2.ChangeActivityIfc;
+import wt.change2.ChangeHelper2;
+import wt.change2.Changeable2;
+import wt.change2.WTChangeActivity2;
+import wt.change2.WTChangeOrder2;
+import wt.change2.WTChangeRequest2;
 import wt.doc.WTDocument;
 import wt.epm.EPMDocument;
-import wt.fc.*;
+import wt.fc.ObjectReference;
+import wt.fc.Persistable;
+import wt.fc.PersistenceHelper;
+import wt.fc.PersistenceServerHelper;
+import wt.fc.QueryResult;
+import wt.fc.ReferenceFactory;
+import wt.fc.WTObject;
 import wt.fc.collections.WTArrayList;
 import wt.fc.collections.WTCollection;
 import wt.fc.collections.WTHashSet;
@@ -61,10 +84,6 @@ import wt.workflow.engine.WfEngineHelper;
 import wt.workflow.engine.WfEngineServerHelper;
 import wt.workflow.engine.WfProcess;
 
-import java.io.IOException;
-import java.sql.Timestamp;
-import java.util.*;
-
 /**
  * ECN主流程相关处理逻辑
  */
@@ -83,6 +102,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
 
     /**
      * 同步ECA状态-已解决表达式逻辑
+     *
      * @param pbo
      * @param self
      * @return
@@ -92,14 +112,16 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
         String routing = "OK";
 
         if (pbo instanceof WTChangeOrder2) {
-            //所有ECA都是已解决,已取消状态
-            if (WorkflowProcessHelper.isRelatedChildrenInStates(pbo, new String[]{RESOLVED, CANCELLED}, new String[]{TYPE_1, TYPE_2})) {
-                Set<CorrelationObjectLink> links = ModifyHelper.service.queryCorrelationObjectLinks((WTChangeOrder2) pbo, LINKTYPE_1);
+            // 所有ECA都是已解决,已取消状态
+            if (WorkflowProcessHelper.isRelatedChildrenInStates(pbo, new String[] { RESOLVED, CANCELLED },
+                    new String[] { TYPE_1, TYPE_2 })) {
+                Set<CorrelationObjectLink> links = ModifyHelper.service
+                        .queryCorrelationObjectLinks((WTChangeOrder2) pbo, LINKTYPE_1);
                 LOGGER.info("=====syncExpression.links: " + links);
                 for (CorrelationObjectLink link : links) {
                     Persistable persistable = ModifyUtils.getPersistable(link.getEcaIdentifier());
                     if (!isReplace((WTChangeActivity2) persistable)) {
-                        //存在路由不是「已完成」继续等待
+                        // 存在路由不是「已完成」继续等待
                         if (!ROUTING_3.equals(link.getRouting())) {
                             routing = "WAIT";
                             break;
@@ -107,7 +129,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                     }
                 }
             }
-            //存在ECA不是「已解决」,已取消状态，继续等待
+            // 存在ECA不是「已解决」,已取消状态，继续等待
             else {
                 routing = "WAIT";
             }
@@ -118,10 +140,10 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
 
     /**
      * 2.2.1 若已经产生“修订对象”，且“修订对象”的状态为“正在工作”或“重新工作”才可以删除“受影响对象”，且受影响对象需要恢复到变更前的版本，
-     * 2.2.2 删除的“受影响对象”关联的ECA及ECN中的“受影响的对象”“产生的对象”列表需要同步处理。
-     * 2.2.3 删除的“受影响对象”的收集图纸对象需要同步处理。
-     * 2.2.4 若ECA中无受影响的对象，需要删除当前的ECA对象及流程
+     * 2.2.2 删除的“受影响对象”关联的ECA及ECN中的“受影响的对象”“产生的对象”列表需要同步处理。 2.2.3
+     * 删除的“受影响对象”的收集图纸对象需要同步处理。 2.2.4 若ECA中无受影响的对象，需要删除当前的ECA对象及流程
      * 驳回处理（新增）：保留ECA，状态更改为已取消，ECA流程结束，产生的对象还原，ECA跟受影响对象关系解除。
+     *
      * @param pbo
      * @param self
      * @throws WTException
@@ -136,59 +158,67 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
 
                 boolean flog = false;
                 WTChangeOrder2 changeOrder2 = (WTChangeOrder2) pbo;
-                //获取ECN关联的ECA
+                // 获取ECN关联的ECA
                 Collection<WTChangeActivity2> activity2s = ModifyUtils.getChangeActivities(changeOrder2);
                 for (WTChangeActivity2 activity2 : activity2s) {
-                    //判断ECA的状态是否为「已取消」
+                    // 判断ECA的状态是否为「已取消」
                     if (CANCELLED.equals(activity2.getState().toString())) {
-                        //更新Link的路由为「已驳回」并清空ECA的Id
+                        // 更新Link的路由为「已驳回」并清空ECA的Id
                         if (PICoreHelper.service.isTypeOrSubType(activity2, TYPE_3)) {
-                            TransactionTask task = ModifyHelper.service.queryTransactionTask(changeOrder2, activity2, "");
+                            TransactionTask task = ModifyHelper.service.queryTransactionTask(changeOrder2, activity2,
+                                    "");
                             ModifyHelper.service.updateTransactionTask(task, "");
-                            CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(changeOrder2, task);
+                            CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(changeOrder2,
+                                    task);
                             if (link != null) {
-                                ModifyHelper.service.updateCorrelationObjectLink(link, link.getEcaIdentifier(), link.getAadDescription(), ROUTING_2);
+                                ModifyHelper.service.updateCorrelationObjectLink(link, link.getEcaIdentifier(),
+                                        link.getAadDescription(), ROUTING_2);
                             }
                         } else {
-                            Set<CorrelationObjectLink> links = ModifyHelper.service.queryCorrelationObjectLinks(activity2, LINKTYPE_1);
+                            Set<CorrelationObjectLink> links = ModifyHelper.service
+                                    .queryCorrelationObjectLinks(activity2, LINKTYPE_1);
                             for (CorrelationObjectLink link : links) {
-                                ModifyHelper.service.updateCorrelationObjectLink(link, "", link.getAadDescription(), ROUTING_2);
+                                ModifyHelper.service.updateCorrelationObjectLink(link, "", link.getAadDescription(),
+                                        ROUTING_2);
                             }
                         }
-                        //获取所有需要回退版本的对象
-                        Collection<Persistable> collection = ModifyUtils.getRollbackObject(activity2);//获取ECA关联的产生对象
-                        LOGGER.info("=====syncExpression.activity2: " + activity2.getNumber() + " >>>>>collection: " + collection);
-                        //移除受影响对象
+                        // 获取所有需要回退版本的对象
+                        Collection<Persistable> collection = ModifyUtils.getRollbackObject(activity2);// 获取ECA关联的产生对象
+                        LOGGER.info("=====syncExpression.activity2: " + activity2.getNumber() + " >>>>>collection: "
+                                + collection);
+                        // 移除受影响对象
                         ModifyUtils.removeAffectedActivityData(activity2);
-                        //移除产生对象
+                        // 移除产生对象
                         ModifyUtils.removeChangeRecord(activity2);
-                        //删除进程
+                        // 删除进程
                         QueryResult result = WfEngineHelper.service.getAssociatedProcesses(activity2, null, null);
-                        LOGGER.info(">>>>>>>>>>syncExpression.activity2:" + activity2.getNumber() + " >>>>>result: " + result.size());
+                        LOGGER.info(">>>>>>>>>>syncExpression.activity2:" + activity2.getNumber() + " >>>>>result: "
+                                + result.size());
                         while (result.hasMoreElements()) {
                             WfProcess process = (WfProcess) result.nextElement();
                             LOGGER.info(">>>>>>>>>>syncExpression.process:" + process);
-                            //add by lzy at 20191207 start
-                            //终止进程,不删除进程，不删除ECA
+                            // add by lzy at 20191207 start
+                            // 终止进程,不删除进程，不删除ECA
                             PIWorkflowHelper.service.stop(process);
-                            //PersistenceServerHelper.manager.remove(process);
+                            // PersistenceServerHelper.manager.remove(process);
                         }
-                        //删除ECA
-                        //PersistenceServerHelper.manager.remove(activity2);
-                        //设置ECA状态为-已取消
+                        // 删除ECA
+                        // PersistenceServerHelper.manager.remove(activity2);
+                        // 设置ECA状态为-已取消
                         State state = State.toState(CANCELLED);
                         LifeCycleHelper.service.setLifeCycleState(activity2, state);
-                        //add by lzy at 20191207 end
-                        //删除修订版本
+                        // add by lzy at 20191207 end
+                        // 删除修订版本
                         SandboxHelper.service.removeObjects(new WTHashSet(collection));
                         flog = true;
                     }
                 }
                 if (!flog) {
-                    //其他驳回情况处理
+                    // 其他驳回情况处理
                     String ecnVid = String.valueOf(PICoreHelper.service.getBranchId(changeOrder2));
                     LOGGER.info(">>>>>>>>>>syncExpression.ecnVid:" + ecnVid);
-                    CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, CONSTANTS_7, CONSTANTS_7);
+                    CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, CONSTANTS_7,
+                            CONSTANTS_7);
                     if (null != link && ROUTING_2.equals(link.getRouting())) {
                         flog = true;
                     }
@@ -209,8 +239,8 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
     }
 
     /**
-     * 查询ECN与受影响对象的Link，是否存在路由为 已驳回的数据
-     * 存在则触发「修改变更申请」任务
+     * 查询ECN与受影响对象的Link，是否存在路由为 已驳回的数据 存在则触发「修改变更申请」任务
+     *
      * @param pbo
      * @param self
      * @throws WTException
@@ -218,24 +248,29 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
      */
     public boolean isRejected(WTObject pbo, ObjectReference self) throws WTException {
         if (pbo instanceof WTChangeOrder2) {
-            Set<CorrelationObjectLink> links = ModifyHelper.service.queryCorrelationObjectLinks((WTChangeOrder2) pbo, LINKTYPE_1, ROUTING_2);
+            Set<CorrelationObjectLink> links = ModifyHelper.service.queryCorrelationObjectLinks((WTChangeOrder2) pbo,
+                    LINKTYPE_1, ROUTING_2);
             LOGGER.info("=====isRejected.links1: " + links);
             System.out.println("=====isRejected.links1: " + links);
-            if (links.size() > 0) return true;
+            if (links.size() > 0)
+                return true;
             links = ModifyHelper.service.queryCorrelationObjectLinks((WTChangeOrder2) pbo, LINKTYPE_3, ROUTING_2);
             LOGGER.info("=====isRejected.links2: " + links);
             System.out.println("=====isRejected.links2: " + links);
-            if (links.size() > 0) return true;
-            links = ModifyHelper.service.queryCorrelationObjectLinks((WTChangeOrder2) pbo, CONSTANTS_7, ROUTING_2);//其他情况驳回判定
+            if (links.size() > 0)
+                return true;
+            links = ModifyHelper.service.queryCorrelationObjectLinks((WTChangeOrder2) pbo, CONSTANTS_7, ROUTING_2);// 其他情况驳回判定
             LOGGER.info("=====isRejected.links3: " + links);
             System.out.println("=====isRejected.links3: " + links);
-            if (links.size() > 0) return true;
+            if (links.size() > 0)
+                return true;
         }
         return false;
     }
 
     /**
      * 判定是否暂存
+     *
      * @param pbo
      * @param self
      * @return
@@ -244,7 +279,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
     public boolean isCache(WTObject pbo, ObjectReference self) throws WTException {
         String actionName = ModifyUtils.getValue(pbo, ATTRIBUTE_6);
         LOGGER.info("=====isCache.actionName: " + actionName);
-        if (CONSTANTS_1.equals(actionName)||CONSTANTS_12.equals(actionName)) {
+        if (CONSTANTS_1.equals(actionName) || CONSTANTS_12.equals(actionName)) {
             return true;
         }
         return false;
@@ -254,6 +289,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
      * 2.3 当选中“取消变更”，点击完成任务时
      * 2.3.1、需要判断是否所有子流程都处于实施状态（或者已取消状态）。（修改：子流程存在已完成状态也不能取消变更）
      * 2.3.2、若路由选择“取消变更”，需要恢复所有变更对象到变更前版本。
+     *
      * @param pbo
      * @param self
      * @throws WTException
@@ -264,9 +300,10 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
 
             Set<WTChangeActivity2> activity2s = new HashSet<>();
             Set<WTChangeActivity2> unfinished = new HashSet<>();
-            Set<CorrelationObjectLink> links = ModifyHelper.service.queryCorrelationObjectLinks(changeOrder2, LINKTYPE_1);
+            Set<CorrelationObjectLink> links = ModifyHelper.service.queryCorrelationObjectLinks(changeOrder2,
+                    LINKTYPE_1);
             LOGGER.info("=====cancelRoute.links: " + links);
-            link:for (CorrelationObjectLink link : links) {
+            link: for (CorrelationObjectLink link : links) {
                 Persistable persistable = ModifyUtils.getPersistable(link.getEcaIdentifier());
                 LOGGER.info("=====cancelRoute.persistable: " + persistable);
                 if (persistable instanceof WTChangeActivity2) {
@@ -275,12 +312,12 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
 
                     String routing = link.getRouting();
                     LOGGER.info("=====cancelRoute.routing: " + routing);
-                    //add by lzy at 20200103 start
-                    //替换类型不需判断路由
+                    // add by lzy at 20200103 start
+                    // 替换类型不需判断路由
                     Collection<Changeable2> befores = ModifyUtils.getChangeablesBefore(activity2);
                     for (Changeable2 before : befores) {
                         if (before instanceof WTPart) {
-                            String value = ModifyUtils.getValue(before, CHANGETYPE_COMPID);//获取物料变更类型
+                            String value = ModifyUtils.getValue(before, CHANGETYPE_COMPID);// 获取物料变更类型
                             String[] str = value.split(";");
                             if (str.length > 1) {
                                 value = str[1];
@@ -290,94 +327,96 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                             }
                         }
                     }
-                     //add by lzy at 20200103 start
+                    // add by lzy at 20200103 start
                     if (!ROUTING_2.equals(routing)) {
                         unfinished.add(activity2);
                     }
-                    //add by lzy at 2200103 end
-//                    if (!ROUTING_2.equals(routing) && !ROUTING_3.equals(routing)) {
-//                        unfinished.add(activity2);
-//                    }
+                    // add by lzy at 2200103 end
+                    // if (!ROUTING_2.equals(routing) &&
+                    // !ROUTING_3.equals(routing)) {
+                    // unfinished.add(activity2);
+                    // }
                 }
             }
             if (unfinished.isEmpty()) {
                 for (WTChangeActivity2 activity2 : activity2s) {
-                    //获取所有需要回退版本的对象
-                    Collection<Persistable> collection = ModifyUtils.getRollbackObject(activity2);//获取ECA关联的产生对象
-                    LOGGER.info("=====syncExpression.activity2: " + activity2.getNumber() + " >>>>>collection: " + collection);
-                    //移除受影响对象
+                    // 获取所有需要回退版本的对象
+                    Collection<Persistable> collection = ModifyUtils.getRollbackObject(activity2);// 获取ECA关联的产生对象
+                    LOGGER.info("=====syncExpression.activity2: " + activity2.getNumber() + " >>>>>collection: "
+                            + collection);
+                    // 移除受影响对象
                     ModifyUtils.removeAffectedActivityData(activity2);
-                    //移除产生对象
+                    // 移除产生对象
                     ModifyUtils.removeChangeRecord(activity2);
-                    //删除进程
+                    // 删除进程
                     QueryResult result = WfEngineHelper.service.getAssociatedProcesses(activity2, null, null);
-                    LOGGER.info(">>>>>>>>>>syncExpression.activity2:" + activity2.getNumber() + " >>>>>result: " + result.size());
+                    LOGGER.info(">>>>>>>>>>syncExpression.activity2:" + activity2.getNumber() + " >>>>>result: "
+                            + result.size());
                     while (result.hasMoreElements()) {
                         WfProcess process = (WfProcess) result.nextElement();
                         LOGGER.info(">>>>>>>>>>syncExpression.process:" + process);
-                        //终止进程
+                        // 终止进程
                         PIWorkflowHelper.service.stop(process);
-//                        PersistenceServerHelper.manager.remove(process);
+                        // PersistenceServerHelper.manager.remove(process);
                     }
-                    //删除ECA
+                    // 删除ECA
                     PersistenceServerHelper.manager.remove(activity2);
-                    //删除修订版本
+                    // 删除修订版本
                     SandboxHelper.service.removeObjects(new WTHashSet(collection));
                 }
-                //add by lzy at 20200114 start
+                // add by lzy at 20200114 start
                 Collection<WTChangeActivity2> wtChangeActivity2s = ModifyUtils.getChangeActivities(changeOrder2);
                 LOGGER.info("=====wtChangeActivity2s: " + wtChangeActivity2s);
                 for (WTChangeActivity2 activity2 : wtChangeActivity2s) {
-                    //更新Link的路由为「已驳回」并清空ECA的Id
+                    // 更新Link的路由为「已驳回」并清空ECA的Id
                     if (PICoreHelper.service.isTypeOrSubType(activity2, TYPE_3)) {
                         TransactionTask task = ModifyHelper.service.queryTransactionTask(changeOrder2, activity2, "");
                         ModifyHelper.service.updateTransactionTask(task, "");
-                        CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(changeOrder2, task);
+                        CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(changeOrder2,
+                                task);
                         if (link != null) {
-                            ModifyHelper.service.updateCorrelationObjectLink(link, link.getEcaIdentifier(), link.getAadDescription(), ROUTING_2);
+                            ModifyHelper.service.updateCorrelationObjectLink(link, link.getEcaIdentifier(),
+                                    link.getAadDescription(), ROUTING_2);
                         }
-                        //获取所有需要回退版本的对象
-                        Collection<Persistable> collection = ModifyUtils.getRollbackObject(activity2);//获取ECA关联的产生对象
+                        // 获取所有需要回退版本的对象
+                        Collection<Persistable> collection = ModifyUtils.getRollbackObject(activity2);// 获取ECA关联的产生对象
                         LOGGER.info("=====activity2: " + activity2.getNumber() + " >>>>>collection: " + collection);
-                        //移除受影响对象
+                        // 移除受影响对象
                         ModifyUtils.removeAffectedActivityData(activity2);
-                        //移除产生对象
+                        // 移除产生对象
                         ModifyUtils.removeChangeRecord(activity2);
-                        //删除进程
+                        // 删除进程
                         QueryResult result = WfEngineHelper.service.getAssociatedProcesses(activity2, null, null);
                         LOGGER.info(">>>>>>>>>>activity2:" + activity2.getNumber() + " >>>>>result: " + result.size());
                         while (result.hasMoreElements()) {
                             WfProcess process = (WfProcess) result.nextElement();
                             LOGGER.info(">>>>>>>>>>process:" + process);
-                            //add by lzy at 20191207 start
-                            //终止进程
+                            // add by lzy at 20191207 start
+                            // 终止进程
                             PIWorkflowHelper.service.stop(process);
-    //                        PersistenceServerHelper.manager.remove(process);
-    //                        //add by lzy at 20191207 end
+                            // PersistenceServerHelper.manager.remove(process);
+                            // //add by lzy at 20191207 end
                         }
-                        //删除ECA
+                        // 删除ECA
                         PersistenceServerHelper.manager.remove(activity2);
-                        //删除修订版本
+                        // 删除修订版本
                         SandboxHelper.service.removeObjects(new WTHashSet(collection));
                     }
                 }
-                //add by lzy at 20200114 end
+                // add by lzy at 20200114 end
             } else {
                 for (WTChangeActivity2 activity2 : unfinished) {
-                    MESSAGES.add("变更申请「" + changeOrder2.getNumber() + "」关联的更改任务「" + activity2.getNumber() + "」已完成或未完成或未取消，不允许取消变更！");
+                    MESSAGES.add("变更申请「" + changeOrder2.getNumber() + "」关联的更改任务「" + activity2.getNumber()
+                            + "」已完成或未完成或未取消，不允许取消变更！");
                 }
                 compoundMessage();
             }
         }
     }
 
-
-
-
     /**
-     * 2.4 当选中“提交”，点击完成任务时
-     * 2.4.1、ECN流程正常流向。
-     * 2.4.2、启动新创建的对象的ECA流程。
+     * 2.4 当选中“提交”，点击完成任务时 2.4.1、ECN流程正常流向。 2.4.2、启动新创建的对象的ECA流程。
+     *
      * @param pbo
      * @param self
      * @throws WTException
@@ -386,35 +425,39 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
         if (pbo instanceof WTChangeOrder2) {
             WTChangeOrder2 changeOrder2 = (WTChangeOrder2) pbo;
 
-            //收集需要创建ECA的部件、文档、CAD文档
+            // 收集需要创建ECA的部件、文档、CAD文档
             Map<Persistable, Collection<Persistable>> collectionMap = collectionObjectsAffected(changeOrder2);
 
-            //检查是否存在独立进行变更的说明文档
-            if (MESSAGES.size() > 0) compoundMessage();
+            // 检查是否存在独立进行变更的说明文档
+            if (MESSAGES.size() > 0)
+                compoundMessage();
 
-            //创建ECA并关联受影响对象、产生对象
+            // 创建ECA并关联受影响对象、产生对象
             createChangeActivity2(changeOrder2, collectionMap);
 
-            //创建事务性ECA
+            // 创建事务性ECA
             createTransactionECA(changeOrder2);
 
-            //add by lzy at 20191230 start
-            //删除other路由link
+            // add by lzy at 20191230 start
+            // 删除other路由link
             setOtherRouting(changeOrder2);
-            //add by lzy at 20191230 end
+            // add by lzy at 20191230 end
+
+            triggerEca(changeOrder2, collectionMap);
         }
     }
 
     /**
-     * 收集需要创建ECA的数据
-     * 「修改变更申请」节点提交删除ECA可以在这里操作
+     * 收集需要创建ECA的数据 「修改变更申请」节点提交删除ECA可以在这里操作
+     *
      * @param changeOrder2
      * @return
      * @throws WTException
      */
-    public Map<Persistable, Collection<Persistable>> collectionObjectsAffected(WTChangeOrder2 changeOrder2) throws WTException {
-        Set<WTPart> parts = new HashSet<>();//部件集合
-        Map<String, Persistable> docMap = new HashMap<>();//文档集合
+    public Map<Persistable, Collection<Persistable>> collectionObjectsAffected(WTChangeOrder2 changeOrder2)
+            throws WTException {
+        Set<WTPart> parts = new HashSet<>();// 部件集合
+        Map<String, Persistable> docMap = new HashMap<>();// 文档集合
         Set<CorrelationObjectLink> links = ModifyHelper.service.queryCorrelationObjectLinks(changeOrder2, LINKTYPE_1);
         LOGGER.info("=====collectionObjectsAffected.links: " + links);
         for (CorrelationObjectLink link : links) {
@@ -435,12 +478,12 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
         LOGGER.info("=====collectionObjectsAffected.docMap: " + docMap);
 
         Map<Persistable, Collection<Persistable>> collectionMap = new HashMap<>();
-        //部件与关联的图纸集合
+        // 部件与关联的图纸集合
         for (WTPart part : parts) {
-            Collection<Persistable> associatedItems = new HashSet<>();//收集图文档
+            Collection<Persistable> associatedItems = new HashSet<>();// 收集图文档
 
-            //按照收集规则获取关联的所有WTDocument文档和EPMDocument文档
-            QueryResult result = PartDocHelper.service.getAssociatedDocuments(part);//获取部件关联的图文档
+            // 按照收集规则获取关联的所有WTDocument文档和EPMDocument文档
+            QueryResult result = PartDocHelper.service.getAssociatedDocuments(part);// 获取部件关联的图文档
             LOGGER.info("=====collectionObjectsAffected.part: " + part.getNumber() + " >>>>>result: " + result.size());
             while (result.hasMoreElements()) {
                 Object object = result.nextElement();
@@ -462,7 +505,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
 
             collectionMap.put(part, associatedItems);
         }
-        //游离的图纸（WTDocument、EPMDocument）单独走「图纸变更」ECA
+        // 游离的图纸（WTDocument、EPMDocument）单独走「图纸变更」ECA
         for (Persistable persistable : docMap.values()) {
             if (persistable instanceof WTDocument) {
                 WTDocument document = (WTDocument) persistable;
@@ -478,13 +521,15 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
 
     /**
      * 「修改变更申请」节点创建ECA
+     *
      * @param changeOrder2
      * @param collectionMap
      * @throws WTException
      */
-    public void createChangeActivity2(WTChangeOrder2 changeOrder2, Map<Persistable, Collection<Persistable>> collectionMap) throws WTException {
+    public void createChangeActivity2(WTChangeOrder2 changeOrder2,
+                                      Map<Persistable, Collection<Persistable>> collectionMap) throws WTException {
         try {
-            Map<String, Changeable2> reviseMap = new HashMap<>();//已修订对象
+            Map<String, Changeable2> reviseMap = new HashMap<>();// 已修订对象
             for (Map.Entry<Persistable, Collection<Persistable>> entryMap : collectionMap.entrySet()) {
                 if (entryMap.getKey() instanceof Changeable2) {
                     Changeable2 changeable2 = (Changeable2) entryMap.getKey();
@@ -493,10 +538,11 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                     String type = "";
                     String flowName = "";
                     String description = "";
-                    //add by lzy at 20191231 start
-//                    String changeObjectType = ModifyUtils.getValue(changeable2, ATTRIBUTE_7);//变更对象类型
-                    String changeObjectType = ModifyUtils.getValue(changeable2, CHANGETYPE_COMPID);//物料变更类型
-                    //add by lzy at 20191231 end
+                    // add by lzy at 20191231 start
+                    // String changeObjectType =
+                    // ModifyUtils.getValue(changeable2, ATTRIBUTE_7);//变更对象类型
+                    String changeObjectType = ModifyUtils.getValue(changeable2, CHANGETYPE_COMPID);// 物料变更类型
+                    // add by lzy at 20191231 end
                     if (changeObjectType.contains(VALUE_5)) {
                         type = TYPE_1;
                         flowName = FLOWNAME_1;
@@ -506,29 +552,33 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                         flowName = FLOWNAME_2;
                         description = FLOWNAME_4;
                     }
-                    //add by lzy at 20191229 start
+                    // add by lzy at 20191229 start
                     else if (changeObjectType.contains(VALUE_1)) {
                         type = TYPE_1;
                         flowName = FLOWNAME_1;
                         description = FLOWNAME_3;
                     }
-                    //add by lzy at 20191229 end
-                    //游离WTDocument、EPMDocument(图纸单独走变更的场景)，创建图纸变更ECA
+                    // add by lzy at 20191229 end
+                    // 游离WTDocument、EPMDocument(图纸单独走变更的场景)，创建图纸变更ECA
                     if (StringUtils.isEmpty(type) && !(changeable2 instanceof WTPart)) {
                         type = TYPE_2;
                         flowName = FLOWNAME_2;
                         description = FLOWNAME_4;
                     }
-                    LOGGER.info(">>>>>>>>>>createChangeActivity2.type:" + type + " >>>>>flowName: " + flowName + " >>>>>description: " + description);
-                    if (StringUtils.isEmpty(type) || StringUtils.isEmpty(flowName)) continue;
+                    LOGGER.info(">>>>>>>>>>createChangeActivity2.type:" + type + " >>>>>flowName: " + flowName
+                            + " >>>>>description: " + description);
+                    if (StringUtils.isEmpty(type) || StringUtils.isEmpty(flowName))
+                        continue;
 
                     // 责任人
                     String assigneeName = ModifyUtils.getValue(changeable2, RESPONSIBLEPERSON_COMPID);
 
                     // 创建ECA
-                    WTChangeActivity2 eca = ModifyUtils.createChangeTask(changeOrder2, ModifyUtils.getNumber(changeable2), null, null, type, assigneeName);
+                    WTChangeActivity2 eca = ModifyUtils.createChangeTask(changeOrder2,
+                            ModifyUtils.getNumber(changeable2), null, null, type, assigneeName);
                     LOGGER.info(">>>>>>>>>>createChangeActivity2.eca:" + eca);
-                    if (eca == null) continue;
+                    if (eca == null)
+                        continue;
 
                     // 收集需要添加的受影响对象
                     Vector<Changeable2> vector = new Vector<>();
@@ -544,50 +594,60 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                     ModifyUtils.addAffectedActivityData(eca, vector);
 
                     // 期望完成日期
-                    eca = ModifyUtils.updateNeedDate(eca, ModifyUtils.getValue(changeable2, ChangeConstants.COMPLETIONTIME_COMPID));
+                    eca = ModifyUtils.updateNeedDate(eca,
+                            ModifyUtils.getValue(changeable2, ChangeConstants.COMPLETIONTIME_COMPID));
 
                     String ecnVid = String.valueOf(PICoreHelper.service.getBranchId(changeOrder2));
                     LOGGER.info(">>>>>>>>>>createChangeActivity2.ecnVid:" + ecnVid);
 
-                    //更新受影响对象描述，受影响对象Link路由、ECA ID
+                    // 更新受影响对象描述，受影响对象Link路由、ECA ID
                     updateDescription(ecnVid, eca, changeable2);
-                    //更新部件关联的说明文档及图纸受影响对象描述，受影响对象Link路由、ECA ID
+                    // 更新部件关联的说明文档及图纸受影响对象描述，受影响对象Link路由、ECA ID
                     for (Persistable persistable : entryMap.getValue()) {
                         if (persistable instanceof Changeable2) {
                             updateDescription(ecnVid, eca, (Changeable2) persistable);
                         }
                     }
 
-//                    // 部件‘类型’选择‘替换’时ECA状态设置为‘已发布’,选择‘升级’时ECA状态设置为‘开启’
-//                    String attributeValue = ModifyUtils.getValue(changeable2, CHANGETYPE_COMPID);
-//                    if (PIStringUtils.isNotNull(attributeValue) && attributeValue.contains(VALUE_1)) {
-//                        eca = (WTChangeActivity2) PICoreHelper.service.setLifeCycleState(eca, RESOLVED);
-//                    } else if (PIStringUtils.isNotNull(attributeValue) && attributeValue.contains(VALUE_4)) {
-//                        eca = (WTChangeActivity2) PICoreHelper.service.setLifeCycleState(eca, OPEN);
-//                    }
+                    // // 部件‘类型’选择‘替换’时ECA状态设置为‘已发布’,选择‘升级’时ECA状态设置为‘开启’
+                    // String attributeValue = ModifyUtils.getValue(changeable2,
+                    // CHANGETYPE_COMPID);
+                    // if (PIStringUtils.isNotNull(attributeValue) &&
+                    // attributeValue.contains(VALUE_1)) {
+                    // eca = (WTChangeActivity2)
+                    // PICoreHelper.service.setLifeCycleState(eca, RESOLVED);
+                    // } else if (PIStringUtils.isNotNull(attributeValue) &&
+                    // attributeValue.contains(VALUE_4)) {
+                    // eca = (WTChangeActivity2)
+                    // PICoreHelper.service.setLifeCycleState(eca, OPEN);
+                    // }
 
                     // 部件‘类型’选择‘替换’时ECA状态设置为‘已解决’,不启动ECA,选择‘升级’时ECA状态设置为‘开启’
-                    //add by lzy at 20191231 start
+                    // add by lzy at 20191231 start
                     String attributeValue = ModifyUtils.getValue(changeable2, CHANGETYPE_COMPID);
-//                    String attributeValue = ModifyUtils.getValue(changeable2, CHANGOBJECTETYPE_COMPID);
-                    //add by lzy at 20191231  end
+                    // String attributeValue = ModifyUtils.getValue(changeable2,
+                    // CHANGOBJECTETYPE_COMPID);
+                    // add by lzy at 20191231 end
                     if (PIStringUtils.isNotNull(attributeValue) && attributeValue.contains(VALUE_1)) {
                         PICoreHelper.service.setLifeCycleState(eca, RESOLVED);
-//                        add by lzy at 20191209 start
+                        // add by lzy at 20191209 start
                     } else if (PIStringUtils.isNotNull(attributeValue) && attributeValue.contains(VALUE_4)) {
-//                    } else if (PIStringUtils.isNotNull(attributeValue) && (attributeValue.contains(VALUE_7)||attributeValue.contains(VALUE_8))) {
-//                        add by lzy at 20191209 end
+                        // } else if (PIStringUtils.isNotNull(attributeValue) &&
+                        // (attributeValue.contains(VALUE_7)||attributeValue.contains(VALUE_8)))
+                        // {
+                        // add by lzy at 20191209 end
 
-                        //修订受影响对象，并添加到产生对象列表
-                        //add by lzy at 20200114 start
-//                        WTCollection collection = ModifyUtils.revise(vector, reviseMap);
-                        WTCollection collection = ModifyUtils.revise(vector, reviseMap,eca);
-                        //add by lzy at 20200114 end
+                        // 修订受影响对象，并添加到产生对象列表
+                        // add by lzy at 20200114 start
+                        // WTCollection collection = ModifyUtils.revise(vector,
+                        // reviseMap);
+                        WTCollection collection = ModifyUtils.revise(vector, reviseMap, eca);
+                        // add by lzy at 20200114 end
                         LOGGER.info(">>>>>>>>>>createChangeActivity2.collection:" + collection);
                         ModifyUtils.AddChangeRecord2(eca, collection);
 
                         eca = (WTChangeActivity2) PICoreHelper.service.setLifeCycleState(eca, OPEN);
-                        //启动ECA流程
+                        // 启动ECA流程
                         ModifyUtils.startWorkflow(eca, flowName, description);
                     }
                 }
@@ -599,6 +659,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
 
     /**
      * 创建事务性任务
+     *
      * @param changeOrder2
      * @throws WTException
      */
@@ -611,21 +672,26 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                 if (persistable instanceof TransactionTask) {
                     TransactionTask task = (TransactionTask) persistable;
 
-                    String changeTheme = task.getChangeTheme();//变更主题
-                    String changeDescribe = task.getChangeDescribe();//变更任务描述
-                    String responsible = task.getResponsible();//责任人
-                    String needDate = task.getNeedDate();//期望完成日期
-                    String changeActivity2 = task.getChangeActivity2();//ECA
-                    LOGGER.info("createTransactionECA>>>>>>>>>>changeTheme: " + changeTheme + " changeDescribe: " + changeDescribe + " responsible: " + responsible + " needDate: " + needDate + " changeActivity2: " + changeActivity2);
+                    String changeTheme = task.getChangeTheme();// 变更主题
+                    String changeDescribe = task.getChangeDescribe();// 变更任务描述
+                    String responsible = task.getResponsible();// 责任人
+                    String needDate = task.getNeedDate();// 期望完成日期
+                    String changeActivity2 = task.getChangeActivity2();// ECA
+                    LOGGER.info("createTransactionECA>>>>>>>>>>changeTheme: " + changeTheme + " changeDescribe: "
+                            + changeDescribe + " responsible: " + responsible + " needDate: " + needDate
+                            + " changeActivity2: " + changeActivity2);
 
                     WTChangeActivity2 activity2 = null;
                     if (PIStringUtils.isNotNull(changeActivity2)) {
-                        activity2 = (WTChangeActivity2) (new ReferenceFactory()).getReference(changeActivity2).getObject();
+                        activity2 = (WTChangeActivity2) (new ReferenceFactory()).getReference(changeActivity2)
+                                .getObject();
                     }
 
                     if (activity2 == null) {
-                        activity2 = ModifyUtils.createChangeTask(changeOrder2, changeTheme, null, changeDescribe, TYPE_3, responsible);
-                        ModifyHelper.service.updateTransactionTask(task, PersistenceHelper.getObjectIdentifier(activity2).toString());
+                        activity2 = ModifyUtils.createChangeTask(changeOrder2, changeTheme, null, changeDescribe,
+                                TYPE_3, responsible);
+                        ModifyHelper.service.updateTransactionTask(task,
+                                PersistenceHelper.getObjectIdentifier(activity2).toString());
                     } else {
                         // 名称修改
                         if (!activity2.getName().equals(changeTheme)) {
@@ -643,10 +709,11 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                     if (PIStringUtils.isNotNull(needDate)) {
                         ModifyUtils.updateNeedDate(activity2, needDate);
                     }
-                    //更新路由为已创建
+                    // 更新路由为已创建
                     String ecnVid = String.valueOf(changeOrder2.getBranchIdentifier());
                     String taskOid = String.valueOf(task.getPersistInfo().getObjectIdentifier().getId());
-                    CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, taskOid, LINKTYPE_3);
+                    CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, taskOid,
+                            LINKTYPE_3);
                     link.setRouting(ROUTING_1);
                     PersistenceServerHelper.manager.update(link);
                 }
@@ -658,6 +725,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
 
     /**
      * 更新受影响对象描述，受影响对象Link路由、ECA ID
+     *
      * @param ecnVid
      * @param eca
      * @param changeable2
@@ -686,6 +754,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
 
     /**
      * 收集子流程会签者、审核者、批准者到ECN流程接收者
+     *
      * @param pbo
      * @param self
      * @throws WTException
@@ -700,30 +769,34 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
             LOGGER.info(">>>>>>>>>>collectionNoticeMember.collection:" + collection);
             for (WTChangeActivity2 activity2 : collection) {
                 QueryResult result = WfEngineHelper.service.getAssociatedProcesses(activity2, null, null);
-                LOGGER.info(">>>>>>>>>>collectionNoticeMember.activity2:" + activity2.getNumber() + " >>>>>result: " + result.size());
+                LOGGER.info(">>>>>>>>>>collectionNoticeMember.activity2:" + activity2.getNumber() + " >>>>>result: "
+                        + result.size());
                 while (result.hasMoreElements()) {
                     WfProcess sourceProcess = (WfProcess) result.nextElement();
                     LOGGER.info(">>>>>>>>>>collectionNoticeMember.sourceProcess:" + sourceProcess);
 
-                    //检查任务节点角色是否根据Excel配置改变
-                    /*Set<Role> roles = new HashSet<>();
-                    QueryResult workItems = PIWorkflowHelper.service.findWorkItems(sourceProcess, true);
-                    while (workItems.hasMoreElements()) {
-                        WorkItem workItem = (WorkItem) workItems.nextElement();
-                        WfAssignedActivity activity = (WfAssignedActivity) workItem.getSource().getObject();
-                        String name = activity.getName();
-                        if (WORKITEMNAME.contains(name)) {
-                            roles.add(workItem.getRole());
-                        }
-                    }
+                    // 检查任务节点角色是否根据Excel配置改变
+                    /*
+                     * Set<Role> roles = new HashSet<>(); QueryResult workItems
+                     * = PIWorkflowHelper.service.findWorkItems(sourceProcess,
+                     * true); while (workItems.hasMoreElements()) { WorkItem
+                     * workItem = (WorkItem) workItems.nextElement();
+                     * WfAssignedActivity activity = (WfAssignedActivity)
+                     * workItem.getSource().getObject(); String name =
+                     * activity.getName(); if (WORKITEMNAME.contains(name)) {
+                     * roles.add(workItem.getRole()); } }
+                     *
+                     * for (Role role : roles) {
+                     * PIWorkflowHelper.service.copyPrincipals(sourceProcess,
+                     * role, destProcess, Role.toRole(ROLE_1), false); }
+                     */
 
-                    for (Role role : roles) {
-                        PIWorkflowHelper.service.copyPrincipals(sourceProcess, role, destProcess, Role.toRole(ROLE_1), false);
-                    }*/
-
-                    PIWorkflowHelper.service.copyPrincipals(sourceProcess, Role.toRole(ROLE_2), destProcess, Role.toRole(ROLE_1), false);//会签者
-                    PIWorkflowHelper.service.copyPrincipals(sourceProcess, Role.toRole(ROLE_3), destProcess, Role.toRole(ROLE_1), false);//审核者
-                    PIWorkflowHelper.service.copyPrincipals(sourceProcess, Role.toRole(ROLE_4), destProcess, Role.toRole(ROLE_1), false);//批准者
+                    PIWorkflowHelper.service.copyPrincipals(sourceProcess, Role.toRole(ROLE_2), destProcess,
+                            Role.toRole(ROLE_1), false);// 会签者
+                    PIWorkflowHelper.service.copyPrincipals(sourceProcess, Role.toRole(ROLE_3), destProcess,
+                            Role.toRole(ROLE_1), false);// 审核者
+                    PIWorkflowHelper.service.copyPrincipals(sourceProcess, Role.toRole(ROLE_4), destProcess,
+                            Role.toRole(ROLE_1), false);// 批准者
                 }
             }
         }
@@ -731,6 +804,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
 
     /**
      * 获取ECN关联ECA的产生对象
+     *
      * @param pbo
      * @param self
      * @return
@@ -750,6 +824,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
 
     /**
      * ECN流程会签、批准驳回处理
+     *
      * @param pbo
      * @param self
      * @throws Exception
@@ -758,32 +833,37 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
         if (pbo instanceof WTChangeOrder2) {
             String ecnVid = String.valueOf(PICoreHelper.service.getBranchId(pbo));
             LOGGER.info(">>>>>>>>>>saveAttribute.ecnVid: " + ecnVid);
-            Set<CorrelationObjectLink> links = ModifyHelper.service.queryCorrelationObjectLinks((WTChangeOrder2) pbo, LINKTYPE_1);
-            //add by lzy at 20191231 start
-//            links.add(ModifyHelper.service.queryCorrelationObjectLink(ecnVid, CONSTANTS_7, CONSTANTS_7));
-            CorrelationObjectLink otherLink=ModifyHelper.service.queryCorrelationObjectLink(ecnVid, CONSTANTS_7, CONSTANTS_7);
-            if (otherLink!=null) links.add(otherLink);
-            //add by lzy at 20191231 end
+            Set<CorrelationObjectLink> links = ModifyHelper.service.queryCorrelationObjectLinks((WTChangeOrder2) pbo,
+                    LINKTYPE_1);
+            // add by lzy at 20191231 start
+            // links.add(ModifyHelper.service.queryCorrelationObjectLink(ecnVid,
+            // CONSTANTS_7, CONSTANTS_7));
+            CorrelationObjectLink otherLink = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, CONSTANTS_7,
+                    CONSTANTS_7);
+            if (otherLink != null)
+                links.add(otherLink);
+            // add by lzy at 20191231 end
             LOGGER.info("=====rejectDispose.links: " + links);
             System.out.println("=====rejectDispose.links: " + links);
             for (CorrelationObjectLink link : links) {
                 String approvalOpinion = link.getApprovalOpinion();
                 LOGGER.info("=====rejectDispose.approvalOpinion: " + approvalOpinion);
                 System.out.println("=====rejectDispose.approvalOpinion: " + approvalOpinion);
-                System.out.println("CONSTANTS_8.equals(approvalOpinion)=="+CONSTANTS_8.equals(approvalOpinion));
+                System.out.println("CONSTANTS_8.equals(approvalOpinion)==" + CONSTANTS_8.equals(approvalOpinion));
                 if (CONSTANTS_8.equals(approvalOpinion)) {
                     Persistable persistable = ModifyUtils.getPersistable(link.getEcaIdentifier());
-                    System.out.println("persistable=="+persistable);
+                    System.out.println("persistable==" + persistable);
                     if (persistable instanceof LifeCycleManaged)
                         ModifyUtils.setLifeCycleState((LifeCycleManaged) persistable, CANCELLED);
                     link.setApprovalOpinion("");
                     link.setRemark("");
                     link.setRouting(ROUTING_2);
-                    //add by lzy at 20200102 start
-//                    if (CONSTANTS_7.equals(link.getPerBranchIdentifier()) && CONSTANTS_7.equals(link.getLinkType())) {
-//                        link.setRouting(ROUTING_2);
-//                    }
-                    //add by lzy at 20200102 end
+                    // add by lzy at 20200102 start
+                    // if (CONSTANTS_7.equals(link.getPerBranchIdentifier()) &&
+                    // CONSTANTS_7.equals(link.getLinkType())) {
+                    // link.setRouting(ROUTING_2);
+                    // }
+                    // add by lzy at 20200102 end
                     PersistenceServerHelper.manager.update(link);
                 }
             }
@@ -792,17 +872,18 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
 
     /**
      * 获取ECA中所有受影响对象,如果物料变更类型为替换，则不需判断路由节点是否已完成，没启动流程，查询的路由节点为已创建
+     *
      * @param changeActivity2
      * @return
      * @throws WTException
      */
     public boolean isReplace(WTChangeActivity2 changeActivity2) throws WTException {
         Boolean isReplace = false;
-        if (changeActivity2!=null){
+        if (changeActivity2 != null) {
             Collection<Changeable2> befores = ModifyUtils.getChangeablesBefore(changeActivity2);
             for (Changeable2 before : befores) {
                 if (before instanceof WTPart) {
-                String value = ModifyUtils.getValue(before, CHANGETYPE_COMPID);//获取物料变更类型
+                    String value = ModifyUtils.getValue(before, CHANGETYPE_COMPID);// 获取物料变更类型
                     String[] str = value.split(";");
                     if (str.length > 1) {
                         value = str[1];
@@ -818,6 +899,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
 
     /**
      * 设置ECN解决时间
+     *
      * @param pbo
      * @param self
      * @throws WTException
@@ -833,6 +915,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
 
     /**
      * 设置ECN解决时间
+     *
      * @param pbo
      * @param self
      * @throws WTException
@@ -848,6 +931,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
 
     /**
      * 合成错误信息
+     *
      * @return
      */
     public void compoundMessage() throws WTException {
@@ -867,46 +951,51 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
 
     /**
      * 检查受影响对象是否为最新版本
+     *
      * @param pbo
      * @param self
      * @throws WTException
      */
     public void checkAffectObjectVesionNew(WTObject pbo, ObjectReference self) throws WTException {
-        Set<String> parts=new HashSet();//物料
-        Set<String> docs=new HashSet();//文档
-        String str="";
+        Set<String> parts = new HashSet();// 物料
+        Set<String> docs = new HashSet();// 文档
+        String str = "";
         if (pbo instanceof WTChangeOrder2) {
             WTChangeOrder2 changeOrder2 = (WTChangeOrder2) pbo;
-            //收集需要创建ECA的部件、文档、CAD文档
+            // 收集需要创建ECA的部件、文档、CAD文档
             Map<Persistable, Collection<Persistable>> collectionMap = collectionObjectsAffected(changeOrder2);
-            System.out.println("collectionMap=="+collectionMap);
+            System.out.println("collectionMap==" + collectionMap);
             for (Map.Entry<Persistable, Collection<Persistable>> entryMap : collectionMap.entrySet()) {
                 if (entryMap.getKey() instanceof Changeable2) {
                     Changeable2 changeable2 = (Changeable2) entryMap.getKey();
                     if (changeable2 instanceof WTPart) {
                         WTPart part = (WTPart) changeable2;
-//                        WTPart newParentPart = (WTPart) AffectedMaterialsUtil
-//                                .getLatestVersionByMaster(part.getMaster());
-//                        if (part.getViewName() != null
-//                                && part.getViewName().equals(newParentPart.getViewName())) {
-//                            if (!AffectedMaterialsUtil.getOidByObject(part)
-//                                    .equals(AffectedMaterialsUtil.getOidByObject(newParentPart))
-//                                    || !part.isLatestIteration()) {
-//                                System.out.println("old version");
-//                                parts.add(part.getNumber());
-//                            }
-//                        }
+                        // WTPart newParentPart = (WTPart) AffectedMaterialsUtil
+                        // .getLatestVersionByMaster(part.getMaster());
+                        // if (part.getViewName() != null
+                        // &&
+                        // part.getViewName().equals(newParentPart.getViewName()))
+                        // {
+                        // if (!AffectedMaterialsUtil.getOidByObject(part)
+                        // .equals(AffectedMaterialsUtil.getOidByObject(newParentPart))
+                        // || !part.isLatestIteration()) {
+                        // System.out.println("old version");
+                        // parts.add(part.getNumber());
+                        // }
+                        // }
 
-                        String view=part.getViewName();
-                        String number=part.getNumber();
-                        String version=part.getVersionInfo().getIdentifier().getValue() + "." + part.getIterationInfo().getIdentifier().getValue();
-                        Vector latestVector=getAllLatestWTParts(view,number);
-                        if (latestVector!=null&&latestVector.size()>0) {
+                        String view = part.getViewName();
+                        String number = part.getNumber();
+                        String version = part.getVersionInfo().getIdentifier().getValue() + "."
+                                + part.getIterationInfo().getIdentifier().getValue();
+                        Vector latestVector = getAllLatestWTParts(view, number);
+                        if (latestVector != null && latestVector.size() > 0) {
                             WTPart newPart = (WTPart) latestVector.get(0);
                             if (newPart != null) {
-                                String newVersion = newPart.getVersionInfo().getIdentifier().getValue() + "." + newPart.getIterationInfo().getIdentifier().getValue();
-                                System.out.println("version=="+version+"==newVersion=="+newVersion);
-                                if (!version.equals(newVersion)){
+                                String newVersion = newPart.getVersionInfo().getIdentifier().getValue() + "."
+                                        + newPart.getIterationInfo().getIdentifier().getValue();
+                                System.out.println("version==" + version + "==newVersion==" + newVersion);
+                                if (!version.equals(newVersion)) {
                                     parts.add(number);
                                 }
                             }
@@ -914,25 +1003,31 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                         for (Persistable persistable : entryMap.getValue()) {
                             if (persistable instanceof WTDocument) {
                                 WTDocument doc = (WTDocument) persistable;
-//                                WTDocument neWtDocument = (WTDocument) AffectedMaterialsUtil
-//                                        .getLatestVersionByMaster((WTDocumentMaster) document.getMaster());
-//
-//                                if (!AffectedMaterialsUtil.getOidByObject(document)
-//                                        .equals(AffectedMaterialsUtil.getOidByObject(neWtDocument))
-//                                        || !document.isLatestIteration()) {
-//                                    docs.add(document.getNumber());
-//                                }
-                                String docVersion=doc.getVersionInfo().getIdentifier().getValue() + "." + doc.getIterationInfo().getIdentifier().getValue();
+                                // WTDocument neWtDocument = (WTDocument)
+                                // AffectedMaterialsUtil
+                                // .getLatestVersionByMaster((WTDocumentMaster)
+                                // document.getMaster());
+                                //
+                                // if
+                                // (!AffectedMaterialsUtil.getOidByObject(document)
+                                // .equals(AffectedMaterialsUtil.getOidByObject(neWtDocument))
+                                // || !document.isLatestIteration()) {
+                                // docs.add(document.getNumber());
+                                // }
+                                String docVersion = doc.getVersionInfo().getIdentifier().getValue() + "."
+                                        + doc.getIterationInfo().getIdentifier().getValue();
                                 QueryResult qrVersions = VersionControlHelper.service.allVersionsOf(doc.getMaster());
-                                WTDocument newDoc=new WTDocument();
+                                WTDocument newDoc = new WTDocument();
                                 while (qrVersions.hasMoreElements()) {
-                                    newDoc=(WTDocument) qrVersions.nextElement();
+                                    newDoc = (WTDocument) qrVersions.nextElement();
                                     break;
                                 }
-                                if (newDoc!=null){
-                                    String newVersion = newDoc.getVersionInfo().getIdentifier().getValue() + "." + newDoc.getIterationInfo().getIdentifier().getValue();;
-                                    System.out.println("docVersion=="+docVersion+"==newVersion=="+newVersion);
-                                    if (!docVersion.equals(newVersion)){
+                                if (newDoc != null) {
+                                    String newVersion = newDoc.getVersionInfo().getIdentifier().getValue() + "."
+                                            + newDoc.getIterationInfo().getIdentifier().getValue();
+                                    ;
+                                    System.out.println("docVersion==" + docVersion + "==newVersion==" + newVersion);
+                                    if (!docVersion.equals(newVersion)) {
                                         docs.add(doc.getNumber());
                                     }
                                 }
@@ -941,14 +1036,14 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                     }
                 }
             }
-            if ((parts!= null && parts.size() > 0)||(docs!= null && docs.size() > 0)) {
-                for (String partNumber:parts){
-                    str=str+"物料"+partNumber+",";
+            if ((parts != null && parts.size() > 0) || (docs != null && docs.size() > 0)) {
+                for (String partNumber : parts) {
+                    str = str + "物料" + partNumber + ",";
                 }
-                for (String docNumber:docs){
-                    str=str+"文档"+docNumber+",";
+                for (String docNumber : docs) {
+                    str = str + "文档" + docNumber + ",";
                 }
-                str=str+"不是最新版本！";
+                str = str + "不是最新版本！";
                 throw new WTException(str);
             }
 
@@ -958,39 +1053,41 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
 
     /**
      * 检查受影响对象是否检出
+     *
      * @param pbo
      * @throws WTException
      */
     public void isCheckout(WTObject pbo, ObjectReference self) throws WTException {
-        Set<String> checkoutPart=new HashSet();//检出物料
-        Set<String> checkoutDoc=new HashSet();//检出文档
-        String str="";
+        Set<String> checkoutPart = new HashSet();// 检出物料
+        Set<String> checkoutDoc = new HashSet();// 检出文档
+        String str = "";
         if (pbo instanceof WTChangeOrder2) {
             WTChangeOrder2 changeOrder2 = (WTChangeOrder2) pbo;
-            //收集需要创建ECA的部件、文档、CAD文档
+            // 收集需要创建ECA的部件、文档、CAD文档
             Map<Persistable, Collection<Persistable>> collectionMap = collectionObjectsAffected(changeOrder2);
             System.out.println("collectionMap==" + collectionMap);
             for (Map.Entry<Persistable, Collection<Persistable>> entryMap : collectionMap.entrySet()) {
                 if (entryMap.getKey() instanceof Changeable2) {
                     Changeable2 changeable2 = (Changeable2) entryMap.getKey();
-                    if (changeable2 instanceof WTPart){
+                    if (changeable2 instanceof WTPart) {
                         WTPart part = (WTPart) changeable2;
-                        String view=part.getViewName();
-                        String number=part.getNumber();
-                        Vector latestVector=getAllLatestWTParts(view,number);//同一视图最新版本
-                        if (latestVector!=null&&latestVector.size()>0) {
+                        String view = part.getViewName();
+                        String number = part.getNumber();
+                        Vector latestVector = getAllLatestWTParts(view, number);// 同一视图最新版本
+                        if (latestVector != null && latestVector.size() > 0) {
                             WTPart newPart = (WTPart) latestVector.get(0);
-                            Boolean flag=PICoreHelper.service.isCheckout(newPart);
-                            if (flag){
+                            Boolean flag = PICoreHelper.service.isCheckout(newPart);
+                            if (flag) {
                                 checkoutPart.add(part.getNumber());
                             }
                         }
                         for (Persistable persistable : entryMap.getValue()) {
                             if (persistable instanceof WTDocument) {
-                                WTDocument doc= (WTDocument) persistable;
-                                WTDocument wtDocument=(WTDocument)VersionControlHelper.service.getLatestIteration(doc,false);//最新版本
-                                Boolean flag2=PICoreHelper.service.isCheckout(wtDocument);
-                                if (flag2){
+                                WTDocument doc = (WTDocument) persistable;
+                                WTDocument wtDocument = (WTDocument) VersionControlHelper.service
+                                        .getLatestIteration(doc, false);// 最新版本
+                                Boolean flag2 = PICoreHelper.service.isCheckout(wtDocument);
+                                if (flag2) {
                                     checkoutDoc.add(doc.getNumber());
                                 }
                             }
@@ -1000,14 +1097,14 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
 
                 }
             }
-            if ((checkoutPart!= null && checkoutPart.size() > 0)||(checkoutDoc!= null && checkoutDoc.size() > 0)) {
-                for (String partNumber:checkoutPart){
-                    str=str+"物料"+partNumber+",";
+            if ((checkoutPart != null && checkoutPart.size() > 0) || (checkoutDoc != null && checkoutDoc.size() > 0)) {
+                for (String partNumber : checkoutPart) {
+                    str = str + "物料" + partNumber + ",";
                 }
-                for (String docNumber:checkoutDoc){
-                    str=str+"文档"+docNumber+",";
+                for (String docNumber : checkoutDoc) {
+                    str = str + "文档" + docNumber + ",";
                 }
-                str=str+"被检出！";
+                str = str + "被检出！";
                 throw new WTException(str);
             }
 
@@ -1016,6 +1113,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
 
     /**
      * 通过number获取某视图的最新的物料
+     *
      * @param viewName
      * @param number
      * @return
@@ -1025,33 +1123,38 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
         QuerySpec qs = new QuerySpec(WTPart.class);
 
         View view = ViewHelper.service.getView(viewName);
-        SearchCondition sc = new SearchCondition(WTPart.class, "view.key.id", SearchCondition.EQUAL, view.getPersistInfo().getObjectIdentifier().getId());
+        SearchCondition sc = new SearchCondition(WTPart.class, "view.key.id", SearchCondition.EQUAL,
+                view.getPersistInfo().getObjectIdentifier().getId());
         qs.appendWhere(sc);
         if (number.trim().length() > 0) {
             qs.appendAnd();
-            SearchCondition scNumber = new SearchCondition(WTPart.class, WTPart.NUMBER, SearchCondition.EQUAL, number.toUpperCase());
+            SearchCondition scNumber = new SearchCondition(WTPart.class, WTPart.NUMBER, SearchCondition.EQUAL,
+                    number.toUpperCase());
             qs.appendWhere(scNumber);
         }
 
-        SearchCondition scLatestIteration = new SearchCondition(WTPart.class, WTAttributeNameIfc.LATEST_ITERATION, SearchCondition.IS_TRUE);
+        SearchCondition scLatestIteration = new SearchCondition(WTPart.class, WTAttributeNameIfc.LATEST_ITERATION,
+                SearchCondition.IS_TRUE);
         qs.appendAnd();
         qs.appendWhere(scLatestIteration);
 
         QueryResult qr = PersistenceHelper.manager.find(qs);
-        if (qr != null && qr.hasMoreElements()) qr = (new LatestConfigSpec()).process(qr);
+        if (qr != null && qr.hasMoreElements())
+            qr = (new LatestConfigSpec()).process(qr);
 
-        if (qr != null && qr.hasMoreElements()) return qr.getObjectVectorIfc().getVector();
+        if (qr != null && qr.hasMoreElements())
+            return qr.getObjectVectorIfc().getVector();
 
         return new Vector();
     }
 
-
     /**
      * 如果存在驳回为其他情况other(之前驳回过为其他情况的，删除other路由link)
+     *
      * @param changeOrder2
      * @throws WTException
      */
-    public void setOtherRouting(WTChangeOrder2 changeOrder2) throws Exception{
+    public void setOtherRouting(WTChangeOrder2 changeOrder2) throws Exception {
         String ecnVid = String.valueOf(PICoreHelper.service.getBranchId(changeOrder2));
         CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, CONSTANTS_7, CONSTANTS_7);
         if (null != link) {
@@ -1059,9 +1162,9 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
         }
     }
 
-
     /**
      * 判断ECN流程中是否强制选择会签人员
+     *
      * @param pbo
      * @param self
      * @return
@@ -1076,7 +1179,10 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                 if (changeable2 instanceof WTPart) {
                     WTPart part = (WTPart) changeable2;
                     LOGGER.info("=====checkPartType.part: " + part.getNumber());
-                    if (part.getNumber().startsWith("A") || part.getNumber().startsWith("C") || part.getNumber().startsWith("D") || part.getNumber().startsWith("E") || part.getNumber().startsWith("P") || part.getNumber().startsWith("T") || part.getNumber().startsWith("S") || part.getNumber().startsWith("K")) {
+                    if (part.getNumber().startsWith("A") || part.getNumber().startsWith("C")
+                            || part.getNumber().startsWith("D") || part.getNumber().startsWith("E")
+                            || part.getNumber().startsWith("P") || part.getNumber().startsWith("T")
+                            || part.getNumber().startsWith("S") || part.getNumber().startsWith("K")) {
                         return "RD";
                     }
                     if (part.getNumber().startsWith("B")) {
@@ -1098,15 +1204,18 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
             }
         } else if (pbo instanceof WTChangeOrder2) {
             WTChangeOrder2 changeOrder2 = (WTChangeOrder2) pbo;
-            //收集需要创建ECA的部件、文档、CAD文档
+            // 收集需要创建ECA的部件、文档、CAD文档
             Map<Persistable, Collection<Persistable>> collectionMap = collectionObjectsAffected(changeOrder2);
-            System.out.println("collectionMap=="+collectionMap);
+            System.out.println("collectionMap==" + collectionMap);
             for (Map.Entry<Persistable, Collection<Persistable>> entryMap : collectionMap.entrySet()) {
                 if (entryMap.getKey() instanceof Changeable2) {
                     Changeable2 changeable2 = (Changeable2) entryMap.getKey();
                     if (changeable2 instanceof WTPart) {
                         WTPart part = (WTPart) changeable2;
-                        if (part.getNumber().startsWith("A") || part.getNumber().startsWith("C") || part.getNumber().startsWith("D") || part.getNumber().startsWith("E") || part.getNumber().startsWith("P") || part.getNumber().startsWith("T") || part.getNumber().startsWith("S") || part.getNumber().startsWith("K")) {
+                        if (part.getNumber().startsWith("A") || part.getNumber().startsWith("C")
+                                || part.getNumber().startsWith("D") || part.getNumber().startsWith("E")
+                                || part.getNumber().startsWith("P") || part.getNumber().startsWith("T")
+                                || part.getNumber().startsWith("S") || part.getNumber().startsWith("K")) {
                             return "RD";
                         }
                         if (part.getNumber().startsWith("B")) {
@@ -1131,8 +1240,10 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
         LOGGER.info("=====checkPartType.isRDPart: " + isRDPart);
         return "NOTRD";
     }
+
     /**
      * 检查团队角色
+     *
      * @param pbo
      * @param rolename
      * @param reviewname
@@ -1260,8 +1371,10 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
             }
         }
     }
+
     /**
      * 检查指定角色是否在团队中
+     *
      * @param pbo
      * @param rolename
      * @param principal
@@ -1287,16 +1400,17 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
             WTDocument object = (WTDocument) pbo;
             container = object.getContainer();
         }
-        //add by lzy at 20191212 start
+        // add by lzy at 20191212 start
         if (pbo instanceof WTChangeActivity2) {
             WTChangeActivity2 object = (WTChangeActivity2) pbo;
             container = object.getContainer();
         }
-        //add by lzy at 20191212 end
+        // add by lzy at 20191212 end
         if (container != null) {
             try {
                 WTRoleHolder2 wtroleholder2 = TeamCCHelper.getTeamFromObject(container);
-                ContainerTeam containerTeam = ContainerTeamHelper.service.getContainerTeam((ContainerTeamManaged) container);
+                ContainerTeam containerTeam = ContainerTeamHelper.service
+                        .getContainerTeam((ContainerTeamManaged) container);
                 Enumeration enumPrin = containerTeam.getPrincipalTarget(role);
                 Set<WTUser> userSet = new HashSet<>();
                 while (enumPrin.hasMoreElements()) {
@@ -1325,6 +1439,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
 
     /**
      * 检查流程中的角色是否在上下文团队中
+     *
      * @param pbo
      * @throws WTException
      */
@@ -1334,12 +1449,13 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
             WTChangeOrder2 ecn = (WTChangeOrder2) pbo;
 
             WTContainer container = ecn.getContainer();
-            ContainerTeam containerTeam = ContainerTeamHelper.service.getContainerTeam((ContainerTeamManaged) container);
+            ContainerTeam containerTeam = ContainerTeamHelper.service
+                    .getContainerTeam((ContainerTeamManaged) container);
             Set<WTUser> userSet = PartWorkflowUtil.getAllMembers(containerTeam);
             Team processTeam = WorkflowUtil.getTeam(ecn);
             // 流程实例所有角色
             Vector processRoleVector = processTeam.getRoles();
-            a:for (Object o : processRoleVector) {
+            a: for (Object o : processRoleVector) {
                 Role processRole = (Role) o;
                 Enumeration enumPrin = processTeam.getPrincipalTarget(processRole);// 会签者
                 while (enumPrin.hasMoreElements()) {
@@ -1348,7 +1464,8 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                     if (principal instanceof WTUser) {
                         WTUser user = (WTUser) principal;
                         if (userSet != null && userSet.size() > 0 && !userSet.contains(user)) {
-                            result.append("用户").append(user.getFullName()).append("不在").append(container.getContainerName()).append("团队中，请另外选择人员或通知业务管理员设置用户权限！");
+                            result.append("用户").append(user.getFullName()).append("不在")
+                                    .append(container.getContainerName()).append("团队中，请另外选择人员或通知业务管理员设置用户权限！");
                             break a;
                         }
                     }
@@ -1359,9 +1476,10 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
             throw new WTException(result.toString());
         }
     }
+
     /**
-     * 给流程节点角色添加固定人员
-     * 删除用户为空抛出异常
+     * 给流程节点角色添加固定人员 删除用户为空抛出异常
+     *
      * @param pbo
      * @param rolename
      * @param principalname
@@ -1382,8 +1500,10 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
             }
         }
     }
+
     /**
      * 根据产品类别，判断是否需要加人
+     *
      * @param pbo
      * @return
      */
@@ -1408,8 +1528,8 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
     }
 
     /***
-     * 产生对象批量设置状态为‘已发布’
-     *并返回所有产生对象及发布BOM下所有已发布子件(不是只返回发布的产生对象及发布BOM下所有已发布子件)
+     * 产生对象批量设置状态为‘已发布’ 并返回所有产生对象及发布BOM下所有已发布子件(不是只返回发布的产生对象及发布BOM下所有已发布子件)
+     *
      * @param wtObject
      *            WTChangeOrder2
      * @return
@@ -1439,7 +1559,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                 Collection<Changeable2> afterInfoArray = afterInfoMap.get(eca);
                 for (Changeable2 afterObject : afterInfoArray) {
                     if (afterObject instanceof WTPart) {
-                        //添加所有产生的对象
+                        // 添加所有产生的对象
                         releasePartsArray.add((WTPart) afterObject);
                     }
                 }
@@ -1569,7 +1689,6 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
         return datasMap;
     }
 
-
     /***
      * 判断对象状态是否符合要求
      *
@@ -1650,8 +1769,8 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
     }
 
     /**
-     * 提交时第一校验
-     * 校验ECN是暂存按钮操作还是完成按钮操作
+     * 提交时第一校验 校验ECN是暂存按钮操作还是完成按钮操作
+     *
      * @param pbo
      * @param self
      * @throws WTException
@@ -1660,16 +1779,15 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
         if (pbo instanceof WTChangeOrder2) {
             WTChangeOrder2 changeOrder2 = (WTChangeOrder2) pbo;
             String actionName = ModifyUtils.getValue(changeOrder2, ATTRIBUTE_6);
-            if (CONSTANTS_12.equals(actionName)){
+            if (CONSTANTS_12.equals(actionName)) {
                 throw new WTException("变更申请表单未提交，请先进入【变更申请表单页面】，检查表单数据是否填写完整，再点击【完成】进行提交!");
             }
         }
     }
 
-
     /**
-     * 给流程节点角色删除固定人员(删除陈乔蓉00873|光峰)
-     * 删除用户为空抛出异常
+     * 给流程节点角色删除固定人员(删除陈乔蓉00873|光峰) 删除用户为空抛出异常
+     *
      * @param pbo
      * @param rolename
      * @param principalname
@@ -1684,18 +1802,18 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                 WTChangeOrder2 ecn = (WTChangeOrder2) pbo;
                 Team processTeam = WorkflowUtil.getTeam(ecn);
                 if (processTeam != null) {
-                    Set<String> principalnameSet=new HashSet<>();
-                    //如果ECN流程存在2个以上节点人员，删除固定人员
-                    Enumeration enumPrin =processTeam.getPrincipalTarget(role);
-                    while (enumPrin.hasMoreElements()){
+                    Set<String> principalnameSet = new HashSet<>();
+                    // 如果ECN流程存在2个以上节点人员，删除固定人员
+                    Enumeration enumPrin = processTeam.getPrincipalTarget(role);
+                    while (enumPrin.hasMoreElements()) {
                         WTPrincipalReference tempPrinRef = (WTPrincipalReference) enumPrin.nextElement();
                         WTPrincipal principal = tempPrinRef.getPrincipal();
                         principalnameSet.add(principal.getName());
                     }
-                    if (principalnameSet.size()>1){
-                        for (String value:principalnameSet){
-                            if (value.contains(principalname)){
-                                processTeam.deletePrincipalTarget(role,wtprincipal);
+                    if (principalnameSet.size() > 1) {
+                        for (String value : principalnameSet) {
+                            if (value.contains(principalname)) {
+                                processTeam.deletePrincipalTarget(role, wtprincipal);
                             }
                         }
 
@@ -1708,6 +1826,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
 
     /**
      * 变更阶段：DR4 or 量产后，或者受影响产品中包含 已发布状态的产品，会签人员必须选择工程代表
+     *
      * @param pbo
      * @param rolename
      * @param principalname
@@ -1716,26 +1835,64 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
     public void checkChangePhase(WTObject pbo, String rolename, String principalname) throws WTException {
         if (pbo instanceof WTChangeOrder2) {
             WTChangeOrder2 ecn = (WTChangeOrder2) pbo;
-            String changePhase= BomChangeReport.getChangeAtt(ecn,"bgjd");//变更阶段
-            Set<Persistable> affectedProducts=ModifyHelper.service.queryPersistable(ecn, LINKTYPE_2);
-            Boolean isReleased=false;
-            //是否包含已发布状态产品
-            for (Persistable persistable:affectedProducts){
-                if (persistable instanceof WTPart){
-                    WTPart part=(WTPart)persistable;
-                    String state=part.getState().toString();
-                    if (state.contains("RELEASED")){
-                        isReleased=true;
+            String changePhase = BomChangeReport.getChangeAtt(ecn, "bgjd");// 变更阶段
+            Set<Persistable> affectedProducts = ModifyHelper.service.queryPersistable(ecn, LINKTYPE_2);
+            Boolean isReleased = false;
+            // 是否包含已发布状态产品
+            for (Persistable persistable : affectedProducts) {
+                if (persistable instanceof WTPart) {
+                    WTPart part = (WTPart) persistable;
+                    String state = part.getState().toString();
+                    if (state.contains("RELEASED")) {
+                        isReleased = true;
                         break;
                     }
                 }
             }
-            if (changePhase.contains("DR4")||changePhase.contains("量产后")||isReleased){
-                PartWorkflowUtil partWorkflowUtil=new PartWorkflowUtil();
-                partWorkflowUtil.CheckTeam(pbo, "engineering_manager", "Signer");//工程代表
+            if (changePhase.contains("DR4") || changePhase.contains("量产后") || isReleased) {
+                PartWorkflowUtil partWorkflowUtil = new PartWorkflowUtil();
+                partWorkflowUtil.CheckTeam(pbo, rolename, principalname);// 工程代表
+                // partWorkflowUtil.CheckTeam(pbo, "engineering_manager",
+                // "Signer");// 工程代表
             }
         }
 
     }
 
+    /**
+     * 会签，批准驳回没有修改受影响对象、或者只删除受影响对象需修改ECA状态触发同步机
+     * @param changeOrder2
+     * @param collectionMap
+     */
+    public void triggerEca(WTChangeOrder2 changeOrder2, Map<Persistable, Collection<Persistable>> collectionMap) throws WTException, InterruptedException {
+        //没有需要创建的ECA
+        if (collectionMap.size()<=0){
+            //获取ECA
+            QueryResult qr = ChangeHelper2.service.getChangeActivities(changeOrder2);
+
+            if( qr != null ) {
+                while (qr.hasMoreElements()) {
+                    Object object = qr.nextElement();
+
+                    if (object != null) {
+                        if (object instanceof WTChangeActivity2) {
+                            WTChangeActivity2 eca = (WTChangeActivity2) object;
+                            if(!PICoreHelper.service.isType(eca, ChangeConstants.TRANSACTIONAL_CHANGEACTIVITY2)){
+                                String state=eca.getState().toString();
+                                if (state.equalsIgnoreCase(RESOLVED)||state.equalsIgnoreCase(CANCELLED)){
+                                    PICoreHelper.service.setLifeCycleState(eca, "REWORK");
+                                    PersistenceHelper.manager.refresh(eca);
+                                    Thread.sleep(100);//暂停0.1s再执行
+                                    PICoreHelper.service.setLifeCycleState(eca, state);
+                                    PersistenceHelper.manager.refresh(eca);
+                                    break;
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
