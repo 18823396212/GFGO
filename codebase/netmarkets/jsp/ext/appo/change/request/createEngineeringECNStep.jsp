@@ -51,6 +51,8 @@
 
 <input type="hidden" name="affectedProductID" id="affectedProductID"/>
 
+<input type="hidden" name="affectedProductArray" id="affectedProductArray"/>
+
 <!--modify by wangtong at 20191024 start-->
 <input type="hidden" name="routingName" id="routingName"/>
 <!--modify by wangtong at 20191024 end-->
@@ -209,6 +211,10 @@
             affectedProductID[i] = tableRows[i].data.oid;
         }
         document.getElementById("affectedProductID").value = JSON.stringify(affectedProductID);
+        //add by lzy at 20200414 start
+        //保存受影响产品数据
+        saveAffectedEndItemsTable();
+        //add by lzy at 20200414 end
     }
 
     // 收集受影响对象表中选中数据的上层产品对象
@@ -220,7 +226,10 @@
         }
         // 保存数据
         saveChangeTaskArray();
-
+        //add by lzy at 20200414 start
+        //保存受影响产品数据
+        saveAffectedEndItemsTable();
+        //add by lzy at 20200414 end
         var oidArray = [];
         for (var i = 0; i < selectRows.length; i++) {
             oidArray.push(getOidFromRowValue(selectRows[i].value));
@@ -539,10 +548,35 @@
         var affectedProductID = [];
         // 获取受影响对象表单中的所有数据
         var tableRows = PTC.jca.table.Utils.getTableRows("ext.appo.change.mvc.builder.AffectedEndItemsTableBuilder").items;
+        // for (var i = 0; i < tableRows.length; i++) {
+        //     affectedProductID[i] = tableRows[i].data.oid;
+        // }
+        // document.getElementById("affectedProductID").value = JSON.stringify(affectedProductID);
+        //add by lzy at 20200414 start
+        // 获取页面所有input控件
+        var inputFormArray = document.getElementsByTagName("input");
+        var affectedProductArray = [];
         for (var i = 0; i < tableRows.length; i++) {
-            affectedProductID[i] = tableRows[i].data.oid;
+            var columnArray = {};
+            var tableRow=tableRows[i].data;
+            affectedProductID[i] = tableRow.oid;
+            columnArray['oid'] = tableRow.oid;
+            if (tableRow.hasOwnProperty('clfs')) {
+                var clfs = tableRow['clfs'].gui.comparable;
+                for (var j = 0; j < inputFormArray.length; j++) {
+                    var inputForm = inputFormArray[j];
+                    if ((inputForm.name.indexOf('clfs') > -1) && (inputForm.name.indexOf(tableRow.oid) > -1)) {
+                        clfs = inputForm.value;
+                        break;
+                    }
+                }
+                columnArray['clfs'] = clfs;
+            }
+            affectedProductArray[i]=columnArray;
         }
         document.getElementById("affectedProductID").value = JSON.stringify(affectedProductID);
+        document.getElementById("affectedProductArray").value = JSON.stringify(affectedProductArray);
+        //add by lzy at 20200414 end
     }
 
     // 保存事务性任务表单数据
@@ -617,6 +651,9 @@
         saveDatasArray();
 
         saveChangeTaskArray();
+        //add by lzy at 20200414 start
+        saveAffectedEndItemsTable();
+        //add by lzy at 20200414 end
     }
 
     setUserSubmitFunction(submitSaveData);
@@ -991,7 +1028,6 @@
         var nowdate = date.substring(0,10);
         return nowdate;
     }
-
 
 </SCRIPT>
 

@@ -19,6 +19,8 @@ import ext.pi.core.PICoreHelper;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import wt.change2.WTChangeOrder2;
 import wt.fc.Persistable;
 import wt.fc.PersistenceServerHelper;
@@ -109,6 +111,7 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
 
                     //新增ChangeOrder2与受影响对象的关系
                     linkAffectedItems(changeOrder2, affectedObjectUtil.PAGEDATAMAP, activity2Util.BRANCHIDMAP);
+
                 }
                 PIAttributeHelper.service.forceUpdateSoftAttribute(changeOrder2, ATTRIBUTE_6, routingName);
             }
@@ -153,6 +156,11 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
             // 新增受影响产品列表与ECN的关系(ECN与受影响产品链接)
             linkAffectedEndItems(nmcommandBean, changeOrder2);
 
+            //add by lzy at 20200414 start
+            //更新受影响产品列表「处理方式」属性值
+            updateAffectedEndItemsAttribute(nmcommandBean);
+            //add by lzy at 20200414 start
+
             //创建事务性任务-模型对象，已存在则更新
             transactionUtil.createTransactionECA();
 
@@ -161,6 +169,8 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
 
             // 更新ECN「所属产品类别」「所属项目」
             UpdateSoftAttribute(nmcommandBean, changeOrder2);
+        } catch (JSONException e) {
+            e.printStackTrace();
         } finally {
             SessionContext.setContext(previous);
         }
@@ -170,6 +180,7 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
 
     /**
      * 新增ChangeOrder2与受影响对象的关系
+     *
      * @param changeOrder2
      * @param pageDataMap
      * @param branchMap
@@ -242,7 +253,6 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
                     String endItemsJSON = endItemsArrayStr[0];
                     LOGGER.info(">>>>>>>>>>linkAffectedEndItems.endItemsJSON: " + endItemsJSON);
                     if (PIStringUtils.isNull(endItemsJSON)) return;
-
                     // 页面表单中所有产品对象
                     Collection<Persistable> collection = new HashSet<>();
                     JSONArray jsonArray = new JSONArray(endItemsJSON);
@@ -252,6 +262,7 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
                             if (!oid.contains(WTPart.class.getName())) continue;
                             collection.add(((new ReferenceFactory()).getReference(oid).getObject()));
                         }
+
                     }
                     LOGGER.info(">>>>>>>>>>linkAffectedEndItems.collection: " + collection);
 
@@ -277,6 +288,7 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
 
     /**
      * 新增ChangeOrder2与事务性任务的关系
+     *
      * @param changeOrder2
      * @param tasks
      * @throws Exception
@@ -301,6 +313,7 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
 
     /**
      * 更新ECN「所属产品类别」「所属项目」
+     *
      * @param nmcommandBean
      * @param changeOrder2
      * @throws WTException
@@ -335,6 +348,7 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
 
     /**
      * 合成错误信息
+     *
      * @param messages
      * @return
      */
@@ -350,4 +364,42 @@ public class ExtCreateChangeNoticeFormProcessor extends CreateChangeNoticeFormPr
         return builder.toString();
     }
 
+    //add by lzy at 20200414
+
+    /**
+     * 更新受影响产品处理方式属性
+     *
+     * @param nmcommandBean
+     */
+    private void updateAffectedEndItemsAttribute(NmCommandBean nmcommandBean) throws JSONException, WTException {
+        Map<String, Object> parameterMap = nmcommandBean.getParameterMap();
+        if (parameterMap.containsKey(ATTRIBUTE_14)) {
+            String[] endItemsArrayStr = (String[]) parameterMap.get(ATTRIBUTE_14);
+            if (endItemsArrayStr != null && endItemsArrayStr.length > 0) {
+                String endItemsJSON = endItemsArrayStr[0];
+                LOGGER.info(">>>>>>>>>>linkAffectedEndItems.endItemsJSON: " + endItemsJSON);
+                if (PIStringUtils.isNull(endItemsJSON)) return;
+
+                // 页面表单中所有产品对象
+                JSONArray jsonArray = new JSONArray(endItemsJSON);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    Map<String, Object> attributesMap = new HashMap<>();
+                    JSONObject jsonObject = new JSONObject(jsonArray.getString(i));
+                    Persistable persistable = null;
+                    if (jsonObject.has("oid")) {
+                        // 属性值
+                        String value = jsonObject.getString("oid");
+                        // 获取主对象
+                        persistable = (new ReferenceFactory()).getReference(value).getObject();
+                        if (persistable != null && jsonObject.has("clfs")) {
+                            // 属性值
+                            String clfsValue = jsonObject.getString("clfs");
+                            attributesMap.put(ATTRIBUTE_13, clfsValue == null ? "" : clfsValue);
+                            PIAttributeHelper.service.forceUpdateSoftAttributes(persistable, attributesMap);
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

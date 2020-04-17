@@ -70,7 +70,6 @@ public class AffectedEndItemsTableBuilder extends AbstractComponentBuilder imple
         tableConfig.setId(TABLE_ID);
         tableConfig.setSelectable(true);
         tableConfig.setShowCount(true);
-
         NmHelperBean localNmHelperBean = ((JcaComponentParams) paramComponentParams).getHelperBean();
         NmCommandBean localNmCommandBean = localNmHelperBean.getNmCommandBean();
         boolean bool = CreateAndEditWizBean.isCreateEditWizard(localNmCommandBean);
@@ -142,6 +141,14 @@ public class AffectedEndItemsTableBuilder extends AbstractComponentBuilder imple
         columnconfig.setDataUtilityId("customizationDataUtility");
         columnconfig.setAutoSize(true);
         tableConfig.addComponent(columnconfig);
+
+        //add by lzy at 20200401 start
+        columnconfig = componentconfigfactory.newColumnConfig("clfs", true);
+        columnconfig.setLabel(this.messageChange2ClientResource.getMessage("TREATMENT"));
+        columnconfig.setDataUtilityId("ModifyAffectedItemsDataUtility");
+        columnconfig.setAutoSize(true);
+        tableConfig.addComponent(columnconfig);
+        //add by lzy at 20200401 end
 
         return tableConfig;
     }
