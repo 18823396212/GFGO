@@ -18,6 +18,8 @@ public interface ModifyConstants {
     String ATTRIBUTE_10 = "Remark";//备注（驳回必填）
     String ATTRIBUTE_11 = "ggms";//规格描述
     String ATTRIBUTE_12 = "CollectionNumber";//收集对象
+    String ATTRIBUTE_13="clfs";//处理方式
+    String ATTRIBUTE_14="affectedProductArray";//页面创建编辑受影响产品关键字
 
     //类型定义
     String TYPE_1 = "com.plm.BOMChangeActivity2";//BOM变更ECA
