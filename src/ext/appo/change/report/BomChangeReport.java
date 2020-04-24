@@ -282,7 +282,9 @@ public class BomChangeReport {
                     Object object = qr.nextElement();
                     if (object instanceof WTPart) {
                         WTPart part = (WTPart) object;
-                        parts.add(part);
+                        if (!parts.contains(part)) {
+                            parts.add(part);
+                        }
                     }
                 }
             }
