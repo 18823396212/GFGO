@@ -1882,7 +1882,7 @@ public class ECNWorkflowUtil implements ChangeConstants, ModifyConstants {
                                 if (state.equalsIgnoreCase(RESOLVED)||state.equalsIgnoreCase(CANCELLED)){
                                     PICoreHelper.service.setLifeCycleState(eca, "REWORK");
                                     PersistenceHelper.manager.refresh(eca);
-                                    Thread.sleep(100);//暂停0.1s再执行
+                                    Thread.sleep(10000);//暂停10s再执行
                                     PICoreHelper.service.setLifeCycleState(eca, state);
                                     PersistenceHelper.manager.refresh(eca);
                                     break;
