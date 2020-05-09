@@ -16,6 +16,9 @@
         <action name="createTeamTeamplate" type="modify" shortcut="true"/>
         <action name="deleteTeamTeamplate" type="wfteam" shortcut="true"/>
         <action name="applyTeamTeamplate" type="modify" shortcut="true"/>
+        <!--    add by lzy at 20200508 start-->
+        <action name="manageTeamTemplate" type="modify" shortcut="true"/>
+        <!--    add by lzy at 20200508 end-->
     </model>
 
     <!--    add by lzy at 20200310 start-->

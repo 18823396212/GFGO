@@ -45,6 +45,11 @@
         <action name="teamTeamplate_step">
             <command windowType="wizard_step" url="netmarkets/jsp/ext/generic/reviewprincipal/teamTeamplate_step.jsp"/>
         </action>
+        <!--    add by lzy at 20200508 start-->
+        <action name="manageTeamTemplate">
+            <command class="ext.appo.change.processor.ExtManageTeamTemplateProcessor" method="execute" url="netmarkets/jsp/ext/appo/change/request/manageTeamTemplate.jsp?" windowType="popup"/>
+        </action>
+        <!--    add by lzy at 20200508 end-->
 
         <action name="cancelChangeApply" ajax="row">
 <!--            add by lzy at 20191130 start-->
@@ -93,6 +98,21 @@
             <includeFilter name="DrawingFilter"/>
         </action>
         <!--    add by lzy at 20200310 end-->
+
+        <!--add by lzy at 20200409 start-->
+        <!-- 事务性任务表单启动任务跟踪按钮 -->
+        <action name="startupChangeTask">
+            <command class="ext.appo.change.processor.StartupChangeTaskProcessor" method="execute" onClick="JCAConfirm(event,'ext.appo.change.resource.ModifyResource.MY_CUSTOM_49');saveDatasArray()"/>
+        </action>
+        <!-- 事务性任务表单添加按钮 -->
+        <action name="addChangeTask">
+            <command onClick="addChangeTask()" windowType="no_content"/>
+        </action>
+        <!-- 事务性任务表单删除按钮 -->
+        <action name="deleteChangeTask">
+            <command onClick="deleteChangeTask()" windowType="no_content" />
+        </action>
+        <!--add by lzy at 20200409 end-->
 
     </objecttype>
 
