@@ -1,5 +1,6 @@
 package ext.appo.part.util;
 
+import ext.appo.change.util.ModifyUtils;
 import ext.appo.doc.uploadDoc.UploadAttachmentUtil;
 import ext.appo.util.excel.AppoExcelUtil;
 import ext.com.core.CoreUtil;
@@ -20,6 +21,9 @@ import ext.pi.core.PIAttributeHelper;
 import ext.pi.core.PIClassificationHelper;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import wt.change2.Changeable2;
+import wt.change2.WTChangeActivity2;
+import wt.change2.WTChangeOrder2;
 import wt.doc.WTDocument;
 import wt.enterprise.RevisionControlled;
 import wt.epm.EPMDocument;
@@ -39,6 +43,7 @@ import wt.util.WTException;
 import wt.util.WTMessage;
 import wt.util.WTPropertyVetoException;
 import wt.vc.VersionControlHelper;
+import wt.workflow.definer.WfProcessTemplate;
 import wt.workflow.engine.WfProcess;
 
 import java.io.IOException;
@@ -1012,22 +1017,51 @@ public class PartReleasedWorkFlow extends WorkFlowBase {
         if (self != null) {
             WfProcess process = WorkflowUtil.getProcess(self);
             if (process != null) {
-                QueryResult queryresult = ProcessReviewObjectLinkHelper.service.getProcessReviewObjectLinkByRoleA(process);
-                while (queryresult != null && queryresult.hasMoreElements()) {
-                    ProcessReviewObjectLink link = (ProcessReviewObjectLink) queryresult.nextElement();
-                    WTObject obj = (WTObject) link.getRoleBObject();
-                    if (obj instanceof WTPart) {
-                        String number = ((WTPart) obj).getNumber();
-                        for (String key : readSheet2) {
-                            if (number.startsWith(key)) {
-                                return true;
+                //add by lzy at 20200311 start
+                Collection<Persistable> result = new HashSet<>();
+                WfProcessTemplate wfprocesstemplate = (WfProcessTemplate) process.getTemplate().getObject();
+                String templateName = wfprocesstemplate.getName();
+                //判断是否是ECN流程
+                if(templateName!=null&&templateName.equals("APPO_ECNWF")){
+                    if (pbo instanceof WTChangeOrder2){
+                        // 获取ECN中所有产生对象
+                        Map<WTChangeActivity2, Collection<Changeable2>> dataMap = ModifyUtils.getChangeablesAfter((WTChangeOrder2)pbo);
+                        for (Map.Entry<WTChangeActivity2, Collection<Changeable2>> entry : dataMap.entrySet()) {
+                            result.addAll(entry.getValue());
+                        }
+                        //查看产生对象是否有符合发CIS的部件
+                        for (Persistable persistable:result){
+                            if (persistable instanceof WTPart) {
+                                String number = ((WTPart) persistable).getNumber();
+                                for (String key : readSheet2) {
+                                    if (number.startsWith(key)) {
+                                        return true;
+                                    }
+                                }
                             }
                         }
                     }
+                }else{
+                //add by lzy at 20200311 end
+                    QueryResult queryresult = ProcessReviewObjectLinkHelper.service.getProcessReviewObjectLinkByRoleA(process);
+                    while (queryresult != null && queryresult.hasMoreElements()) {
+                        ProcessReviewObjectLink link = (ProcessReviewObjectLink) queryresult.nextElement();
+                        WTObject obj = (WTObject) link.getRoleBObject();
+                        if (obj instanceof WTPart) {
+                            String number = ((WTPart) obj).getNumber();
+                            for (String key : readSheet2) {
+                                if (number.startsWith(key)) {
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                //add by lzy at 20200311 start
                 }
-
+                //add by lzy at 20200311 end
             }
         }
         return false;
     }
+
 }
