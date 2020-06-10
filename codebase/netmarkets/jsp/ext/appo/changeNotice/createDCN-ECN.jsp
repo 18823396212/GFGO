@@ -1,4 +1,4 @@
-﻿<%@ page pageEncoding="UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
 <%@page import="wt.fc.Persistable"%>
 <%@page import="com.ptc.netmarkets.model.NmOid"%>
