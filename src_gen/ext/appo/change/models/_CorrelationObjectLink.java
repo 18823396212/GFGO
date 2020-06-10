@@ -4,368 +4,404 @@ package ext.appo.change.models;
 public abstract class _CorrelationObjectLink extends wt.fc.ObjectToObjectLink implements java.io.Externalizable {
    static final long serialVersionUID = 1;
 
-   static final java.lang.String RESOURCE = "ext.appo.change.models.modelsResource";
-   static final java.lang.String CLASSNAME = CorrelationObjectLink.class.getName();
+   static final String RESOURCE = "ext.appo.change.models.modelsResource";
+   static final String CLASSNAME = CorrelationObjectLink.class.getName();
 
    /**
     * ECN对象VID
     *
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * @see CorrelationObjectLink
     */
-   public static final java.lang.String ECN_BRANCH_IDENTIFIER = "ecnBranchIdentifier";
+   public static final String ECN_BRANCH_IDENTIFIER = "ecnBranchIdentifier";
    static int ECN_BRANCH_IDENTIFIER_UPPER_LIMIT = -1;
-   java.lang.String ecnBranchIdentifier;
+   String ecnBranchIdentifier;
    /**
     * ECN对象VID
     *
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * @see CorrelationObjectLink
     */
-   public java.lang.String getEcnBranchIdentifier() {
+   public String getEcnBranchIdentifier() {
       return ecnBranchIdentifier;
    }
    /**
     * ECN对象VID
     *
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * @see CorrelationObjectLink
     */
-   public void setEcnBranchIdentifier(java.lang.String ecnBranchIdentifier) throws wt.util.WTPropertyVetoException {
+   public void setEcnBranchIdentifier(String ecnBranchIdentifier) throws wt.util.WTPropertyVetoException {
       ecnBranchIdentifierValidate(ecnBranchIdentifier);
       this.ecnBranchIdentifier = ecnBranchIdentifier;
    }
-   void ecnBranchIdentifierValidate(java.lang.String ecnBranchIdentifier) throws wt.util.WTPropertyVetoException {
+   void ecnBranchIdentifierValidate(String ecnBranchIdentifier) throws wt.util.WTPropertyVetoException {
       if (ECN_BRANCH_IDENTIFIER_UPPER_LIMIT < 1) {
-         try { ECN_BRANCH_IDENTIFIER_UPPER_LIMIT = (java.lang.Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("ecnBranchIdentifier").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT); }
+         try { ECN_BRANCH_IDENTIFIER_UPPER_LIMIT = (Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("ecnBranchIdentifier").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT); }
          catch (wt.introspection.WTIntrospectionException e) { ECN_BRANCH_IDENTIFIER_UPPER_LIMIT = 200; }
       }
       if (ecnBranchIdentifier != null && !wt.fc.PersistenceHelper.checkStoredLength(ecnBranchIdentifier.toString(), ECN_BRANCH_IDENTIFIER_UPPER_LIMIT, true))
          throw new wt.util.WTPropertyVetoException("wt.introspection.introspectionResource", wt.introspection.introspectionResource.UPPER_LIMIT,
-               new java.lang.Object[] { new wt.introspection.PropertyDisplayName(CLASSNAME, "ecnBranchIdentifier"), java.lang.String.valueOf(java.lang.Math.min(ECN_BRANCH_IDENTIFIER_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE/wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR)) },
+               new Object[] { new wt.introspection.PropertyDisplayName(CLASSNAME, "ecnBranchIdentifier"), String.valueOf(Math.min(ECN_BRANCH_IDENTIFIER_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE/wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR)) },
                new java.beans.PropertyChangeEvent(this, "ecnBranchIdentifier", this.ecnBranchIdentifier, ecnBranchIdentifier));
    }
 
    /**
     * Persistable对象VID
     *
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * @see CorrelationObjectLink
     */
-   public static final java.lang.String PER_BRANCH_IDENTIFIER = "perBranchIdentifier";
+   public static final String PER_BRANCH_IDENTIFIER = "perBranchIdentifier";
    static int PER_BRANCH_IDENTIFIER_UPPER_LIMIT = -1;
-   java.lang.String perBranchIdentifier;
+   String perBranchIdentifier;
    /**
     * Persistable对象VID
     *
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * @see CorrelationObjectLink
     */
-   public java.lang.String getPerBranchIdentifier() {
+   public String getPerBranchIdentifier() {
       return perBranchIdentifier;
    }
    /**
     * Persistable对象VID
     *
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * @see CorrelationObjectLink
     */
-   public void setPerBranchIdentifier(java.lang.String perBranchIdentifier) throws wt.util.WTPropertyVetoException {
+   public void setPerBranchIdentifier(String perBranchIdentifier) throws wt.util.WTPropertyVetoException {
       perBranchIdentifierValidate(perBranchIdentifier);
       this.perBranchIdentifier = perBranchIdentifier;
    }
-   void perBranchIdentifierValidate(java.lang.String perBranchIdentifier) throws wt.util.WTPropertyVetoException {
+   void perBranchIdentifierValidate(String perBranchIdentifier) throws wt.util.WTPropertyVetoException {
       if (PER_BRANCH_IDENTIFIER_UPPER_LIMIT < 1) {
-         try { PER_BRANCH_IDENTIFIER_UPPER_LIMIT = (java.lang.Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("perBranchIdentifier").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT); }
+         try { PER_BRANCH_IDENTIFIER_UPPER_LIMIT = (Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("perBranchIdentifier").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT); }
          catch (wt.introspection.WTIntrospectionException e) { PER_BRANCH_IDENTIFIER_UPPER_LIMIT = 200; }
       }
       if (perBranchIdentifier != null && !wt.fc.PersistenceHelper.checkStoredLength(perBranchIdentifier.toString(), PER_BRANCH_IDENTIFIER_UPPER_LIMIT, true))
          throw new wt.util.WTPropertyVetoException("wt.introspection.introspectionResource", wt.introspection.introspectionResource.UPPER_LIMIT,
-               new java.lang.Object[] { new wt.introspection.PropertyDisplayName(CLASSNAME, "perBranchIdentifier"), java.lang.String.valueOf(java.lang.Math.min(PER_BRANCH_IDENTIFIER_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE/wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR)) },
+               new Object[] { new wt.introspection.PropertyDisplayName(CLASSNAME, "perBranchIdentifier"), String.valueOf(Math.min(PER_BRANCH_IDENTIFIER_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE/wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR)) },
                new java.beans.PropertyChangeEvent(this, "perBranchIdentifier", this.perBranchIdentifier, perBranchIdentifier));
    }
 
    /**
     * ECA对象VID
     *
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * @see CorrelationObjectLink
     */
-   public static final java.lang.String ECA_IDENTIFIER = "ecaIdentifier";
+   public static final String ECA_IDENTIFIER = "ecaIdentifier";
    static int ECA_IDENTIFIER_UPPER_LIMIT = -1;
-   java.lang.String ecaIdentifier;
+   String ecaIdentifier;
    /**
     * ECA对象VID
     *
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * @see CorrelationObjectLink
     */
-   public java.lang.String getEcaIdentifier() {
+   public String getEcaIdentifier() {
       return ecaIdentifier;
    }
    /**
     * ECA对象VID
     *
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * @see CorrelationObjectLink
     */
-   public void setEcaIdentifier(java.lang.String ecaIdentifier) throws wt.util.WTPropertyVetoException {
+   public void setEcaIdentifier(String ecaIdentifier) throws wt.util.WTPropertyVetoException {
       ecaIdentifierValidate(ecaIdentifier);
       this.ecaIdentifier = ecaIdentifier;
    }
-   void ecaIdentifierValidate(java.lang.String ecaIdentifier) throws wt.util.WTPropertyVetoException {
+   void ecaIdentifierValidate(String ecaIdentifier) throws wt.util.WTPropertyVetoException {
       if (ECA_IDENTIFIER_UPPER_LIMIT < 1) {
-         try { ECA_IDENTIFIER_UPPER_LIMIT = (java.lang.Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("ecaIdentifier").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT); }
+         try { ECA_IDENTIFIER_UPPER_LIMIT = (Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("ecaIdentifier").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT); }
          catch (wt.introspection.WTIntrospectionException e) { ECA_IDENTIFIER_UPPER_LIMIT = 200; }
       }
       if (ecaIdentifier != null && !wt.fc.PersistenceHelper.checkStoredLength(ecaIdentifier.toString(), ECA_IDENTIFIER_UPPER_LIMIT, true))
          throw new wt.util.WTPropertyVetoException("wt.introspection.introspectionResource", wt.introspection.introspectionResource.UPPER_LIMIT,
-               new java.lang.Object[] { new wt.introspection.PropertyDisplayName(CLASSNAME, "ecaIdentifier"), java.lang.String.valueOf(java.lang.Math.min(ECA_IDENTIFIER_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE/wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR)) },
+               new Object[] { new wt.introspection.PropertyDisplayName(CLASSNAME, "ecaIdentifier"), String.valueOf(Math.min(ECA_IDENTIFIER_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE/wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR)) },
                new java.beans.PropertyChangeEvent(this, "ecaIdentifier", this.ecaIdentifier, ecaIdentifier));
    }
 
    /**
     * 类型
     *
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * @see CorrelationObjectLink
     */
-   public static final java.lang.String LINK_TYPE = "linkType";
+   public static final String LINK_TYPE = "linkType";
    static int LINK_TYPE_UPPER_LIMIT = -1;
-   java.lang.String linkType;
+   String linkType;
    /**
     * 类型
     *
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * @see CorrelationObjectLink
     */
-   public java.lang.String getLinkType() {
+   public String getLinkType() {
       return linkType;
    }
    /**
     * 类型
     *
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * @see CorrelationObjectLink
     */
-   public void setLinkType(java.lang.String linkType) throws wt.util.WTPropertyVetoException {
+   public void setLinkType(String linkType) throws wt.util.WTPropertyVetoException {
       linkTypeValidate(linkType);
       this.linkType = linkType;
    }
-   void linkTypeValidate(java.lang.String linkType) throws wt.util.WTPropertyVetoException {
+   void linkTypeValidate(String linkType) throws wt.util.WTPropertyVetoException {
       if (LINK_TYPE_UPPER_LIMIT < 1) {
-         try { LINK_TYPE_UPPER_LIMIT = (java.lang.Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("linkType").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT); }
+         try { LINK_TYPE_UPPER_LIMIT = (Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("linkType").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT); }
          catch (wt.introspection.WTIntrospectionException e) { LINK_TYPE_UPPER_LIMIT = 200; }
       }
       if (linkType != null && !wt.fc.PersistenceHelper.checkStoredLength(linkType.toString(), LINK_TYPE_UPPER_LIMIT, true))
          throw new wt.util.WTPropertyVetoException("wt.introspection.introspectionResource", wt.introspection.introspectionResource.UPPER_LIMIT,
-               new java.lang.Object[] { new wt.introspection.PropertyDisplayName(CLASSNAME, "linkType"), java.lang.String.valueOf(java.lang.Math.min(LINK_TYPE_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE/wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR)) },
+               new Object[] { new wt.introspection.PropertyDisplayName(CLASSNAME, "linkType"), String.valueOf(Math.min(LINK_TYPE_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE/wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR)) },
                new java.beans.PropertyChangeEvent(this, "linkType", this.linkType, linkType));
    }
 
    /**
     * 更改详细描述
     *
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * @see CorrelationObjectLink
     */
-   public static final java.lang.String AAD_DESCRIPTION = "aadDescription";
+   public static final String AAD_DESCRIPTION = "aadDescription";
    static int AAD_DESCRIPTION_UPPER_LIMIT = -1;
-   java.lang.String aadDescription;
+   String aadDescription;
    /**
     * 更改详细描述
     *
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * @see CorrelationObjectLink
     */
-   public java.lang.String getAadDescription() {
+   public String getAadDescription() {
       return aadDescription;
    }
    /**
     * 更改详细描述
     *
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * @see CorrelationObjectLink
     */
-   public void setAadDescription(java.lang.String aadDescription) throws wt.util.WTPropertyVetoException {
+   public void setAadDescription(String aadDescription) throws wt.util.WTPropertyVetoException {
       aadDescriptionValidate(aadDescription);
       this.aadDescription = aadDescription;
    }
-   void aadDescriptionValidate(java.lang.String aadDescription) throws wt.util.WTPropertyVetoException {
+   void aadDescriptionValidate(String aadDescription) throws wt.util.WTPropertyVetoException {
       if (AAD_DESCRIPTION_UPPER_LIMIT < 1) {
-         try { AAD_DESCRIPTION_UPPER_LIMIT = (java.lang.Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("aadDescription").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT); }
+         try { AAD_DESCRIPTION_UPPER_LIMIT = (Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("aadDescription").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT); }
          catch (wt.introspection.WTIntrospectionException e) { AAD_DESCRIPTION_UPPER_LIMIT = 2000; }
       }
       if (aadDescription != null && !wt.fc.PersistenceHelper.checkStoredLength(aadDescription.toString(), AAD_DESCRIPTION_UPPER_LIMIT, true))
          throw new wt.util.WTPropertyVetoException("wt.introspection.introspectionResource", wt.introspection.introspectionResource.UPPER_LIMIT,
-               new java.lang.Object[] { new wt.introspection.PropertyDisplayName(CLASSNAME, "aadDescription"), java.lang.String.valueOf(java.lang.Math.min(AAD_DESCRIPTION_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE/wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR)) },
+               new Object[] { new wt.introspection.PropertyDisplayName(CLASSNAME, "aadDescription"), String.valueOf(Math.min(AAD_DESCRIPTION_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE/wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR)) },
                new java.beans.PropertyChangeEvent(this, "aadDescription", this.aadDescription, aadDescription));
    }
 
    /**
     * 路由
     *
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * @see CorrelationObjectLink
     */
-   public static final java.lang.String ROUTING = "routing";
+   public static final String ROUTING = "routing";
    static int ROUTING_UPPER_LIMIT = -1;
-   java.lang.String routing;
+   String routing;
    /**
     * 路由
     *
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * @see CorrelationObjectLink
     */
-   public java.lang.String getRouting() {
+   public String getRouting() {
       return routing;
    }
    /**
     * 路由
     *
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * @see CorrelationObjectLink
     */
-   public void setRouting(java.lang.String routing) throws wt.util.WTPropertyVetoException {
+   public void setRouting(String routing) throws wt.util.WTPropertyVetoException {
       routingValidate(routing);
       this.routing = routing;
    }
-   void routingValidate(java.lang.String routing) throws wt.util.WTPropertyVetoException {
+   void routingValidate(String routing) throws wt.util.WTPropertyVetoException {
       if (ROUTING_UPPER_LIMIT < 1) {
-         try { ROUTING_UPPER_LIMIT = (java.lang.Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("routing").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT); }
+         try { ROUTING_UPPER_LIMIT = (Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("routing").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT); }
          catch (wt.introspection.WTIntrospectionException e) { ROUTING_UPPER_LIMIT = 200; }
       }
       if (routing != null && !wt.fc.PersistenceHelper.checkStoredLength(routing.toString(), ROUTING_UPPER_LIMIT, true))
          throw new wt.util.WTPropertyVetoException("wt.introspection.introspectionResource", wt.introspection.introspectionResource.UPPER_LIMIT,
-               new java.lang.Object[] { new wt.introspection.PropertyDisplayName(CLASSNAME, "routing"), java.lang.String.valueOf(java.lang.Math.min(ROUTING_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE/wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR)) },
+               new Object[] { new wt.introspection.PropertyDisplayName(CLASSNAME, "routing"), String.valueOf(Math.min(ROUTING_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE/wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR)) },
                new java.beans.PropertyChangeEvent(this, "routing", this.routing, routing));
    }
 
    /**
     * 审批意见
     *
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * @see CorrelationObjectLink
     */
-   public static final java.lang.String APPROVAL_OPINION = "approvalOpinion";
+   public static final String APPROVAL_OPINION = "approvalOpinion";
    static int APPROVAL_OPINION_UPPER_LIMIT = -1;
-   java.lang.String approvalOpinion;
+   String approvalOpinion;
    /**
     * 审批意见
     *
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * @see CorrelationObjectLink
     */
-   public java.lang.String getApprovalOpinion() {
+   public String getApprovalOpinion() {
       return approvalOpinion;
    }
    /**
     * 审批意见
     *
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * @see CorrelationObjectLink
     */
-   public void setApprovalOpinion(java.lang.String approvalOpinion) throws wt.util.WTPropertyVetoException {
+   public void setApprovalOpinion(String approvalOpinion) throws wt.util.WTPropertyVetoException {
       approvalOpinionValidate(approvalOpinion);
       this.approvalOpinion = approvalOpinion;
    }
-   void approvalOpinionValidate(java.lang.String approvalOpinion) throws wt.util.WTPropertyVetoException {
+   void approvalOpinionValidate(String approvalOpinion) throws wt.util.WTPropertyVetoException {
       if (APPROVAL_OPINION_UPPER_LIMIT < 1) {
-         try { APPROVAL_OPINION_UPPER_LIMIT = (java.lang.Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("approvalOpinion").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT); }
+         try { APPROVAL_OPINION_UPPER_LIMIT = (Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("approvalOpinion").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT); }
          catch (wt.introspection.WTIntrospectionException e) { APPROVAL_OPINION_UPPER_LIMIT = 200; }
       }
       if (approvalOpinion != null && !wt.fc.PersistenceHelper.checkStoredLength(approvalOpinion.toString(), APPROVAL_OPINION_UPPER_LIMIT, true))
          throw new wt.util.WTPropertyVetoException("wt.introspection.introspectionResource", wt.introspection.introspectionResource.UPPER_LIMIT,
-               new java.lang.Object[] { new wt.introspection.PropertyDisplayName(CLASSNAME, "approvalOpinion"), java.lang.String.valueOf(java.lang.Math.min(APPROVAL_OPINION_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE/wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR)) },
+               new Object[] { new wt.introspection.PropertyDisplayName(CLASSNAME, "approvalOpinion"), String.valueOf(Math.min(APPROVAL_OPINION_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE/wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR)) },
                new java.beans.PropertyChangeEvent(this, "approvalOpinion", this.approvalOpinion, approvalOpinion));
    }
 
    /**
     * 备注（驳回必填）
     *
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * @see CorrelationObjectLink
     */
-   public static final java.lang.String REMARK = "remark";
+   public static final String REMARK = "remark";
    static int REMARK_UPPER_LIMIT = -1;
-   java.lang.String remark;
+   String remark;
    /**
     * 备注（驳回必填）
     *
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * @see CorrelationObjectLink
     */
-   public java.lang.String getRemark() {
+   public String getRemark() {
       return remark;
    }
    /**
     * 备注（驳回必填）
     *
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * @see CorrelationObjectLink
     */
-   public void setRemark(java.lang.String remark) throws wt.util.WTPropertyVetoException {
+   public void setRemark(String remark) throws wt.util.WTPropertyVetoException {
       remarkValidate(remark);
       this.remark = remark;
    }
-   void remarkValidate(java.lang.String remark) throws wt.util.WTPropertyVetoException {
+   void remarkValidate(String remark) throws wt.util.WTPropertyVetoException {
       if (REMARK_UPPER_LIMIT < 1) {
-         try { REMARK_UPPER_LIMIT = (java.lang.Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("remark").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT); }
+         try { REMARK_UPPER_LIMIT = (Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("remark").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT); }
          catch (wt.introspection.WTIntrospectionException e) { REMARK_UPPER_LIMIT = 2000; }
       }
       if (remark != null && !wt.fc.PersistenceHelper.checkStoredLength(remark.toString(), REMARK_UPPER_LIMIT, true))
          throw new wt.util.WTPropertyVetoException("wt.introspection.introspectionResource", wt.introspection.introspectionResource.UPPER_LIMIT,
-               new java.lang.Object[] { new wt.introspection.PropertyDisplayName(CLASSNAME, "remark"), java.lang.String.valueOf(java.lang.Math.min(REMARK_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE/wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR)) },
+               new Object[] { new wt.introspection.PropertyDisplayName(CLASSNAME, "remark"), String.valueOf(Math.min(REMARK_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE/wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR)) },
                new java.beans.PropertyChangeEvent(this, "remark", this.remark, remark));
    }
 
    /**
     * 收集对象
     *
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * @see CorrelationObjectLink
     */
-   public static final java.lang.String COLLECTION = "collection";
+   public static final String COLLECTION = "collection";
    static int COLLECTION_UPPER_LIMIT = -1;
-   java.lang.String collection;
+   String collection;
    /**
     * 收集对象
     *
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * @see CorrelationObjectLink
     */
-   public java.lang.String getCollection() {
+   public String getCollection() {
       return collection;
    }
    /**
     * 收集对象
     *
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * @see CorrelationObjectLink
     */
-   public void setCollection(java.lang.String collection) throws wt.util.WTPropertyVetoException {
+   public void setCollection(String collection) throws wt.util.WTPropertyVetoException {
       collectionValidate(collection);
       this.collection = collection;
    }
-   void collectionValidate(java.lang.String collection) throws wt.util.WTPropertyVetoException {
+   void collectionValidate(String collection) throws wt.util.WTPropertyVetoException {
       if (COLLECTION_UPPER_LIMIT < 1) {
-         try { COLLECTION_UPPER_LIMIT = (java.lang.Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("collection").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT); }
+         try { COLLECTION_UPPER_LIMIT = (Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("collection").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT); }
          catch (wt.introspection.WTIntrospectionException e) { COLLECTION_UPPER_LIMIT = 2000; }
       }
       if (collection != null && !wt.fc.PersistenceHelper.checkStoredLength(collection.toString(), COLLECTION_UPPER_LIMIT, true))
          throw new wt.util.WTPropertyVetoException("wt.introspection.introspectionResource", wt.introspection.introspectionResource.UPPER_LIMIT,
-               new java.lang.Object[] { new wt.introspection.PropertyDisplayName(CLASSNAME, "collection"), java.lang.String.valueOf(java.lang.Math.min(COLLECTION_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE/wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR)) },
+               new Object[] { new wt.introspection.PropertyDisplayName(CLASSNAME, "collection"), String.valueOf(Math.min(COLLECTION_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE/wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR)) },
                new java.beans.PropertyChangeEvent(this, "collection", this.collection, collection));
    }
 
    /**
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * 处理方式
+    *
+    * @see CorrelationObjectLink
     */
-   public static final java.lang.String CHANGE_ORDER2_ROLE = "changeOrder2";
+   public static final String TREATMENT = "treatment";
+   static int TREATMENT_UPPER_LIMIT = -1;
+   String treatment;
    /**
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * 处理方式
+    *
+    * @see CorrelationObjectLink
+    */
+   public String getTreatment() {
+      return treatment;
+   }
+   /**
+    * 处理方式
+    *
+    * @see CorrelationObjectLink
+    */
+   public void setTreatment(String treatment) throws wt.util.WTPropertyVetoException {
+      treatmentValidate(treatment);
+      this.treatment = treatment;
+   }
+   void treatmentValidate(String treatment) throws wt.util.WTPropertyVetoException {
+      if (TREATMENT_UPPER_LIMIT < 1) {
+         try { TREATMENT_UPPER_LIMIT = (Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("treatment").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT); }
+         catch (wt.introspection.WTIntrospectionException e) { TREATMENT_UPPER_LIMIT = 2000; }
+      }
+      if (treatment != null && !wt.fc.PersistenceHelper.checkStoredLength(treatment.toString(), TREATMENT_UPPER_LIMIT, true))
+         throw new wt.util.WTPropertyVetoException("wt.introspection.introspectionResource", wt.introspection.introspectionResource.UPPER_LIMIT,
+               new Object[] { new wt.introspection.PropertyDisplayName(CLASSNAME, "treatment"), String.valueOf(Math.min(TREATMENT_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE/wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR)) },
+               new java.beans.PropertyChangeEvent(this, "treatment", this.treatment, treatment));
+   }
+
+   /**
+    * @see CorrelationObjectLink
+    */
+   public static final String CHANGE_ORDER2_ROLE = "changeOrder2";
+   /**
+    * @see CorrelationObjectLink
     */
    public wt.change2.WTChangeOrder2 getChangeOrder2() {
       return (wt.change2.WTChangeOrder2) getRoleAObject();
    }
    /**
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * @see CorrelationObjectLink
     */
    public void setChangeOrder2(wt.change2.WTChangeOrder2 the_changeOrder2) throws wt.util.WTPropertyVetoException {
       setRoleAObject((wt.fc.Persistable) the_changeOrder2);
    }
 
    /**
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * @see CorrelationObjectLink
     */
-   public static final java.lang.String PERSISTABLE_ROLE = "persistable";
+   public static final String PERSISTABLE_ROLE = "persistable";
    /**
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * @see CorrelationObjectLink
     */
    public wt.fc.Persistable getPersistable() {
       return (wt.fc.Persistable) getRoleBObject();
    }
    /**
-    * @see ext.appo.change.models.CorrelationObjectLink
+    * @see CorrelationObjectLink
     */
    public void setPersistable(wt.fc.Persistable the_persistable) throws wt.util.WTPropertyVetoException {
       setRoleBObject((wt.fc.Persistable) the_persistable);
    }
 
-   public java.lang.String getConceptualClassname() {
+   public String getConceptualClassname() {
       return CLASSNAME;
    }
 
@@ -373,12 +409,12 @@ public abstract class _CorrelationObjectLink extends wt.fc.ObjectToObjectLink im
       return wt.introspection.WTIntrospector.getClassInfo(getConceptualClassname());
    }
 
-   public java.lang.String getType() {
+   public String getType() {
       try { return getClassInfo().getDisplayName(); }
       catch (wt.introspection.WTIntrospectionException wte) { return wt.util.WTStringUtilities.tail(getConceptualClassname(), '.'); }
    }
 
-   public static final long EXTERNALIZATION_VERSION_UID = -3473050819574853397L;
+   public static final long EXTERNALIZATION_VERSION_UID = -4039924139835728706L;
 
    public void writeExternal(java.io.ObjectOutput output) throws java.io.IOException {
       output.writeLong( EXTERNALIZATION_VERSION_UID );
@@ -394,17 +430,18 @@ public abstract class _CorrelationObjectLink extends wt.fc.ObjectToObjectLink im
       output.writeObject( perBranchIdentifier );
       output.writeObject( remark );
       output.writeObject( routing );
+      output.writeObject( treatment );
    }
 
    protected void super_writeExternal_CorrelationObjectLink(java.io.ObjectOutput output) throws java.io.IOException {
       super.writeExternal(output);
    }
 
-   public void readExternal(java.io.ObjectInput input) throws java.io.IOException, java.lang.ClassNotFoundException {
+   public void readExternal(java.io.ObjectInput input) throws java.io.IOException, ClassNotFoundException {
       long readSerialVersionUID = input.readLong();
-      readVersion( (ext.appo.change.models.CorrelationObjectLink) this, input, readSerialVersionUID, false, false );
+      readVersion( (CorrelationObjectLink) this, input, readSerialVersionUID, false, false );
    }
-   protected void super_readExternal_CorrelationObjectLink(java.io.ObjectInput input) throws java.io.IOException, java.lang.ClassNotFoundException {
+   protected void super_readExternal_CorrelationObjectLink(java.io.ObjectInput input) throws java.io.IOException, ClassNotFoundException {
       super.readExternal(input);
    }
 
@@ -420,6 +457,7 @@ public abstract class _CorrelationObjectLink extends wt.fc.ObjectToObjectLink im
       output.setString( "perBranchIdentifier", perBranchIdentifier );
       output.setString( "remark", remark );
       output.setString( "routing", routing );
+      output.setString( "treatment", treatment );
    }
 
    public void readExternal(wt.pds.PersistentRetrieveIfc input) throws java.sql.SQLException, wt.pom.DatastoreException {
@@ -434,29 +472,31 @@ public abstract class _CorrelationObjectLink extends wt.fc.ObjectToObjectLink im
       perBranchIdentifier = input.getString( "perBranchIdentifier" );
       remark = input.getString( "remark" );
       routing = input.getString( "routing" );
+      treatment = input.getString( "treatment" );
    }
 
-   boolean readVersion_3473050819574853397L( java.io.ObjectInput input, long readSerialVersionUID, boolean superDone ) throws java.io.IOException, java.lang.ClassNotFoundException {
+   boolean readVersion_4039924139835728706L( java.io.ObjectInput input, long readSerialVersionUID, boolean superDone ) throws java.io.IOException, ClassNotFoundException {
       if ( !superDone )
          super.readExternal( input );
 
-      aadDescription = (java.lang.String) input.readObject();
-      approvalOpinion = (java.lang.String) input.readObject();
-      collection = (java.lang.String) input.readObject();
-      ecaIdentifier = (java.lang.String) input.readObject();
-      ecnBranchIdentifier = (java.lang.String) input.readObject();
-      linkType = (java.lang.String) input.readObject();
-      perBranchIdentifier = (java.lang.String) input.readObject();
-      remark = (java.lang.String) input.readObject();
-      routing = (java.lang.String) input.readObject();
+      aadDescription = (String) input.readObject();
+      approvalOpinion = (String) input.readObject();
+      collection = (String) input.readObject();
+      ecaIdentifier = (String) input.readObject();
+      ecnBranchIdentifier = (String) input.readObject();
+      linkType = (String) input.readObject();
+      perBranchIdentifier = (String) input.readObject();
+      remark = (String) input.readObject();
+      routing = (String) input.readObject();
+      treatment = (String) input.readObject();
       return true;
    }
 
-   protected boolean readVersion( CorrelationObjectLink thisObject, java.io.ObjectInput input, long readSerialVersionUID, boolean passThrough, boolean superDone ) throws java.io.IOException, java.lang.ClassNotFoundException {
+   protected boolean readVersion( CorrelationObjectLink thisObject, java.io.ObjectInput input, long readSerialVersionUID, boolean passThrough, boolean superDone ) throws java.io.IOException, ClassNotFoundException {
       boolean success = true;
 
       if ( readSerialVersionUID == EXTERNALIZATION_VERSION_UID )
-         return readVersion_3473050819574853397L( input, readSerialVersionUID, superDone );
+         return readVersion_4039924139835728706L( input, readSerialVersionUID, superDone );
       else
          success = readOldVersion( input, readSerialVersionUID, passThrough, superDone );
 
@@ -465,11 +505,11 @@ public abstract class _CorrelationObjectLink extends wt.fc.ObjectToObjectLink im
 
       return success;
    }
-   protected boolean super_readVersion_CorrelationObjectLink( _CorrelationObjectLink thisObject, java.io.ObjectInput input, long readSerialVersionUID, boolean passThrough, boolean superDone ) throws java.io.IOException, java.lang.ClassNotFoundException {
+   protected boolean super_readVersion_CorrelationObjectLink( _CorrelationObjectLink thisObject, java.io.ObjectInput input, long readSerialVersionUID, boolean passThrough, boolean superDone ) throws java.io.IOException, ClassNotFoundException {
       return super.readVersion(thisObject, input, readSerialVersionUID, passThrough, superDone);
    }
 
-   boolean readOldVersion( java.io.ObjectInput input, long readSerialVersionUID, boolean passThrough, boolean superDone ) throws java.io.IOException, java.lang.ClassNotFoundException {
+   boolean readOldVersion( java.io.ObjectInput input, long readSerialVersionUID, boolean passThrough, boolean superDone ) throws java.io.IOException, ClassNotFoundException {
       throw new java.io.InvalidClassException(CLASSNAME, "Local class not compatible: stream classdesc externalizationVersionUID="+readSerialVersionUID+" local class externalizationVersionUID="+EXTERNALIZATION_VERSION_UID);
    }
 }

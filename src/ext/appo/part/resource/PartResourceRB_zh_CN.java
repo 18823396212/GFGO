@@ -132,4 +132,15 @@ public class PartResourceRB_zh_CN extends WTListResourceBundle {
 	@RBEntry("标准件属性变更流程")
 	public static final String PRIVATE_CONSTANT_42 = "partAttrChangeProcessor.standardPartAttrChangeProcessor.description";
 
+	@RBEntry("导出项目文档信息")
+	public static final String PRIVATE_CONSTANT_43 = "StatReport.subtab2.tooltip";
+	@RBEntry("导出项目文档信息")
+	public static final String PRIVATE_CONSTANT_44 = "StatReport.subtab2.description";
+
+	//add by lzy at 20200414 start
+	@RBEntry("事务性任务跟踪报表")
+	public static final String PRIVATE_CONSTANT_45 = "StatReport.changeTaskReport.tooltip";
+	@RBEntry("事务性任务跟踪报表")
+	public static final String PRIVATE_CONSTANT_46 = "StatReport.changeTaskReport.description";
+	//add by lzy at 20200414 end
 }

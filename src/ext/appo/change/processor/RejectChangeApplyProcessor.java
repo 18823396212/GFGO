@@ -9,6 +9,7 @@ import ext.appo.change.models.CorrelationObjectLink;
 import ext.appo.change.models.TransactionTask;
 import ext.appo.change.util.ModifyUtils;
 import ext.appo.ecn.constants.ChangeConstants;
+import ext.pi.core.PIAttributeHelper;
 import ext.pi.core.PICoreHelper;
 import ext.pi.core.PIWorkflowHelper;
 import org.apache.log4j.Logger;
@@ -21,6 +22,8 @@ import wt.fc.collections.WTHashSet;
 import wt.lifecycle.LifeCycleHelper;
 import wt.lifecycle.State;
 import wt.log4j.LogR;
+import wt.org.WTPrincipal;
+import wt.org.WTUser;
 import wt.sandbox.SandboxHelper;
 import wt.session.SessionContext;
 import wt.session.SessionHelper;
@@ -29,9 +32,7 @@ import wt.util.WTException;
 import wt.workflow.engine.WfEngineHelper;
 import wt.workflow.engine.WfProcess;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 驳回变更申请按钮
@@ -100,15 +101,21 @@ public class RejectChangeApplyProcessor extends DefaultObjectFormProcessor imple
                     WfProcess process = (WfProcess) result.nextElement();
                     PIWorkflowHelper.service.stop(process);
                 }
-                //设置ECN状态为-已开启
-                State state = State.toState("OPEN");
-                LifeCycleHelper.service.setLifeCycleState(changeOrder2,state);
-
+                SessionContext.setContext(previous);//设置回原用户，ECN编辑节点会自动获取当前用户为责任人
+                boolean flag = SessionServerHelper.manager.setAccessEnforced(false); // 忽略权限
+                try{
+                    //设置ECN状态为-已开启
+                    State state = State.toState("OPEN");
+                    LifeCycleHelper.service.setLifeCycleState(changeOrder2, state);
+                } catch (Exception e) {
+                    throw new WTException(e.getStackTrace());
+                } finally {
+                    SessionServerHelper.manager.setAccessEnforced(flag);
+                }
             }
         } catch (Exception e) {
             throw new WTException(e.getStackTrace());
         } finally {
-//            SessionServerHelper.manager.setAccessEnforced(flag);
             SessionContext.setContext(previous);
         }
         setRefreshFormResult(nmCommandBean, formResult);
@@ -116,7 +123,7 @@ public class RejectChangeApplyProcessor extends DefaultObjectFormProcessor imple
     }
 
     @SuppressWarnings("deprecation")
-    public static FormResult setRefreshFormResult(NmCommandBean nmCommandBean, FormResult result) throws WTException{
+    public static FormResult setRefreshFormResult(NmCommandBean nmCommandBean, FormResult result) throws WTException {
         DynamicRefreshInfo refreshInfo = new DynamicRefreshInfo();
         refreshInfo.setLocation(nmCommandBean.getActionOid());
         refreshInfo.setOid(nmCommandBean.getActionOid());

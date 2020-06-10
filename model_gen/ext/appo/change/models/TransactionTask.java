@@ -33,7 +33,17 @@ import wt.util.WTException;
                         name = "changeActivity2",
                         type = String.class,
                         javaDoc = "ECA对象VID"
-                )
+                ),
+                @GeneratedProperty(
+                        name = "taskType",
+                        type = String.class,
+                        javaDoc = "任务类型"
+                ),
+                @GeneratedProperty(
+                        name = "managementStyle",
+                        type = String.class,
+                        javaDoc = "管理方式"
+                ),
         },
         tableProperties = @TableProperties(
                 tableName = "APPO_TRANSACTIONTASK"

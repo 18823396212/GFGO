@@ -1,3 +1,5 @@
 # List of all modeled classes belonging to ext/appo/change.
 wt.fc.WTObject=ext.appo.change.models.TransactionTask
 wt.fc.ObjectToObjectLink=ext.appo.change.models.CorrelationObjectLink
+wt.fc.WTObject=ext.appo.change.models.ManageTeamTemplate
+wt.fc.WTObject=ext.appo.change.models.ManageTeamTemplateShow

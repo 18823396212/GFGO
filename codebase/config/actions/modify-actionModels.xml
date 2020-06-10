@@ -14,7 +14,7 @@
         <action name="setReviewPrincipal" type="modify" shortcut="true"/>
         <action name="removePrincipal" type="generic" shortcut="true"/>
         <action name="createTeamTeamplate" type="modify" shortcut="true"/>
-        <action name="deleteTeamTeamplate" type="wfteam" shortcut="true"/>
+        <action name="deleteTeamTeamplate" type="modify" shortcut="true"/>
         <action name="applyTeamTeamplate" type="modify" shortcut="true"/>
         <!--    add by lzy at 20200508 start-->
         <action name="manageTeamTemplate" type="modify" shortcut="true"/>
@@ -27,5 +27,19 @@
         <action name="removeDrawing" type="modify" shortcut="true"/>
     </model>
     <!--    add by lzy at 20200310 end-->
-
+    <!--    add by lzy at 20200513 start-->
+    <model name="modify_principal_table_completed_actions">
+        <action name="createTeamTeamplate" type="modify" shortcut="true"/>
+        <action name="deleteTeamTeamplate" type="modify" shortcut="true"/>
+        <action name="manageTeamTemplate" type="modify" shortcut="true"/>
+    </model>
+    <!--    add by lzy at 20200513 end-->
+    <!--    add by lzy at 20200515 start-->
+    <!-- 设置流程节点处理人 完成,应用，取消 按钮 -->
+    <model name="ModifyClerkButtonsApply">
+        <action name="okButton" type="modify"/>
+        <action name="applyButton" type="modify"/>
+        <action name="cancelButton" type="object"/>
+    </model>
+    <!--    add by lzy at 20200515 end-->
 </actionmodels>

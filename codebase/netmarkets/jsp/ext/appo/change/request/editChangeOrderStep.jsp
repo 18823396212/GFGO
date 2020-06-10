@@ -18,7 +18,10 @@
 <%--add by lzy at 20191130 start--%>
 <jsp:include page="${mvc:getComponentURL('wt.change2.ChangeActivity2.changeTask.resultingItemsTable')}" flush="true"/>
 <%--add by lzy at 20191130 end--%>
-<jsp:include page="${mvc:getComponentURL('ext.appo.change.mvc.builder.ChangeTaskTableBuilder')}" flush="true"/>
+<%--add by lzy at 20200417 start--%>
+<jsp:include page="${mvc:getComponentURL('ext.appo.change.mvc.builder.UsabilityChangeTaskTableBuilder')}" flush="true"/>
+<%--<jsp:include page="${mvc:getComponentURL('ext.appo.change.mvc.builder.ChangeTaskTableBuilder')}" flush="true"/>--%>
+<%--add by lzy at 20200417 end--%>
 
 <input type="hidden" name="datasArray" id="datasArray"/>
 
@@ -34,7 +37,7 @@
 
 <SCRIPT LANGUAGE="JavaScript">
     //一键设置
-    function addOneKeySetup(completiontime,userPicker,articleDispose_result,passageDispose_result,inventoryDispose_result,productDispose_result,changeType_result,aadDescription_result){
+    function addOneKeySetup(completiontime, userPicker, articleDispose_result, passageDispose_result, inventoryDispose_result, productDispose_result, changeType_result, aadDescription_result) {
         // //修改、保存数据
         // saveChangeTaskArrayByOneKeySetup(completiontime,userPicker,articleDispose_result,passageDispose_result,inventoryDispose_result,productDispose_result,changeType_result,aadDescription_result);
         // // 重新加载数据表
@@ -43,22 +46,61 @@
         // 保存数据
         saveChangeTaskArray();
         // 重新加载数据表
-        PTC.jca.table.Utils.reload('ext.appo.change.mvc.builder.AffectedItemsTableBuilder', {completiontime: completiontime,userPicker: userPicker,articleDispose_result: articleDispose_result,
-            passageDispose_result: passageDispose_result,inventoryDispose_result: inventoryDispose_result,productDispose_result: productDispose_result,changeType_result: changeType_result,aadDescription_result: aadDescription_result}, true);
+        PTC.jca.table.Utils.reload('ext.appo.change.mvc.builder.AffectedItemsTableBuilder', {
+            completiontime: completiontime,
+            userPicker: userPicker,
+            articleDispose_result: articleDispose_result,
+            passageDispose_result: passageDispose_result,
+            inventoryDispose_result: inventoryDispose_result,
+            productDispose_result: productDispose_result,
+            changeType_result: changeType_result,
+            aadDescription_result: aadDescription_result
+        }, true);
         // 保存数据
         saveChangeTaskArray();
     }
 
 
-
     // 受影响对象列表‘收集对象’及‘添加受影响对象’按钮调用
-    function addCollectItemsForAffectedEndItems(itemsOid) {
+    function addCollectItemsForAffectedEndItems(itemsOid,type) {
         // 保存数据
         saveChangeTaskArray();
+        var tableRows = PTC.jca.table.Utils.getTableRows("ext.appo.change.mvc.builder.AffectedItemsTableBuilder").items;
         // 重新加载数据表
         PTC.jca.table.Utils.reload('ext.appo.change.mvc.builder.AffectedItemsTableBuilder', {selectOids: JSON.stringify(itemsOid)}, true);
+        //add by lzy at 20200519 start
+        if (type.indexOf("collectItems")>-1){
+            // 保存数据
+            setTimeout(saveChangeTaskArray(), 1000);
+        }else{
+            var count = parseInt(tableRows.length) + parseInt(itemsOid.length);
+            var splitNumber = 10;//拆分数
+            var size = parseInt(count) / parseInt(splitNumber);
+            //向上取整
+            size = Math.ceil(size);
+            if (size > 1) {
+                // 通过原有受影响列表数 和 选择添加的受影响对象数 延迟保存数据，收集受影响产品
+                var time = size * 1200;
+                setTimeout("delaySaveAndEndItems(" + JSON.stringify(itemsOid) + ")", time);
+            } else {
+                setTimeout("delaySaveAndEndItems(" + JSON.stringify(itemsOid) + ")", 1000);
+            }
+        }
+        //add by lzy at 20200519 end
+    }
+
+    function delaySaveAndEndItems(itemsOid) {
         // 保存数据
         saveChangeTaskArray();
+        //保存受影响产品数据
+        saveAffectedEndItemsTable();
+        // 检查选择产品是否符合要求
+        var params = "itemOid=" + JSON.stringify(itemsOid) + "&method=collectAffectedEndItems";
+        var url = "netmarkets/jsp/ext/appo/change/request/affectedEndItems.jsp";
+        var json = eval("(" + ajaxRequest(url, params) + ")");
+        // 数据反填
+        reloadAffectedEndItemsTable(json['resultDatas']);
+        // add by lzy at 20200519 end
     }
 
     // 受影响对象表单中'责任人'回填
@@ -105,19 +147,69 @@
         var result = ajaxRequest(url, params);
         //add by lzy at 20200113 start
         if (result.indexOf("当前数据(") !== -1) {
-        // if (result.indexOf("存在以下受影响对象不允许移除：") !== -1) {
-        //add by lzy at 20200113 end
+            // if (result.indexOf("存在以下受影响对象不允许移除：") !== -1) {
+            //add by lzy at 20200113 end
             alert(result.trim());
         } else {
             // 移除数据
             var table = PTC.jca.table.Utils.getTable('ext.appo.change.mvc.builder.AffectedItemsTableBuilder');
             PTC.jca.table.Utils.removeRows(table, eval("(" + result + ")"));
+            //add by lzy at 20200520 start
+            //删除‘移除’受影响对象的受影响产品（不删除不是‘移除’受影响对象的受影响产品）
+            //保存受影响产品数据
+            saveAffectedEndItemsTable();
+            // 获取‘移除’受影响对象的受影响产品oid
+            var params = "itemOid=" + JSON.stringify(oidArray) + "&method=collectAffectedEndItems";
+            var url = "netmarkets/jsp/ext/appo/changeNotice/affectedEndItems.jsp";
+            var json = eval("(" + ajaxRequest(url, params) + ")");
+            //获取不是'移除'受影响对象的受影响产品oid
+            var tableRows = PTC.jca.table.Utils.getTableRows("ext.appo.change.mvc.builder.AffectedItemsTableBuilder").items;
+            var oids = [];
+            for (var i = 0; i < tableRows.length; i++) {
+                var tableRow = tableRows[i].data;
+                //不是‘移除’受影响对象
+                if (oidArray.indexOf(tableRow.oid) == -1)
+                    oids.push(tableRow.oid);
+            }
+            // 获取不是‘移除’受影响对象的受影响产品oid
+            var params2 = "itemOid=" + JSON.stringify(oids) + "&method=collectAffectedEndItems";
+            var url2 = "netmarkets/jsp/ext/appo/changeNotice/affectedEndItems.jsp";
+            var json2 = eval("(" + ajaxRequest(url2, params2) + ")");
+            // 输入参数转换JSON
+            var removeOid = eval("(" + json['resultDatas'] + ")");
+            var noRemoveOid = eval("(" + json2['resultDatas'] + ")");
+            //移除不需要的Oid
+            //需要移除的oid
+            var needRemoveOid=[];
+            for (var i = 0; i < removeOid.length; i++) {
+                for (var j = 0; j < noRemoveOid.length; j++) {
+                    if (removeOid[i].indexOf(noRemoveOid[j]) > -1) {
+                        needRemoveOid.push(removeOid[i]);
+                    }
+                }
+            }
+            if (needRemoveOid.length>0){
+                for (let i = 0; i <needRemoveOid.length ; i++) {
+                    removeOid.remove(needRemoveOid[i]);
+                }
+            }
+            //通过removeOid获取获取受影响产品表单对应Oid
+            var params3 = "removeOid=" + JSON.stringify(removeOid)
+            var url3 = "netmarkets/jsp/ext/appo/change/request/getAffectedEndItemsOid.jsp";
+            var json3 = eval("(" + ajaxRequest(url3, params3) + ")");
+            var rowOids = eval("(" + json3['resultDatas'] + ")");
+            //移除需要移除的受影响产品
+            var table2 = PTC.jca.table.Utils.getTable('ext.appo.change.mvc.builder.AffectedEndItemsTableBuilder');
+            PTC.jca.table.Utils.removeRows(table2, rowOids);
+            //保存受影响产品数据
+            saveAffectedEndItemsTable();
+            //add by lzy at 20200520 end
         }
         // 数据保存
         saveChangeTaskArray();
     }
 
-    var table_id = "ext.appo.change.mvc.builder.ChangeTaskTableBuilder";
+    var table_id = "ext.appo.change.mvc.builder.UsabilityChangeTaskTableBuilder";
 
     // 移除事务性任务
     function deleteChangeTask() {
@@ -166,7 +258,7 @@
         return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
     }
 
-    // 重新加载 ChangeTaskTableBuilder
+    // 重新加载 UsabilityChangeTaskTableBuilder
     function reloadTable(param) {
         // 保存数据
         document.getElementById("datasArray").value = param;
@@ -342,15 +434,15 @@
                         }
                     }
                 }
-                if (responsiblePersonValue.length === 0){
-                    var str= JSON.stringify(tableRow['ResponsiblePerson'].gui);
-                    if (str.indexOf("value")>-1){
-                        str=str.substring(str.indexOf("value")+8,str.length-1);
+                if (responsiblePersonValue.length === 0) {
+                    var str = JSON.stringify(tableRow['ResponsiblePerson'].gui);
+                    if (str.indexOf("value") > -1) {
+                        str = str.substring(str.indexOf("value") + 8, str.length - 1);
                     }
-                    if (str.indexOf("\"")>-1){
-                        str=str.substring(0,str.indexOf("\"")-1);
+                    if (str.indexOf("\"") > -1) {
+                        str = str.substring(0, str.indexOf("\"") - 1);
                     }
-                    responsiblePersonValue=str;
+                    responsiblePersonValue = str;
                 }
                 columnArray['ResponsiblePerson'] = responsiblePersonValue;
             } else {
@@ -367,11 +459,11 @@
                 //     }
                 // }
 
-                if (articleDispose.indexOf('[') > -1){
-                    articleDispose=articleDispose.substring(articleDispose.lastIndexOf('[') + 1, articleDispose.length - 1);
+                if (articleDispose.indexOf('[') > -1) {
+                    articleDispose = articleDispose.substring(articleDispose.lastIndexOf('[') + 1, articleDispose.length - 1);
                 }
-                if (articleDispose.indexOf(']') > -1){
-                    articleDispose=articleDispose.substring(0, articleDispose.indexOf(']') - 1);
+                if (articleDispose.indexOf(']') > -1) {
+                    articleDispose = articleDispose.substring(0, articleDispose.indexOf(']') - 1);
                 }
 
                 columnArray['ArticleDispose'] = articleDispose;
@@ -395,11 +487,11 @@
                 //     }
                 // }
 
-                if (passageDispose.indexOf('[') > -1){
-                    passageDispose=passageDispose.substring(passageDispose.lastIndexOf('[') + 1, passageDispose.length - 1);
+                if (passageDispose.indexOf('[') > -1) {
+                    passageDispose = passageDispose.substring(passageDispose.lastIndexOf('[') + 1, passageDispose.length - 1);
                 }
-                if (passageDispose.indexOf(']') > -1){
-                    passageDispose=passageDispose.substring(0, passageDispose.indexOf(']') - 1);
+                if (passageDispose.indexOf(']') > -1) {
+                    passageDispose = passageDispose.substring(0, passageDispose.indexOf(']') - 1);
                 }
 
                 columnArray['PassageDispose'] = passageDispose;
@@ -423,11 +515,11 @@
                 //     }
                 // }
 
-                if (inventoryDispose.indexOf('[') > -1){
-                    inventoryDispose=inventoryDispose.substring(inventoryDispose.lastIndexOf('[') + 1, inventoryDispose.length - 1);
+                if (inventoryDispose.indexOf('[') > -1) {
+                    inventoryDispose = inventoryDispose.substring(inventoryDispose.lastIndexOf('[') + 1, inventoryDispose.length - 1);
                 }
-                if (inventoryDispose.indexOf(']') > -1){
-                    inventoryDispose=inventoryDispose.substring(0, inventoryDispose.indexOf(']') - 1);
+                if (inventoryDispose.indexOf(']') > -1) {
+                    inventoryDispose = inventoryDispose.substring(0, inventoryDispose.indexOf(']') - 1);
                 }
 
                 columnArray['InventoryDispose'] = inventoryDispose;
@@ -442,7 +534,7 @@
             }
             if (tableRow.hasOwnProperty('CompletionTime')) {
                 //add by lzy at 20200113 start
-                var completionTimeValue=tableRow['CompletionTime'].gui.comparable;
+                var completionTimeValue = tableRow['CompletionTime'].gui.comparable;
                 // for (var j = 0; j < selectArray.length; j++) {
                 //     var select = selectArray[j];
                 //     if ((select.name.indexOf('CompletionTime') > -1) && (select.name.indexOf(tableRow.oid) > -1)) {
@@ -467,11 +559,11 @@
                 //     }
                 // }
 
-                if (changeType.indexOf('[') > -1){
-                    changeType=changeType.substring(changeType.lastIndexOf('[') + 1, changeType.length - 1);
+                if (changeType.indexOf('[') > -1) {
+                    changeType = changeType.substring(changeType.lastIndexOf('[') + 1, changeType.length - 1);
                 }
-                if (changeType.indexOf(']') > -1){
-                    changeType=changeType.substring(0, changeType.indexOf(']') - 1);
+                if (changeType.indexOf(']') > -1) {
+                    changeType = changeType.substring(0, changeType.indexOf(']') - 1);
                 }
 
                 columnArray['ChangeType'] = changeType;
@@ -495,11 +587,11 @@
                 //     }
                 // }
 
-                if (productDispose.indexOf('[') > -1){
-                    productDispose=productDispose.substring(productDispose.lastIndexOf('[') + 1, productDispose.length - 1);
+                if (productDispose.indexOf('[') > -1) {
+                    productDispose = productDispose.substring(productDispose.lastIndexOf('[') + 1, productDispose.length - 1);
                 }
-                if (productDispose.indexOf(']') > -1){
-                    productDispose=productDispose.substring(0, productDispose.indexOf(']') - 1);
+                if (productDispose.indexOf(']') > -1) {
+                    productDispose = productDispose.substring(0, productDispose.indexOf(']') - 1);
                 }
 
                 columnArray['ProductDispose'] = productDispose;
@@ -516,11 +608,11 @@
             //add by tongwang 20191023 start
             if (tableRow.hasOwnProperty('ChangeObjectType')) {
                 var changeObjectType = tableRow['ChangeObjectType'].gui.comparable;
-                if (changeObjectType.indexOf('[') > -1){
-                    changeObjectType=changeObjectType.substring(changeObjectType.lastIndexOf('[') + 1, changeObjectType.length - 1);
+                if (changeObjectType.indexOf('[') > -1) {
+                    changeObjectType = changeObjectType.substring(changeObjectType.lastIndexOf('[') + 1, changeObjectType.length - 1);
                 }
-                if (changeObjectType.indexOf(']') > -1){
-                    changeObjectType=changeObjectType.substring(0, changeObjectType.indexOf(']') - 1);
+                if (changeObjectType.indexOf(']') > -1) {
+                    changeObjectType = changeObjectType.substring(0, changeObjectType.indexOf(']') - 1);
                 }
                 columnArray['ChangeObjectType'] = changeObjectType;
             } else {
@@ -553,7 +645,7 @@
         var affectedProductArray = [];
         for (var i = 0; i < tableRows.length; i++) {
             var columnArray = {};
-            var tableRow=tableRows[i].data;
+            var tableRow = tableRows[i].data;
             affectedProductID[i] = tableRow.oid;
             columnArray['oid'] = tableRow.oid;
             if (tableRow.hasOwnProperty('clfs')) {
@@ -567,7 +659,7 @@
                 }
                 columnArray['clfs'] = clfs;
             }
-            affectedProductArray[i]=columnArray;
+            affectedProductArray[i] = columnArray;
         }
         document.getElementById("affectedProductID").value = JSON.stringify(affectedProductID);
         document.getElementById("affectedProductArray").value = JSON.stringify(affectedProductArray);
@@ -611,6 +703,23 @@
             if (record.data.needDate) {
                 json['needDate'] = record.data.needDate.gui.comparable;
             }
+            //add by lzy at 20200417 start
+            if (record.data.taskType) {
+                json['taskType'] = record.data.taskType.gui.comparable;
+            }
+            if (record.data.glfs) {
+                json['glfs'] = record.data.glfs.gui.comparable;
+            }
+            if (record.data.taskState) {
+                json['taskState'] = record.data.taskState;
+            }
+            if (record.data.taskNumber) {
+                json['taskNumber'] = record.data.taskNumber;
+            }
+            if (record.data.actualDate) {
+                json['actualDate'] = record.data.actualDate;
+            }
+            //add by lzy at 20200417 end
             allDatas[record.data.oid] = json;
         });
         document.getElementById("datasArray").value = JSON.stringify(allDatas);
@@ -653,9 +762,8 @@
 
     setUserSubmitFunction(submitSaveData);
 
-
     // 保存受影响列表客制化字段信息（一键设置功能保存）
-    function saveChangeTaskArrayByOneKeySetup(completiontime,userPicker,articleDispose_result,passageDispose_result,inventoryDispose_result,productDispose_result,changeType_result,aadDescription_result) {
+    function saveChangeTaskArrayByOneKeySetup(completiontime, userPicker, articleDispose_result, passageDispose_result, inventoryDispose_result, productDispose_result, changeType_result, aadDescription_result) {
         // 获取页面所有input控件
         var inputFormArray = document.getElementsByTagName("input");
         // 用于存储所有数据
@@ -707,10 +815,10 @@
                     }
                 }
                 //add by lzy at 20200109 start
-                var gui=JSON.stringify(tableRow['ResponsiblePerson'].gui);
-                var isEdit=gui.indexOf('disabled');//isEdit为-1表示不存在该字符，即是可编辑状态
-                if(userPicker!=null&&userPicker!=""&&isEdit==-1){
-                    responsiblePersonValue=userPicker;
+                var gui = JSON.stringify(tableRow['ResponsiblePerson'].gui);
+                var isEdit = gui.indexOf('disabled');//isEdit为-1表示不存在该字符，即是可编辑状态
+                if (userPicker != null && userPicker != "" && isEdit == -1) {
+                    responsiblePersonValue = userPicker;
                 }
                 //add by lzy at 20200109 end
                 columnArray['ResponsiblePerson'] = responsiblePersonValue;
@@ -720,16 +828,16 @@
             if (tableRow.hasOwnProperty('ArticleDispose')) {
                 var articleDispose = tableRow['ArticleDispose'].gui.comparable;
                 //add by lzy at 20200118 start
-                var gui=JSON.stringify(tableRow['ArticleDispose'].gui);
-                var isEdit=gui.indexOf('disabled');//isEdit为-1表示不存在该字符，即是可编辑状态
-                if(articleDispose_result!=null&&articleDispose_result!=""&&isEdit==-1) {
+                var gui = JSON.stringify(tableRow['ArticleDispose'].gui);
+                var isEdit = gui.indexOf('disabled');//isEdit为-1表示不存在该字符，即是可编辑状态
+                if (articleDispose_result != null && articleDispose_result != "" && isEdit == -1) {
                     columnArray['ArticleDispose'] = articleDispose_result;
-                }else{
-                    if (articleDispose.indexOf('[') > -1){
-                        articleDispose=articleDispose.substring(articleDispose.lastIndexOf('[') + 1, articleDispose.length - 1);
+                } else {
+                    if (articleDispose.indexOf('[') > -1) {
+                        articleDispose = articleDispose.substring(articleDispose.lastIndexOf('[') + 1, articleDispose.length - 1);
                     }
-                    if (articleDispose.indexOf(']') > -1){
-                        articleDispose=articleDispose.substring(0, articleDispose.indexOf(']') - 1);
+                    if (articleDispose.indexOf(']') > -1) {
+                        articleDispose = articleDispose.substring(0, articleDispose.indexOf(']') - 1);
                     }
 
                     columnArray['ArticleDispose'] = articleDispose;
@@ -746,16 +854,16 @@
             if (tableRow.hasOwnProperty('PassageDispose')) {
                 var passageDispose = tableRow['PassageDispose'].gui.comparable
                 //add by lzy at 20200118 start
-                var gui=JSON.stringify(tableRow['PassageDispose'].gui);
-                var isEdit=gui.indexOf('disabled');//isEdit为-1表示不存在该字符，即是可编辑状态
-                if(passageDispose_result!=null&&passageDispose_result!=""&&isEdit==-1){
-                    columnArray['PassageDispose']=passageDispose_result;
-                }else{
-                    if (passageDispose.indexOf('[') > -1){
-                        passageDispose=passageDispose.substring(passageDispose.lastIndexOf('[') + 1, passageDispose.length - 1);
+                var gui = JSON.stringify(tableRow['PassageDispose'].gui);
+                var isEdit = gui.indexOf('disabled');//isEdit为-1表示不存在该字符，即是可编辑状态
+                if (passageDispose_result != null && passageDispose_result != "" && isEdit == -1) {
+                    columnArray['PassageDispose'] = passageDispose_result;
+                } else {
+                    if (passageDispose.indexOf('[') > -1) {
+                        passageDispose = passageDispose.substring(passageDispose.lastIndexOf('[') + 1, passageDispose.length - 1);
                     }
-                    if (passageDispose.indexOf(']') > -1){
-                        passageDispose=passageDispose.substring(0, passageDispose.indexOf(']') - 1);
+                    if (passageDispose.indexOf(']') > -1) {
+                        passageDispose = passageDispose.substring(0, passageDispose.indexOf(']') - 1);
                     }
                     columnArray['PassageDispose'] = passageDispose;
                 }
@@ -772,16 +880,16 @@
             if (tableRow.hasOwnProperty('InventoryDispose')) {
                 var inventoryDispose = tableRow['InventoryDispose'].gui.comparable;
                 //add by lzy at 20200118 start
-                var gui=JSON.stringify(tableRow['InventoryDispose'].gui);
-                var isEdit=gui.indexOf('disabled');//isEdit为-1表示不存在该字符，即是可编辑状态
-                if(inventoryDispose_result!=null&&inventoryDispose_result!=""&&isEdit==-1){
-                    columnArray['InventoryDispose']=inventoryDispose_result;
-                }else{
-                    if (inventoryDispose.indexOf('[') > -1){
-                        inventoryDispose=inventoryDispose.substring(inventoryDispose.lastIndexOf('[') + 1, inventoryDispose.length - 1);
+                var gui = JSON.stringify(tableRow['InventoryDispose'].gui);
+                var isEdit = gui.indexOf('disabled');//isEdit为-1表示不存在该字符，即是可编辑状态
+                if (inventoryDispose_result != null && inventoryDispose_result != "" && isEdit == -1) {
+                    columnArray['InventoryDispose'] = inventoryDispose_result;
+                } else {
+                    if (inventoryDispose.indexOf('[') > -1) {
+                        inventoryDispose = inventoryDispose.substring(inventoryDispose.lastIndexOf('[') + 1, inventoryDispose.length - 1);
                     }
-                    if (inventoryDispose.indexOf(']') > -1){
-                        inventoryDispose=inventoryDispose.substring(0, inventoryDispose.indexOf(']') - 1);
+                    if (inventoryDispose.indexOf(']') > -1) {
+                        inventoryDispose = inventoryDispose.substring(0, inventoryDispose.indexOf(']') - 1);
                     }
                     columnArray['InventoryDispose'] = inventoryDispose;
 
@@ -809,10 +917,10 @@
                         }
                     }
                 }
-                var gui=JSON.stringify(tableRow['CompletionTime'].gui);
-                var isEdit=gui.indexOf('disabled');//isEdit为-1表示不存在该字符，即是可编辑状态
-                if(completiontime!=null&&completiontime!=""&&isEdit==-1){
-                    completionTimeValue =completiontime;
+                var gui = JSON.stringify(tableRow['CompletionTime'].gui);
+                var isEdit = gui.indexOf('disabled');//isEdit为-1表示不存在该字符，即是可编辑状态
+                if (completiontime != null && completiontime != "" && isEdit == -1) {
+                    completionTimeValue = completiontime;
                 }
                 columnArray['CompletionTime'] = date(completionTimeValue);
                 //add by lzy at 20200109 end
@@ -822,23 +930,23 @@
             if (tableRow.hasOwnProperty('ChangeType')) {
                 var changeType = tableRow['ChangeType'].gui.comparable;
                 //add by lzy at 20200118 start
-                var gui=JSON.stringify(tableRow['ChangeType'].gui);
-                var isEdit=gui.indexOf('disabled');//isEdit为-1表示不存在该字符，即是可编辑状态
-                if(changeType_result!=null&&changeType_result!=""&&isEdit==-1){
-                    columnArray['ChangeType']=changeType_result;
-                }else{
-                    if (changeType.indexOf('[') > -1||changeType.indexOf(']')> -1) {
-                        var changeTypeValue="";
-                        if(changeType.indexOf('[') > -1){
-                            changeTypeValue=changeType.substring(changeType.lastIndexOf('[') + 1, changeType.length - 1);
+                var gui = JSON.stringify(tableRow['ChangeType'].gui);
+                var isEdit = gui.indexOf('disabled');//isEdit为-1表示不存在该字符，即是可编辑状态
+                if (changeType_result != null && changeType_result != "" && isEdit == -1) {
+                    columnArray['ChangeType'] = changeType_result;
+                } else {
+                    if (changeType.indexOf('[') > -1 || changeType.indexOf(']') > -1) {
+                        var changeTypeValue = "";
+                        if (changeType.indexOf('[') > -1) {
+                            changeTypeValue = changeType.substring(changeType.lastIndexOf('[') + 1, changeType.length - 1);
                         }
-                        if(changeType.indexOf(']') > -1){
-                            changeTypeValue=changeType.substring(0, changeType.indexOf(']') - 1);
+                        if (changeType.indexOf(']') > -1) {
+                            changeTypeValue = changeType.substring(0, changeType.indexOf(']') - 1);
                         }
-                        if (changeTypeValue.indexOf(";")>-1){
-                            columnArray['ChangeType'] =changeTypeValue;
-                        }else{
-                            columnArray['ChangeType'] =changeTypeValue+";"+changeTypeValue;
+                        if (changeTypeValue.indexOf(";") > -1) {
+                            columnArray['ChangeType'] = changeTypeValue;
+                        } else {
+                            columnArray['ChangeType'] = changeTypeValue + ";" + changeTypeValue;
                         }
                     } else {
                         columnArray['ChangeType'] = changeType;
@@ -856,16 +964,16 @@
             if (tableRow.hasOwnProperty('ProductDispose')) {
                 var productDispose = tableRow['ProductDispose'].gui.comparable;
                 //add by lzy at 20200118 start
-                var gui=JSON.stringify(tableRow['ProductDispose'].gui);
-                var isEdit=gui.indexOf('disabled');//isEdit为-1表示不存在该字符，即是可编辑状态
-                if(productDispose_result!=null&&productDispose_result!=""&&isEdit==-1){
-                    columnArray['ProductDispose']=productDispose_result;
-                }else{
+                var gui = JSON.stringify(tableRow['ProductDispose'].gui);
+                var isEdit = gui.indexOf('disabled');//isEdit为-1表示不存在该字符，即是可编辑状态
+                if (productDispose_result != null && productDispose_result != "" && isEdit == -1) {
+                    columnArray['ProductDispose'] = productDispose_result;
+                } else {
                     if (productDispose.indexOf('[') > -1) {
                         productDispose = productDispose.substring(productDispose.lastIndexOf('[') + 1, productDispose.length - 1);
                     }
                     if (productDispose.indexOf(']') > -1) {
-                        productDispose = productDispose.substring( 0, productDispose.indexOf(']') - 1);
+                        productDispose = productDispose.substring(0, productDispose.indexOf(']') - 1);
                     }
                     columnArray['ProductDispose'] = productDispose;
 
@@ -887,7 +995,7 @@
                     changeObjectType = changeObjectType.substring(changeObjectType.lastIndexOf('[') + 1, changeObjectType.length - 1);
                 }
                 if (changeObjectType.indexOf(']') > -1) {
-                    changeObjectType = changeObjectType.substring( 0 , changeObjectType.indexOf(']') - 1);
+                    changeObjectType = changeObjectType.substring(0, changeObjectType.indexOf(']') - 1);
                 }
                 columnArray['ChangeObjectType'] = changeObjectType;
             } else {
@@ -920,10 +1028,10 @@
                 for (var j = 0; j < inputFormArray.length; j++) {
                     var inputForm = inputFormArray[j];
                     if (inputForm.type === 'text') {
-                        if (inputForm.name.indexOf('CompletionTime')>-1) {
+                        if (inputForm.name.indexOf('CompletionTime') > -1) {
                             for (var i = 0; i < changeTaskArray.length; i++) {
                                 var datasArray = changeTaskArray[i];
-                                if (inputForm.name.indexOf(datasArray['oid'])>-1) {
+                                if (inputForm.name.indexOf(datasArray['oid']) > -1) {
                                     inputForm.value = datasArray['CompletionTime'];
                                     break;
                                 }
@@ -934,6 +1042,7 @@
             }
         }
     }
+
     // 受影响对象表单中'更改详细描述'回填
     function aadDescriptionWriteBack() {
         if (document.getElementById("changeTaskArray")) {
@@ -945,10 +1054,10 @@
                 for (var j = 0; j < inputFormArray.length; j++) {
                     var inputForm = inputFormArray[j];
                     if (inputForm.type === 'text') {
-                        if (inputForm.name.indexOf('aadDescription')>-1) {
+                        if (inputForm.name.indexOf('aadDescription') > -1) {
                             for (var i = 0; i < changeTaskArray.length; i++) {
                                 var datasArray = changeTaskArray[i];
-                                if (inputForm.name.indexOf(datasArray['oid'])>-1) {
+                                if (inputForm.name.indexOf(datasArray['oid']) > -1) {
                                     inputForm.value = datasArray['aadDescription'];
                                     break;
                                 }
@@ -959,6 +1068,7 @@
             }
         }
     }
+
     // 受影响对象表单中'在制处理措施','在途处理措施'，'库存处理措施'，'已出货成品处理措施'，'类型'回填
     function disposeWriteBack() {
         if (document.getElementById("changeTaskArray")) {
@@ -969,42 +1079,42 @@
             if (changeTaskArray.length > 0) {
                 for (var j = 0; j < inputFormArray.length; j++) {
                     var inputForm = inputFormArray[j];
-                    if (inputForm.name.indexOf('ArticleDispose')>-1) {
+                    if (inputForm.name.indexOf('ArticleDispose') > -1) {
                         for (var i = 0; i < changeTaskArray.length; i++) {
                             var datasArray = changeTaskArray[i];
-                            if (inputForm.name.indexOf(datasArray['oid'])>-1) {
+                            if (inputForm.name.indexOf(datasArray['oid']) > -1) {
                                 inputForm.value = datasArray['ArticleDispose'];
                                 break;
                             }
                         }
-                    }else if (inputForm.name.indexOf('PassageDispose')>-1){
+                    } else if (inputForm.name.indexOf('PassageDispose') > -1) {
                         for (var i = 0; i < changeTaskArray.length; i++) {
                             var datasArray = changeTaskArray[i];
-                            if (inputForm.name.indexOf(datasArray['oid'])>-1) {
+                            if (inputForm.name.indexOf(datasArray['oid']) > -1) {
                                 inputForm.value = datasArray['PassageDispose'];
                                 break;
                             }
                         }
-                    }else if (inputForm.name.indexOf('InventoryDispose')>-1){
+                    } else if (inputForm.name.indexOf('InventoryDispose') > -1) {
                         for (var i = 0; i < changeTaskArray.length; i++) {
                             var datasArray = changeTaskArray[i];
-                            if (inputForm.name.indexOf(datasArray['oid'])>-1) {
+                            if (inputForm.name.indexOf(datasArray['oid']) > -1) {
                                 inputForm.value = datasArray['InventoryDispose'];
                                 break;
                             }
                         }
-                    }else if (inputForm.name.indexOf('ProductDispose')>-1){
+                    } else if (inputForm.name.indexOf('ProductDispose') > -1) {
                         for (var i = 0; i < changeTaskArray.length; i++) {
                             var datasArray = changeTaskArray[i];
-                            if (inputForm.name.indexOf(datasArray['oid'])>-1) {
+                            if (inputForm.name.indexOf(datasArray['oid']) > -1) {
                                 inputForm.value = datasArray['ProductDispose'];
                                 break;
                             }
                         }
-                    }else if (inputForm.name.indexOf('ChangeType')>-1){
+                    } else if (inputForm.name.indexOf('ChangeType') > -1) {
                         for (var i = 0; i < changeTaskArray.length; i++) {
                             var datasArray = changeTaskArray[i];
-                            if (inputForm.name.indexOf(datasArray['oid'])>-1) {
+                            if (inputForm.name.indexOf(datasArray['oid']) > -1) {
                                 inputForm.value = datasArray['ChangeType'];
                                 break;
                             }
@@ -1016,8 +1126,8 @@
     }
 
     //日期格式转换 转换成yyyy-MM-dd
-    function date (date) {
-        var nowdate = date.substring(0,10);
+    function date(date) {
+        var nowdate = date.substring(0, 10);
         return nowdate;
     }
 

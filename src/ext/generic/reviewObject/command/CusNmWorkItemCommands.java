@@ -8,19 +8,66 @@
  * </pre>
  */
 
+/**
+ * <pre>
+ * 修改记录：06
+ * 修改日期：2020-02-24 
+ * 修   改  人：毛兵义
+ * 关联活动：
+ * 修改内容：标准属性变更流程,增加必填项的验证
+ * </pre>
+ */
+
 package ext.generic.reviewObject.command;
+
+import static ext.appo.change.constants.ModifyConstants.ATTRIBUTE_10;
+import static ext.appo.change.constants.ModifyConstants.ATTRIBUTE_9;
+import static ext.appo.change.constants.ModifyConstants.CONSTANTS_10;
+import static ext.appo.change.constants.ModifyConstants.CONSTANTS_11;
+import static ext.appo.change.constants.ModifyConstants.CONSTANTS_5;
+import static ext.appo.change.constants.ModifyConstants.CONSTANTS_6;
+import static ext.appo.change.constants.ModifyConstants.CONSTANTS_7;
+import static ext.appo.change.constants.ModifyConstants.CONSTANTS_8;
+import static ext.appo.change.constants.ModifyConstants.CONSTANTS_9;
+import static ext.appo.change.constants.ModifyConstants.FLOWNAME_5;
+import static ext.appo.change.constants.ModifyConstants.LINKTYPE_1;
+import static ext.appo.change.constants.ModifyConstants.SEPARATOR_1;
+import static ext.appo.change.constants.ModifyConstants.SEPARATOR_2;
+import static ext.appo.ecn.constants.ChangeConstants.CHANGEDESCRIBE_COMPID;
+import static ext.appo.ecn.constants.ChangeConstants.CHANGETHEME_COMPID;
+import static ext.appo.ecn.constants.ChangeConstants.NEEDDATE_COMPID;
+import static ext.appo.ecn.constants.ChangeConstants.RESPONSIBLE_COMPID;
+
+import java.io.Externalizable;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TimeZone;
+import java.util.Vector;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.ptc.core.components.forms.FormResult;
 import com.ptc.netmarkets.util.beans.NmCommandBean;
 import com.ptc.netmarkets.work.NmWorkItemCommands;
 import com.ptc.windchill.enterprise.workflow.WfDataUtilitiesHelper;
+
 import ext.appo.change.ModifyHelper;
-import ext.appo.change.constants.ModifyConstants;
 import ext.appo.change.models.CorrelationObjectLink;
 import ext.appo.change.models.TransactionTask;
 import ext.appo.change.util.ModifyUtils;
 import ext.appo.change.workflow.ECNWorkflowUtil;
-import ext.appo.ecn.constants.ChangeConstants;
 import ext.generic.reviewObject.cache.ExcelCacheManager;
 import ext.generic.reviewObject.constant.ReviewObjectConstant;
 import ext.generic.reviewObject.datautility.DataUtilityHelper;
@@ -31,12 +78,13 @@ import ext.generic.reviewObject.model.SignedOpinionHelper;
 import ext.lang.PIStringUtils;
 import ext.pi.core.PIAttributeHelper;
 import ext.pi.core.PICoreHelper;
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-import org.json.JSONException;
-import org.json.JSONObject;
 import wt.change2.WTChangeOrder2;
-import wt.fc.*;
+import wt.fc.Persistable;
+import wt.fc.PersistenceHelper;
+import wt.fc.PersistenceServerHelper;
+import wt.fc.QueryResult;
+import wt.fc.ReferenceFactory;
+import wt.fc.WTObject;
 import wt.log4j.LogR;
 import wt.org.TimeZoneHelper;
 import wt.org.WTPrincipal;
@@ -44,6 +92,7 @@ import wt.org.WTUser;
 import wt.part.WTPart;
 import wt.preference.PreferenceClient;
 import wt.preference.PreferenceHelper;
+import wt.session.SessionContext;
 import wt.session.SessionHelper;
 import wt.util.WTException;
 import wt.util.WTMessage;
@@ -56,17 +105,13 @@ import wt.workflow.engine.WfVotingEventAudit;
 import wt.workflow.work.WfAssignedActivity;
 import wt.workflow.work.WorkItem;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.Externalizable;
-import java.sql.Timestamp;
-import java.util.*;
-
 /**
- * 页面
+ * 完成任务的处理类
  * 
- * @author administrator TODO
+ * @author APPO
+ *
  */
-public class CusNmWorkItemCommands extends NmWorkItemCommands implements Externalizable, ModifyConstants, ChangeConstants {
+public class CusNmWorkItemCommands extends NmWorkItemCommands implements Externalizable {
 	private static final String RESOURCE = "ext.generic.reviewObject.resource.ReviewObjectResourceRB";
 	private static String CLASSNAME = CusNmWorkItemCommands.class.getName();
 	private static final Logger LOGGER = LogR.getLogger(CLASSNAME);
@@ -95,11 +140,9 @@ public class CusNmWorkItemCommands extends NmWorkItemCommands implements Externa
 	public static FormResult save(NmCommandBean nmCommandBean) throws WTException {
 		FormResult formResult = NmWorkItemCommands.save(nmCommandBean);
 		formResult = completeOrSave(nmCommandBean, formResult);
-		//add by wangtong start
 		/* 保存受影响对象、事务性任务表单属性 */
 		saveAttribute(nmCommandBean);
 		/* 保存受影响对象、事务性任务表单属性 */
-		//add by wangtong end
 		return formResult;
 	}
 
@@ -121,11 +164,9 @@ public class CusNmWorkItemCommands extends NmWorkItemCommands implements Externa
 		// 添加驳回时必须添加备注 begin
 		checkUnPassComments(nmCommandBean);
 		// 添加驳回时必须添加备注 end
-		//add by wangtong start
-		/* 检查受影响对象列表「审批意见」「备注（驳回必填）」*/
+		/* 检查受影响对象列表「审批意见」「备注（驳回必填）」 */
 		checkAttribute(nmCommandBean);
-		/* 检查受影响对象列表「审批意见」「备注（驳回必填）」*/
-		//add by wangtong end
+		/* 检查受影响对象列表「审批意见」「备注（驳回必填）」 */
 		formResult = NmWorkItemCommands.complete(nmCommandBean);
 
 		// 一人驳回即驳回
@@ -145,18 +186,18 @@ public class CusNmWorkItemCommands extends NmWorkItemCommands implements Externa
 		// }
 		formResult = completeOrSave(nmCommandBean, formResult);
 		// SessionHelper.manager.setPrincipal(current.getName());
-		//add by wangtong start
 		/* 保存受影响对象、事务性任务表单属性 */
 		String taskComments = saveAttribute(nmCommandBean);
 		/* 保存受影响对象、事务性任务表单属性 */
 		/* 设置备注 */
 		setTaskComments(nmCommandBean, taskComments);
 		/* 设置备注 */
-		//add by wangtong end
 		return formResult;
 	}
+
 	/**
 	 * 检查受影响对象列表「审批意见」「备注（驳回必填）」
+	 * 
 	 * @param nmCommandBean
 	 * @throws WTException
 	 */
@@ -167,19 +208,15 @@ public class CusNmWorkItemCommands extends NmWorkItemCommands implements Externa
 			WfAssignedActivity activity = (WfAssignedActivity) workItem.getSource().getObject();
 			String activityName = activity.getName();
 			String template = activity.getParentProcess().getTemplate().getName();
-			LOGGER.info("=====checkAttribute.activityName: " + activityName);
-			LOGGER.info("=====checkAttribute.template: " + template);
 			if (FLOWNAME_5.equals(template) && (CONSTANTS_5.equals(activityName) || CONSTANTS_6.equals(activityName))) {
 				List<String> voteList = ModifyUtils.getVoteList(nmCommandBean);
-				LOGGER.info("=====checkAttribute.voteList: " + voteList);
-				List<String> approvalOpinionList=new ArrayList<>();//所有审批意见
+				List<String> approvalOpinionList = new ArrayList<>();// 所有审批意见
 
 				Map<String, Map<String, String>> map = conversionParameter(nmCommandBean);
-				LOGGER.info("=====checkAttribute.map: " + map);
 				for (String oid : map.keySet()) {
-					if (oid.contains(TransactionTask.class.getName())) continue;
+					if (oid.contains(TransactionTask.class.getName()))
+						continue;
 					Map<String, String> attributeMap = map.get(oid);
-					LOGGER.info("=====checkAttribute.oid: " + oid + " >>>>>attributeMap: " + attributeMap);
 					String approvalOpinion = attributeMap.get(ATTRIBUTE_9) == null ? "" : attributeMap.get(ATTRIBUTE_9);
 					approvalOpinionList.add(approvalOpinion);
 					if (voteList.contains(CONSTANTS_11)) {
@@ -187,7 +224,8 @@ public class CusNmWorkItemCommands extends NmWorkItemCommands implements Externa
 							throw new WTException("受影响对象列表存在审批意见为「驳回」的数据，不允许通过！");
 						}
 					} else if (voteList.contains(CONSTANTS_8)) {
-						if (approvalOpinion.contains(CONSTANTS_8) && PIStringUtils.isNull(attributeMap.get(ATTRIBUTE_10))) {
+						if (approvalOpinion.contains(CONSTANTS_8)
+								&& PIStringUtils.isNull(attributeMap.get(ATTRIBUTE_10))) {
 							String number = CONSTANTS_9;
 							if (!CONSTANTS_7.equals(oid)) {
 								Persistable persistable = PICoreHelper.service.getWTObjectByOid(oid);
@@ -197,13 +235,13 @@ public class CusNmWorkItemCommands extends NmWorkItemCommands implements Externa
 						}
 					}
 				}
-				System.out.println("voteList=="+voteList);
-				if (voteList.contains(CONSTANTS_8)){
-					System.out.println("approvalOpinionList=="+approvalOpinionList);
-					voteList:if (approvalOpinionList!=null&&approvalOpinionList.size()>0){
-						for (int i = 0; i <approvalOpinionList.size() ; i++) {
-							if (approvalOpinionList.get(i).contains(CONSTANTS_8)){
-								//存在一个驳回项
+				System.out.println("voteList==" + voteList);
+				if (voteList.contains(CONSTANTS_8)) {
+					System.out.println("approvalOpinionList==" + approvalOpinionList);
+					voteList: if (approvalOpinionList != null && approvalOpinionList.size() > 0) {
+						for (int i = 0; i < approvalOpinionList.size(); i++) {
+							if (approvalOpinionList.get(i).contains(CONSTANTS_8)) {
+								// 存在一个驳回项
 								break voteList;
 							}
 						}
@@ -217,46 +255,55 @@ public class CusNmWorkItemCommands extends NmWorkItemCommands implements Externa
 
 	/**
 	 * 保存受影响对象、事务性任务表单属性
+	 * 
 	 * @param nmCommandBean
 	 * @throws Exception
 	 * @return
 	 */
 	private static String saveAttribute(NmCommandBean nmCommandBean) throws WTException {
+
 		StringBuilder taskComments = new StringBuilder();
+
+		SessionContext previous = SessionContext.newContext();
+
 		try {
+			// 当前用户设置为管理员，用于忽略权限
+			SessionHelper.manager.setAdministrator();
+
 			Object refObject = nmCommandBean.getActionOid().getRefObject();
 			if (refObject instanceof WorkItem) {
 				WorkItem workItem = (WorkItem) refObject;
 				WfAssignedActivity activity = (WfAssignedActivity) workItem.getSource().getObject();
 				String activityName = activity.getName();
 				String template = activity.getParentProcess().getTemplate().getName();
-				LOGGER.info("=====saveAttribute.activityName: " + activityName);
-				LOGGER.info("=====saveAttribute.template: " + template);
 				System.out.println("=====saveAttribute.activityName: " + activityName);
 				System.out.println("=====saveAttribute.template: " + template);
 				Object object = workItem.getPrimaryBusinessObject().getObject();
-				LOGGER.info("=====saveAttribute.object: " + object);
 				System.out.println("=====saveAttribute.object: " + object);
-				Boolean ecn=FLOWNAME_5.equals(template) && (CONSTANTS_5.equals(activityName) || CONSTANTS_6.equals(activityName)) && (object instanceof WTChangeOrder2);
-				System.out.println("ecn=="+ecn);
-				if (FLOWNAME_5.equals(template) && (CONSTANTS_5.equals(activityName) || CONSTANTS_6.equals(activityName)) && (object instanceof WTChangeOrder2)) {
+				Boolean ecn = FLOWNAME_5.equals(template)
+						&& (CONSTANTS_5.equals(activityName) || CONSTANTS_6.equals(activityName))
+						&& (object instanceof WTChangeOrder2);
+				System.out.println("ecn==" + ecn);
+				if (FLOWNAME_5.equals(template)
+						&& (CONSTANTS_5.equals(activityName) || CONSTANTS_6.equals(activityName))
+						&& (object instanceof WTChangeOrder2)) {
 
 					WTChangeOrder2 changeOrder2 = (WTChangeOrder2) object;
 					String ecnVid = String.valueOf(PICoreHelper.service.getBranchId(changeOrder2));
-					LOGGER.info(">>>>>>>>>>saveAttribute.ecnVid: " + ecnVid);
 					System.out.println(">>>>>>>>>>saveAttribute.ecnVid: " + ecnVid);
 					Map<String, Map<String, String>> map = conversionParameter(nmCommandBean);
-					LOGGER.info("=====saveAttribute.map: " + map);
 					System.out.println("=====saveAttribute.map: " + map);
 					for (String oid : map.keySet()) {
 						Map<String, String> attributeMap = map.get(oid);
-						LOGGER.info("=====saveAttribute.oid: " + oid + " >>>>>attributeMap: " + attributeMap);
 						System.out.println("=====saveAttribute.oid: " + oid + " >>>>>attributeMap: " + attributeMap);
 						if (oid.equals(CONSTANTS_7)) {
-							String approvalOpinion = attributeMap.get(ATTRIBUTE_9) == null ? "" : attributeMap.get(ATTRIBUTE_9);
-							String remark = attributeMap.get(ATTRIBUTE_10) == null ? "" : attributeMap.get(ATTRIBUTE_10);
+							String approvalOpinion = attributeMap.get(ATTRIBUTE_9) == null ? ""
+									: attributeMap.get(ATTRIBUTE_9);
+							String remark = attributeMap.get(ATTRIBUTE_10) == null ? ""
+									: attributeMap.get(ATTRIBUTE_10);
 
-							CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, CONSTANTS_7, CONSTANTS_7);
+							CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid,
+									CONSTANTS_7, CONSTANTS_7);
 							if (null == link) {
 								link = new CorrelationObjectLink();
 								link.setChangeOrder2(changeOrder2);
@@ -266,40 +313,53 @@ public class CusNmWorkItemCommands extends NmWorkItemCommands implements Externa
 								PersistenceServerHelper.manager.insert(link);
 								link = (CorrelationObjectLink) PersistenceHelper.manager.refresh(link);
 							}
-							link.setApprovalOpinion(approvalOpinion.contains(CONSTANTS_8) ? CONSTANTS_8 : approvalOpinion.contains(CONSTANTS_10) ? CONSTANTS_10 : approvalOpinion);
+							link.setApprovalOpinion(approvalOpinion.contains(CONSTANTS_8) ? CONSTANTS_8
+									: approvalOpinion.contains(CONSTANTS_10) ? CONSTANTS_10 : approvalOpinion);
 							link.setRemark(remark);
 							PersistenceServerHelper.manager.update(link);
 
 							if (approvalOpinion.contains(CONSTANTS_8)) {
-								taskComments.append(CONSTANTS_9).append(SEPARATOR_1).append(CONSTANTS_8).append(SEPARATOR_1).append(remark).append("\n");
+								taskComments.append(CONSTANTS_9).append(SEPARATOR_1).append(CONSTANTS_8)
+										.append(SEPARATOR_1).append(remark).append("\n");
 							}
 						} else {
 							Persistable persistable = PICoreHelper.service.getWTObjectByOid(oid);
-							if (persistable == null) continue;
+							if (persistable == null)
+								continue;
 							if (persistable instanceof TransactionTask) {
 								TransactionTask task = (TransactionTask) persistable;
-								String changeTheme = attributeMap.get(CHANGETHEME_COMPID) == null ? task.getChangeTheme() : attributeMap.get(CHANGETHEME_COMPID);
-								String changeDescribe = attributeMap.get(CHANGEDESCRIBE_COMPID) == null ? task.getChangeDescribe() : attributeMap.get(CHANGEDESCRIBE_COMPID);
-								String responsible = attributeMap.get(RESPONSIBLE_COMPID) == null ? task.getResponsible() : attributeMap.get(RESPONSIBLE_COMPID);
-								String needDate = attributeMap.get(NEEDDATE_COMPID) == null ? task.getNeedDate() : attributeMap.get(NEEDDATE_COMPID);
-								ModifyHelper.service.updateTransactionTask(task, changeTheme, changeDescribe, responsible, needDate);
+								String changeTheme = attributeMap.get(CHANGETHEME_COMPID) == null
+										? task.getChangeTheme() : attributeMap.get(CHANGETHEME_COMPID);
+								String changeDescribe = attributeMap.get(CHANGEDESCRIBE_COMPID) == null
+										? task.getChangeDescribe() : attributeMap.get(CHANGEDESCRIBE_COMPID);
+								String responsible = attributeMap.get(RESPONSIBLE_COMPID) == null
+										? task.getResponsible() : attributeMap.get(RESPONSIBLE_COMPID);
+								String needDate = attributeMap.get(NEEDDATE_COMPID) == null ? task.getNeedDate()
+										: attributeMap.get(NEEDDATE_COMPID);
+								ModifyHelper.service.updateTransactionTask(task, changeTheme, changeDescribe,
+										responsible, needDate);
 							} else {
-								String approvalOpinion = attributeMap.get(ATTRIBUTE_9) == null ? "" : attributeMap.get(ATTRIBUTE_9);
-								String remark = attributeMap.get(ATTRIBUTE_10) == null ? "" : attributeMap.get(ATTRIBUTE_10);
+								String approvalOpinion = attributeMap.get(ATTRIBUTE_9) == null ? ""
+										: attributeMap.get(ATTRIBUTE_9);
+								String remark = attributeMap.get(ATTRIBUTE_10) == null ? ""
+										: attributeMap.get(ATTRIBUTE_10);
 
 								String branchId = String.valueOf(PICoreHelper.service.getBranchId(persistable));
-								LOGGER.info(">>>>>>>>>>saveAttribute.branchId: " + branchId);
-								CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, branchId, LINKTYPE_1);
-								System.out.println("link==="+link);
-								String value=approvalOpinion.contains(CONSTANTS_8) ? CONSTANTS_8 : approvalOpinion.contains(CONSTANTS_10) ? CONSTANTS_10 : approvalOpinion;
-								System.out.println("value=="+value);
-								link.setApprovalOpinion(approvalOpinion.contains(CONSTANTS_8) ? CONSTANTS_8 : approvalOpinion.contains(CONSTANTS_10) ? CONSTANTS_10 : approvalOpinion);
+								CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid,
+										branchId, LINKTYPE_1);
+								System.out.println("link===" + link);
+								String value = approvalOpinion.contains(CONSTANTS_8) ? CONSTANTS_8
+										: approvalOpinion.contains(CONSTANTS_10) ? CONSTANTS_10 : approvalOpinion;
+								System.out.println("value==" + value);
+								link.setApprovalOpinion(approvalOpinion.contains(CONSTANTS_8) ? CONSTANTS_8
+										: approvalOpinion.contains(CONSTANTS_10) ? CONSTANTS_10 : approvalOpinion);
 								link.setRemark(remark);
 								PersistenceServerHelper.manager.update(link);
 
 								if (approvalOpinion.contains(CONSTANTS_8)) {
 									String number = ModifyUtils.getNumber(persistable);
-									taskComments.append(number).append(SEPARATOR_1).append(CONSTANTS_8).append(SEPARATOR_1).append(remark).append("\n");
+									taskComments.append(number).append(SEPARATOR_1).append(CONSTANTS_8)
+											.append(SEPARATOR_1).append(remark).append("\n");
 								}
 							}
 						}
@@ -308,13 +368,15 @@ public class CusNmWorkItemCommands extends NmWorkItemCommands implements Externa
 			}
 		} catch (Exception e) {
 			throw new WTException(e.getStackTrace());
+		} finally {
+			SessionContext.setContext(previous);
 		}
-		LOGGER.info("=====saveAttribute.taskComments: " + taskComments);
 		return taskComments.toString();
 	}
 
 	/**
 	 * 设置备注
+	 * 
 	 * @param nmCommandBean
 	 * @param taskComments
 	 * @throws WTException
@@ -328,9 +390,8 @@ public class CusNmWorkItemCommands extends NmWorkItemCommands implements Externa
 				WfAssignedActivity activity = (WfAssignedActivity) workItem.getSource().getObject();
 				String activityName = activity.getName();
 				String template = activity.getParentProcess().getTemplate().getName();
-				LOGGER.info("=====setTaskComments.activityName: " + activityName);
-				LOGGER.info("=====setTaskComments.template: " + template);
-				if (FLOWNAME_5.equals(template) && (CONSTANTS_5.equals(activityName) || CONSTANTS_6.equals(activityName))) {
+				if (FLOWNAME_5.equals(template)
+						&& (CONSTANTS_5.equals(activityName) || CONSTANTS_6.equals(activityName))) {
 					if (PIStringUtils.isNotNull(taskComments)) {
 						ProcessData processData = workItem.getContext();
 						processData.setTaskComments(taskComments);
@@ -342,7 +403,6 @@ public class CusNmWorkItemCommands extends NmWorkItemCommands implements Externa
 					}
 
 					Object object = workItem.getPrimaryBusinessObject().getObject();
-					LOGGER.info("=====saveAttribute.object: " + object);
 					if (object instanceof WTChangeOrder2) {
 						new ECNWorkflowUtil().createTransactionECA((WTChangeOrder2) object);
 					}
@@ -355,57 +415,52 @@ public class CusNmWorkItemCommands extends NmWorkItemCommands implements Externa
 
 	/**
 	 * 获取流程中需要保存的属性值
+	 * 
 	 * @param nmCommandBean
 	 * @return
 	 */
-	//add by wangtong
+	// add by wangtong
 	private static Map<String, Map<String, String>> conversionParameter(NmCommandBean nmCommandBean) {
 		Map<String, Map<String, String>> map = new HashMap<>();
 		HashMap text = nmCommandBean.getText();
-		LOGGER.info("=====text: " + text);
 		for (Object object : text.keySet()) {
 			String key = object == null ? "" : object.toString();
 			/* 备注（驳回必填）、责任人、任务主题、任务描述、期望完成时间 */
-			if (key.contains(ATTRIBUTE_10) || key.contains(RESPONSIBLE_COMPID)
-					|| key.contains(CHANGETHEME_COMPID) || key.contains(CHANGEDESCRIBE_COMPID)
-					|| key.contains(NEEDDATE_COMPID)) {
+//			if (key.contains(ATTRIBUTE_10) || key.contains(RESPONSIBLE_COMPID) || key.contains(CHANGETHEME_COMPID)
+//					|| key.contains(CHANGEDESCRIBE_COMPID) || key.contains(NEEDDATE_COMPID)) {
+			//add by lzy at 20200521 start
+			if (key.contains(ATTRIBUTE_10)) {
+				//add by lzy at 20200521 end
 				String value = text.get(object) == null ? "" : text.get(object).toString();
-				LOGGER.info("=====key: " + key);
-				LOGGER.info("=====value: " + value);
 				String[] keys = key.split(SEPARATOR_2, -1);
 				if (keys.length == 2) {
 					String oid = keys[0];
 					String attribute = keys[1];
-					LOGGER.info("=====oid: " + oid + " >>>>>attribute: " + attribute);
-					if (ATTRIBUTE_10.equals(oid)) oid = CONSTANTS_7;
+					if (ATTRIBUTE_10.equals(oid))
+						oid = CONSTANTS_7;
 					Map<String, String> attributeMap = map.computeIfAbsent(oid, k -> new HashMap<>());
 					attributeMap.put(attribute, value);
 				}
 			}
 		}
-		LOGGER.info("=====text: " + text);
 
 		HashMap comboBox = nmCommandBean.getComboBox();
-		LOGGER.info("=====comboBox: " + comboBox);
 		for (Object object : comboBox.keySet()) {
 			String key = object == null ? "" : object.toString();
 			if (key.contains(ATTRIBUTE_9)) {
 				String value = comboBox.get(object) == null ? "" : comboBox.get(object).toString();
 				value = value.replaceAll("^\\[", "").replaceAll("\\]$", "");
-				LOGGER.info("=====key: " + key);
-				LOGGER.info("=====value: " + value);
 				String[] keys = key.split(SEPARATOR_2, -1);
 				if (keys.length == 2) {
 					String oid = keys[0];
 					String attribute = keys[1];
-					LOGGER.info("=====oid: " + oid + " >>>>>attribute: " + attribute);
-					if (ATTRIBUTE_9.equals(oid)) oid = CONSTANTS_7;
+					if (ATTRIBUTE_9.equals(oid))
+						oid = CONSTANTS_7;
 					Map<String, String> attributeMap = map.computeIfAbsent(oid, k -> new HashMap<>());
 					attributeMap.put(attribute, value);
 				}
 			}
 		}
-		LOGGER.info("=====comboBox: " + comboBox);
 		return map;
 	}
 
@@ -824,6 +879,87 @@ public class CusNmWorkItemCommands extends NmWorkItemCommands implements Externa
 			String workFlowNameXML = wfprocess.getTemplate().getName();
 			Hashtable<String, String> signedOpinionList = ExcelCacheManager.getWorkFlowExcelFromCache(workFlowNameXML);
 			LOGGER.debug("signedOpinionList : = " + signedOpinionList);
+
+			// 属性变更流程
+			if (workFlowNameXML.equals("APPO_PartAttrChangeWF")
+					&& (wfactivityname.equals("编制") || wfactivityname.equals("修改"))) {
+
+				// 首先判断路由是否为【提交】的路由
+				boolean flag = true; // 默认设置为是
+				HttpServletRequest request = nmCommandBean.getRequest();
+				Enumeration parameterNames = request.getParameterNames();
+
+				Vector<String> eventList = null;
+				// 查询用户的所有事件
+				while (parameterNames.hasMoreElements()) {
+					String plainKey = (String) parameterNames.nextElement();
+					String key = NmCommandBean.convert(plainKey);
+
+					if (key.indexOf(ROUTER_EVENT) >= 0 && key.lastIndexOf("old") == -1) {
+						String eventValue = null;
+						if (key.indexOf(ROUTER_CHECK) >= 0) {
+							eventValue = key.substring(
+									key.indexOf(ROUTER_CHECK) + NmWorkItemCommands.ROUTER_CHECK.length(),
+									key.lastIndexOf("___"));
+						} else {
+							eventValue = nmCommandBean.getTextParameter(plainKey);
+						}
+
+						if (eventList == null) {
+							eventList = new Vector<String>();
+						}
+						eventList.addElement(eventValue);
+					}
+				}
+				// 判断事件中是否包含取消
+				if (eventList != null && eventList.size() > 0) {
+					for (int i = 0; i < eventList.size(); i++) {
+						String eventName = (String) eventList.get(i);
+						if (eventName.startsWith("取消")) {
+							flag = false;
+							break;
+						}
+					}
+				}
+
+				// 完成时需要校验必填项的数据
+				QueryResult queryresult = ProcessReviewObjectLinkHelper.service
+						.getProcessReviewObjectLinkByRoleA(wfprocess);
+				if (queryresult != null && flag) {
+					while (queryresult.hasMoreElements()) {
+						HashMap textArea = nmCommandBean.getTextArea();
+						HashMap conboBoxMap = nmCommandBean.getComboBox();
+
+						System.out.println("conboBoxMap===" + conboBoxMap);
+						// System.out.println("获取属性变更流程text属性=="+text);
+						System.out.println("获取属性变更流程textArea属性==" + textArea);
+						ProcessReviewObjectLink link = (ProcessReviewObjectLink) queryresult.nextElement();
+						WTObject obj = (WTObject) link.getRoleBObject();
+
+						if (obj instanceof WTPart) {
+							WTPart part = (WTPart) obj;
+							String branchIdentifier = String.valueOf(part.getBranchIdentifier()) == null ? ""
+									: String.valueOf(part.getBranchIdentifier());
+							String crStr = "VR:wt.part.WTPart:" + branchIdentifier + "_col_ChangeReason";
+							String preStr = "VR:wt.part.WTPart:" + branchIdentifier + "_col_PreChangeContent";
+							String postStr = "VR:wt.part.WTPart:" + branchIdentifier + "_col_PostChangeContent";
+							String attrChangeTypeStr = "AttrChangeType";
+
+							String changeReasonValue = String.valueOf(textArea.get(crStr));
+							String preChangeContentValue = String.valueOf(textArea.get(preStr));
+							String postChangeContentValue = String.valueOf(textArea.get(postStr));
+							String attrChangeTypeValue = String.valueOf(conboBoxMap.get(attrChangeTypeStr));
+
+							if (PIStringUtils.isNull(changeReasonValue) || PIStringUtils.isNull(preChangeContentValue)
+									|| PIStringUtils.isNull(postChangeContentValue)
+									|| PIStringUtils.isNull(attrChangeTypeValue)) {
+								throw new WTException("您必须为所有带星号（*）的必填字段，指定有效的信息。");
+							}
+						}
+					}
+				}
+			}
+
 			if (signedOpinionList != null && signedOpinionList.size() > 0) {
 				if (signedOpinionList.keySet().contains(wfactivityname)) {
 					String check = signedOpinionList.get(wfactivityname);

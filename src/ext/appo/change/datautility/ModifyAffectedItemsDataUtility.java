@@ -104,7 +104,7 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
                 if (paramString.contains(ARTICLEINVENTORY_COMPID) || paramString.contains(CENTRALWAREHOUSEINVENTORY_COMPID) || paramString.contains(PASSAGEINVENTORY_COMPID)) {
                     if (paramObject instanceof WTPart) {
                         GUIComponentArray gui_array = new GUIComponentArray();
-                      gui_array.addGUIComponent(generateTextDisplayComponent(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString)));
+                        gui_array.addGUIComponent(generateTextDisplayComponent(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString)));
 //                        gui_array.addGUIComponent(generateTextDisplayComponent(paramModelContext, paramObject, paramString, null));
                         return gui_array;
                     }
@@ -241,25 +241,6 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
                             textBox.setEditable(false);
                         }
                     }
-
-//                    HTTPRequestData requestData = nmCommandBean.getRequestData();
-//                    HashMap<String, Object> parameterMap1 = requestData.getParameterMap();
-//                    Object changeMode = parameterMap1.get("changeMode");
-//                    String mode = "";
-//                    if (changeMode instanceof String){
-//                        mode = (String)changeMode;
-//                    }else if (changeMode instanceof String[]){
-//                        mode = ((String[])changeMode)[0];
-//                    }
-//                    if ("EDIT".equalsIgnoreCase(mode)){
-//                        if (value==null){
-//                            textBox.setEditable(false);
-//                        }
-//                    }else {
-//                        if (value!=null){
-//                            textBox.setEditable(false);
-//                        }
-//                    }
                     //add by xiebowen at 2020/1/8  end
                     textBox.setWidth(50);
                     textBox.setRequired(false);
@@ -270,6 +251,7 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
                 else if (paramString.contains(ATTRIBUTE_13)) {
                     GUIComponentArray gui_array = new GUIComponentArray();
                     TextBox textBox = generateTextBox(paramModelContext, paramObject, paramString, getValue(paramModelContext, paramObject, bool, paramString));
+                    textBox.setRequired(false);
                     gui_array.addGUIComponent(textBox);
                     return gui_array;
                 }
@@ -281,12 +263,11 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
                         return gui_array;
                     }
                 }
-            } else {
-                if (paramString.contains(ATTRIBUTE_12)) {
-                    GUIComponentArray gui_array = new GUIComponentArray();
-                    gui_array.addGUIComponent(generateTextDisplayComponent(paramModelContext, paramObject, paramString, link.getCollection()));
-                    return gui_array;
-                }
+            }
+            if (paramString.contains(ATTRIBUTE_12)) {
+                GUIComponentArray gui_array = new GUIComponentArray();
+                gui_array.addGUIComponent(generateTextDisplayComponent(paramModelContext, paramObject, paramString, link.getCollection()));
+                return gui_array;
             }
 
             GUIComponentArray gui_array = new GUIComponentArray();
@@ -550,6 +531,25 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
                     }
                 } else if (compid.equals(BorrowOrderConstants.STATE)) {
                     return CommonPDMUtil.getLifecycleCN((LifeCycleManaged) paramObject);
+                }
+                //add by lzy at 2020005 start
+                else if (compid.equals(ATTRIBUTE_13)) {
+                    //拿受影响产品的‘处理方式’值
+                    NmCommandBean nmCommandBean = paramModelContext.getNmCommandBean();
+                    Object actionObject = nmCommandBean.getActionOid().getRefObject();
+                    if (actionObject instanceof WTChangeOrder2) {
+                        String branchId = String.valueOf(PICoreHelper.service.getBranchId(paramObject));
+                        Set<CorrelationObjectLink> links = ModifyHelper.service.queryCorrelationObjectLinks((WTChangeOrder2) actionObject, LINKTYPE_2);
+                        for (CorrelationObjectLink link : links) {
+                            Persistable persistable = link.getPersistable();
+                            String persistableBranchId = String.valueOf(PICoreHelper.service.getBranchId(persistable));
+                            if (persistableBranchId.equals(branchId)) {
+                                String clfsValue = link.getTreatment();
+                                return clfsValue;
+                            }
+                        }
+                    }
+                    //add by lzy at 2020005 end
                 } else {
                     value = paramModelContext.getRawValue();
                 }
@@ -697,13 +697,13 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = new JSONObject(jsonArray.getString(i));
                                 Persistable persistable = null;
-                                if (jsonObject.has("oid")){
+                                if (jsonObject.has("oid")) {
                                     // 属性值
                                     String value = jsonObject.getString("oid");
                                     // 获取主对象
                                     persistable = (new ReferenceFactory()).getReference(value).getObject();
                                     if (PersistenceHelper.isEquivalent(persistable, (Persistable) paramObject)) {
-                                        if (jsonObject.has("clfs")){
+                                        if (jsonObject.has("clfs")) {
                                             // 属性值
                                             String clfsValue = jsonObject.getString("clfs");
                                             return clfsValue;
@@ -714,11 +714,22 @@ public class ModifyAffectedItemsDataUtility extends ChangeLinkAttributeDataUtili
                         }
                     }
                 }
-                //页面初始化没有值，拿部件‘处理方式’值
-                Object object = PIAttributeHelper.service.getValue((Persistable) paramObject, ATTRIBUTE_13);
-                if (object!=null&&!object.toString().isEmpty()){
-                    return object.toString();
+                //add by lzy at 2020005 start
+                //编辑初始化没值，拿受影响产品的‘处理方式’值
+                Object actionObject = nmCommandBean.getActionOid().getRefObject();
+                if (actionObject instanceof WTChangeOrder2) {
+                    String branchId = String.valueOf(PICoreHelper.service.getBranchId(paramObject));
+                    Set<CorrelationObjectLink> links = ModifyHelper.service.queryCorrelationObjectLinks((WTChangeOrder2) actionObject, LINKTYPE_2);
+                    for (CorrelationObjectLink link : links) {
+                        Persistable persistable = link.getPersistable();
+                        String persistableBranchId = String.valueOf(PICoreHelper.service.getBranchId(persistable));
+                        if (persistableBranchId.equals(branchId)) {
+                            String clfsValue = link.getTreatment();
+                            return clfsValue;
+                        }
+                    }
                 }
+                //add by lzy at 2020005 end
             } else {
                 //add by lzy at 20200414 end
                 // 添加原有数据

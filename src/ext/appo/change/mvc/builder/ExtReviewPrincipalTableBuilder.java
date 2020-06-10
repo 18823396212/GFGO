@@ -47,6 +47,8 @@ public class ExtReviewPrincipalTableBuilder extends AbstractComponentBuilder {
                 if (!status.equals(WfAssignmentState.COMPLETED)) {
                     treeconfig.setActionModel("modify_principal_table_actions");
                     this.initProcessNode(workitem);
+                }else{
+                    treeconfig.setActionModel("modify_principal_table_completed_actions");
                 }
             }
         }

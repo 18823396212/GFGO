@@ -43,4 +43,11 @@ public class AffectedProductBean {
     	String ggms = (String)PdfUtil.getIBAObjectValue(part, "ggms");
         return ggms == null ? "" :  ggms;
     }
+
+    //add by lzy at 20200402 start
+    public String getCLFS(){
+        String clfs = (String)PdfUtil.getIBAObjectValue(part, "clfs");
+        return clfs == null ? "" :  clfs;
+    }
+    //add by lzy at 20200402 end
 }

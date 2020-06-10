@@ -4,7 +4,7 @@
 	
 <model name="main navigation" id="browseActions" resourceBundle="com.ptc.core.ui.navigationRB">
         <description>
-            Main navigation (tabs)shouyinx
+            Main navigation (tabs)
         </description>
         <action name="recentContexts" type="navigation"/>
         <action name="product" type="navigation"/>
@@ -119,9 +119,6 @@
        <action name="manualSendPartDcc" type="sendDcc"/>	<!-- 手工发送DCC -->
        <action name="itemStageControl" type="partItemStageControl"/><!-- 产品阶段状态控制流程 -->
 	   <action name="standardPartAttrChangeProcessor" type="partAttrChangeProcessor"/><!-- 标准件属性变更流程 -->
-<!--       &lt;!&ndash;add by lzy at 20200408 start&ndash;&gt;-->
-<!--       <action name="exportChangeHistory" type="changeHistory" shortcut="true"/>&lt;!&ndash; 导出变更履历 &ndash;&gt;-->
-<!--       &lt;!&ndash;add by lzy at 20200408 end&ndash;&gt;-->
        <action name="separator" type="separator"/>                     <!-- ===================================== -->
        <action name="copy" type="object"/>                             <!-- Copy -->
        <action name="WFSAVEAS" type="pdmObject"/>                      <!-- Save As -->
@@ -639,6 +636,7 @@
    
    <model name="changeNoticeDetailsTab" resourceBundle="com.ptc.windchill.enterprise.change2.changeManagementActionsRB">
       <action name="primaryAttributes"         type="object"/>
+	   <action name="attachments"               type="object"/>
       <action name="affectedItemsTable"        type="changeNotice"/>  <!-- add by kwang : 受影响对象表单 -->
 	  <action name="resultingItemsTable"       type="changeNotice"/>  <!-- add by kwang : 产生对象表单 -->
 	  <action name="affectedEndItemsTableBuilder"    type="changeNotice"/> <!-- add by kwang : 受影响产品表单 -->
@@ -1152,7 +1150,7 @@
    <model name="changeTaskDetailsTab" resourceBundle="com.ptc.windchill.enterprise.change2.changeManagementActionsRB">
       <action name="primaryAttributes"                 type="object"/>
       <action name="attributes"                        type="object"/>
-      <!--<action name="attachments"                       type="object"/>-->
+      <action name="attachments"                       type="object"/>
       <action name="affectedAndResultingItems"         type="changeTask"/>
       <action name="sumaChangeTree"                    type="suma"/>
       <action name="associatedChangeIssues"            type="changeTask"/>
@@ -1200,14 +1198,5 @@
 	<model name="yulong_checkoutlist_actions">
 		<action name="list_undocheckout"  type="object"/>
 	</model>
-
-<!--    &lt;!&ndash;add by lzy at 20200409 start&ndash;&gt;-->
-<!--    <model name="changeTask.table.create_remove_startup">-->
-<!--        <description>actions for ext.appo.change.mvc.builder.UsabilityChangeTaskTableBuilder</description>-->
-<!--        <action name="startupChangeTask" type="modify" shortcut="true"/>-->
-<!--        <action name="addChangeTask" type="modify" shortcut="true"/>-->
-<!--        <action name="deleteChangeTask" type="modify" shortcut="true"/>-->
-<!--    </model>-->
-<!--    &lt;!&ndash;add by lzy at 20200409 end&ndash;&gt;-->
 
 </actionmodels>

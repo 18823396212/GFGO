@@ -110,6 +110,22 @@ public class ModifyResource_zh_CN extends WTListResourceBundle {
     public static final String CLIENTBUTTONHOTKEY = "modify.clientButton.hotkey";
     //add by lzy at 20200109 end
 
+    //add by lzy at 20200515 start
+    @RBEntry("确定(<u class='mnemonic'>O</u>)")
+    public static final String OKBUTTON = "modify.okButton.description";
+
+    @RBEntry("o")
+    @RBPseudo(false)
+    public static final String OKBUTTONHOTKEY = "modify.okButton.hotkey";
+
+    @RBEntry("应用(<u class='mnemonic'>A</u>)")
+    public static final String APPLYBUTTON = "modify.applyButton.description";
+
+    @RBEntry("a")
+    @RBPseudo(false)
+    public static final String APPLYBUTTONHOTKEY = "modify.applyButton.hotkey";
+    //add by lzy at 20200515 end
+
     //add by lzy at 20200310  start
     @RBEntry("收集图纸")
     public static final String MY_CUSTOM_38 = "modify.collectDrawing.description";
@@ -130,5 +146,87 @@ public class ModifyResource_zh_CN extends WTListResourceBundle {
     public static final String MY_CUSTOM_45 = "modify.removeDrawing.icon";
     //add by lzy at 20200310  end
 
+    //add by lzy at 20200408 start
+    @RBEntry("导出变更履历")
+    public static final String MY_CUSTOM_46 = "changeHistory.exportChangeHistory.description";
+    @RBEntry("导出变更履历")
+    public static final String MY_CUSTOM_47 = "changeHistory.exportChangeHistory.title";
+    @RBEntry("导出变更履历")
+    public static final String MY_CUSTOM_48 = "changeHistory.exportChangeHistory.tooltip";
+    //add by lzy at 20200408 end
 
+    //add by lzy at 20200409 start
+    @RBEntry("启动任务跟踪")
+    public static final String MY_CUSTOM_49 = "modify.startupChangeTask.description";
+    @RBEntry("启动任务跟踪")
+    public static final String MY_CUSTOM_50 = "modify.startupChangeTask.title";
+    @RBEntry("启动任务跟踪")
+    public static final String MY_CUSTOM_51 = "modify.startupChangeTask.tooltip";
+    @RBEntry("change_task.gif")
+    public static final String MY_CUSTOM_52 = "modify.startupChangeTask.icon";
+
+    @RBEntry("新增")
+    public static final String MY_CUSTOM_53 = "modify.addChangeTask.description";
+    @RBEntry("新增")
+    public static final String MY_CUSTOM_54 = "modify.addChangeTask.title";
+    @RBEntry("新增")
+    public static final String MY_CUSTOM_55 = "modify.addChangeTask.tooltip";
+    @RBEntry("add16x16.gif")
+    public static final String MY_CUSTOM_56 = "modify.addChangeTask.icon";
+    //add by lzy at 20200408 end
+
+    //add by lzy at 20200417 start
+    @RBEntry("*事务性任务")
+    public static final String MY_CUSTOM_57 = "CHANGETASK_TABLE_NAME";
+    @RBEntry("*任务类型")
+    public static final String MY_CUSTOM_58 = "COLUMNNAME_TASKTYPE";
+    @RBEntry("*任务主题")
+    public static final String MY_CUSTOM_59 = "COLUMNNAME_CHANGETHEME";
+    @RBEntry("管理方式")
+    public static final String MY_CUSTOM_60 = "COLUMNNAME_GLFS";
+    @RBEntry("*任务描述")
+    public static final String MY_CUSTOM_61 = "COLUMNNAME_CHANGEDESCRIBE";
+    @RBEntry("*期望完成时间")
+    public static final String MY_CUSTOM_62 = "COLUMNNAME_NEEDDATE";
+    @RBEntry("*责任人")
+    public static final String MY_CUSTOM_63 = "COLUMNNAME_RESPONSIBLE";
+    @RBEntry("状态")
+    public static final String MY_CUSTOM_64 = "COLUMNNAME_TASKSTATE";
+    @RBEntry("任务单号")
+    public static final String MY_CUSTOM_65 = "COLUMNNAME_TASKNUMBER";
+    @RBEntry("实际完成时间")
+    public static final String MY_CUSTOM_66 = "COLUMNNAME_ACTUALDATE";
+    //add by lzy at 20200417 end
+    //add by lzy at 202003421 start
+    @RBEntry("移除")
+    public static final String MY_CUSTOM_67 = "modify.deleteChangeTask.description";
+    @RBEntry("移除")
+    public static final String MY_CUSTOM_68 = "modify.deleteChangeTask.title";
+    @RBEntry("移除")
+    public static final String MY_CUSTOM_69 = "modify.deleteChangeTask.tooltip";
+    @RBEntry("remove16x16.gif")
+    public static final String MY_CUSTOM_70 = "modify.deleteChangeTask.icon";
+    //add by lzy at 202003421 end
+    //add by lzy at 20200508 start
+    @RBEntry("管理模板")
+    public static final String MY_CUSTOM_71 = "modify.manageTeamTemplate.description";
+    @RBEntry("管理模板")
+    public static final String MY_CUSTOM_72 = "modify.manageTeamTemplate.title";
+    @RBEntry("管理模板")
+    public static final String MY_CUSTOM_73 = "modify.manageTeamTemplate.tooltip";
+    @RBEntry("register_template.gif")
+    public static final String MY_CUSTOM_74 = "modify.manageTeamTemplate.icon";
+    @RBEntry("删除模板")
+    public static final String MY_CUSTOM_75 = "modify.deleteTeamTeamplate.description";
+    @RBEntry("删除模板")
+    public static final String MY_CUSTOM_76 = "modify.deleteTeamTeamplate.title";
+    @RBEntry("删除模板")
+    public static final String MY_CUSTOM_77 = "modify.deleteTeamTeamplate.tooltip";
+    @RBEntry("delete.gif")
+    public static final String MY_CUSTOM_78 = "modify.deleteTeamTeamplate.icon";
+    //add by lzy at 20200508 end
+    //add by lzy at 20200526 start
+    @RBEntry("任务详细信息")
+    public static final String MY_CUSTOM_79 = "COLUMNNAME_VIEWINFO";
+    //add by lzy at 20200526 end
 }

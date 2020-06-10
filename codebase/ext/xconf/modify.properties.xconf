@@ -21,5 +21,9 @@
        	<!-- add by lzy at 20200310 start-->
          <Option serviceClass="ext.appo.change.validator.DrawingFilter" selector="DrawingFilter" requestor="null" />
          <!-- add by lzy at 20200310 end-->
+
+        <!-- add by lzy at 20200410 start-->
+        <Option serviceClass="ext.appo.change.validator.ChangeTaskReportValidator" selector="ChangeTaskReportValidator" requestor="null" />
+        <!-- add by lzy at 20200410 end-->
     </Service>
 </Configuration>

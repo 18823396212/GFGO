@@ -18,8 +18,8 @@ public interface ModifyConstants {
     String ATTRIBUTE_10 = "Remark";//备注（驳回必填）
     String ATTRIBUTE_11 = "ggms";//规格描述
     String ATTRIBUTE_12 = "CollectionNumber";//收集对象
-    String ATTRIBUTE_13="clfs";//处理方式
-    String ATTRIBUTE_14="affectedProductArray";//页面创建编辑受影响产品关键字
+    String ATTRIBUTE_13 = "clfs";//处理方式
+    String ATTRIBUTE_14 = "affectedProductArray";//页面创建编辑受影响产品关键字
 
     //类型定义
     String TYPE_1 = "com.plm.BOMChangeActivity2";//BOM变更ECA
@@ -93,5 +93,27 @@ public interface ModifyConstants {
      * 子流程进度-已完成
      */
     String ROUTING_3 = "已完成";
+
+    //add by lzy at 20200417 start
+    // 事务性任务列名
+    String TASKTYPE_COMPID = "taskType";//任务类型
+    //    String CHANGETHEME_COMPID = "changeTheme";//任务主题
+    String GLFS_COMPID = "glfs";//管理方式
+    //    String CHANGEDESCRIBE_COMPID = "changeDescribe";//任务描述
+//    String NEEDDATE_COMPID = "needDate";//期望完成时间
+//    String RESPONSIBLE_COMPID = "responsible";//责任人
+    String TASKSTATE_COMPID = "taskState";//状态(未开启，进行中，已超期，已关闭，已完成)
+    String TASKNUMBER_COMPID = "taskNumber";//任务单号
+    String ACTUALDATE_COMPID = "actualDate";//实际完成时间
+    String VIEWINFO_COMPID = "viewInfo";//查看信息
+
+    //状态值常量
+    String TASK_1 = "未开启";
+    String TASK_2 = "进行中";
+    String TASK_3 = "已超期";
+    String TASK_4 = "已关闭";
+    String TASK_5 = "已完成";
+    String TASK_6 = "暂存";
+    //add by lzy at 20200417 end
 
 }

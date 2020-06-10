@@ -168,11 +168,6 @@ public class ExtEditChangeNoticeFormProcessor extends EditChangeNoticeFormProces
             // 新增受影响产品列表与ECN的关系(ECN与受影响产品链接)
             linkAffectedEndItems(nmcommandBean, changeOrder2);
 
-            //add by lzy at 20200414 start
-            //更新受影响产品列表「处理方式」属性值
-            updateAffectedEndItemsAttribute(nmcommandBean);
-            //add by lzy at 20200414 start
-
             //创建事务性任务-模型对象，已存在则更新
             transactionUtil.createTransactionECA();
 
@@ -181,8 +176,6 @@ public class ExtEditChangeNoticeFormProcessor extends EditChangeNoticeFormProces
 
             // 更新ECN「所属产品类别」「所属项目」
             UpdateSoftAttribute(nmcommandBean, changeOrder2);
-        } catch (JSONException e) {
-            e.printStackTrace();
         } finally {
             SessionContext.setContext(previous);
         }
@@ -285,10 +278,13 @@ public class ExtEditChangeNoticeFormProcessor extends EditChangeNoticeFormProces
                         LOGGER.info(">>>>>>>>>>linkAffectedEndItems.branchId: " + branchId);
                         CorrelationObjectLink link = ModifyHelper.service.queryCorrelationObjectLink(ecnVid, branchId, LINKTYPE_2);
                         LOGGER.info(">>>>>>>>>>linkAffectedEndItems.link: " + link);
+                        //add by lzy at 20200605 start
+                        String treatmentValue = getTreatmentValue(nmcommandBean, persistable);
+                        //add by lzy at 20200605 end
                         if (link == null) {
-                            ModifyHelper.service.newCorrelationObjectLink(changeOrder2, persistable, LINKTYPE_2, ecnVid, branchId);
+                            ModifyHelper.service.newCorrelationObjectLink(changeOrder2, persistable, LINKTYPE_2, ecnVid, branchId, treatmentValue);
                         } else {
-                            ModifyHelper.service.updateCorrelationObjectLink(ecnVid, branchId, LINKTYPE_2);
+                            ModifyHelper.service.updateCorrelationObjectLink(ecnVid, branchId, LINKTYPE_2, treatmentValue);
                         }
                     }
                 }
@@ -296,6 +292,49 @@ public class ExtEditChangeNoticeFormProcessor extends EditChangeNoticeFormProces
         } catch (Exception e) {
             throw new WTException(e.getStackTrace());
         }
+    }
+
+    /**
+     * 获取页面受影响产品处理方式值
+     *
+     * @param nmcommandBean
+     * @param persistable
+     * @return
+     * @throws JSONException
+     * @throws WTException
+     */
+    public String getTreatmentValue(NmCommandBean nmcommandBean, Persistable persistable) throws JSONException, WTException {
+        String treatmentValue = "";
+        String branchId = String.valueOf(PICoreHelper.service.getBranchId(persistable));
+        Map<String, Object> parameterMap = nmcommandBean.getParameterMap();
+        if (parameterMap.containsKey(ATTRIBUTE_14)) {
+            String[] endItemsArrayStr = (String[]) parameterMap.get(ATTRIBUTE_14);
+            if (endItemsArrayStr != null && endItemsArrayStr.length > 0) {
+                String endItemsJSON = endItemsArrayStr[0];
+                LOGGER.info(">>>>>>>>>>linkAffectedEndItems.endItemsJSON: " + endItemsJSON);
+                if (PIStringUtils.isNull(endItemsJSON)) return treatmentValue;
+
+                // 页面表单中所有产品对象
+                JSONArray jsonArray = new JSONArray(endItemsJSON);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    Map<String, Object> attributesMap = new HashMap<>();
+                    JSONObject jsonObject = new JSONObject(jsonArray.getString(i));
+                    Persistable persistable1 = null;
+                    if (jsonObject.has("oid")) {
+                        // 属性值
+                        String value = jsonObject.getString("oid");
+                        // 获取主对象
+                        persistable1 = (new ReferenceFactory()).getReference(value).getObject();
+                        String branchId1 = String.valueOf(PICoreHelper.service.getBranchId(persistable1));
+                        if (persistable1 != null && branchId.equals(branchId1) && jsonObject.has("clfs")) {
+                            //返回值值
+                            treatmentValue = jsonObject.getString("clfs");
+                        }
+                    }
+                }
+            }
+        }
+        return treatmentValue;
     }
 
     /**

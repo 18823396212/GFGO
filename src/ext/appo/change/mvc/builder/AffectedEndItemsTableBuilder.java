@@ -150,6 +150,7 @@ public class AffectedEndItemsTableBuilder extends AbstractComponentBuilder imple
         tableConfig.addComponent(columnconfig);
         //add by lzy at 20200401 end
 
+
         return tableConfig;
     }
 

@@ -56,7 +56,10 @@
             var selection = selections[i].data;
             items.push({oid: selection.oid, collection: selection.collection})
         }
-        window.opener.addCollectItemsForAffectedEndItems(items);
+        //add by lzy at 20200604 start
+        window.opener.addCollectItemsForAffectedEndItems(items,"collectItems");
+        // window.opener.addCollectItemsForAffectedEndItems(items);
+        //add by lzy at 20200604 end
         window.close();
     }
 

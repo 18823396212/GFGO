@@ -1,3 +1,5 @@
 # List of all modeled classes belonging to ext/appo/change.
 ext.appo.change.models=CorrelationObjectLink
 ext.appo.change.models=TransactionTask
+ext.appo.change.models=ManageTeamTemplate
+ext.appo.change.models=ManageTeamTemplateShow

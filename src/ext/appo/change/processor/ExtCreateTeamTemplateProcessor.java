@@ -6,13 +6,18 @@ import com.ptc.core.components.forms.FormResult;
 import com.ptc.core.components.util.FeedbackMessage;
 import com.ptc.core.ui.resources.FeedbackType;
 import com.ptc.netmarkets.util.beans.NmCommandBean;
+import ext.appo.change.ModifyHelper;
 import ext.appo.change.util.ECAReviewActivityUtil;
+import ext.generic.reviewprincipal.model.PersonalTeamTemplate;
 import ext.generic.reviewprincipal.service.WFTeamTemplateHelper;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import wt.fc.ObjectReference;
+import wt.fc.PersistenceHelper;
 import wt.fc.WTObject;
 import wt.log4j.LogR;
+import wt.org.WTUser;
+import wt.session.SessionHelper;
 import wt.session.SessionServerHelper;
 import wt.util.WTException;
 import wt.util.WTMessage;
@@ -72,7 +77,18 @@ public class ExtCreateTeamTemplateProcessor extends DefaultObjectFormProcessor {
             logger.debug("isDefault=" + isDefault);
 
             try {
-                WFTeamTemplateHelper.service.savePersonalTeamTemplate(process, pbo, templateName, isDefault, augmentActivities);
+//                WFTeamTemplateHelper.service.savePersonalTeamTemplate(process, pbo, templateName, isDefault, augmentActivities);
+                //add by lzy at 20200511 start
+                PersonalTeamTemplate personalTeamTemplate = WFTeamTemplateHelper.service.savePersonalTeamTemplate(process, pbo, templateName, isDefault, augmentActivities);
+                String oid = PersistenceHelper.getObjectIdentifier(personalTeamTemplate).toString();
+                String showTemplate = "true";//默认显示
+                String shareTemplate = "false";//默认不共享
+                WTUser curUser = (WTUser) SessionHelper.getPrincipal();
+                String userName=curUser.getName();
+                String userFullName=curUser.getFullName();
+                ModifyHelper.service.newManageTeamTemplate(templateName, showTemplate, shareTemplate, oid,ObjectReference.newObjectReference(curUser),userName,userFullName);
+                ModifyHelper.service.newManageTeamTemplateShow(templateName, showTemplate, oid,ObjectReference.newObjectReference(curUser),userName,userFullName);
+                //add by lzy at 20200511 end
             } catch (WTPropertyVetoException var19) {
                 var19.printStackTrace();
                 throw new WTException(var19);

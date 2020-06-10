@@ -67,6 +67,12 @@ import wt.workflow.engine.WfProcess;
                         type = String.class,
                         javaDoc = "收集对象",
                         constraints = @PropertyConstraints(upperLimit = 2000)
+                ),
+                @GeneratedProperty(
+                        name = "treatment",
+                        type = String.class,
+                        javaDoc = "处理方式",
+                        constraints = @PropertyConstraints(upperLimit = 2000)
                 )
         },
         tableProperties = @TableProperties(

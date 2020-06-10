@@ -187,6 +187,78 @@ public abstract class _TransactionTask extends wt.fc.WTObject implements java.io
                new java.beans.PropertyChangeEvent(this, "changeActivity2", this.changeActivity2, changeActivity2));
    }
 
+   /**
+    * 任务类型
+    *
+    * @see ext.appo.change.models.TransactionTask
+    */
+   public static final java.lang.String TASK_TYPE = "taskType";
+   static int TASK_TYPE_UPPER_LIMIT = -1;
+   java.lang.String taskType;
+   /**
+    * 任务类型
+    *
+    * @see ext.appo.change.models.TransactionTask
+    */
+   public java.lang.String getTaskType() {
+      return taskType;
+   }
+   /**
+    * 任务类型
+    *
+    * @see ext.appo.change.models.TransactionTask
+    */
+   public void setTaskType(java.lang.String taskType) throws wt.util.WTPropertyVetoException {
+      taskTypeValidate(taskType);
+      this.taskType = taskType;
+   }
+   void taskTypeValidate(java.lang.String taskType) throws wt.util.WTPropertyVetoException {
+      if (TASK_TYPE_UPPER_LIMIT < 1) {
+         try { TASK_TYPE_UPPER_LIMIT = (java.lang.Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("taskType").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT); }
+         catch (wt.introspection.WTIntrospectionException e) { TASK_TYPE_UPPER_LIMIT = 200; }
+      }
+      if (taskType != null && !wt.fc.PersistenceHelper.checkStoredLength(taskType.toString(), TASK_TYPE_UPPER_LIMIT, true))
+         throw new wt.util.WTPropertyVetoException("wt.introspection.introspectionResource", wt.introspection.introspectionResource.UPPER_LIMIT,
+               new java.lang.Object[] { new wt.introspection.PropertyDisplayName(CLASSNAME, "taskType"), java.lang.String.valueOf(java.lang.Math.min(TASK_TYPE_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE/wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR)) },
+               new java.beans.PropertyChangeEvent(this, "taskType", this.taskType, taskType));
+   }
+
+   /**
+    * 管理方式
+    *
+    * @see ext.appo.change.models.TransactionTask
+    */
+   public static final java.lang.String MANAGEMENT_STYLE = "managementStyle";
+   static int MANAGEMENT_STYLE_UPPER_LIMIT = -1;
+   java.lang.String managementStyle;
+   /**
+    * 管理方式
+    *
+    * @see ext.appo.change.models.TransactionTask
+    */
+   public java.lang.String getManagementStyle() {
+      return managementStyle;
+   }
+   /**
+    * 管理方式
+    *
+    * @see ext.appo.change.models.TransactionTask
+    */
+   public void setManagementStyle(java.lang.String managementStyle) throws wt.util.WTPropertyVetoException {
+      managementStyleValidate(managementStyle);
+      this.managementStyle = managementStyle;
+   }
+   void managementStyleValidate(java.lang.String managementStyle) throws wt.util.WTPropertyVetoException {
+      if (MANAGEMENT_STYLE_UPPER_LIMIT < 1) {
+         try { MANAGEMENT_STYLE_UPPER_LIMIT = (java.lang.Integer) wt.introspection.WTIntrospector.getClassInfo(CLASSNAME).getPropertyDescriptor("managementStyle").getValue(wt.introspection.WTIntrospector.UPPER_LIMIT); }
+         catch (wt.introspection.WTIntrospectionException e) { MANAGEMENT_STYLE_UPPER_LIMIT = 200; }
+      }
+      if (managementStyle != null && !wt.fc.PersistenceHelper.checkStoredLength(managementStyle.toString(), MANAGEMENT_STYLE_UPPER_LIMIT, true))
+         throw new wt.util.WTPropertyVetoException("wt.introspection.introspectionResource", wt.introspection.introspectionResource.UPPER_LIMIT,
+               new java.lang.Object[] { new wt.introspection.PropertyDisplayName(CLASSNAME, "managementStyle"), java.lang.String.valueOf(java.lang.Math.min(MANAGEMENT_STYLE_UPPER_LIMIT, wt.fc.PersistenceHelper.DB_MAX_SQL_STRING_SIZE/wt.fc.PersistenceHelper.DB_MAX_BYTES_PER_CHAR)) },
+               new java.beans.PropertyChangeEvent(this, "managementStyle", this.managementStyle, managementStyle));
+   }
+
    public java.lang.String getConceptualClassname() {
       return CLASSNAME;
    }
@@ -200,7 +272,7 @@ public abstract class _TransactionTask extends wt.fc.WTObject implements java.io
       catch (wt.introspection.WTIntrospectionException wte) { return wt.util.WTStringUtilities.tail(getConceptualClassname(), '.'); }
    }
 
-   public static final long EXTERNALIZATION_VERSION_UID = 5738293078621751499L;
+   public static final long EXTERNALIZATION_VERSION_UID = 3418552422125898972L;
 
    public void writeExternal(java.io.ObjectOutput output) throws java.io.IOException {
       output.writeLong( EXTERNALIZATION_VERSION_UID );
@@ -210,8 +282,10 @@ public abstract class _TransactionTask extends wt.fc.WTObject implements java.io
       output.writeObject( changeActivity2 );
       output.writeObject( changeDescribe );
       output.writeObject( changeTheme );
+      output.writeObject( managementStyle );
       output.writeObject( needDate );
       output.writeObject( responsible );
+      output.writeObject( taskType );
    }
 
    protected void super_writeExternal_TransactionTask(java.io.ObjectOutput output) throws java.io.IOException {
@@ -232,8 +306,10 @@ public abstract class _TransactionTask extends wt.fc.WTObject implements java.io
       output.setString( "changeActivity2", changeActivity2 );
       output.setString( "changeDescribe", changeDescribe );
       output.setString( "changeTheme", changeTheme );
+      output.setString( "managementStyle", managementStyle );
       output.setString( "needDate", needDate );
       output.setString( "responsible", responsible );
+      output.setString( "taskType", taskType );
    }
 
    public void readExternal(wt.pds.PersistentRetrieveIfc input) throws java.sql.SQLException, wt.pom.DatastoreException {
@@ -242,19 +318,23 @@ public abstract class _TransactionTask extends wt.fc.WTObject implements java.io
       changeActivity2 = input.getString( "changeActivity2" );
       changeDescribe = input.getString( "changeDescribe" );
       changeTheme = input.getString( "changeTheme" );
+      managementStyle = input.getString( "managementStyle" );
       needDate = input.getString( "needDate" );
       responsible = input.getString( "responsible" );
+      taskType = input.getString( "taskType" );
    }
 
-   boolean readVersion5738293078621751499L( java.io.ObjectInput input, long readSerialVersionUID, boolean superDone ) throws java.io.IOException, java.lang.ClassNotFoundException {
+   boolean readVersion3418552422125898972L( java.io.ObjectInput input, long readSerialVersionUID, boolean superDone ) throws java.io.IOException, java.lang.ClassNotFoundException {
       if ( !superDone )
          super.readExternal( input );
 
       changeActivity2 = (java.lang.String) input.readObject();
       changeDescribe = (java.lang.String) input.readObject();
       changeTheme = (java.lang.String) input.readObject();
+      managementStyle = (java.lang.String) input.readObject();
       needDate = (java.lang.String) input.readObject();
       responsible = (java.lang.String) input.readObject();
+      taskType = (java.lang.String) input.readObject();
       return true;
    }
 
@@ -262,7 +342,7 @@ public abstract class _TransactionTask extends wt.fc.WTObject implements java.io
       boolean success = true;
 
       if ( readSerialVersionUID == EXTERNALIZATION_VERSION_UID )
-         return readVersion5738293078621751499L( input, readSerialVersionUID, superDone );
+         return readVersion3418552422125898972L( input, readSerialVersionUID, superDone );
       else
          success = readOldVersion( input, readSerialVersionUID, passThrough, superDone );
 

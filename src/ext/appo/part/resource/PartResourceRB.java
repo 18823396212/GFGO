@@ -132,4 +132,16 @@ public class PartResourceRB extends WTListResourceBundle {
 	public static final String PRIVATE_CONSTANT_41 = "partAttrChangeProcessor.standardPartAttrChangeProcessor.tooltip";
 	@RBEntry("standardPartAttrChangeProcessor")
 	public static final String PRIVATE_CONSTANT_42 = "partAttrChangeProcessor.standardPartAttrChangeProcessor.description";
+
+	@RBEntry("exportProjectDocInfo")
+	public static final String PRIVATE_CONSTANT_43 = "StatReport.subtab2.tooltip";
+	@RBEntry("exportProjectDocInfo")
+	public static final String PRIVATE_CONSTANT_44 = "StatReport.subtab2.description";
+
+	//add by lzy at 20200414 start
+	@RBEntry("changeTaskReport")
+	public static final String PRIVATE_CONSTANT_45 = "StatReport.changeTaskReport.tooltip";
+	@RBEntry("changeTaskReport")
+	public static final String PRIVATE_CONSTANT_46 = "StatReport.changeTaskReport.description";
+	//add by lzy at 20200414 end
 }

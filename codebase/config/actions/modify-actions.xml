@@ -4,75 +4,98 @@
 
     <objecttype name="modify" resourceBundle="ext.appo.change.resource.ModifyResource">
         <action name="cacheButton" id="PJL_wizard_cache">
-            <command class="" method="" windowType="page" url="javascript:ChangeManagementSubmitHandler.submitChangeWizard();"/>
+            <command class="" method="" windowType="page"
+                     url="javascript:ChangeManagementSubmitHandler.submitChangeWizard();"/>
         </action>
 
         <!-- 创建变更申请ECN对象 -->
         <action name="createChangeOrder" ajax="component" uicomponent="CREATE_CHANGENOTICE">
-            <command url="/netmarkets/jsp/ext/appo/change/request/createEngineeringECN.jsp" windowType="popup" class="ext.appo.change.processor.ExtCreateChangeNoticeFormProcessor" method="excute"/>
+            <command url="/netmarkets/jsp/ext/appo/change/request/createEngineeringECN.jsp" windowType="popup"
+                     class="ext.appo.change.processor.ExtCreateChangeNoticeFormProcessor" method="excute"/>
         </action>
 
         <action name="createChangeOrderStep" id="createChangeOrderStep" preloadWizardPage="false" required="false">
-            <command url="/netmarkets/jsp/ext/appo/change/request/createEngineeringECNStep.jsp" class="" windowType="wizard_step"/>
+            <command url="/netmarkets/jsp/ext/appo/change/request/createEngineeringECNStep.jsp" class=""
+                     windowType="wizard_step"/>
         </action>
 
         <!-- 编辑变更申请ECN对象 -->
         <action name="editChangeOrder" ajax="row">
-            <command url="/netmarkets/jsp/ext/appo/change/request/editChangeOrder.jsp" windowType="popup" class="ext.appo.change.processor.ExtEditChangeNoticeFormProcessor" method="excute"/>
+            <command url="/netmarkets/jsp/ext/appo/change/request/editChangeOrder.jsp" windowType="popup"
+                     class="ext.appo.change.processor.ExtEditChangeNoticeFormProcessor" method="excute"/>
             <includeFilter name="editECNFilter"/>
         </action>
 
         <action name="editChangeOrderStep" id="editChangeOrderStep" preloadWizardPage="false" required="false">
-            <command url="/netmarkets/jsp/ext/appo/change/request/editChangeOrderStep.jsp" class="" windowType="wizard_step"/>
+            <command url="/netmarkets/jsp/ext/appo/change/request/editChangeOrderStep.jsp" class=""
+                     windowType="wizard_step"/>
         </action>
 
         <action name="setReviewPrincipal">
-            <command class="ext.generic.reviewprincipal.processor.SetReviewPrincipalProcessor" url="/netmarkets/jsp/ext/appo/change/reviewprincipal/setReviewPrincipal.jsp?objectType=wt.org.WTUser&amp;showUserType=ActiveOnly" windowType="popup"/>
+            <command class="ext.generic.reviewprincipal.processor.SetReviewPrincipalProcessor"
+                     url="/netmarkets/jsp/ext/appo/change/reviewprincipal/setReviewPrincipal.jsp?objectType=wt.org.WTUser&amp;showUserType=ActiveOnly"
+                     windowType="popup"/>
         </action>
 
         <action name="createTeamTeamplate" ajax="component">
-            <command class="ext.appo.change.processor.ExtCreateTeamTemplateProcessor" method="execute" url="netmarkets/jsp/ext/generic/reviewprincipal/createTeamTeamplate.jsp" windowType="popup"/>
+            <command class="ext.appo.change.processor.ExtCreateTeamTemplateProcessor" method="execute"
+                     url="netmarkets/jsp/ext/generic/reviewprincipal/createTeamTeamplate.jsp" windowType="popup"/>
         </action>
 
         <action name="createTeamTeamplate_step">
-            <command windowType="wizard_step" url="netmarkets/jsp/ext/generic/reviewprincipal/createTeamTeamplate_step.jsp"/>
+            <command windowType="wizard_step"
+                     url="netmarkets/jsp/ext/generic/reviewprincipal/createTeamTeamplate_step.jsp"/>
         </action>
 
         <action name="applyTeamTeamplate" ajax="component">
-            <command class="ext.appo.change.processor.ExtApplyTeamTemplateProcessor" method="execute" url="netmarkets/jsp/ext/generic/reviewprincipal/teamTeamplate.jsp?type=apply" windowType="popup"/>
+            <command class="ext.appo.change.processor.ExtApplyTeamTemplateProcessor" method="execute"
+                     url="netmarkets/jsp/ext/appo/change/reviewprincipal/teamTeamplate.jsp?type=apply"
+                     windowType="popup"/>
         </action>
 
         <action name="teamTeamplate_step">
-            <command windowType="wizard_step" url="netmarkets/jsp/ext/generic/reviewprincipal/teamTeamplate_step.jsp"/>
+            <command windowType="wizard_step"
+                     url="netmarkets/jsp/ext/appo/change/reviewprincipal/teamTeamplate_step.jsp"/>
         </action>
         <!--    add by lzy at 20200508 start-->
         <action name="manageTeamTemplate">
-            <command class="ext.appo.change.processor.ExtManageTeamTemplateProcessor" method="execute" url="netmarkets/jsp/ext/appo/change/request/manageTeamTemplate.jsp?" windowType="popup"/>
+            <command class="ext.appo.change.processor.ExtManageTeamTemplateProcessor" method="execute"
+                     url="netmarkets/jsp/ext/appo/change/request/manageTeamTemplate.jsp?" windowType="popup"/>
+        </action>
+        <action name="manageTeamTemplate_step">
+            <command windowType="wizard_step" url="netmarkets/jsp/ext/appo/change/request/manageTeamTemplate_step.jsp"/>
+        </action>
+        <action name="deleteTeamTeamplate" ajax="component">
+            <command class="ext.appo.change.processor.DeleteTeamTemplateProcessor" method="execute"
+                     url="netmarkets/jsp/ext/appo/change/reviewprincipal/teamTeamplate.jsp?type=delete"
+                     windowType="popup"/>
         </action>
         <!--    add by lzy at 20200508 end-->
 
         <action name="cancelChangeApply" ajax="row">
-<!--            add by lzy at 20191130 start-->
-<!--            <command class="ext.appo.change.processor.CancelChangeApplyProcessor" method="execute" onClick="JCAConfirm(event,'ext.appo.change.resource.ModifyResource.MY_CUSTOM_24')"/>-->
-            <command class="ext.appo.change.processor.CancelChangeApplyProcessor" method="execute" onClick="JCAConfirm(event,'ext.appo.change.resource.ModifyResource.MY_CUSTOM_20')"/>
-<!--            add by lzy at 20191130 end-->
+            <!--            add by lzy at 20191130 start-->
+            <!--            <command class="ext.appo.change.processor.CancelChangeApplyProcessor" method="execute" onClick="JCAConfirm(event,'ext.appo.change.resource.ModifyResource.MY_CUSTOM_24')"/>-->
+            <command class="ext.appo.change.processor.CancelChangeApplyProcessor" method="execute"
+                     onClick="JCAConfirm(event,'ext.appo.change.resource.ModifyResource.MY_CUSTOM_20')"/>
+            <!--            add by lzy at 20191130 end-->
             <includeFilter name="CancelChangeApplyFilter"/>
         </action>
 
         <action name="changeHistory">
             <!-- add by lzy at 20191218 start-->
-<!--            <component name="ext.appo.change.mvc.builder.ChangeHistoryTableBuilder"/>-->
-            <command url="netmarkets/jsp/ext/appo/change/report/changeHistoryReport.jsp"  windowType="page"/>
+            <!--            <component name="ext.appo.change.mvc.builder.ChangeHistoryTableBuilder"/>-->
+            <command url="netmarkets/jsp/ext/appo/change/report/changeHistoryReport.jsp" windowType="page"/>
             <!-- add by lzy at 20191218 end-->
         </action>
 
         <action name="user" resourceBundle="ext.appo.change.resource.ModifyResource">
-            <command url="netmarkets/jsp/ext/appo/change/reviewprincipal/chooseUser.jsp"  windowType="page"/>
+            <command url="netmarkets/jsp/ext/appo/change/reviewprincipal/chooseUser.jsp" windowType="page"/>
         </action>
         <!--add by xiebowen at 2019/12/30  start-->
         <action name="rejectChangeApply" ajax="row">
-            <command class="ext.appo.change.processor.RejectChangeApplyProcessor" method="execute" onClick="JCAConfirm(event,'ext.appo.change.resource.ModifyResource.MY_CUSTOM_35')"/>
-        <includeFilter name="RejectChangeApplyFilter"/>
+            <command class="ext.appo.change.processor.RejectChangeApplyProcessor" method="execute"
+                     onClick="JCAConfirm(event,'ext.appo.change.resource.ModifyResource.MY_CUSTOM_35')"/>
+            <includeFilter name="RejectChangeApplyFilter"/>
         </action>
         <!--add by xiebowen at 2019/12/30  end-->
         <!--add by lzy at 20200108  start-->
@@ -99,21 +122,16 @@
         </action>
         <!--    add by lzy at 20200310 end-->
 
-        <!--add by lzy at 20200409 start-->
-        <!-- 事务性任务表单启动任务跟踪按钮 -->
-        <action name="startupChangeTask">
-            <command class="ext.appo.change.processor.StartupChangeTaskProcessor" method="execute" onClick="JCAConfirm(event,'ext.appo.change.resource.ModifyResource.MY_CUSTOM_49');saveDatasArray()"/>
+        <!--add by lzy at 20200515 start-->
+        <!--设置流程节点处理人 确认按钮-->
+        <action name="okButton" id="PJL_wizard_ok">
+            <command class="" method="" windowType="page" onClick="isSingleSelectSubmit()"/>
         </action>
-        <!-- 事务性任务表单添加按钮 -->
-        <action name="addChangeTask">
-            <command onClick="addChangeTask()" windowType="no_content"/>
+        <!--设置流程节点处理人 应用按钮-->
+        <action name="applyButton" id="PJL_wizard_apply">
+            <command class="" method="" windowType="page" onClick="isSingleSelectApply()"/>
         </action>
-        <!-- 事务性任务表单删除按钮 -->
-        <action name="deleteChangeTask">
-            <command onClick="deleteChangeTask()" windowType="no_content" />
-        </action>
-        <!--add by lzy at 20200409 end-->
-
+        <!--add by lzy at 20200515 end-->
     </objecttype>
 
 </listofactions>

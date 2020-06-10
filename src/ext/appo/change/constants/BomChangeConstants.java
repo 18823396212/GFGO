@@ -17,5 +17,5 @@ public interface BomChangeConstants {
     //物料升版类型
     String TYPE_10="ECN变更";
     String TYPE_11="修订";
-
+    String TYPE_12="未发生变更";
 }

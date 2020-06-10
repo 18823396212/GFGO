@@ -9,6 +9,7 @@ import com.ptc.core.components.rendering.guicomponents.PickerInputComponent;
 import com.ptc.netmarkets.util.beans.NmCommandBean;
 import com.ptc.windchill.enterprise.change2.dataUtilities.ChangeLinkAttributeDataUtility;
 import ext.appo.change.ModifyHelper;
+import ext.appo.change.beans.UsabilityChangeTaskBean;
 import ext.appo.change.constants.ModifyConstants;
 import ext.appo.change.models.CorrelationObjectLink;
 import ext.appo.ecn.beans.ChangeTaskBean;
@@ -37,8 +38,8 @@ public class ModifyUserPickerDataUtility extends ChangeLinkAttributeDataUtility 
         //add by lzy at 20191216 start
         // 获取当前用户
         WTPrincipal principal = SessionHelper.manager.getPrincipal();
-        WTUser user=(WTUser) principal;
-        String fullName=user.getFullName();
+        WTUser user = (WTUser) principal;
+        String fullName = user.getFullName();
 //        System.out.println("fullName=="+fullName);
         //add by lzy at 20191216 end
         // 当前用户设置为管理员，用于忽略权限
@@ -65,11 +66,11 @@ public class ModifyUserPickerDataUtility extends ChangeLinkAttributeDataUtility 
                 PickerInputComponent userPicker;
                 HashMap<String, Object> parameterMap = nmCommandBean.getParameterMap();
                 Object userPickerObj = parameterMap.get("userPicker");
-                String responsible= (String) userPickerObj;//责任人
-                if (!flag&&responsible!=null&&!responsible.isEmpty()){
-                    userPicker = createPickerUserComponent(paramString, paramObject, paramModelContext, bool,"",responsible);
-                }else{
-                    userPicker = createPickerUserComponent(paramString, paramObject, paramModelContext, bool,fullName,"");
+                String responsible = (String) userPickerObj;//责任人
+                if (!flag && responsible != null && !responsible.isEmpty()) {
+                    userPicker = createPickerUserComponent(paramString, paramObject, paramModelContext, bool, "", responsible);
+                } else {
+                    userPicker = createPickerUserComponent(paramString, paramObject, paramModelContext, bool, fullName, "");
                 }
                 //add by lzy at 20200316 end
 //                PickerInputComponent userPicker = createPickerUserComponent(paramString, paramObject, paramModelContext, bool,fullName);
@@ -94,6 +95,8 @@ public class ModifyUserPickerDataUtility extends ChangeLinkAttributeDataUtility 
         }
         // 初始化Picker数据
         if (object instanceof ChangeTaskBean) {
+            setPickerConfig(param, modelContext, modelContext.getRawValue());
+        } else if (object instanceof UsabilityChangeTaskBean) {
             setPickerConfig(param, modelContext, modelContext.getRawValue());
         } else {
             // 是否创建及编辑状态
@@ -160,6 +163,7 @@ public class ModifyUserPickerDataUtility extends ChangeLinkAttributeDataUtility 
 
     /**
      * 传当前用户名
+     *
      * @param param
      * @param object
      * @param modelContext
@@ -168,7 +172,7 @@ public class ModifyUserPickerDataUtility extends ChangeLinkAttributeDataUtility 
      * @return
      * @throws WTException
      */
-    public PickerInputComponent createPickerUserComponent(String param, Object object, ModelContext modelContext, Boolean isCreateEdit,String fullName,String responsible) throws WTException {
+    public PickerInputComponent createPickerUserComponent(String param, Object object, ModelContext modelContext, Boolean isCreateEdit, String fullName, String responsible) throws WTException {
         String label = getLabel(param, modelContext);
         if (label == null) {
             label = "Picker";
@@ -179,7 +183,7 @@ public class ModifyUserPickerDataUtility extends ChangeLinkAttributeDataUtility 
         } else {
             // 是否创建及编辑状态
             AffectedItemsDataUtility dataUtility = new AffectedItemsDataUtility();
-            setPickerUserConfig(param, modelContext, dataUtility.getValue(modelContext, object, isCreateEdit, param),fullName,responsible);
+            setPickerUserConfig(param, modelContext, dataUtility.getValue(modelContext, object, isCreateEdit, param), fullName, responsible);
         }
 
         ComponentDescriptor componentDescriptor = modelContext.getDescriptor();
@@ -218,7 +222,7 @@ public class ModifyUserPickerDataUtility extends ChangeLinkAttributeDataUtility 
      * @throws WTException
      */
     //add by lzy at 20191216
-    public void setPickerUserConfig(String param, ModelContext modelContext, Object value,String fullName,String responsible) throws WTException {
+    public void setPickerUserConfig(String param, ModelContext modelContext, Object value, String fullName, String responsible) throws WTException {
         // 获取参数列表
         Map<Object, Object> propertiesMap = modelContext.getDescriptor().getProperties();
         if (LOGGER.isDebugEnabled()) {
@@ -228,12 +232,12 @@ public class ModifyUserPickerDataUtility extends ChangeLinkAttributeDataUtility 
         UserPickerConfig.setPickerProperties(param, modelContext.getNmCommandBean(), propertiesMap);
 
         //add by lzy at 20200316 start
-        Boolean a=responsible!=null&&!responsible.trim().isEmpty();
-        Boolean b=responsible!=null&&!responsible.isEmpty();
-        if (responsible!=null&&!responsible.trim().isEmpty()){
+        Boolean a = responsible != null && !responsible.trim().isEmpty();
+        Boolean b = responsible != null && !responsible.isEmpty();
+        if (responsible != null && !responsible.trim().isEmpty()) {
             propertiesMap.put(PickerRenderConfigs.DEFAULT_HIDDEN_VALUE, responsible == null ? "" : responsible);
             propertiesMap.put(PickerRenderConfigs.DEFAULT_VALUE, responsible == null ? "" : responsible);
-        }else{
+        } else {
             propertiesMap.put(PickerRenderConfigs.DEFAULT_HIDDEN_VALUE, value == null ? fullName : (String) value);
             propertiesMap.put(PickerRenderConfigs.DEFAULT_VALUE, value == null ? fullName : (String) value);
         }

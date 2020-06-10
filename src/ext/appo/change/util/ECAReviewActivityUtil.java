@@ -1,6 +1,8 @@
 package ext.appo.change.util;
 
 import com.ptc.core.meta.common.TypeIdentifier;
+import com.ptc.netmarkets.model.NmOid;
+import com.ptc.netmarkets.util.beans.NmCommandBean;
 import ext.appo.change.workflow.ECNWorkflowUtil;
 import ext.com.csm.CSMUtil;
 import ext.com.iba.IBAUtil;
@@ -40,8 +42,11 @@ import wt.util.WTMessage;
 import wt.util.WTProperties;
 import wt.util.WTPropertyVetoException;
 import wt.workflow.definer.WfAssignedActivityTemplate;
+import wt.workflow.engine.ProcessData;
+import wt.workflow.engine.WfActivity;
 import wt.workflow.engine.WfProcess;
 import wt.workflow.work.WfAssignedActivity;
+import wt.workflow.work.WorkItem;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -429,7 +434,7 @@ public class ECAReviewActivityUtil {
                             if (disName != null && disName.length() > 0) {
                                 middleType = disName;
                             }
-                        }else{
+                        } else {
                             disName = CSMUtil.getOneLastClfNodeInternalNameByWTPart(part);
                             if (disName == null || disName.length() <= 0) {
                                 throw new WTException(WTMessage.getLocalizedMessage(RESOURCE, "11", new Object[0], SessionHelper.getLocale()));
@@ -906,5 +911,78 @@ public class ECAReviewActivityUtil {
         }
 
     }
+
+    //是否单选
+    public static Map<String,Role> isSingleSelect(NmCommandBean commandBean) throws WTException {
+        Map<String,Role> result = new HashMap<>();
+        boolean bool = SessionServerHelper.manager.isAccessEnforced();
+        try {
+            SessionServerHelper.manager.setAccessEnforced(false);
+
+            NmOid contextNmOid = null;
+            if (commandBean != null) {
+                contextNmOid = commandBean.getElementContext().getPrimaryOid();
+            }
+            if (contextNmOid != null) {
+                WorkItem workitem = (WorkItem) contextNmOid.getRefObject();
+                WfActivity wfactivity = (WfActivity) workitem.getSource().getObject();
+                WfProcess process = wfactivity.getParentProcess();
+                String activityName = wfactivity.getName();
+                ProcessData processData = wfactivity.getContext();
+                WTObject pbo = (WTObject) processData.getValue("primaryBusinessObject");
+                String augmentActivities = (String) processData.getValue("augmentActivities");
+                WfAssignedActivity assignActivity = getWfAssignedActivity(process, activityName);
+                Team team = WorkflowUtil.getTeam(process);
+                String sheetName = getSheetName(pbo);
+                RowBean rowBean = getRowBean(null, process, pbo, sheetName);
+                ArrayList<String> nextActivitys = new ArrayList();
+
+                String isAllActivties = (String) assignActivity.getContext().getValue("isAllActivties");
+                if (isAllActivties == null) {
+                    nextActivitys = getNextActivity(null, process, pbo, augmentActivities, activityName);
+                } else {
+                    String tempAllActivities;
+                    String[] tempAuge;
+                    if ("YES".equals(isAllActivties)) {
+                        tempAllActivities = augmentActivities.replaceAll(">>AND<<", ";;;qqq");
+                        tempAuge = tempAllActivities.split(";;;qqq");
+                        if (tempAuge != null) {
+                            Collections.addAll(nextActivitys, tempAuge);
+                        }
+                    } else if (!"".equals(isAllActivties)) {
+                        tempAllActivities = augmentActivities.replaceAll(">>AND<<", ";;;qqq");
+                        tempAuge = tempAllActivities.split(";;;qqq");
+                        List<String> tempAllArrys = Arrays.asList(tempAuge);
+                        tempAuge = isAllActivties.split(";;;qqq");
+                        if (tempAuge != null) {
+                            for (String tempEv : tempAuge) {
+                                if (tempAllArrys.contains(tempEv)) {
+                                    nextActivitys.add(tempEv);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                for (String activtiyName : nextActivitys) {
+                    CellBean cellBean = getCellBean(activtiyName, rowBean);
+                    boolean isNotice = cellBean.isNotice();
+                    boolean isSign = cellBean.isSign();
+                    if (!isNotice && !isSign) {
+                        Role role = ReviewActivityUtil.getRoleByActivity(activtiyName, process);
+                        result.put(activtiyName,role);
+                    }
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new WTException(e.getLocalizedMessage());
+        } finally {
+            SessionServerHelper.manager.setAccessEnforced(bool);
+        }
+        return result;
+    }
+
 
 }
