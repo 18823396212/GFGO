@@ -13,6 +13,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.Calendar" %>
 <%@ taglib uri="http://www.ptc.com/windchill/taglib/wrappers" prefix="w" %>
 <%@ taglib prefix="wctags" tagdir="/WEB-INF/tags" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
@@ -426,9 +427,13 @@
                                           required="true" dateValueType="DATE_ONLY"/>
                     <%
                     } else {
+                        //期望完成时间默认推迟一周
+                        Calendar curr = Calendar.getInstance();
+                        curr.set(Calendar.DAY_OF_MONTH, curr.get(Calendar.DAY_OF_MONTH) + 7);
+                        Date date = curr.getTime();
                     %>
                     <w:dateInputComponent propertyLabel="DateInputComponent" styleClass="ppdata" id="<%=needDate%>"
-                                          name="<%=needDate%>"
+                                          name="<%=needDate%>" dateValue="<%=date%>"
                                           required="true" dateValueType="DATE_ONLY"/>
                     <%
                         }
@@ -565,7 +570,7 @@
             alert("请至少选择一项任务！");
             return;
         }
-        var taskThemeStr = "";
+        var taskThemeStrArray = [];
         //勾选的行校验【任务类型】,【任务主题】,【任务描述】,【期望完成时间】,【责任人】不能为空
         for (let i = 0; i < boxArrry.length; i++) {
             var boxValue = boxArrry[i].value;
@@ -593,7 +598,7 @@
             for (let i = 0; i < uncheckboxArrry.length; i++) {
                 var uncheckboxValue = uncheckboxArrry[i].value;
                 var unchecktaskTheme = document.getElementById("taskTheme_" + uncheckboxValue).value;
-                if (unchecktaskTheme.indexOf(taskTheme) > -1) {
+                if (unchecktaskTheme == taskTheme) {
                     alert("提交的事务性任务已存在相同任务主题事务性任务！");
                     return;
                 }
@@ -602,16 +607,19 @@
             for (var j = 0; j < hasEca.length; j++) {
                 var hasEcaValue = hasEca[j].value;
                 var hasEcaTheme = document.getElementById("taskTheme_" + hasEcaValue).value;
-                if (hasEcaTheme.indexOf(taskTheme) > -1) {
+                if (hasEcaTheme == taskTheme) {
                     alert("提交的事务性任务已存在相同任务主题事务性任务！");
                     return;
                 }
             }
-            if (taskThemeStr.indexOf(taskTheme) > -1) {
-                alert("提交的事务性任务中存在相同任务主题！");
-                return;
+            for (let i = 0; i <taskThemeStrArray.length; i++) {
+                var taskThemeStr = taskThemeStrArray[i];
+                if (taskThemeStr == taskTheme) {
+                    alert("提交的事务性任务中存在相同任务主题！");
+                    return;
+                }
             }
-            taskThemeStr += ";" + taskTheme;
+            taskThemeStrArray.push(taskTheme);
         }
 
         var result = confirm("启动任务跟踪");
@@ -679,7 +687,7 @@
             alert("请至少选择一项任务！");
             return;
         }
-        var taskThemeStr = "";
+        var taskThemeStrArray = [];
         //勾选的行校验【任务类型】,【任务主题】,【任务描述】,【期望完成时间】,【责任人】不能为空
         for (let i = 0; i < boxArrry.length; i++) {
             var boxValue = boxArrry[i].value;
@@ -707,7 +715,7 @@
             for (let i = 0; i < uncheckboxArrry.length; i++) {
                 var uncheckboxValue = uncheckboxArrry[i].value;
                 var unchecktaskTheme = document.getElementById("taskTheme_" + uncheckboxValue).value;
-                if (unchecktaskTheme.indexOf(taskTheme) > -1) {
+                if (unchecktaskTheme == taskTheme) {
                     alert("提交的事务性任务已存在相同任务主题事务性任务！");
                     return;
                 }
@@ -716,16 +724,19 @@
             for (var j = 0; j < hasEca.length; j++) {
                 var hasEcaValue = hasEca[j].value;
                 var hasEcaTheme = document.getElementById("taskTheme_" + hasEcaValue).value;
-                if (hasEcaTheme.indexOf(taskTheme) > -1) {
+                if (hasEcaTheme == taskTheme) {
                     alert("提交的事务性任务已存在相同任务主题事务性任务！");
                     return;
                 }
             }
-            if (taskThemeStr.indexOf(taskTheme) > -1) {
-                alert("提交的事务性任务中存在相同任务主题！");
-                return;
+            for (let i = 0; i <taskThemeStrArray.length; i++) {
+                var taskThemeStr = taskThemeStrArray[i];
+                if (taskThemeStr == taskTheme) {
+                    alert("提交的事务性任务中存在相同任务主题！");
+                    return;
+                }
             }
-            taskThemeStr += ";" + taskTheme;
+            taskThemeStrArray.push(taskTheme);
         }
 
         var result = confirm("保存任务");
