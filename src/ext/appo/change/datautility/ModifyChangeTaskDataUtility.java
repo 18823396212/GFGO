@@ -42,6 +42,7 @@ public class ModifyChangeTaskDataUtility extends AbstractDataUtility implements 
         GUIComponentArray gui_array = new GUIComponentArray();
         boolean flag = false;
         Persistable persistable = null;
+        String changeTheme = "";
         if (paramObject instanceof ChangeTaskBean) {
             ChangeTaskBean bean = (ChangeTaskBean) paramObject;
             String activity = bean.getChangeActivity2();
@@ -49,12 +50,14 @@ public class ModifyChangeTaskDataUtility extends AbstractDataUtility implements 
             persistable = ModifyUtils.getPersistable(activity);
             LOGGER.info("=====persistable: " + persistable);
             flag = persistable != null;
+            changeTheme = bean.getChangeTheme();
         } else if (paramObject instanceof UsabilityChangeTaskBean) {
             UsabilityChangeTaskBean bean = (UsabilityChangeTaskBean) paramObject;
             String activity = bean.getChangeActivity2();
             persistable = ModifyUtils.getPersistable(activity);
             LOGGER.info("=====persistable: " + persistable);
             flag = persistable != null;
+            changeTheme = bean.getChangeTheme();
         }
         //是否已存在eca
         if (!flag && bool) {
@@ -106,6 +109,9 @@ public class ModifyChangeTaskDataUtility extends AbstractDataUtility implements 
                 } else {
                     if (paramString.equalsIgnoreCase(ModifyConstants.TASKSTATE_COMPID)) {
                         value = TASK_6;
+                        if (changeTheme == null || changeTheme.trim().equals("")){
+                            value = TASK_1;
+                        }
                     }
                 }
                 gui.setValue(value);
@@ -205,14 +211,17 @@ public class ModifyChangeTaskDataUtility extends AbstractDataUtility implements 
             } else if (keyStr.equalsIgnoreCase(ModifyConstants.TASKSTATE_COMPID)) {
                 Persistable persistable = null;
                 String value = "";
+                String changeTheme = "";
                 if (paramObject instanceof ChangeTaskBean) {
                     ChangeTaskBean bean = (ChangeTaskBean) paramObject;
                     String activity = bean.getChangeActivity2();
                     persistable = ModifyUtils.getPersistable(activity);
+                    changeTheme = bean.getChangeTheme();
                 } else if (paramObject instanceof UsabilityChangeTaskBean) {
                     UsabilityChangeTaskBean bean = (UsabilityChangeTaskBean) paramObject;
                     String activity = bean.getChangeActivity2();
                     persistable = ModifyUtils.getPersistable(activity);
+                    changeTheme = bean.getChangeTheme();
                 }
                 if (persistable != null && persistable instanceof WTChangeActivity2) {
                     WTChangeActivity2 eca = (WTChangeActivity2) persistable;
@@ -235,6 +244,9 @@ public class ModifyChangeTaskDataUtility extends AbstractDataUtility implements 
                     }
                 } else {
                     value = TASK_6;
+                    if (changeTheme == null || changeTheme.trim().equals("")){
+                        value = TASK_1;
+                    }
                 }
                 gui.setValue(value);
             } else if (keyStr.equalsIgnoreCase(ModifyConstants.TASKNUMBER_COMPID)) {

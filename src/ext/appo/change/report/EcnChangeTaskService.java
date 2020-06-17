@@ -259,12 +259,13 @@ public class EcnChangeTaskService implements RemoteAccess {
                     changeTaskBean.setTaskTheme(task.getChangeTheme() == null ? "" : task.getChangeTheme());
                     changeTaskBean.setGlfs(task.getManagementStyle() == null ? "" : task.getManagementStyle());
                     changeTaskBean.setChangeDescribe(task.getChangeDescribe() == null ? "" : task.getChangeDescribe());
+                    changeTaskBean.setTaskState(ModifyConstants.TASK_1);
                     if (task.getChangeTheme() != null && task.getChangeTheme().trim() != "") {
                         changeTaskBean.setNeedDate(task.getNeedDate() == null ? "" : task.getNeedDate());
+                        changeTaskBean.setTaskState(ModifyConstants.TASK_6);
                     }
                     changeTaskBean.setResponsible(task.getResponsible() == null ? "" : task.getResponsible());
                     changeTaskBean.setTaskOid(String.valueOf(task.getPersistInfo().getObjectIdentifier().getId()));
-                    changeTaskBean.setTaskState(ModifyConstants.TASK_6);
                     changeTaskInfoBeans.add(changeTaskBean);
                 }
             }
