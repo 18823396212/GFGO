@@ -965,15 +965,16 @@ public class ECAReviewActivityUtil {
                 }
 
                 for (String activtiyName : nextActivitys) {
-                    CellBean cellBean = getCellBean(activtiyName, rowBean);
-                    boolean isNotice = cellBean.isNotice();
-                    boolean isSign = cellBean.isSign();
-                    if (!isNotice && !isSign) {
-                        Role role = ReviewActivityUtil.getRoleByActivity(activtiyName, process);
-                        result.put(activtiyName,role);
+                    if (!activtiyName.isEmpty()){
+                        CellBean cellBean = getCellBean(activtiyName, rowBean);
+                        boolean isNotice = cellBean.isNotice();
+                        boolean isSign = cellBean.isSign();
+                        if (!isNotice && !isSign) {
+                            Role role = ReviewActivityUtil.getRoleByActivity(activtiyName, process);
+                            result.put(activtiyName,role);
+                        }
                     }
                 }
-
             }
         } catch (Exception e) {
             e.printStackTrace();
