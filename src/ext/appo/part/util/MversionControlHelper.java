@@ -143,24 +143,24 @@ public class MversionControlHelper {
 					WTPartMaster wm = link.getUses();
 					System.out.println("wm==================================" + wm);
 					WTPart eff = getLatestEffective(wm, top.getViewName());
-					//add by lzy at 20200603 start
-					//如果部件在新ECN流程中，取前一个版本物料
-					Boolean flag = isRunningNewEcnWorkflowAndAfter(eff);
-					String mVersion = eff.getVersionIdentifier().getValue();//大版本
-					if (flag) {
-						// 存在，取前一个版本
-						String englishLetter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-						if (englishLetter.contains(mVersion)) {
-							int index = englishLetter.indexOf(mVersion);
-							if (index > 0 && index < englishLetter.length()) {
-								mVersion = englishLetter.substring(index - 1, index);
-							}
-						}
-						eff = ChangeHistoryReport.getLatestPart(eff.getNumber(), eff.getViewName(), mVersion);
-					}
-					//add by lzy at 20200603 end
 					System.out.println("eff==================================" + eff);
 					if (eff != null) {
+						//add by lzy at 20200603 start
+						//如果部件在新ECN流程中，取前一个版本物料
+						Boolean flag = isRunningNewEcnWorkflowAndAfter(eff);
+						String mVersion = eff.getVersionIdentifier().getValue();//大版本
+						if (flag) {
+							// 存在，取前一个版本
+							String englishLetter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+							if (englishLetter.contains(mVersion)) {
+								int index = englishLetter.indexOf(mVersion);
+								if (index > 0 && index < englishLetter.length()) {
+									mVersion = englishLetter.substring(index - 1, index);
+								}
+							}
+							eff = ChangeHistoryReport.getLatestPart(eff.getNumber(), eff.getViewName(), mVersion);
+						}
+						//add by lzy at 20200603 end
 						String lid = getOidByObject(link);
 						EffectiveBaselineBean eblb = new EffectiveBaselineBean(pid, upUID, top, eff, lid);
 						beans.add(eblb);

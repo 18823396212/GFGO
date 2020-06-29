@@ -327,17 +327,19 @@ public class CusNmWorkItemCommands extends NmWorkItemCommands implements Externa
 							if (persistable == null)
 								continue;
 							if (persistable instanceof TransactionTask) {
-								TransactionTask task = (TransactionTask) persistable;
-								String changeTheme = attributeMap.get(CHANGETHEME_COMPID) == null
-										? task.getChangeTheme() : attributeMap.get(CHANGETHEME_COMPID);
-								String changeDescribe = attributeMap.get(CHANGEDESCRIBE_COMPID) == null
-										? task.getChangeDescribe() : attributeMap.get(CHANGEDESCRIBE_COMPID);
-								String responsible = attributeMap.get(RESPONSIBLE_COMPID) == null
-										? task.getResponsible() : attributeMap.get(RESPONSIBLE_COMPID);
-								String needDate = attributeMap.get(NEEDDATE_COMPID) == null ? task.getNeedDate()
-										: attributeMap.get(NEEDDATE_COMPID);
-								ModifyHelper.service.updateTransactionTask(task, changeTheme, changeDescribe,
-										responsible, needDate);
+								//add by lzy at 20200617 start
+//								TransactionTask task = (TransactionTask) persistable;
+//								String changeTheme = attributeMap.get(CHANGETHEME_COMPID) == null
+//										? task.getChangeTheme() : attributeMap.get(CHANGETHEME_COMPID);
+//								String changeDescribe = attributeMap.get(CHANGEDESCRIBE_COMPID) == null
+//										? task.getChangeDescribe() : attributeMap.get(CHANGEDESCRIBE_COMPID);
+//								String responsible = attributeMap.get(RESPONSIBLE_COMPID) == null
+//										? task.getResponsible() : attributeMap.get(RESPONSIBLE_COMPID);
+//								String needDate = attributeMap.get(NEEDDATE_COMPID) == null ? task.getNeedDate()
+//										: attributeMap.get(NEEDDATE_COMPID);
+//								ModifyHelper.service.updateTransactionTask(task, changeTheme, changeDescribe,
+//										responsible, needDate);
+								//add by lzy at 20200617 end
 							} else {
 								String approvalOpinion = attributeMap.get(ATTRIBUTE_9) == null ? ""
 										: attributeMap.get(ATTRIBUTE_9);
@@ -401,11 +403,12 @@ public class CusNmWorkItemCommands extends NmWorkItemCommands implements Externa
 						audit.setUserComment(taskComments);
 						PersistenceServerHelper.manager.update(audit);
 					}
-
-					Object object = workItem.getPrimaryBusinessObject().getObject();
-					if (object instanceof WTChangeOrder2) {
-						new ECNWorkflowUtil().createTransactionECA((WTChangeOrder2) object);
-					}
+					//add by lzy at 20200617 start
+//					Object object = workItem.getPrimaryBusinessObject().getObject();
+//					if (object instanceof WTChangeOrder2) {
+//						new ECNWorkflowUtil().createTransactionECA((WTChangeOrder2) object);
+//					}
+					//add by lzy at 20200617 end
 				}
 			}
 		} catch (Exception e) {

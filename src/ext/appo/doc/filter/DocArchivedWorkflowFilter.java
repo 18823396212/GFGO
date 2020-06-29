@@ -1,7 +1,9 @@
 package ext.appo.doc.filter;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Vector;
 
 import com.ptc.core.ui.validation.DefaultSimpleValidationFilter;
 import com.ptc.core.ui.validation.UIValidationCriteria;
@@ -10,8 +12,15 @@ import com.ptc.core.ui.validation.UIValidationStatus;
 import com.ptc.netmarkets.model.NmOid;
 import com.ptc.netmarkets.workflow.NmWorkflowHelper;
 
+import ext.appo.change.report.ChangeHistoryReport;
+import ext.appo.change.util.ModifyUtils;
+import ext.appo.ecn.common.util.ChangeUtils;
 import ext.com.workflow.WorkflowUtil;
 import ext.generic.doc.config.DocValidatorRuleUtil;
+import wt.change2.ChangeHelper2;
+import wt.change2.Changeable2;
+import wt.change2.WTChangeActivity2;
+import wt.change2.WTChangeOrder2;
 import wt.doc.WTDocument;
 import wt.enterprise.RevisionControlled;
 import wt.fc.Persistable;
@@ -20,8 +29,11 @@ import wt.fc.QueryResult;
 import wt.fc.WTObject;
 import wt.fc.WTReference;
 import wt.org.WTUser;
+import wt.part.WTPart;
 import wt.session.SessionHelper;
 import wt.util.WTException;
+import wt.vc.VersionControlHelper;
+import wt.workflow.engine.WfEngineHelper;
 import wt.workflow.engine.WfProcess;
 import wt.workflow.engine.WfState;
 
@@ -93,8 +105,12 @@ public class DocArchivedWorkflowFilter extends DefaultSimpleValidationFilter {
 
 					// if ((stateOk) && (userOk) && (typeOk) && (processok) && (isLatestObject(doc))
 					// && (!WorkflowUtil.isObjectCheckedOut(doc)))
+					//add by lzy at 20200611 start
+//					if ((stateOk) && (userOk) && (processok) && (isLatestObject(doc))
+//							&& (!WorkflowUtil.isObjectCheckedOut(doc)))
 					if ((stateOk) && (userOk) && (processok) && (isLatestObject(doc))
-							&& (!WorkflowUtil.isObjectCheckedOut(doc)))
+							&& (!WorkflowUtil.isObjectCheckedOut(doc)) && !isRunningNewEcnWorkflowAndAfter(doc))
+					//add by lzy at 20200611 end
 						uivalidationstatus = UIValidationStatus.ENABLED;
 				}
 			} catch (WTException e) {
@@ -116,5 +132,54 @@ public class DocArchivedWorkflowFilter extends DefaultSimpleValidationFilter {
 			}
 		}
 		return isLstest;
+	}
+
+	/**
+	 * add by lzy
+	 * 判断pbo是否在新ECN流程APPO_ECNWF产生对象中且流程未结束
+	 *
+	 * @param document
+	 * @return
+	 * @throws WTException
+	 */
+	private static Boolean isRunningNewEcnWorkflowAndAfter(WTDocument document) throws WTException {
+		if (document == null) return false;
+		String number = document.getNumber();
+		String mVersion = document.getVersionIdentifier().getValue();//文档大版本
+		WTDocument wtDocument = ext.generic.integration.cis.workflow.WorkflowUtil.getDocumentPreVersionLatestIter(document);//获取取前一个版本
+		WTChangeOrder2 changeOrder2 = null;
+		//获取对象所有关联的ECA对象
+		QueryResult result = ChangeHelper2.service.getAffectingChangeActivities(wtDocument);
+		while (result.hasMoreElements()) {
+			WTChangeActivity2 changeActivity2 = (WTChangeActivity2) result.nextElement();
+			//获取产生对象
+			Collection<Changeable2> collection = ModifyUtils.getChangeablesAfter(changeActivity2);
+			for (Changeable2 changeable2 : collection) {
+				if (changeable2 instanceof WTDocument) {
+					WTDocument doc = (WTDocument) changeable2;
+					String docNumber = doc.getNumber();
+					String docVersion = doc.getVersionIdentifier().getValue();//文档大版本
+					if (number.equals(docNumber) && mVersion.equals(docVersion)) {
+						changeOrder2 = ChangeUtils.getEcnByEca(changeActivity2);
+					}
+				}
+			}
+		}
+		if (changeOrder2!=null){
+			//ECN进程
+			QueryResult qr = WfEngineHelper.service.getAssociatedProcesses(changeOrder2, null, null);
+			while (qr.hasMoreElements()) {
+				WfProcess process = (WfProcess) qr.nextElement();
+				String templateName = process.getTemplate().getName();
+				String state = String.valueOf(changeOrder2.getLifeCycleState());
+				//不是已取消、已解决的新ECN流程APPO_ECNWF
+				if (templateName.equals("APPO_ECNWF")) {
+					if (!state.equals("CANCELLED") && !state.equals("RESOLVED")) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 }

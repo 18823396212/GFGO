@@ -7,6 +7,8 @@ import com.ptc.core.ui.validation.DefaultSimpleValidationFilter;
 import com.ptc.core.ui.validation.UIValidationCriteria;
 import com.ptc.core.ui.validation.UIValidationKey;
 import com.ptc.core.ui.validation.UIValidationStatus;
+import wt.change2.ChangeHelper2;
+import wt.change2.WTChangeActivity2;
 import wt.doc.WTDocument;
 import wt.fc.QueryResult;
 import wt.fc.WTReference;
@@ -58,6 +60,18 @@ public class ManualSendDCCValidator extends DefaultSimpleValidationFilter {
 				        WorkItem wi = (WorkItem)qr.nextElement();
 				        set.add(wi);
 				     }
+ 					//add by lzy at 20200610 start
+					 //获取对象所有关联的ECA对象
+					 QueryResult result= ChangeHelper2.service.getAffectingChangeActivities(part);
+                     while(result.hasMoreElements()) {
+                         WTChangeActivity2 changeActivity2 = (WTChangeActivity2) result.nextElement();
+						 QueryResult queryResult = WorkflowHelper.service.getWorkItems(changeActivity2);
+						 while(queryResult.hasMoreElements()){
+							 WorkItem wi = (WorkItem)queryResult.nextElement();
+							 set.add(wi);
+						 }
+                     }
+                    //add by lzy at 20200610 end
 					System.out.println("set============================"+set);
 					if(set.isEmpty()) {
 						uivalidationstatus = UIValidationStatus.DISABLED;
