@@ -1,3 +1,13 @@
+/**
+ * <pre>
+ * 修改记录：05
+ * 修改日期：2019-12-24 
+ * 修   改  人：毛兵义
+ * 关联活动：
+ * 修改内容：增加二次抛送
+ * </pre>
+ */
+
 package ext.appo.erp.util;
 
 import static ext.generic.integration.erp.util.SqlHelperUtil.queryBOMFid;
@@ -43,24 +53,25 @@ public class KingDeeK3Helper {
 	// FAuxPropertyId 100001为版本id,100002为等级
 	// FIsEnable1 true为开启，false为未开启
 	// FUseOrgId 使用组织 1为光峰
-	public static List<List<Object>> queryMaterielFAuxProperty(String partNumber) throws Exception {
-		K3CloudApiClient client = new K3CloudApiClient(K3CloudURL);
-		Boolean result = client.login(dbId, uid, pwd, lang);
-		if (result) {
-			String sContent = "{\"FormId\":\"BD_MATERIAL\"," + // 物料formid
-					"\"FilterString\":\"FNumber=\'" + partNumber + "\'\"," + // 过滤条件
-					"\"FieldKeys\":\"FAuxPropertyId,FIsEnable1,FUseOrgId,FNumber,FMATERIALID\"}";// FAuxPropertyId
-																									// 辅助属性，FIsEnable1
-																									// 启用，FNumber
-																									// 物料编码,FMATERIALID
-																									// 物料内码
+	public static List<List<Object>> queryMaterielFAuxProperty(String partNumber, K3CloudApiClient client)
+			throws Exception {
+		// K3CloudApiClient client = new K3CloudApiClient(K3CloudURL);
+		// Boolean result = client.login(dbId, uid, pwd, lang);
+		// if (result) {
+		String sContent = "{\"FormId\":\"BD_MATERIAL\"," + // 物料formid
+				"\"FilterString\":\"FNumber=\'" + partNumber + "\'\"," + // 过滤条件
+				"\"FieldKeys\":\"FAuxPropertyId,FIsEnable1,FUseOrgId,FNumber,FMATERIALID\"}";// FAuxPropertyId
+																								// 辅助属性，FIsEnable1
+																								// 启用，FNumber
+																								// 物料编码,FMATERIALID
+																								// 物料内码
 
-			List<List<Object>> sResult = client.executeBillQuery(sContent);
-			// System.out.println(sContent);
-			return sResult;
-		} else {
-			throw new RuntimeException("ERP连接失败，请联系管理员！");
-		}
+		List<List<Object>> sResult = client.executeBillQuery(sContent);
+		// System.out.println(sContent);
+		return sResult;
+		// } else {
+		// throw new RuntimeException("ERP连接失败，请联系管理员！");
+		// }
 	}
 
 	/***
@@ -90,17 +101,17 @@ public class KingDeeK3Helper {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String saveMaterialBOM(String data) throws Exception {
-		K3CloudApiClient client = new K3CloudApiClient(K3CloudURL);
-		Boolean result = client.login(dbId, uid, pwd, lang);
-		if (result) {
+	public static String saveMaterialBOM(String data, K3CloudApiClient client) throws Exception {
+		// K3CloudApiClient client = new K3CloudApiClient(K3CloudURL);
+		// Boolean result = client.login(dbId, uid, pwd, lang);
+		// if (result) {
 
-			String sContent = client.save("ENG_BOM", data);
-			System.out.println("发送BOM返回结果：" + sContent);
-			return sContent;
-		} else {
-			throw new RuntimeException("ERP连接失败，请联系管理员！");
-		}
+		String sContent = client.save("ENG_BOM", data);
+		System.out.println("发送BOM返回结果：" + sContent);
+		return sContent;
+		// } else {
+		// throw new RuntimeException("ERP连接失败，请联系管理员！");
+		// }
 	}
 
 	/*****
@@ -189,7 +200,13 @@ public class KingDeeK3Helper {
 		// System.out.println("发送物料的lang:"+lang);
 		K3CloudApiClient client = new K3CloudApiClient(K3CloudURL);
 		// System.out.println("连接K3:"+client);
-		Boolean login = client.login(dbId, uid, pwd, lang);
+		Boolean login = false;
+		try {
+			login = client.login(dbId, uid, pwd, lang);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
 
 		// System.out.println("进入物料发送接口");
 
@@ -202,10 +219,21 @@ public class KingDeeK3Helper {
 
 		if (login) {
 			String[] data = { json, json2 };
-			// System.out.println("发物料JSON2:"+json2);
-			String execute = client.execute(
+			System.out.println("发物料JSON2:" + json2);
+			String execute = "";
+			Object executeObj = client.execute(
 					"GFBasicInformationAdded.GFBasicInformationAdd.AddMmaterials,GFBasicInformationAdded", data,
 					String.class);
+			if (executeObj == null) {
+				System.out.println("返回对象为空，请联系管理员！");
+				throw new RuntimeException("返回对象为空，请联系管理员！");
+			} else if (executeObj instanceof String) {
+				execute = (String) executeObj;
+			} else {
+				System.out.println("executeObj class==" + executeObj.getClass() + "  =" + executeObj.toString());
+				// throw new RuntimeException("返回类型错误，请联系管理员！");
+				return "error";
+			}
 			System.out.println("AddMaterials信息:" + execute);
 			return execute;
 		} else {
@@ -251,35 +279,38 @@ public class KingDeeK3Helper {
 	}
 
 	// 通过物料BOM版本查询对应BOM内码（PkIds）
-	public static String viewBOM(String version) throws Exception {
+	public static String viewBOM(String version, K3CloudApiClient client) throws Exception {
 		String result = "0";
 		// System.out.println("发送物料的lang:"+lang);
 		System.out.println("查询的BOM版本:" + version);
-		K3CloudApiClient client = new K3CloudApiClient(K3CloudURL);
-		Boolean login = client.login(dbId, uid, pwd, lang);
-		if (login) {
-			String formId = "ENG_BOM";
-			String data = "{\n" + "    \"Number\": \"" + version + "\",\n" + "}";
-			result = client.view(formId, data);
-			// System.out.println("结果："+result);
-			if (result.contains("Id")) {// ID
-				result = result.substring(10, result.length() - 1);
-				// System.out.println("截取"+result);
-				JSONObject jsonObject = new JSONObject(result);
-				JSONObject s = jsonObject.getJSONObject("Result");
-				Object Id = s.get("Id");
-				System.out.println("Id:" + Id);
-				// result="查询BOM内码成功";
-				result = String.valueOf(Id);
-			} else {
-				System.out.println("查询BOM内码：" + result);
-				result = "0";
-			}
+		// K3CloudApiClient client = new K3CloudApiClient(K3CloudURL);
+		// Boolean login = client.login(dbId, uid, pwd, lang);
+		// if (login) {
+		String formId = "ENG_BOM";
+		String data = "{\n" + "    \"Number\": \"" + version + "\",\n" + "}";
+		result = client.view(formId, data);
+		// System.out.println("结果："+result);
+		if (result.contains("Id")) {// ID
+			result = result.substring(10, result.length() - 1);
+			// System.out.println("截取"+result);
+			JSONObject jsonObject = new JSONObject(result);
+			JSONObject s = jsonObject.getJSONObject("Result");
+			Object Id = s.get("Id");
+			System.out.println("Id:" + Id);
+			// result="查询BOM内码成功";
+			result = String.valueOf(Id);
 		} else {
-			throw new RuntimeException("ERP连接失败，请联系管理员！");
+			System.out.println("查询BOM内码：" + result);
+			result = "0";
 		}
+		// }else
+		//
+		// {
+		// throw new RuntimeException("ERP连接失败，请联系管理员！");
+		// }
 		System.out.println("返回的BOM内码结果:" + result);
 		return result;
+
 	}
 
 	// 分配（将BOM发送给峰米） PkIds BOM内码,TOrgIds 组织内码 （02光峰，20峰米）
@@ -377,6 +408,8 @@ public class KingDeeK3Helper {
 		// mao
 		material.setOldVersion(materialInfo.getOldVersion());
 
+		material.setMI_Customize_orNot(materialInfo.getMI_Customize_orNot());
+
 		String json = material.toString();
 
 		System.out.println("==========materialJson===========" + json);
@@ -386,7 +419,8 @@ public class KingDeeK3Helper {
 	}
 
 	// 拼接发BOM送的json
-	public static String bomInfoToJson(List<BomInfo> bomInfoList, String company) throws Exception {
+	public static String bomInfoToJson(List<BomInfo> bomInfoList, String company, K3CloudApiClient client)
+			throws Exception {
 
 		if (bomInfoList == null || bomInfoList.size() <= 0) {
 			return null;
@@ -399,7 +433,7 @@ public class KingDeeK3Helper {
 		String bomVersion = parentNumber + "_" + version;
 		String parentwlfl = info.getParentwlfl();
 
-		String fTreeEntityJson = BomUtil.createFTreeEntityJson(bomInfoList, company);
+		String fTreeEntityJson = BomUtil.createFTreeEntityJson(bomInfoList, company, client);
 
 		String json = "";
 		// String mVersion=info.getMajorVersion();
@@ -430,7 +464,7 @@ public class KingDeeK3Helper {
 		// FIsEnable1 true为开启，false为未开启
 		// FUseOrgId 使用组织 1为光峰，100146为峰米，100148(与BOM的使用组织FUseOrgId不同，BOM的
 		// 02为光峰，20为峰米,50为中影光峰)，
-		List<List<Object>> list = queryMaterielFAuxProperty(parentNumber);
+		List<List<Object>> list = queryMaterielFAuxProperty(parentNumber, client);
 		boolean isFIsEnable1 = false;
 		if (list != null && list.size() > 0) {
 			// System.out.println("list.size():"+list.size());
@@ -511,7 +545,7 @@ public class KingDeeK3Helper {
 
 	// 拼接发送的json
 	public static String ecnInfoToJson(Map<WTPart, List<BomCompareBean>> map, Map<String, String> headInfo,
-			String companyStr) throws Exception {
+			String companyStr, K3CloudApiClient client) throws Exception {
 
 		System.out.println("========拼接ECN发送的JSON==========");
 
@@ -552,7 +586,7 @@ public class KingDeeK3Helper {
 			company = "20";
 			ECNNumber = ECNNumber + "_FM";
 		}
-		List<ECNInfoEntity> ecnInfoEntityToJson = BomUtil.getECNInfoEntityToJson(map, company);
+		List<ECNInfoEntity> ecnInfoEntityToJson = BomUtil.getECNInfoEntityToJson(map, company, client);
 
 		String FTreeEntity = ecnInfoEntityToJson.toString();
 		String json = "{" + "  \"IsDeleteEntry\": \"true\",\n" + "  \"IsVerifyBaseDataField\": \"false\",\n"

@@ -115,8 +115,8 @@
 <%
     if (partUpdateTypeBeans != null && partUpdateTypeBeans.size() > 0) {
 %>
-<div align="right" style="margin-right: 4px;margin-bottom: 2px;">
-    <input type="button" onclick="exportChangeHistoryReport()" value="导出变更履历"/>
+<div align="left" style="margin-right: 4px;margin-bottom: 2px;">
+    <input type="button" onclick="exportChangeHistoryReport()" value="导出变更履历" style="height: 26px"/>
 </div>
 <div style="background: #D2E1FD;height: 20px;line-height: 20px;width: 2000px"><h4>变更履历</h4></div>
 <br/>

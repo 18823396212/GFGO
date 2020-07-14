@@ -61,8 +61,10 @@
     Map<String,Role> singleSelect = ECAReviewActivityUtil.isSingleSelect(commandBean);
     String roleStr = "";
     for (Role role : singleSelect.values()) {
-        roleStr += ";"+role.toString();
-        role.getDisplay(Locale.CHINA);
+        if(roleStr!=null){
+            roleStr += ";"+role.toString();
+            role.getDisplay(Locale.CHINA);
+        }
     }
     if (roleStr.indexOf(";")==0){
         roleStr=roleStr.substring(1);
